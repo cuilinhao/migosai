@@ -15,18 +15,20 @@
 
 ## 验证结果
 
-- 全项目自动测试 **57/57 通过**。测试包括输入验证、幂等扣费和退款、OAuth 回跳、订单确认、媒体范围请求、任务并发与租约回归，以及真实 workerd 中的服务端请求和重定向安全回归等。供应商网络与 R2 行为有测试桩参与，不能等同真实端到端付款或生成。
+- 全项目自动测试 **57/57 通过**，其中新增八项真实 workerd 回归，验证服务端请求使用受支持的手动重定向策略并拒绝供应商 3xx，避免凭据跟随跳转。其余测试覆盖输入验证、幂等扣费和退款、OAuth 回跳、订单确认、媒体范围请求、任务并发与租约。供应商网络与 R2 行为有测试桩参与，不能等同真实端到端付款或生成。
 - TypeScript、Next 构建及 OpenNext Cloudflare 构建已通过。Cloudflare 本地 Worker 绑定 D1/R2 的 **16 项 HTTP 检查全部通过**，记录见 `QA/api-smoke.json`；其中未配置支付及未配置 Webhook 返回 503 是预期失败态，不是成功交易。
 - 公开八页的 24 条三档路由检查与账户四页的 12 条三档检查均无横向溢出；公开页没有坏图。分别记录于 `QA/routes.json` 和 `QA/account-routes.json`。
-- Cloudflare Worker 已部署到正式域名；真实浏览器 Google OAuth 成功，首次登录账户获得 10 积分，截图在 `QA/screenshots/live-google-login-success.jpg`。正式六项 Workers Secrets 已配置，远端 D1 两份迁移已应用。匿名 `/api/me` 返回 200，正式域名上的无签名和错误签名 Webhook 请求均返回 401。
+- Cloudflare Worker 已部署到正式域名，当前版本 `04613329-9173-41d4-b2ba-87350b9d4b5f`；真实浏览器 Google OAuth 成功，首次登录账户获得 10 积分，截图在 `QA/screenshots/live-google-login-success.jpg`。正式六项 Workers Secrets 已配置，远端 D1 两份迁移已应用。匿名 `/api/me` 返回 200，正式域名上的无签名和错误签名 Webhook 请求均返回 401。
 - APIMart 的两首已完成 V6 Mini 音乐与一次新建 Seedance 2.5 视频均经生产媒体处理函数转存到真实本地 R2；授权媒体 API 返回 200，输出 CDN 精确主机为 `getapib.org`。任务记录使用本地 D1 fixture，并非从生产站点 UI 提交、自动轮询、扣费到交付的完整端到端验证。
+- 另在正式部署的后端完成两条独立闭环：音乐提交后一次扣 10 积分，真实 cron 推进到完成，生产 R2 的两首音频经授权 API 返回 200（[`QA/production-generation.json`](QA/production-generation.json)）；视频使用两张私有上传图、签名输入及两次素材审核，随后一次扣 50 积分，真实 cron 完成 Seedance 2.5 任务，生产 R2 视频授权 GET 返回 200（[`QA/production-video.json`](QA/production-video.json)）。视频观察至完成历时 443 秒，输出 5.056 秒、480×854、有音轨，上游返回 cost 0.48437。测试使用隔离 QA 账户，测试媒体和会话已清理；浏览器 UI 端到端未测试。
 
 ## 已知差异和边界
 
 1. 尚未运行统一的逐像素差异评分；长篇法务文案因目标站实际服务调整，不以源站原文为目标。
 2. 原站积分包所写“约 6/24/44/100 条五秒 720P 视频”和生成器显示的单条 720P 100 积分不一致。本实现保留卡片展示并由服务端按当前单次报价核算；付款上线前应向购买者清楚说明实际扣费。
-3. Creem 四档生产商品、API Key 与三个 Webhook 事件已创建；生产 Checkout 无客户资料创建返回 HTTP 200/pending。商家资料已提交，后台显示审核中且当前无需补操作；提交前付款页要求账户验证的截图在 `QA/screenshots/creem-verification-required.jpg`。真实收款、签名 Webhook 入账尚未验证。APIMart 的真实视频与音乐结果已验证解析和本地 R2 转存，但生产网站 UI 提交生成、积分扣费、自动完成及授权交付的完整链路仍未验证。
+3. Creem 四档生产商品、API Key 与三个 Webhook 事件已创建；正式网站 `/api/checkout` 用独立 QA 账户返回 200 并创建生产 Checkout。商家资料已提交，后台显示审核中且当前无需补件；提交后打开 Checkout 仍提示账户验证，截图在 `QA/screenshots/creem-after-submission.jpg`。真实收款、签名 Webhook 入账尚未验证。音乐与视频生产后端链路已通过，浏览器 UI 点击生成到结果展示仍未验证。
 4. 后端无管理员页面；上游提交结果不确定的任务、退款/争议事件需要人工核对。列表 API 当前最多返回最近 100 条，未做分页；媒体没有自动保留期限与自助删除页面。
 5. 原站源码未取得或复用。营销内容和视觉按照浏览器证据重建；这不构成对原站资产使用许可的确认。此前本机代理 TUN 假 IP 缓存曾导致部分主域 TLS 连接失败；正式域名接口已成功访问，仍宜在独立网络复查解析。
+6. 用户将自行创建 Zoho 邮箱 `support@migosai.design`；创建、转发与收发尚未验证，不能将其写成网站已可用的客服联系方式。
 
 更细的运行风险和发布检查见 [交付审计](CLONE_AUDIT.md)；替换品牌或供应商时按 [替换指南](REPLACE_GUIDE.md) 同步调整前后端。

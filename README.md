@@ -2,7 +2,7 @@
 
 基于原站公开页面和浏览器截图重建的独立应用。目标域名为 `migosai.design`。前端使用 Next.js 15 / React 19，Cloudflare Workers 运行服务端，D1 保存账户、任务和积分账本，R2 保存用户媒体。视频接入 APIMart Seedance 2.5，音乐界面使用 Suno V6 系列，付款流程接入 Creem。
 
-这是重新实现的工程，源站的登录、支付和生成 API 没有被复用。正式域名已部署，真实浏览器 Google 登录与新用户 10 积分已验证。**Creem 真实付款及从生产界面提交生成的完整链路仍未验证，不能据此视为全部业务上线。**
+这是重新实现的工程，源站的登录、支付和生成 API 没有被复用。正式域名已部署，真实浏览器 Google 登录与新用户 10 积分已验证；生产后端的音乐和视频生成链路也已分别跑通。**Creem 真实付款尚未启用，浏览器 UI 提交生成的端到端流程仍未验证，不能据此视为全部业务上线。**
 
 ## 页面
 
@@ -36,9 +36,13 @@ npm test
 
 运行时需要 `DB`、`MEDIA` 等 Cloudflare 绑定，以及 Google、APIMart、Creem 的服务端配置。环境变量名和用途在 [`.env.example`](.env.example)；密钥通过本地忽略文件或 Workers Secrets 提供。没有配置的功能返回明确不可用状态，不模拟付款或生成成功。
 
-Cloudflare Worker 已部署到 `migosai.design` 的根域和 `www` 路由，六项正式密钥已通过 Workers Secrets 配置，远端 D1 两份迁移已应用。真实浏览器 Google OAuth 成功，首次登录账户获得 10 积分，证据见 `QA/screenshots/live-google-login-success.jpg`。正式域名匿名 `/api/me` 返回 200 且认证已配置；无签名及错误签名的 Webhook 请求返回 401。此前本机代理的 TUN 假 IP 缓存曾导致部分主域 TLS 连接失败，并非 Worker 服务异常。
+Cloudflare Worker 已部署到 `migosai.design` 的根域和 `www` 路由，六项正式密钥已通过 Workers Secrets 配置，远端 D1 两份迁移已应用。当前部署版本为 `04613329-9173-41d4-b2ba-87350b9d4b5f`；类型检查、完整 OpenNext 构建及 57 项自动测试已通过。真实浏览器 Google OAuth 成功，首次登录账户获得 10 积分，证据见 `QA/screenshots/live-google-login-success.jpg`。正式域名匿名 `/api/me` 返回 200 且认证已配置；无签名及错误签名的 Webhook 请求返回 401。此前本机代理的 TUN 假 IP 缓存曾导致部分主域 TLS 连接失败，并非 Worker 服务异常。
 
-Creem 四个生产商品、API Key 与三个 Webhook 事件已创建。无客户资料、无付款的生产 Checkout 创建返回 HTTP 200/pending；商家资料随后已提交，后台显示正在审核且当前无需补操作。提交前付款页的账户验证提示截图见 `QA/screenshots/creem-verification-required.jpg`。正式收款仍待审核放行并实测。APIMart V6 Mini 既有任务的两首音乐与一次新建 Seedance 2.5 视频已通过生产媒体解析/转存函数写入真实本地 R2，并由授权 API 返回 200；这使用本地 D1 fixture，不代表生产网站界面、扣费与异步任务完整闭环已验证。输出 CDN 精确主机为 `getapib.org`。
+Creem 四个生产商品、API Key 与三个 Webhook 事件已创建。正式网站 `/api/checkout` 使用独立 QA 账户返回 200 并创建有效生产 Checkout；打开付款页仍显示账户验证要求，截图见 `QA/screenshots/creem-after-submission.jpg`。商家资料已提交，Creem 状态为 `under_review`，当前无需补件；正式收款仍待放行并实测。
+
+生产后端在隔离 QA 账户上完成了 V6 Mini 音乐的提交、一次 10 积分扣费、真实 cron、生产 R2 双音频与授权读取；Seedance 2.5 视频也完成私有双图上传、签名图审核、一次 50 积分扣费、真实 cron、生产 R2 视频与授权读取。证据见 [`QA/production-generation.json`](QA/production-generation.json) 和 [`QA/production-video.json`](QA/production-video.json)。两次测试都未从浏览器 UI 点击生成，测试媒体已清理。输出 CDN 精确主机为 `getapib.org`。
+
+实现基线已推送至 GitHub `main`，提交 `add228e`。用户将自行创建 Zoho 邮箱 `support@migosai.design`；目前创建、转发与收发均未验证，网站联系方式需待邮箱可用后补入。
 
 ## 证据与交付
 

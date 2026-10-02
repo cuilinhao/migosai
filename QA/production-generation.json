@@ -1,6 +1,7 @@
 {
-  "testedAt": "2026-10-02T11:39:37.574Z",
+  "testedAt": "2026-10-02T11:53:39.215Z",
   "environment": "production",
+  "deploymentVersion": "04613329-9173-41d4-b2ba-87350b9d4b5f",
   "transport": {
     "host": "migosai.design",
     "tlsVerified": true,
@@ -13,38 +14,71 @@
     "instrumental": true,
     "creationAttempts": 1,
     "submissionHttpStatus": 202,
-    "initialStatus": "queued",
+    "observedStates": [
+      "queued",
+      "processing",
+      "completed"
+    ],
+    "finalStage": "terminal",
+    "progress": 100,
     "cronObserved": true,
     "pollEndpoint": "/api/generations",
     "pollEndpointAdvancesJobs": false,
-    "observedStatus": "failed",
-    "observedStage": "terminal",
-    "progress": 45,
-    "completed": false,
-    "providerTaskIdAvailable": false,
-    "providerAcceptance": "not_sent",
-    "failure": "Root reproduced workerd TypeError: redirect=\"error\" is unsupported; the Request failed before network dispatch.",
+    "manualJobAdvancement": false,
+    "completed": true,
+    "providerTaskIdRecorded": true,
+    "providerCost": 0.05,
     "automaticResubmission": false
   },
   "credits": {
     "initial": 10,
     "afterSubmission": 0,
+    "afterCompletion": 0,
     "qaGrant": 10,
     "generationDebit": -10,
-    "refund": 10,
-    "balanceAfterConfirmedFailureRefund": 10
+    "debitCount": 1,
+    "refund": 0
   },
   "productionR2": {
-    "verified": false,
-    "reason": "No completed result; no output keys recorded."
+    "verified": true,
+    "audioCount": 2,
+    "mediaResponses": [
+      {
+        "status": 200,
+        "bytes": 4518777,
+        "contentType": "audio/mpeg"
+      },
+      {
+        "status": 200,
+        "bytes": 4662249,
+        "contentType": "audio/mpeg"
+      }
+    ],
+    "testObjectsDeleted": 2
+  },
+  "checkout": {
+    "creationAttempts": 1,
+    "httpStatus": 200,
+    "checkoutHost": "www.creem.io",
+    "orderStatus": "pending",
+    "paid": false,
+    "creditGrant": 0
   },
   "cleanup": {
     "qaSessionRevoked": true,
     "revokedSessionMeUser": null,
+    "activeQaSessions": 0,
     "qaDataRetained": true,
-    "reason": "Failed isolated task and complete debit/refund ledger retained for audit; all QA sessions revoked.",
-    "outputObjectsToDelete": 0
+    "pendingOrderRetained": true,
+    "reason": "Retain isolated QA account, pending checkout, completed generation and credit ledger for audit. Both production R2 test outputs were deleted."
+  },
+  "previousAttempt": {
+    "providerRequestSent": false,
+    "rootCause": "workerd does not support redirect=error; fixed to manual with non-2xx rejection",
+    "creditsRefunded": 10,
+    "sessionsRevoked": true,
+    "failureAuditRetained": true
   },
   "uiEndToEnd": false,
-  "passed": false
+  "passed": true
 }
