@@ -8,6 +8,7 @@ export type GenerationStatus = "queued" | "reviewing" | "processing" | "complete
 export type GenerationResponse = {
   id: string; status: GenerationStatus; progress: number;
   videoUrl?: string; audioUrls?: string[]; error?: string;
+  statusMessage?: string;
 };
 export type CreateVideoRequest = {
   leftImage: string; rightImage: string; aspect: AspectRatio;

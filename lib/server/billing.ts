@@ -1,5 +1,5 @@
 import { ApiError } from './errors';
-export type Job={id:string;user_id:string;idempotency_key:string;kind:'video'|'music';payload:string;cost:number;status:string;stage:string;provider_id:string|null;assets:string|null;result_keys:string|null;error:string|null;progress:number;provider_cost:number|null;lease_until:number;lease_owner:string|null;next_poll:number;created_at:number};
+export type Job={id:string;user_id:string;idempotency_key:string;kind:'video'|'music';payload:string;cost:number;status:string;stage:string;provider_id:string|null;assets:string|null;result_keys:string|null;error:string|null;progress:number;provider_cost:number|null;lease_until:number;lease_owner:string|null;next_poll:number;created_at:number;moderation_state:string|null;moderation_verdict:string|null;moderation_key:string|null;moderation_etag:string|null};
 export async function reserveGeneration(db:D1Database,userId:string,key:string,kind:string,payload:unknown,cost:number):Promise<Job>{
  const serialized=JSON.stringify(payload);const previous=await db.prepare('SELECT * FROM generations WHERE user_id=? AND idempotency_key=?').bind(userId,key).first<Job>();
  if(previous){if(previous.payload!==serialized||previous.kind!==kind)throw new ApiError(409,'This request identifier was already used for different options.');return previous;}

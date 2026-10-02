@@ -36,6 +36,7 @@ export function DuoVideoGenerator() {
 
   const cost = getVideoCost(duration, resolution);
   const activeJob = Boolean(generation && !["completed", "failed", "cancelled"].includes(generation.status));
+  const videoReady = generation?.status === "completed" && Boolean(generation.videoUrl);
   const changePhoto = (side: Side, file?: File) => {
     if (submitting.current) return;
     if (!file) return;
@@ -121,14 +122,14 @@ export function DuoVideoGenerator() {
       <div className="mi-credit-line"><span>Cost {cost} credits</span><span>Remaining {credits} credits</span></div>
       <Link className="mi-buy-button" href="/pricing"><CreditCard size={16} /> Buy Credits</Link>
       {error && <p className="mi-error" role="alert">{error} {credits < cost && user ? <Link href="/pricing">Buy Credits</Link> : null}</p>}
-      {generation && <div className="mi-generation-status" role="status">{generation.status === "completed" ? "Your video is ready." : generation.status === "failed" || generation.status === "cancelled" ? (generation.error ?? "Generation could not be completed.") : `${generation.status[0].toUpperCase()}${generation.status.slice(1)}… ${generation.progress}%`}{generation.status === "completed" && generation.videoUrl && <a href={generation.videoUrl} download>Download video</a>}</div>}
+      {generation && <div className="mi-generation-status" role="status">{videoReady ? "Your video is ready." : generation.error ?? generation.statusMessage ?? (generation.status === "failed" || generation.status === "cancelled" ? "Generation could not be completed." : `${generation.status[0].toUpperCase()}${generation.status.slice(1)}… ${generation.progress}%`)}{generation.status === "completed" && generation.videoUrl && <a href={generation.videoUrl} download>Download video</a>}</div>}
       {pollError && <p className="mi-error" role="alert">{pollError}</p>}
       </div>
     </div>
     <div className="mi-video-preview mi-panel">
       <h2><Video size={17} /> Video Preview</h2>
-      <div className="mi-preview-media"><video src={generation?.status === "completed" && generation.videoUrl ? generation.videoUrl : "/videos/preview.mp4"} poster={generation?.status === "completed" ? undefined : "/posters/preview.jpg"} controls playsInline preload="metadata" /></div>
-      <p>{generation?.status === "completed" ? "Your generated video is ready to watch and download." : "Reference preview · Upload two photos to generate"}</p>
+      <div className="mi-preview-media"><video src={generation?.status === "completed" && generation.videoUrl ? generation.videoUrl : "/videos/preview.mp4"} poster={videoReady ? undefined : "/posters/preview.jpg"} controls playsInline preload="metadata" /></div>
+      <p>{videoReady ? "Your generated video is ready to watch and download." : "Reference preview · Upload two photos to generate"}</p>
     </div>
   </div>;
 }

@@ -11,6 +11,7 @@
 | 积分包与价格 | `content/pricing.ts`、`components/pricing-cards.tsx` | `lib/server/payments.ts` 的服务端订单校验、Creem 四个商品、Worker 商品环境变量、购买回跳 |
 | 视频选项及扣费 | `lib/video-options.ts`、`components/generator/duo-video-generator.tsx` | 测试中的六组时长/清晰度价格，服务端余额检查及商品说明 |
 | 音乐模型与表单 | `lib/contracts.ts`、`components/generator/song-generator.tsx`、`lib/server/` 的音乐请求映射 | APIMart 实际支持的版本、10 积分扣费、成功输出格式与媒体白名单 |
+| 视频安全审核 | `lib/server/jobs.ts`、`lib/server/seeapi.ts`、`lib/server/moderation-media.ts`、`migrations/0003_video_moderation.sql` | SeeAPI 凭据、32 帧采样与判定规则、固定请求体/幂等键、签名候选 URL、积分退回和持久清理；审核未明确通过前不得开放结果媒体 |
 | 域名与回调 | `wrangler.jsonc` 的 `APP_URL` 与 Worker 路由、`app/layout.tsx`、`app/sitemap.ts`、`app/robots.ts` | Google OAuth 回调、Creem 成功页/Webhook、R2 媒体 URL、Cloudflare DNS；当前使用根域及 `www` Worker 路由 |
 | 法务与客服信息 | `app/privacy-policy/page.tsx`、`app/terms-of-service/page.tsx`、页脚 | 正式运营主体、有效联系方式、数据保留及退款政策须由运营方确认 |
 | 支持邮箱 | 计划地址 `support@migosai.design`、域名 DNS 邮件记录 | 用户自行创建 Zoho 邮箱；完成后核验收发、转发及 MX/SPF/DKIM，再把地址写入网站联系方式 |
@@ -21,7 +22,7 @@
 2. 对目标环境应用 D1 迁移并核验绑定到正确数据库；R2 必须为私有用户媒体准备独立桶。
 3. Google 正式客户端、域名回调与真实登录已验证；更换域名或客户端后重新验证账户隔离与首次赠送积分。
 4. Creem 四个商品、API Key、正式网站 Checkout 创建和三个 Webhook 事件已验证存在；商家资料已提交，正在审核且当前无需补操作。提交后的真实付款页仍提示账户验证，待审核放行后以真实签名事件验证一次性入账；页面回跳仅显示等待，不能代替 Webhook。
-5. APIMart 的音乐和视频已分别在正式后端验证一次积分扣费、真实 cron、生产 R2 存储与授权读取，视频还验证了私有双图签名输入和素材审核。更换供应商/CDN 后重新核对 `APIMART_MEDIA_HOSTS`；仍需从浏览器 UI 复查提交、状态展示、结果播放和失败退款。
+5. APIMart 的音乐和视频已在先前部署的正式后端验证一次积分扣费、真实 cron、生产 R2 与授权读取，视频还验证了私有双图签名输入和素材审核。新版 SeeAPI 审核已部署，NSFW 独立快照 231 项测试及本地待审/人工/拦截 UI 验收通过，生产干净视频 32 帧审核和授权读取通过（`QA/production-moderation.json`）。更换供应商/CDN 后重新核对 `APIMART_MEDIA_HOSTS`，更换审核服务时必须保留私有候选、明确通过才开放媒体、拦截幂等退款和技术故障人工保留等规则；仍需从浏览器 UI 复查提交、状态展示、结果播放和失败退款，真实违规拦截尚未验证。
 6. 完成 `npm run typecheck`、`npm test`、`npm run cf:build`，在 Worker 预览与正式域名复查页面、账户、付款和生成。更新 `CLONE_REPORT.md` 与 `CLONE_AUDIT.md` 中对应状态。
 
 修改套餐价格或积分时，不要只改卡片文案。当前源站卡片的“约多少条视频”与生成器单次积分显示本就不一致，新的商品说明应以实际服务端报价为准并明确告知购买者。
