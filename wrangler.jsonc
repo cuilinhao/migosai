@@ -1,0 +1,64 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "migosai",
+  "main": "worker.ts",
+  "account_id": "8021c9867ba6881cf688f0a25af0d32f",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": [
+    "nodejs_compat",
+    "global_fetch_strictly_public"
+  ],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "migosai"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "migosai",
+      "database_id": "a49494ff-54a4-40eb-a7c2-d1e8ad7f487c",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "migosai-media"
+    }
+  ],
+  "triggers": {
+    "crons": [
+      "* * * * *"
+    ]
+  },
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "APP_URL": "https://migosai.design",
+    "CREEM_MODE": "production",
+    "CREEM_PRODUCT_STARTER": "prod_1SpvmYTKzgZJ9LIWoeFncu",
+    "CREEM_PRODUCT_CREATOR": "prod_2SyIzwEnUEaHEe8FlvoCjj",
+    "CREEM_PRODUCT_PRO": "prod_HEU2RWQKve3qUqn81kXkI",
+    "CREEM_PRODUCT_BUSINESS": "prod_5V4BbpqGG028sxd8P74Jq1",
+    "APIMART_MEDIA_HOSTS": "getapib.org"
+  },
+  "routes": [
+    {
+      "pattern": "migosai.design/*",
+      "zone_name": "migosai.design"
+    },
+    {
+      "pattern": "www.migosai.design/*",
+      "zone_name": "migosai.design"
+    }
+  ],
+  "workers_dev": true,
+  "preview_urls": false
+}

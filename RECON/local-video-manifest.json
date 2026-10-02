@@ -1,0 +1,66 @@
+[
+  {
+    "index": 1,
+    "source": "Showcases — Migos AI.mp4",
+    "video": "videos/showcase-01.mp4",
+    "poster": "posters/showcase-01.jpg",
+    "originalBytes": 15537819,
+    "webBytes": 1764088
+  },
+  {
+    "index": 2,
+    "source": "Showcases — Migos AI(1).mp4",
+    "video": "videos/showcase-02.mp4",
+    "poster": "posters/showcase-02.jpg",
+    "originalBytes": 17323805,
+    "webBytes": 2129715
+  },
+  {
+    "index": 3,
+    "source": "Showcases — Migos AI(2).mp4",
+    "video": "videos/showcase-03.mp4",
+    "poster": "posters/showcase-03.jpg",
+    "originalBytes": 17765064,
+    "webBytes": 1873172
+  },
+  {
+    "index": 4,
+    "source": "Showcases — Migos AI(3).mp4",
+    "video": "videos/showcase-04.mp4",
+    "poster": "posters/showcase-04.jpg",
+    "originalBytes": 4769275,
+    "webBytes": 820826
+  },
+  {
+    "index": 5,
+    "source": "Showcases — Migos AI(4).mp4",
+    "video": "videos/showcase-05.mp4",
+    "poster": "posters/showcase-05.jpg",
+    "originalBytes": 9197669,
+    "webBytes": 3619353
+  },
+  {
+    "index": 6,
+    "source": "Showcases — Migos AI(5).mp4",
+    "video": "videos/showcase-06.mp4",
+    "poster": "posters/showcase-06.jpg",
+    "originalBytes": 1075847,
+    "webBytes": 1075847
+  },
+  {
+    "index": 7,
+    "source": "Showcases — Migos AI(6).mp4",
+    "video": "videos/showcase-07.mp4",
+    "poster": "posters/showcase-07.jpg",
+    "originalBytes": 1059353,
+    "webBytes": 1059353
+  },
+  {
+    "index": 8,
+    "source": "Showcases — Migos AI(7).mp4",
+    "video": "videos/showcase-08.mp4",
+    "poster": "posters/showcase-08.jpg",
+    "originalBytes": 1094398,
+    "webBytes": 1094398
+  }
+]

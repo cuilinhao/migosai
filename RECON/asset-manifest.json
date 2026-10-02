@@ -4,7 +4,7 @@
   "assets": [
     {
       "filename": "Showcases — Migos AI(1).mp4",
-      "source_path": "/Users/pgy/Desktop/复刻站/Showcases — Migos AI(1).mp4",
+      "source_path": "../../Showcases — Migos AI(1).mp4",
       "sha256": "f30f13f51b92609e05eca9681cb31ac101edda3fddc1fdbdfe8d5cba4cd50467",
       "media": {
         "programs": [],
@@ -28,11 +28,13 @@
           "size": "17323805"
         }
       },
-      "usage": "User-provided showcase media; matching to original 01-08 order still pending"
+      "usage": "首页/Showcase第02例的网页视频与封面；用户原件未改动",
+      "web_asset": "/videos/showcase-02.mp4",
+      "poster_asset": "/posters/showcase-02.jpg"
     },
     {
       "filename": "Showcases — Migos AI(2).mp4",
-      "source_path": "/Users/pgy/Desktop/复刻站/Showcases — Migos AI(2).mp4",
+      "source_path": "../../Showcases — Migos AI(2).mp4",
       "sha256": "895c9e11b193f8d49c3d3fdab2d375a4c3e5c9d513454534b0eb166279db8776",
       "media": {
         "programs": [],
@@ -56,11 +58,13 @@
           "size": "17765064"
         }
       },
-      "usage": "User-provided showcase media; matching to original 01-08 order still pending"
+      "usage": "首页/Showcase第03例的网页视频与封面；用户原件未改动",
+      "web_asset": "/videos/showcase-03.mp4",
+      "poster_asset": "/posters/showcase-03.jpg"
     },
     {
       "filename": "Showcases — Migos AI(3).mp4",
-      "source_path": "/Users/pgy/Desktop/复刻站/Showcases — Migos AI(3).mp4",
+      "source_path": "../../Showcases — Migos AI(3).mp4",
       "sha256": "f0d67ff4741bae3fe1dab4fa3f74c996bbde0760455a0c88a1daecb31e348d0f",
       "media": {
         "programs": [],
@@ -84,11 +88,13 @@
           "size": "4769275"
         }
       },
-      "usage": "User-provided showcase media; matching to original 01-08 order still pending"
+      "usage": "首页/Showcase第04例的网页视频与封面；用户原件未改动",
+      "web_asset": "/videos/showcase-04.mp4",
+      "poster_asset": "/posters/showcase-04.jpg"
     },
     {
       "filename": "Showcases — Migos AI(4).mp4",
-      "source_path": "/Users/pgy/Desktop/复刻站/Showcases — Migos AI(4).mp4",
+      "source_path": "../../Showcases — Migos AI(4).mp4",
       "sha256": "576f9a256e000dd5caf4ab6145a55ecc7ef501385f8bc5e7c6db2da5869d3daa",
       "media": {
         "programs": [],
@@ -112,11 +118,13 @@
           "size": "9197669"
         }
       },
-      "usage": "User-provided showcase media; matching to original 01-08 order still pending"
+      "usage": "首页/Showcase第05例的网页视频与封面；用户原件未改动",
+      "web_asset": "/videos/showcase-05.mp4",
+      "poster_asset": "/posters/showcase-05.jpg"
     },
     {
       "filename": "Showcases — Migos AI(5).mp4",
-      "source_path": "/Users/pgy/Desktop/复刻站/Showcases — Migos AI(5).mp4",
+      "source_path": "../../Showcases — Migos AI(5).mp4",
       "sha256": "24fea91a236238d589b4a109f429cfc94cf5b2bfce537c6c56c43d823439fb4b",
       "media": {
         "programs": [],
@@ -140,11 +148,13 @@
           "size": "1075847"
         }
       },
-      "usage": "User-provided showcase media; matching to original 01-08 order still pending"
+      "usage": "首页/Showcase第06例的网页视频与封面；用户原件未改动",
+      "web_asset": "/videos/showcase-06.mp4",
+      "poster_asset": "/posters/showcase-06.jpg"
     },
     {
       "filename": "Showcases — Migos AI(6).mp4",
-      "source_path": "/Users/pgy/Desktop/复刻站/Showcases — Migos AI(6).mp4",
+      "source_path": "../../Showcases — Migos AI(6).mp4",
       "sha256": "895693dfff03918faf58b3776548acc45d70477d88de50c57203b24e750b0d4c",
       "media": {
         "programs": [],
@@ -168,11 +178,13 @@
           "size": "1059353"
         }
       },
-      "usage": "User-provided showcase media; matching to original 01-08 order still pending"
+      "usage": "首页/Showcase第07例的网页视频与封面；用户原件未改动",
+      "web_asset": "/videos/showcase-07.mp4",
+      "poster_asset": "/posters/showcase-07.jpg"
     },
     {
       "filename": "Showcases — Migos AI(7).mp4",
-      "source_path": "/Users/pgy/Desktop/复刻站/Showcases — Migos AI(7).mp4",
+      "source_path": "../../Showcases — Migos AI(7).mp4",
       "sha256": "405da4cca5827cc1b9a33c8dfc06f983a471f7106277436976c947efc7736079",
       "media": {
         "programs": [],
@@ -196,11 +208,13 @@
           "size": "1094398"
         }
       },
-      "usage": "User-provided showcase media; matching to original 01-08 order still pending"
+      "usage": "首页/Showcase第08例的网页视频与封面；用户原件未改动",
+      "web_asset": "/videos/showcase-08.mp4",
+      "poster_asset": "/posters/showcase-08.jpg"
     },
     {
       "filename": "Showcases — Migos AI.mp4",
-      "source_path": "/Users/pgy/Desktop/复刻站/Showcases — Migos AI.mp4",
+      "source_path": "../../Showcases — Migos AI.mp4",
       "sha256": "8d76b3bf85bbca1cb825cb55a52908ee7477fa824589f24dcd614a3b3f80a922",
       "media": {
         "programs": [],
@@ -224,11 +238,15 @@
           "size": "15537819"
         }
       },
-      "usage": "User-provided showcase media; matching to original 01-08 order still pending"
+      "usage": "首页/Showcase第01例的网页视频与封面；用户原件未改动",
+      "web_asset": "/videos/showcase-01.mp4",
+      "poster_asset": "/posters/showcase-01.jpg"
     }
   ],
   "separate_home_reference": {
     "observed_url": "https://img.migosai.com/video/model.mp4",
-    "local_match": "not yet verified"
+    "local_video": "/videos/preview.mp4",
+    "local_poster": "/posters/preview.jpg",
+    "note": "已配置独立本地预览片；未进行与源站model.mp4的逐帧像素等同性测量"
   }
 }

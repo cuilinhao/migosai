@@ -1,0 +1,2 @@
+export class ApiError extends Error { constructor(public status:number,message:string){super(message);} }
+export function api(handler:(request:Request,context:any)=>Promise<Response>){return async(request:Request,context:any)=>{try{return await handler(request,context);}catch(error){if(error instanceof ApiError)return Response.json({error:error.message},{status:error.status});console.error('API operation failed',error instanceof Error?error.name:'Unknown error');return Response.json({error:'The service is temporarily unavailable. Please try again later.'},{status:503});}};}

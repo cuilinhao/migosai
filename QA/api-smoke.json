@@ -1,0 +1,98 @@
+[
+  {
+    "check": "Authenticated account",
+    "status": 200,
+    "expected": 200,
+    "passed": true
+  },
+  {
+    "check": "Anonymous denied /api/generations",
+    "status": 401,
+    "expected": 401,
+    "passed": true
+  },
+  {
+    "check": "User list /api/generations",
+    "status": 200,
+    "expected": 200,
+    "passed": true
+  },
+  {
+    "check": "Anonymous denied /api/orders",
+    "status": 401,
+    "expected": 401,
+    "passed": true
+  },
+  {
+    "check": "User list /api/orders",
+    "status": 200,
+    "expected": 200,
+    "passed": true
+  },
+  {
+    "check": "Anonymous denied /api/credits",
+    "status": 401,
+    "expected": 401,
+    "passed": true
+  },
+  {
+    "check": "User list /api/credits",
+    "status": 200,
+    "expected": 200,
+    "passed": true
+  },
+  {
+    "check": "Cross-site upload denied",
+    "status": 403,
+    "expected": 403,
+    "passed": true
+  },
+  {
+    "check": "Foreign generation hidden",
+    "status": 404,
+    "expected": 404,
+    "passed": true
+  },
+  {
+    "check": "Valid private image upload",
+    "status": 201,
+    "expected": 201,
+    "passed": true
+  },
+  {
+    "check": "Owner media access",
+    "status": 200,
+    "expected": 200,
+    "passed": true
+  },
+  {
+    "check": "Other user media denied",
+    "status": 404,
+    "expected": 404,
+    "passed": true
+  },
+  {
+    "check": "Anonymous media denied",
+    "status": 404,
+    "expected": 404,
+    "passed": true
+  },
+  {
+    "check": "Valid owner byte range",
+    "status": 206,
+    "expected": 206,
+    "passed": true
+  },
+  {
+    "check": "Missing payment service fails clearly",
+    "status": 503,
+    "expected": 503,
+    "passed": true
+  },
+  {
+    "check": "Unconfigured webhook fails clearly",
+    "status": 503,
+    "expected": 503,
+    "passed": true
+  }
+]

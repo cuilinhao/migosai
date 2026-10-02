@@ -1,0 +1,50 @@
+{
+  "testedAt": "2026-10-02T11:39:37.574Z",
+  "environment": "production",
+  "transport": {
+    "host": "migosai.design",
+    "tlsVerified": true,
+    "connectToWww": true
+  },
+  "isolatedQaAccount": true,
+  "realGoogleUserUsed": false,
+  "music": {
+    "model": "v6-mini",
+    "instrumental": true,
+    "creationAttempts": 1,
+    "submissionHttpStatus": 202,
+    "initialStatus": "queued",
+    "cronObserved": true,
+    "pollEndpoint": "/api/generations",
+    "pollEndpointAdvancesJobs": false,
+    "observedStatus": "failed",
+    "observedStage": "terminal",
+    "progress": 45,
+    "completed": false,
+    "providerTaskIdAvailable": false,
+    "providerAcceptance": "not_sent",
+    "failure": "Root reproduced workerd TypeError: redirect=\"error\" is unsupported; the Request failed before network dispatch.",
+    "automaticResubmission": false
+  },
+  "credits": {
+    "initial": 10,
+    "afterSubmission": 0,
+    "qaGrant": 10,
+    "generationDebit": -10,
+    "refund": 10,
+    "balanceAfterConfirmedFailureRefund": 10
+  },
+  "productionR2": {
+    "verified": false,
+    "reason": "No completed result; no output keys recorded."
+  },
+  "cleanup": {
+    "qaSessionRevoked": true,
+    "revokedSessionMeUser": null,
+    "qaDataRetained": true,
+    "reason": "Failed isolated task and complete debit/refund ledger retained for audit; all QA sessions revoked.",
+    "outputObjectsToDelete": 0
+  },
+  "uiEndToEnd": false,
+  "passed": false
+}

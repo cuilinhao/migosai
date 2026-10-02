@@ -1,0 +1,14 @@
+PRAGMA foreign_keys=ON;
+CREATE TABLE users(id TEXT PRIMARY KEY,email TEXT NOT NULL UNIQUE,name TEXT NOT NULL,picture TEXT,google_sub TEXT UNIQUE,credits INTEGER NOT NULL DEFAULT 0 CHECK(credits>=0),created_at INTEGER NOT NULL DEFAULT(unixepoch()));
+CREATE TABLE sessions(token_hash TEXT PRIMARY KEY,user_id TEXT NOT NULL REFERENCES users(id),expires_at INTEGER NOT NULL);
+CREATE INDEX sessions_expiry ON sessions(expires_at);
+CREATE TABLE oauth_states(state_hash TEXT PRIMARY KEY,verifier TEXT NOT NULL,return_to TEXT NOT NULL,expires_at INTEGER NOT NULL);
+CREATE TABLE uploads(key TEXT PRIMARY KEY,user_id TEXT NOT NULL REFERENCES users(id),content_type TEXT NOT NULL,created_at INTEGER NOT NULL DEFAULT(unixepoch()));
+CREATE TABLE generations(id TEXT PRIMARY KEY,user_id TEXT NOT NULL REFERENCES users(id),idempotency_key TEXT NOT NULL,kind TEXT NOT NULL CHECK(kind IN('video','music')),payload TEXT NOT NULL,cost INTEGER NOT NULL CHECK(cost>0),status TEXT NOT NULL DEFAULT 'queued',stage TEXT NOT NULL DEFAULT 'new',provider_id TEXT,assets TEXT,result_keys TEXT,error TEXT,progress INTEGER NOT NULL DEFAULT 0,provider_cost REAL,lease_until INTEGER NOT NULL DEFAULT 0,next_poll INTEGER NOT NULL DEFAULT 0,created_at INTEGER NOT NULL DEFAULT(unixepoch()),UNIQUE(user_id,idempotency_key));
+CREATE INDEX generations_due ON generations(next_poll,lease_until);
+CREATE TABLE credit_ledger(id TEXT PRIMARY KEY,user_id TEXT NOT NULL REFERENCES users(id),amount INTEGER NOT NULL,kind TEXT NOT NULL,reference_id TEXT NOT NULL,created_at INTEGER NOT NULL DEFAULT(unixepoch()),UNIQUE(kind,reference_id));
+CREATE TRIGGER ledger_balance BEFORE INSERT ON credit_ledger WHEN NOT EXISTS(SELECT 1 FROM credit_ledger WHERE kind=NEW.kind AND reference_id=NEW.reference_id) BEGIN SELECT (CASE WHEN (SELECT credits FROM users WHERE id=NEW.user_id)+NEW.amount<0 THEN RAISE(ABORT,'insufficient_credits') END); END;
+CREATE TRIGGER ledger_apply AFTER INSERT ON credit_ledger BEGIN UPDATE users SET credits=credits+NEW.amount WHERE id=NEW.user_id; END;
+CREATE TRIGGER generation_charge AFTER INSERT ON generations BEGIN INSERT INTO credit_ledger(id,user_id,amount,kind,reference_id) VALUES(NEW.id||':debit',NEW.user_id,-NEW.cost,'generation',NEW.id); END;
+CREATE TABLE orders(id TEXT PRIMARY KEY,user_id TEXT NOT NULL REFERENCES users(id),pack_id TEXT NOT NULL,product_id TEXT NOT NULL,amount INTEGER NOT NULL,currency TEXT NOT NULL DEFAULT 'USD',credits INTEGER NOT NULL,checkout_id TEXT UNIQUE,provider_order_id TEXT UNIQUE,status TEXT NOT NULL DEFAULT 'pending',created_at INTEGER NOT NULL DEFAULT(unixepoch()));
+CREATE TABLE webhook_events(id TEXT PRIMARY KEY,event_type TEXT NOT NULL,order_id TEXT,review_required INTEGER NOT NULL DEFAULT 0,note TEXT,created_at INTEGER NOT NULL DEFAULT(unixepoch()));

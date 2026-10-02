@@ -1,0 +1,74 @@
+[
+  {
+    "page": "video-generator",
+    "scrollWidth": 375,
+    "title": "Generate Video | Migos AI",
+    "width": 390
+  },
+  {
+    "page": "my-videos",
+    "scrollWidth": 390,
+    "title": "My Videos | Migos AI",
+    "width": 390
+  },
+  {
+    "page": "my-orders",
+    "scrollWidth": 390,
+    "title": "My Orders | Migos AI",
+    "width": 390
+  },
+  {
+    "page": "my-credits",
+    "scrollWidth": 390,
+    "title": "My Credits | Migos AI",
+    "width": 390
+  },
+  {
+    "page": "video-generator",
+    "scrollWidth": 753,
+    "title": "Generate Video | Migos AI",
+    "width": 768
+  },
+  {
+    "page": "my-videos",
+    "scrollWidth": 768,
+    "title": "My Videos | Migos AI",
+    "width": 768
+  },
+  {
+    "page": "my-orders",
+    "scrollWidth": 768,
+    "title": "My Orders | Migos AI",
+    "width": 768
+  },
+  {
+    "page": "my-credits",
+    "scrollWidth": 768,
+    "title": "My Credits | Migos AI",
+    "width": 768
+  },
+  {
+    "page": "video-generator",
+    "scrollWidth": 1440,
+    "title": "Generate Video | Migos AI",
+    "width": 1440
+  },
+  {
+    "page": "my-videos",
+    "scrollWidth": 1440,
+    "title": "My Videos | Migos AI",
+    "width": 1440
+  },
+  {
+    "page": "my-orders",
+    "scrollWidth": 1440,
+    "title": "My Orders | Migos AI",
+    "width": 1440
+  },
+  {
+    "page": "my-credits",
+    "scrollWidth": 1440,
+    "title": "My Credits | Migos AI",
+    "width": 1440
+  }
+]

@@ -1,0 +1,9 @@
+import { getCloudflareContext } from '@opennextjs/cloudflare';
+import { ApiError } from './errors';
+export type Env = Partial<CloudflareEnv>;
+export async function getEnv():Promise<Env>{let bindings:Env={};try{bindings=(await getCloudflareContext({async:true})).env;}catch{/* Plain Next preview can render public pages without Cloudflare bindings. */}return {...process.env,...bindings} as Env;}
+export function database(env:Env):D1Database{if(!env.DB)throw new ApiError(503,'Database service is not configured.');return env.DB;}
+export function media(env:Env):R2Bucket{if(!env.MEDIA)throw new ApiError(503,'Media storage is not configured.');return env.MEDIA;}
+export function appOrigin(env:Env):string{if(!env.APP_URL)throw new ApiError(503,'Application URL is not configured.');const u=new URL(env.APP_URL);if(u.protocol!=='https:'&&!(u.protocol==='http:'&&['127.0.0.1','localhost'].includes(u.hostname)))throw new ApiError(503,'Application URL must use HTTPS.');return u.origin;}
+export function authConfigured(env:Env){return !!(env.DB&&env.APP_URL&&env.GOOGLE_CLIENT_ID&&env.GOOGLE_CLIENT_SECRET);}
+export function providerConfigured(env:Env){if(!env.APIMART_API_KEY||!env.APIMART_MEDIA_HOSTS||!env.MEDIA_SIGNING_SECRET||env.MEDIA_SIGNING_SECRET.length<32)throw new ApiError(503,'AI generation is not configured. Please try again later.');database(env);media(env);appOrigin(env);}
