@@ -1,0 +1,410 @@
+{
+  "containers": [
+    {
+      "class": "fixed inset-x-0 top-0 z-50 dark transition-colors duration-300",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "HEADER",
+      "width": 1425
+    },
+    {
+      "class": "",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "terms-of-service.mdx",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "py-16 bg-black text-white dark border-t border-white/5",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "footer",
+      "maxWidth": "none",
+      "padding": "64px 0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "FOOTER",
+      "width": 1216
+    },
+    {
+      "class": "",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "SECTION",
+      "width": 1425
+    }
+  ],
+  "headings": [
+    {
+      "class": "text-foreground mx-auto mb-4 w-full text-xl font-bold md:max-w-4xl md:text-4xl",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "36px",
+      "fontWeight": "700",
+      "lineHeight": "40px",
+      "tag": "H1",
+      "text": "Terms of Service",
+      "width": 832,
+      "x": 296.5,
+      "y": 192
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "Introduction and Acceptance of Terms",
+      "width": 766,
+      "x": 329.5,
+      "y": 393
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "Use of the Service",
+      "width": 766,
+      "x": 329.5,
+      "y": 568
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "User Accounts and Registration",
+      "width": 766,
+      "x": 329.5,
+      "y": 717
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "AI Generation Inputs and Outputs",
+      "width": 766,
+      "x": 329.5,
+      "y": 944
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "Content and Intellectual Property Rights",
+      "width": 766,
+      "x": 329.5,
+      "y": 1187
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "Prohibited Activities",
+      "width": 766,
+      "x": 329.5,
+      "y": 1544
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "Privacy and Data Collection",
+      "width": 766,
+      "x": 329.5,
+      "y": 1945
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "Pricing, Credits, and Payments",
+      "width": 766,
+      "x": 329.5,
+      "y": 2388
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "Service Availability",
+      "width": 766,
+      "x": 329.5,
+      "y": 2715
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "Termination",
+      "width": 766,
+      "x": 329.5,
+      "y": 2864
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "Disclaimer of Warranties",
+      "width": 766,
+      "x": 329.5,
+      "y": 3013
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "Limitation of Liability",
+      "width": 766,
+      "x": 329.5,
+      "y": 3188
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "Indemnification",
+      "width": 766,
+      "x": 329.5,
+      "y": 3337
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "Governing Law and Dispute Resolution",
+      "width": 766,
+      "x": 329.5,
+      "y": 3512
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "Changes to These Terms",
+      "width": 766,
+      "x": 329.5,
+      "y": 3661
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "Contact Information",
+      "width": 766,
+      "x": 329.5,
+      "y": 3810
+    }
+  ],
+  "links": [
+    {
+      "href": "/",
+      "text": "Migos AI"
+    },
+    {
+      "href": "/#how-it-works",
+      "text": "How It Works"
+    },
+    {
+      "href": "/#faq",
+      "text": "FAQ"
+    },
+    {
+      "href": "/pricing",
+      "text": "Pricing"
+    },
+    {
+      "href": "/showcases",
+      "text": "Showcase"
+    },
+    {
+      "href": "/ai-rap-song-generator",
+      "text": "AI Rap Song Generator"
+    },
+    {
+      "href": "#introduction-and-acceptance-of-terms",
+      "text": "Introduction and Acceptance of Terms"
+    },
+    {
+      "href": "https://migosai.com",
+      "text": "https://migosai.com"
+    },
+    {
+      "href": "#use-of-the-service",
+      "text": "Use of the Service"
+    },
+    {
+      "href": "#user-accounts-and-registration",
+      "text": "User Accounts and Registration"
+    },
+    {
+      "href": "#ai-generation-inputs-and-outputs",
+      "text": "AI Generation Inputs and Outputs"
+    },
+    {
+      "href": "#content-and-intellectual-property-rights",
+      "text": "Content and Intellectual Property Rights"
+    },
+    {
+      "href": "#prohibited-activities",
+      "text": "Prohibited Activities"
+    },
+    {
+      "href": "#privacy-and-data-collection",
+      "text": "Privacy and Data Collection"
+    },
+    {
+      "href": "https://migosai.com/privacy-policy",
+      "text": "Privacy Policy"
+    },
+    {
+      "href": "#pricing-credits-and-payments",
+      "text": "Pricing, Credits, and Payments"
+    },
+    {
+      "href": "#service-availability",
+      "text": "Service Availability"
+    },
+    {
+      "href": "#termination",
+      "text": "Termination"
+    },
+    {
+      "href": "#disclaimer-of-warranties",
+      "text": "Disclaimer of Warranties"
+    },
+    {
+      "href": "#limitation-of-liability",
+      "text": "Limitation of Liability"
+    },
+    {
+      "href": "#indemnification",
+      "text": "Indemnification"
+    },
+    {
+      "href": "#governing-law-and-dispute-resolution",
+      "text": "Governing Law and Dispute Resolution"
+    },
+    {
+      "href": "#changes-to-these-terms",
+      "text": "Changes to These Terms"
+    },
+    {
+      "href": "#contact-information",
+      "text": "Contact Information"
+    },
+    {
+      "href": "mailto:support@migosai.com",
+      "text": "support@migosai.com"
+    },
+    {
+      "href": "#",
+      "text": ""
+    },
+    {
+      "href": "#",
+      "text": ""
+    },
+    {
+      "href": "#",
+      "text": ""
+    },
+    {
+      "href": "/#features",
+      "text": "Features"
+    },
+    {
+      "href": "/ai-rap-song-generator",
+      "text": "AI Rap Song Generator"
+    },
+    {
+      "href": "/#how-it-works",
+      "text": "How It Works"
+    },
+    {
+      "href": "/pricing",
+      "text": "Pricing"
+    },
+    {
+      "href": "/#faq",
+      "text": "FAQ"
+    },
+    {
+      "href": "/privacy-policy",
+      "text": "Privacy Policy"
+    },
+    {
+      "href": "/terms-of-service",
+      "text": "Terms of Service"
+    }
+  ],
+  "media": [],
+  "title": "Terms of Service",
+  "url": "https://migosai.com/terms-of-service"
+}

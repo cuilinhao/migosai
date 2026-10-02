@@ -1,0 +1,34 @@
+{
+  "default_mode": {
+    "fields": [
+      "Prompt"
+    ],
+    "switches": [
+      "Custom Mode",
+      "Instrumental"
+    ]
+  },
+  "custom_mode": {
+    "fields": [
+      "Title",
+      "Style of Music",
+      "Lyrics"
+    ],
+    "style_character_limit": 1000
+  },
+  "instrumental_custom_mode": {
+    "fields": [
+      "Title",
+      "Style of Music"
+    ],
+    "lyrics_hidden": true
+  },
+  "models": [
+    "Suno V5",
+    "Suno V4.5+",
+    "Suno V4.5",
+    "Suno V4",
+    "Suno V3.5"
+  ],
+  "displayed_cost": 10
+}

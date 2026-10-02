@@ -1,0 +1,266 @@
+{
+  "containers": [
+    {
+      "class": "fixed inset-x-0 top-0 z-50 dark transition-colors duration-300",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "HEADER",
+      "width": 1425
+    },
+    {
+      "class": "",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "privacy-policy.mdx",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "py-16 bg-black text-white dark border-t border-white/5",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "footer",
+      "maxWidth": "none",
+      "padding": "64px 0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "FOOTER",
+      "width": 1216
+    },
+    {
+      "class": "",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "SECTION",
+      "width": 1425
+    }
+  ],
+  "headings": [
+    {
+      "class": "text-foreground mx-auto mb-4 w-full text-xl font-bold md:max-w-4xl md:text-4xl",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "36px",
+      "fontWeight": "700",
+      "lineHeight": "40px",
+      "tag": "H1",
+      "text": "Privacy Policy",
+      "width": 832,
+      "x": 296.5,
+      "y": 192
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "Introduction",
+      "width": 766,
+      "x": 329.5,
+      "y": 393
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "Information Collection and Use",
+      "width": 766,
+      "x": 329.5,
+      "y": 568
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "Data Storage and Security",
+      "width": 766,
+      "x": 329.5,
+      "y": 1637
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "Information Sharing and Disclosure",
+      "width": 766,
+      "x": 329.5,
+      "y": 1838
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "User Content",
+      "width": 766,
+      "x": 329.5,
+      "y": 2175
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "Changes to This Policy",
+      "width": 766,
+      "x": 329.5,
+      "y": 2350
+    },
+    {
+      "class": "flex scroll-m-28 flex-row items-center gap-2",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "lineHeight": "39px",
+      "tag": "H2",
+      "text": "Contact Us",
+      "width": 766,
+      "x": 329.5,
+      "y": 2499
+    }
+  ],
+  "links": [
+    {
+      "href": "/",
+      "text": "Migos AI"
+    },
+    {
+      "href": "/#how-it-works",
+      "text": "How It Works"
+    },
+    {
+      "href": "/#faq",
+      "text": "FAQ"
+    },
+    {
+      "href": "/pricing",
+      "text": "Pricing"
+    },
+    {
+      "href": "/showcases",
+      "text": "Showcase"
+    },
+    {
+      "href": "/ai-rap-song-generator",
+      "text": "AI Rap Song Generator"
+    },
+    {
+      "href": "#introduction",
+      "text": "Introduction"
+    },
+    {
+      "href": "https://migosai.com",
+      "text": "https://migosai.com"
+    },
+    {
+      "href": "#information-collection-and-use",
+      "text": "Information Collection and Use"
+    },
+    {
+      "href": "#data-storage-and-security",
+      "text": "Data Storage and Security"
+    },
+    {
+      "href": "#information-sharing-and-disclosure",
+      "text": "Information Sharing and Disclosure"
+    },
+    {
+      "href": "#user-content",
+      "text": "User Content"
+    },
+    {
+      "href": "#changes-to-this-policy",
+      "text": "Changes to This Policy"
+    },
+    {
+      "href": "#contact-us",
+      "text": "Contact Us"
+    },
+    {
+      "href": "https://migosai.com",
+      "text": "Migos AI"
+    },
+    {
+      "href": "mailto:support@migosai.com",
+      "text": "support@migosai.com"
+    },
+    {
+      "href": "#",
+      "text": ""
+    },
+    {
+      "href": "#",
+      "text": ""
+    },
+    {
+      "href": "#",
+      "text": ""
+    },
+    {
+      "href": "/#features",
+      "text": "Features"
+    },
+    {
+      "href": "/ai-rap-song-generator",
+      "text": "AI Rap Song Generator"
+    },
+    {
+      "href": "/#how-it-works",
+      "text": "How It Works"
+    },
+    {
+      "href": "/pricing",
+      "text": "Pricing"
+    },
+    {
+      "href": "/#faq",
+      "text": "FAQ"
+    },
+    {
+      "href": "/privacy-policy",
+      "text": "Privacy Policy"
+    },
+    {
+      "href": "/terms-of-service",
+      "text": "Terms of Service"
+    }
+  ],
+  "media": [],
+  "title": "Privacy Policy",
+  "url": "https://migosai.com/privacy-policy"
+}

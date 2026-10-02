@@ -1,0 +1,25 @@
+{
+  "faqControls": 0,
+  "heroSpans": [
+    {
+      "backgroundImage": "linear-gradient(to right in oklab, rgb(156, 64, 255) 0%, rgb(143, 223, 255) 50%, rgb(156, 64, 255) 100%)",
+      "class": "bg-linear-to-r from-[#9c40ff] via-[#8fdfff] to-[#9c40ff] bg-clip-text text-transparent",
+      "color": "rgba(0, 0, 0, 0)",
+      "text": "Migos AI"
+    }
+  ],
+  "layout": [
+    {
+      "background": "rgb(12, 12, 12) none repeat scroll 0% 0% / auto padding-box border-box",
+      "border": "1px solid oklab(0.999994 0.0000455678 0.0000200868 / 0.1)",
+      "borderRadius": "12px",
+      "class": "flex flex-col gap-6 rounded-xl border py-6 overflow-hidden border-white/10 bg-[#0c0c0c] text-white shadow-none dark:bg-[#0c0c0c]"
+    },
+    {
+      "background": "rgb(44, 40, 37) none repeat scroll 0% 0% / auto padding-box border-box",
+      "border": "1px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "12px",
+      "class": "bg-card text-card-foreground gap-6 rounded-xl border py-6 shadow-sm flex h-full flex-col"
+    }
+  ]
+}

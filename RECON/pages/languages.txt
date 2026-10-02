@@ -1,0 +1,2 @@
+Observed language menu: English only.
+Source: Chrome rendered header menu, 2026-10-02.

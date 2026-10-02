@@ -1,0 +1,460 @@
+{
+  "containers": [
+    {
+      "class": "fixed inset-x-0 top-0 z-50 dark transition-colors duration-300",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "HEADER",
+      "width": 1425
+    },
+    {
+      "class": "relative pt-24 dark",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "hero",
+      "maxWidth": "none",
+      "padding": "96px 0px 0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "scroll-mt-20",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "generator",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "py-16 md:py-24",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "create",
+      "maxWidth": "none",
+      "padding": "96px 0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "bg-black py-20 text-white dark",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "how-it-works",
+      "maxWidth": "none",
+      "padding": "80px 0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "py-16 md:py-24",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "features",
+      "maxWidth": "none",
+      "padding": "96px 0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "py-16 relative overflow-hidden",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "faq",
+      "maxWidth": "none",
+      "padding": "64px 0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "relative py-16 overflow-hidden bg-black text-white dark",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "cta",
+      "maxWidth": "none",
+      "padding": "64px 0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "py-16 bg-black text-white dark border-t border-white/5",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "footer",
+      "maxWidth": "none",
+      "padding": "64px 0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "FOOTER",
+      "width": 1216
+    },
+    {
+      "class": "",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "SECTION",
+      "width": 1425
+    }
+  ],
+  "headings": [
+    {
+      "class": "mx-auto mb-3 mt-4 max-w-6xl text-balance text-4xl font-bold !text-white lg:mb-7 lg:text-7xl",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "72px",
+      "fontWeight": "700",
+      "lineHeight": "72px",
+      "tag": "H1",
+      "text": "AI Rap Song Generator",
+      "width": 1152,
+      "x": 136.5,
+      "y": 158
+    },
+    {
+      "class": "sr-only",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "lineHeight": "24px",
+      "tag": "H2",
+      "text": "AI Rap Song Generator",
+      "width": 1,
+      "x": -1,
+      "y": 437
+    },
+    {
+      "class": "mt-4 text-pretty text-3xl font-bold leading-tight text-white lg:text-5xl",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "48px",
+      "fontWeight": "700",
+      "lineHeight": "60px",
+      "tag": "H2",
+      "text": "How to Create Rap Songs with AI",
+      "width": 768,
+      "x": 328.5,
+      "y": 1156
+    },
+    {
+      "class": "mt-6 text-lg font-bold leading-snug text-white",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "lineHeight": "24.75px",
+      "tag": "H3",
+      "text": "Describe your idea or paste lyrics",
+      "width": 342,
+      "x": 129.5,
+      "y": 1452
+    },
+    {
+      "class": "mt-6 text-lg font-bold leading-snug text-white",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "lineHeight": "24.75px",
+      "tag": "H3",
+      "text": "Generate a complete rap song",
+      "width": 342,
+      "x": 541.5,
+      "y": 1452
+    },
+    {
+      "class": "mt-6 text-lg font-bold leading-snug text-white",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "lineHeight": "24.75px",
+      "tag": "H3",
+      "text": "Listen, download, and share",
+      "width": 342,
+      "x": 953.5,
+      "y": 1452
+    },
+    {
+      "class": "text-foreground mb-4 text-3xl font-semibold tracking-tight md:text-4xl",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "36px",
+      "fontWeight": "600",
+      "lineHeight": "40px",
+      "tag": "H2",
+      "text": "Advanced Features of AI Rap Song Generator",
+      "width": 896,
+      "x": 264.5,
+      "y": 1788
+    },
+    {
+      "class": "text-sm font-medium",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "lineHeight": "20px",
+      "tag": "H3",
+      "text": "Text to Rap",
+      "width": 73.28125,
+      "x": 185.5,
+      "y": 1983
+    },
+    {
+      "class": "text-sm font-medium",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "lineHeight": "20px",
+      "tag": "H3",
+      "text": "Lyrics to Music",
+      "width": 96.7734375,
+      "x": 590.1640625,
+      "y": 1983
+    },
+    {
+      "class": "text-sm font-medium",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "lineHeight": "20px",
+      "tag": "H3",
+      "text": "Vocal + Instrumental Modes",
+      "width": 183.515625,
+      "x": 994.828125,
+      "y": 1983
+    },
+    {
+      "class": "text-sm font-medium",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "lineHeight": "20px",
+      "tag": "H3",
+      "text": "Studio-Ready Audio",
+      "width": 135.890625,
+      "x": 185.5,
+      "y": 2196
+    },
+    {
+      "class": "text-sm font-medium",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "lineHeight": "20px",
+      "tag": "H3",
+      "text": "Multiple Suno Models",
+      "width": 142.3359375,
+      "x": 590.1640625,
+      "y": 2196
+    },
+    {
+      "class": "text-sm font-medium",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "lineHeight": "20px",
+      "tag": "H3",
+      "text": "Download & Keep Creating",
+      "width": 180.6796875,
+      "x": 994.828125,
+      "y": 2196
+    },
+    {
+      "class": "mt-4 text-4xl font-semibold",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "36px",
+      "fontWeight": "600",
+      "lineHeight": "40px",
+      "tag": "H2",
+      "text": "FAQs about AI Rap Song Generator",
+      "width": 1216,
+      "x": 104.5,
+      "y": 2486
+    },
+    {
+      "class": "font-semibold",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "tag": "H3",
+      "text": "What is the AI Rap Song Generator?",
+      "width": 270.40625,
+      "x": 144.5,
+      "y": 2630
+    },
+    {
+      "class": "font-semibold",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "tag": "H3",
+      "text": "Do I need music experience?",
+      "width": 219.4140625,
+      "x": 776.5,
+      "y": 2630
+    },
+    {
+      "class": "font-semibold",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "tag": "H3",
+      "text": "Can I use my own lyrics?",
+      "width": 183.0625,
+      "x": 144.5,
+      "y": 2782
+    },
+    {
+      "class": "font-semibold",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "tag": "H3",
+      "text": "What styles of rap are supported?",
+      "width": 259.09375,
+      "x": 776.5,
+      "y": 2782
+    },
+    {
+      "class": "font-semibold",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "tag": "H3",
+      "text": "Can I generate instrumental beats only?",
+      "width": 302.1484375,
+      "x": 144.5,
+      "y": 2910
+    },
+    {
+      "class": "font-semibold",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "tag": "H3",
+      "text": "How long does generation take?",
+      "width": 248.078125,
+      "x": 776.5,
+      "y": 2910
+    },
+    {
+      "class": "mb-4 text-balance text-3xl font-semibold md:text-5xl text-white",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "48px",
+      "fontWeight": "600",
+      "lineHeight": "48px",
+      "tag": "H2",
+      "text": "Start Creating AI Rap Songs Today",
+      "width": 768,
+      "x": 328.5,
+      "y": 3182
+    }
+  ],
+  "links": [
+    {
+      "href": "/",
+      "text": "Migos AI"
+    },
+    {
+      "href": "/#how-it-works",
+      "text": "How It Works"
+    },
+    {
+      "href": "/#faq",
+      "text": "FAQ"
+    },
+    {
+      "href": "/pricing",
+      "text": "Pricing"
+    },
+    {
+      "href": "/showcases",
+      "text": "Showcase"
+    },
+    {
+      "href": "/ai-rap-song-generator",
+      "text": "AI Rap Song Generator"
+    },
+    {
+      "href": "#generator",
+      "text": "NEWGenerate unlimited AI rap songs — try it free"
+    },
+    {
+      "href": "/pricing",
+      "text": "Buy Credits"
+    },
+    {
+      "href": "#generator",
+      "text": "Try AI Rap Song Generator"
+    },
+    {
+      "href": "#",
+      "text": ""
+    },
+    {
+      "href": "#",
+      "text": ""
+    },
+    {
+      "href": "#",
+      "text": ""
+    },
+    {
+      "href": "/#features",
+      "text": "Features"
+    },
+    {
+      "href": "/ai-rap-song-generator",
+      "text": "AI Rap Song Generator"
+    },
+    {
+      "href": "/#how-it-works",
+      "text": "How It Works"
+    },
+    {
+      "href": "/pricing",
+      "text": "Pricing"
+    },
+    {
+      "href": "/#faq",
+      "text": "FAQ"
+    },
+    {
+      "href": "/privacy-policy",
+      "text": "Privacy Policy"
+    },
+    {
+      "href": "/terms-of-service",
+      "text": "Terms of Service"
+    }
+  ],
+  "media": [],
+  "title": "AI Rap Song Generator | Migos AI",
+  "url": "https://migosai.com/ai-rap-song-generator"
+}

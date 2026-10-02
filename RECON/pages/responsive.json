@@ -1,0 +1,122 @@
+[
+  {
+    "generatorGrids": [
+      {
+        "class": "grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]",
+        "columns": "560px 560px",
+        "gap": "32px"
+      },
+      {
+        "class": "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 space-y-2 pb-4",
+        "columns": "510px",
+        "gap": "6px"
+      },
+      {
+        "class": "grid grid-cols-1 gap-4 sm:grid-cols-2",
+        "columns": "247px 247px",
+        "gap": "16px"
+      },
+      {
+        "class": "grid grid-cols-1 gap-4 sm:grid-cols-3",
+        "columns": "159.328px 159.336px 159.328px",
+        "gap": "16px"
+      },
+      {
+        "class": "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 pb-4",
+        "columns": "510px",
+        "gap": "6px"
+      }
+    ],
+    "headerMenuButton": [
+      {
+        "display": "none",
+        "label": "Open Menu"
+      }
+    ],
+    "heroFontSize": "72px",
+    "viewport": {
+      "height": 1000,
+      "width": 1440
+    }
+  },
+  {
+    "generatorGrids": [
+      {
+        "class": "grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]",
+        "columns": "625px",
+        "gap": "32px"
+      },
+      {
+        "class": "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 space-y-2 pb-4",
+        "columns": "575px",
+        "gap": "6px"
+      },
+      {
+        "class": "grid grid-cols-1 gap-4 sm:grid-cols-2",
+        "columns": "279.5px 279.5px",
+        "gap": "16px"
+      },
+      {
+        "class": "grid grid-cols-1 gap-4 sm:grid-cols-3",
+        "columns": "181px 181px 181px",
+        "gap": "16px"
+      },
+      {
+        "class": "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 pb-4",
+        "columns": "575px",
+        "gap": "6px"
+      }
+    ],
+    "headerMenuButton": [
+      {
+        "display": "block",
+        "label": "Open Menu"
+      }
+    ],
+    "heroFontSize": "36px",
+    "viewport": {
+      "height": 1024,
+      "width": 768
+    }
+  },
+  {
+    "generatorGrids": [
+      {
+        "class": "grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]",
+        "columns": "311px",
+        "gap": "32px"
+      },
+      {
+        "class": "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 space-y-2 pb-4",
+        "columns": "261px",
+        "gap": "6px"
+      },
+      {
+        "class": "grid grid-cols-1 gap-4 sm:grid-cols-2",
+        "columns": "261px",
+        "gap": "16px"
+      },
+      {
+        "class": "grid grid-cols-1 gap-4 sm:grid-cols-3",
+        "columns": "261px",
+        "gap": "16px"
+      },
+      {
+        "class": "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 pb-4",
+        "columns": "261px",
+        "gap": "6px"
+      }
+    ],
+    "headerMenuButton": [
+      {
+        "display": "block",
+        "label": "Open Menu"
+      }
+    ],
+    "heroFontSize": "36px",
+    "viewport": {
+      "height": 844,
+      "width": 390
+    }
+  }
+]

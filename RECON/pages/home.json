@@ -1,0 +1,614 @@
+{
+  "containers": [
+    {
+      "class": "fixed inset-x-0 top-0 z-50 dark transition-colors duration-300",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "HEADER",
+      "width": 1425
+    },
+    {
+      "class": "relative pt-24 dark",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "hero",
+      "maxWidth": "none",
+      "padding": "96px 0px 0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "container mx-auto px-4 pt-8 pb-24",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "generator",
+      "maxWidth": "1280px",
+      "padding": "32px 32px 96px",
+      "tag": "SECTION",
+      "width": 1280
+    },
+    {
+      "class": "py-16 md:py-24",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "",
+      "maxWidth": "none",
+      "padding": "96px 0px",
+      "tag": "SECTION",
+      "width": 1216
+    },
+    {
+      "class": "pt-16 pb-16 space-y-16 bg-black text-white dark",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "showcase",
+      "maxWidth": "none",
+      "padding": "64px 0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "bg-black py-20 text-white dark",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "how-it-works",
+      "maxWidth": "none",
+      "padding": "80px 0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "py-16 md:py-24",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "features",
+      "maxWidth": "none",
+      "padding": "96px 0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "py-16 relative overflow-hidden bg-black text-white dark",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "faq",
+      "maxWidth": "none",
+      "padding": "64px 0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "bg-black py-20 text-white dark",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "pricing",
+      "maxWidth": "none",
+      "padding": "80px 0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "relative py-16 overflow-hidden bg-black text-white dark",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "cta",
+      "maxWidth": "none",
+      "padding": "64px 0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "py-16 bg-black text-white dark border-t border-white/5",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "footer",
+      "maxWidth": "none",
+      "padding": "64px 0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "FOOTER",
+      "width": 1216
+    },
+    {
+      "class": "",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "SECTION",
+      "width": 1425
+    }
+  ],
+  "headings": [
+    {
+      "class": "mx-auto mb-3 mt-4 max-w-6xl text-balance text-4xl font-bold !text-white lg:mb-7 lg:text-7xl",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "72px",
+      "fontWeight": "700",
+      "lineHeight": "72px",
+      "tag": "H1",
+      "text": "Migos AI Hotel Lobby Video Generator",
+      "width": 1152,
+      "x": 136.5,
+      "y": 158
+    },
+    {
+      "class": "sr-only",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "lineHeight": "24px",
+      "tag": "H2",
+      "text": "Migos AI Video Generator",
+      "width": 1,
+      "x": 160.5,
+      "y": 594
+    },
+    {
+      "class": "text-pretty text-3xl font-bold leading-tight text-white lg:text-4xl xl:text-[2.75rem]",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "44px",
+      "fontWeight": "700",
+      "lineHeight": "55px",
+      "tag": "H2",
+      "text": "What is Migos AI Video Trend",
+      "width": 462.078125,
+      "x": 104.5,
+      "y": 1595
+    },
+    {
+      "class": "mb-6 text-pretty text-2xl font-bold lg:text-3xl",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "30px",
+      "fontWeight": "700",
+      "lineHeight": "36px",
+      "tag": "H3",
+      "text": "Migos AI Hotel Lobby Video Showcase",
+      "width": 1216,
+      "x": 104.5,
+      "y": 2090.125
+    },
+    {
+      "class": "mt-4 text-pretty text-3xl font-bold leading-tight text-white lg:text-5xl",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "48px",
+      "fontWeight": "700",
+      "lineHeight": "60px",
+      "tag": "H2",
+      "text": "How to Make a Hotel Lobby AI Video in 3 Simple Steps",
+      "width": 768,
+      "x": 328.5,
+      "y": 3022.5625
+    },
+    {
+      "class": "mt-6 text-lg font-bold leading-snug text-white",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "lineHeight": "24.75px",
+      "tag": "H3",
+      "text": "Upload Two Clear Photos",
+      "width": 342,
+      "x": 129.5,
+      "y": 3378.5625
+    },
+    {
+      "class": "mt-6 text-lg font-bold leading-snug text-white",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "lineHeight": "24.75px",
+      "tag": "H3",
+      "text": "Press the button",
+      "width": 342,
+      "x": 541.5,
+      "y": 3378.5625
+    },
+    {
+      "class": "mt-6 text-lg font-bold leading-snug text-white",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "lineHeight": "24.75px",
+      "tag": "H3",
+      "text": "Downland & Share",
+      "width": 342,
+      "x": 953.5,
+      "y": 3378.5625
+    },
+    {
+      "class": "text-foreground mb-4 text-3xl font-semibold tracking-tight md:text-4xl",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "36px",
+      "fontWeight": "600",
+      "lineHeight": "40px",
+      "tag": "H2",
+      "text": "Key Features for a Migos AI Video Maker",
+      "width": 896,
+      "x": 264.5,
+      "y": 3691.8125
+    },
+    {
+      "class": "text-sm font-medium",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "lineHeight": "20px",
+      "tag": "H3",
+      "text": "Cast Two Subjects From Separate Photos",
+      "width": 274.625,
+      "x": 185.5,
+      "y": 3910.8125
+    },
+    {
+      "class": "text-sm font-medium",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "lineHeight": "20px",
+      "tag": "H3",
+      "text": "Keep the Full Duo in View",
+      "width": 164.515625,
+      "x": 590.1640625,
+      "y": 3910.8125
+    },
+    {
+      "class": "text-sm font-medium",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "lineHeight": "20px",
+      "tag": "H3",
+      "text": "Complete Orange-Booth Scene, Ready to Use",
+      "width": 278.1015625,
+      "x": 992.390625,
+      "y": 3908.8125
+    },
+    {
+      "class": "text-sm font-medium",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "lineHeight": "20px",
+      "tag": "H3",
+      "text": "Real Back-and-Forth Performance",
+      "width": 230.90625,
+      "x": 185.5,
+      "y": 4139.8125
+    },
+    {
+      "class": "text-sm font-medium",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "lineHeight": "20px",
+      "tag": "H3",
+      "text": "Made for Funny and Unexpected Pairings",
+      "width": 270.625,
+      "x": 590.1640625,
+      "y": 4139.8125
+    },
+    {
+      "class": "text-sm font-medium",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "lineHeight": "20px",
+      "tag": "H3",
+      "text": "Original and Rights-Aware Creation",
+      "width": 235.2734375,
+      "x": 994.828125,
+      "y": 4139.8125
+    },
+    {
+      "class": "mt-4 text-4xl font-semibold",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "36px",
+      "fontWeight": "600",
+      "lineHeight": "40px",
+      "tag": "H2",
+      "text": "Migos AI Video FAQs",
+      "width": 1216,
+      "x": 104.5,
+      "y": 4493.3125
+    },
+    {
+      "class": "font-semibold",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "tag": "H3",
+      "text": "What is Hotel Lobby AI video?",
+      "width": 226.65625,
+      "x": 144.5,
+      "y": 4637.3125
+    },
+    {
+      "class": "font-semibold",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "tag": "H3",
+      "text": "Why is the Hotel Lobby AI video trend a thing?",
+      "width": 347.9296875,
+      "x": 776.5,
+      "y": 4637.3125
+    },
+    {
+      "class": "font-semibold",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "tag": "H3",
+      "text": "Does the Hotel Lobby AI template include music?",
+      "width": 374.671875,
+      "x": 144.5,
+      "y": 4813.3125
+    },
+    {
+      "class": "font-semibold",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "tag": "H3",
+      "text": "Can I use pets, fictional characters, or famous people?",
+      "width": 415.296875,
+      "x": 776.5,
+      "y": 4813.3125
+    },
+    {
+      "class": "font-semibold",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "tag": "H3",
+      "text": "Why do the two faces blend together?",
+      "width": 293.53125,
+      "x": 144.5,
+      "y": 4989.3125
+    },
+    {
+      "class": "font-semibold",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "tag": "H3",
+      "text": "Can the same person appear in both roles?",
+      "width": 325.03125,
+      "x": 776.5,
+      "y": 4989.3125
+    },
+    {
+      "class": "font-semibold",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "tag": "H3",
+      "text": "How long does a Hotel Lobby AI video take to generate?",
+      "width": 427.40625,
+      "x": 144.5,
+      "y": 5141.3125
+    },
+    {
+      "class": "font-semibold",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "tag": "H3",
+      "text": "Is the Hotel Lobby AI video template free?",
+      "width": 319.6953125,
+      "x": 776.5,
+      "y": 5141.3125
+    },
+    {
+      "class": "font-semibold",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "tag": "H3",
+      "text": "How does Migos AI pricing work?",
+      "width": 252.890625,
+      "x": 144.5,
+      "y": 5293.3125
+    },
+    {
+      "class": "text-4xl font-bold tracking-tight sm:text-5xl",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "48px",
+      "fontWeight": "700",
+      "lineHeight": "48px",
+      "tag": "H2",
+      "text": "Migos AI Pricing and Credit Plans",
+      "width": 1216,
+      "x": 104.5,
+      "y": 5589.3125
+    },
+    {
+      "class": "mb-4 text-balance text-3xl font-semibold md:text-5xl text-white",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "48px",
+      "fontWeight": "600",
+      "lineHeight": "48px",
+      "tag": "H2",
+      "text": "Ready to Make Your Hotel Lobby AI Video?",
+      "width": 768,
+      "x": 328.5,
+      "y": 6455.0625
+    }
+  ],
+  "links": [
+    {
+      "href": "/",
+      "text": "Migos AI"
+    },
+    {
+      "href": "/#how-it-works",
+      "text": "How It Works"
+    },
+    {
+      "href": "/#faq",
+      "text": "FAQ"
+    },
+    {
+      "href": "/pricing",
+      "text": "Pricing"
+    },
+    {
+      "href": "/showcases",
+      "text": "Showcase"
+    },
+    {
+      "href": "/ai-rap-song-generator",
+      "text": "AI Rap Song Generator"
+    },
+    {
+      "href": "#generator",
+      "text": "TRENDINGCreate Your Hotel Lobby AI Video"
+    },
+    {
+      "href": "/pricing",
+      "text": "Buy Credits"
+    },
+    {
+      "href": "#generator",
+      "text": "Create Hotel Lobby AI Video"
+    },
+    {
+      "href": "#generator",
+      "text": "Create Hotel Lobby AI Video"
+    },
+    {
+      "href": "#",
+      "text": ""
+    },
+    {
+      "href": "#",
+      "text": ""
+    },
+    {
+      "href": "#",
+      "text": ""
+    },
+    {
+      "href": "/#features",
+      "text": "Features"
+    },
+    {
+      "href": "/ai-rap-song-generator",
+      "text": "AI Rap Song Generator"
+    },
+    {
+      "href": "/#how-it-works",
+      "text": "How It Works"
+    },
+    {
+      "href": "/pricing",
+      "text": "Pricing"
+    },
+    {
+      "href": "/#faq",
+      "text": "FAQ"
+    },
+    {
+      "href": "/privacy-policy",
+      "text": "Privacy Policy"
+    },
+    {
+      "href": "/terms-of-service",
+      "text": "Terms of Service"
+    }
+  ],
+  "media": [
+    {
+      "autoplay": false,
+      "class": "mx-auto aspect-video h-auto w-full object-contain",
+      "controls": true,
+      "height": 285.75,
+      "loop": false,
+      "muted": false,
+      "objectFit": "contain",
+      "src": "https://img.migosai.com/video/model.mp4",
+      "width": 508
+    },
+    {
+      "autoplay": false,
+      "class": "absolute inset-0 h-full w-full object-cover",
+      "controls": false,
+      "height": 508.4375,
+      "loop": true,
+      "muted": true,
+      "objectFit": "cover",
+      "src": "https://img.migosai.com/video/01.mp4",
+      "width": 286
+    },
+    {
+      "autoplay": false,
+      "class": "absolute inset-0 h-full w-full object-cover",
+      "controls": false,
+      "height": 508.4375,
+      "loop": true,
+      "muted": true,
+      "objectFit": "cover",
+      "src": "https://img.migosai.com/video/02.mp4",
+      "width": 286
+    },
+    {
+      "autoplay": false,
+      "class": "absolute inset-0 h-full w-full object-cover",
+      "controls": false,
+      "height": 508.4375,
+      "loop": true,
+      "muted": true,
+      "objectFit": "cover",
+      "src": "https://img.migosai.com/video/03.mp4",
+      "width": 286
+    },
+    {
+      "autoplay": false,
+      "class": "absolute inset-0 h-full w-full object-cover",
+      "controls": false,
+      "height": 508.4375,
+      "loop": true,
+      "muted": true,
+      "objectFit": "cover",
+      "src": "https://img.migosai.com/video/04.mp4",
+      "width": 286
+    }
+  ],
+  "title": "Migos AI | Hotel Lobby AI Video Generator",
+  "url": "https://migosai.com/"
+}

@@ -1,0 +1,119 @@
+{
+  "captured_at": "2026-10-02",
+  "origin": "https://migosai.com",
+  "public_routes": [
+    {
+      "path": "/",
+      "url": "https://migosai.com/",
+      "title": "Migos AI | Hotel Lobby AI Video Generator",
+      "kind": "public",
+      "verified": "Chrome rendered DOM and screenshots",
+      "screenshots": {
+        "1440": "screenshots/home-1440.jpg",
+        "768": "screenshots/home-768.jpg",
+        "390": "screenshots/home-390.jpg"
+      }
+    },
+    {
+      "path": "/pricing",
+      "url": "https://migosai.com/pricing",
+      "title": "Pricing — Migos AI",
+      "kind": "public",
+      "verified": "Chrome rendered DOM and screenshots",
+      "screenshots": {
+        "1440": "screenshots/pricing-1440.jpg",
+        "768": "screenshots/pricing-768.jpg",
+        "390": "screenshots/pricing-390.jpg"
+      }
+    },
+    {
+      "path": "/showcases",
+      "url": "https://migosai.com/showcases",
+      "title": "Showcases — Migos AI",
+      "kind": "public",
+      "verified": "Chrome rendered DOM and screenshots",
+      "screenshots": {
+        "1440": "screenshots/showcases-1440.jpg",
+        "768": "screenshots/showcases-768.jpg",
+        "390": "screenshots/showcases-390.jpg"
+      }
+    },
+    {
+      "path": "/ai-rap-song-generator",
+      "url": "https://migosai.com/ai-rap-song-generator",
+      "title": "AI Rap Song Generator | Migos AI",
+      "kind": "public",
+      "verified": "Chrome rendered DOM and screenshots",
+      "screenshots": {
+        "1440": "screenshots/ai-rap-song-generator-1440.jpg",
+        "768": "screenshots/ai-rap-song-generator-768.jpg",
+        "390": "screenshots/ai-rap-song-generator-390.jpg"
+      }
+    },
+    {
+      "path": "/privacy-policy",
+      "url": "https://migosai.com/privacy-policy",
+      "title": "Privacy Policy",
+      "kind": "public",
+      "verified": "Chrome rendered DOM and screenshots",
+      "screenshots": {
+        "1440": "screenshots/privacy-policy-1440.jpg",
+        "768": "screenshots/privacy-policy-768.jpg",
+        "390": "screenshots/privacy-policy-390.jpg"
+      }
+    },
+    {
+      "path": "/terms-of-service",
+      "url": "https://migosai.com/terms-of-service",
+      "title": "Terms of Service",
+      "kind": "public",
+      "verified": "Chrome rendered DOM and screenshots",
+      "screenshots": {
+        "1440": "screenshots/terms-of-service-1440.jpg",
+        "768": "screenshots/terms-of-service-768.jpg",
+        "390": "screenshots/terms-of-service-390.jpg"
+      }
+    },
+    {
+      "path": "/sign-in",
+      "url": "https://migosai.com/sign-in",
+      "title": "Sign In - Migos AI | Hotel Lobby AI Video Generator",
+      "kind": "authentication",
+      "verified": "Chrome rendered DOM and screenshots",
+      "screenshots": {
+        "1440": "screenshots/sign-in-1440.jpg",
+        "768": "screenshots/sign-in-768.jpg",
+        "390": "screenshots/sign-in-390.jpg"
+      }
+    },
+    {
+      "path": "/sign-up",
+      "url": "https://migosai.com/sign-up",
+      "title": "Sign Up - Migos AI | Hotel Lobby AI Video Generator",
+      "kind": "authentication",
+      "verified": "Chrome rendered DOM and screenshots",
+      "screenshots": {
+        "1440": "screenshots/sign-up-1440.jpg",
+        "768": "screenshots/sign-up-768.jpg",
+        "390": "screenshots/sign-up-390.jpg"
+      }
+    }
+  ],
+  "protected_routes": [
+    {
+      "path": "/settings",
+      "observation": "HTTP redirect to sign-in with callbackUrl; content not inspected"
+    },
+    {
+      "path": "/activity",
+      "observation": "HTTP redirect to sign-in with callbackUrl; content not inspected"
+    },
+    {
+      "path": "/admin",
+      "observation": "HTTP redirect to sign-in with callbackUrl; content not inspected"
+    }
+  ],
+  "languages": [
+    "English"
+  ]
+}

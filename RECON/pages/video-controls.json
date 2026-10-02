@@ -1,0 +1,10 @@
+{
+  "aspect": [
+    "9:16",
+    "16:9",
+    "4:3",
+    "3:4"
+  ],
+  "durationSnapshot": "- listbox:\n  - option \"5 seconds\" [active] [selected]:\n    - generic: 5 seconds\n  - option \"10 seconds\":\n    - generic: 10 seconds\n  - option \"15 seconds\":\n    - generic: 15 seconds",
+  "resolutionSnapshot": "- listbox:\n  - option \"720P\" [active] [selected]:\n    - generic: 720P\n  - option \"480P\":\n    - generic: 480P"
+}

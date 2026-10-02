@@ -1,0 +1,2192 @@
+{
+  "body": {
+    "background": "rgb(0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+    "backgroundImage": "none",
+    "border": "0px solid rgba(102, 102, 102, 0.2)",
+    "borderRadius": "0px",
+    "class": "overflow-x-hidden",
+    "color": "rgb(235, 235, 235)",
+    "display": "block",
+    "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+    "fontSize": "16px",
+    "fontWeight": "400",
+    "gap": "normal",
+    "gridTemplateColumns": "none",
+    "height": 1000,
+    "id": "",
+    "lineHeight": "24px",
+    "maxWidth": "none",
+    "padding": "0px",
+    "tag": "BODY",
+    "text": "#nprogress{pointer-events:none}#nprogress .bar{background:#6466F1;posi",
+    "width": 1425,
+    "x": 0,
+    "y": 0
+  },
+  "controls": [
+    {
+      "class": "relative z-20 -m-2.5 -mr-3 block cursor-pointer p-2.5 lg:hidden",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "submit"
+    },
+    {
+      "class": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 size-9 h-auto w-auto p-0",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "class": "hidden",
+      "role": null,
+      "tag": "INPUT",
+      "text": "",
+      "type": "file"
+    },
+    {
+      "class": "flex aspect-square w-full flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-white/15 bg-[#141414] px-4 transition-colors hover:border-white/30 hover:bg-[#1a1a1a]",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Choose photoor drop it here",
+      "type": "button"
+    },
+    {
+      "class": "hidden",
+      "role": null,
+      "tag": "INPUT",
+      "text": "",
+      "type": "file"
+    },
+    {
+      "class": "flex aspect-square w-full flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-white/15 bg-[#141414] px-4 transition-colors hover:border-white/30 hover:bg-[#1a1a1a]",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Choose photoor drop it here",
+      "type": "button"
+    },
+    {
+      "class": "data-[placeholder]:text-muted-foreground [&_svg:not([class*='text-'])]:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 dark:hover:bg-input/50 flex items-center justify-between gap-2 rounded-md border px-3 py-2 text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-9 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 w-full border-white/10 bg-[#141414] text-white",
+      "role": "combobox",
+      "tag": "BUTTON",
+      "text": "9:16",
+      "type": "button"
+    },
+    {
+      "class": "data-[placeholder]:text-muted-foreground [&_svg:not([class*='text-'])]:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 dark:hover:bg-input/50 flex items-center justify-between gap-2 rounded-md border px-3 py-2 text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-9 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 w-full border-white/10 bg-[#141414] text-white",
+      "role": "combobox",
+      "tag": "BUTTON",
+      "text": "5 seconds",
+      "type": "button"
+    },
+    {
+      "class": "data-[placeholder]:text-muted-foreground [&_svg:not([class*='text-'])]:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 dark:hover:bg-input/50 flex items-center justify-between gap-2 rounded-md border px-3 py-2 text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-9 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 w-full border-white/10 bg-[#141414] text-white",
+      "role": "combobox",
+      "tag": "BUTTON",
+      "text": "720P",
+      "type": "button"
+    },
+    {
+      "class": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-10 rounded-md px-6 has-[>svg]:px-4 w-full",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Sign In to Generate Video",
+      "type": "submit"
+    },
+    {
+      "class": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border shadow-xs hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-10 rounded-md px-6 has-[>svg]:px-4 w-full border-white/15 bg-transparent text-white hover:bg-white/5",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Buy Credits",
+      "type": "submit"
+    },
+    {
+      "class": "absolute inset-0 z-10 flex items-center justify-center bg-black/20 transition-opacity hover:bg-black/30",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "class": "absolute inset-0 z-10 flex items-center justify-center bg-black/20 transition-opacity hover:bg-black/30",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "class": "absolute inset-0 z-10 flex items-center justify-center bg-black/20 transition-opacity hover:bg-black/30",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "class": "absolute inset-0 z-10 flex items-center justify-center bg-black/20 transition-opacity hover:bg-black/30",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "class": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive shadow-xs h-9 px-4 py-2 has-[>svg]:px-3 w-full rounded-full border border-white/15 bg-transparent text-white hover:bg-white/10",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Buy Starter",
+      "type": "submit"
+    },
+    {
+      "class": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive shadow-xs h-9 px-4 py-2 has-[>svg]:px-3 w-full rounded-full bg-white text-zinc-900 hover:bg-white/90",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Buy Creator",
+      "type": "submit"
+    },
+    {
+      "class": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive shadow-xs h-9 px-4 py-2 has-[>svg]:px-3 w-full rounded-full border border-white/15 bg-transparent text-white hover:bg-white/10",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Buy Pro",
+      "type": "submit"
+    },
+    {
+      "class": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive shadow-xs h-9 px-4 py-2 has-[>svg]:px-3 w-full rounded-full border border-white/15 bg-transparent text-white hover:bg-white/10",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Buy Business",
+      "type": "submit"
+    },
+    {
+      "class": "inline-flex items-center justify-center gap-2 whitespace-nowrap transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-10 has-[>svg]:px-4 rounded-full px-8 py-6 text-lg font-bold",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Create Hotel Lobby AI Video",
+      "type": "submit"
+    }
+  ],
+  "cssVariables": [
+    [
+      "--color-muted-foreground",
+      "#9ca3af"
+    ],
+    [
+      "--border",
+      "#3a3633"
+    ],
+    [
+      "--container-md",
+      "28rem"
+    ],
+    [
+      "--animate-fd-popover-in",
+      "fd-popover-in .13s ease"
+    ],
+    [
+      "--tw-inset-shadow-alpha",
+      "100%"
+    ],
+    [
+      "--color-cyan-400",
+      "lab(76.6045% -40.9406 -29.6231)"
+    ],
+    [
+      "--tw-ring-shadow",
+      "0 0 #0000"
+    ],
+    [
+      "--text-2xl",
+      "1.5rem"
+    ],
+    [
+      "--color-cyan-300",
+      "lab(85.3886% -36.7636 -21.5716)"
+    ],
+    [
+      "--animate-fd-enterFromRight",
+      "fd-enterFromRight .25s ease"
+    ],
+    [
+      "--aspect-video",
+      "16/9"
+    ],
+    [
+      "--color-purple-500",
+      "lab(52.0183% 66.11 -78.2316)"
+    ],
+    [
+      "--card",
+      "#2c2825"
+    ],
+    [
+      "--fd-sidebar-width",
+      "0px"
+    ],
+    [
+      "--blur-lg",
+      "16px"
+    ],
+    [
+      "--sidebar-primary-foreground",
+      "#1e1b18"
+    ],
+    [
+      "--shadow-xs",
+      "2px 2px 10px 4px #00000017"
+    ],
+    [
+      "--color-yellow-600",
+      "lab(62.7799% 22.4197 86.1544)"
+    ],
+    [
+      "--tw-drop-shadow-alpha",
+      "100%"
+    ],
+    [
+      "--shadow-md",
+      "2px 2px 10px 4px #0000002e,2px 2px 4px 3px #0000002e"
+    ],
+    [
+      "--text-7xl",
+      "4.5rem"
+    ],
+    [
+      "--text-lg",
+      "1.125rem"
+    ],
+    [
+      "--color-neutral-600",
+      "lab(34.924% 0 0)"
+    ],
+    [
+      "--fd-layout-offset",
+      "max(calc(50vw - 100vw/2),0px)"
+    ],
+    [
+      "--color-teal-400",
+      "lab(76.0109% -53.3483 -2.27906)"
+    ],
+    [
+      "--primary-foreground",
+      "#1e1b18"
+    ],
+    [
+      "--color-neutral-500",
+      "lab(48.496% 0 0)"
+    ],
+    [
+      "--color-fd-secondary",
+      "#212121"
+    ],
+    [
+      "--color-amber-600",
+      "lab(60.3514% 40.5624 87.1228)"
+    ],
+    [
+      "--animate-fd-nav-menu-out",
+      "fd-nav-menu-out .2s ease"
+    ],
+    [
+      "--card-foreground",
+      "#e2e8f0"
+    ],
+    [
+      "--tw-outline-style",
+      "solid"
+    ],
+    [
+      "--_number-flow-dx",
+      "0px"
+    ],
+    [
+      "--text-5xl--line-height",
+      "1"
+    ],
+    [
+      "--color-green-100",
+      "lab(96.1861% -13.8464 6.52365)"
+    ],
+    [
+      "--tw-inset-ring-shadow",
+      "0 0 #0000"
+    ],
+    [
+      "--sidebar-accent-foreground",
+      "#d1d5db"
+    ],
+    [
+      "--text-base--line-height",
+      "calc(1.5/1)"
+    ],
+    [
+      "--muted",
+      "#2c2825"
+    ],
+    [
+      "--color-neutral-200",
+      "lab(90.952% 0 -.0000119209)"
+    ],
+    [
+      "--animate-fd-nav-menu-in",
+      "fd-nav-menu-in .2s ease"
+    ],
+    [
+      "--accent-foreground",
+      "#d1d5db"
+    ],
+    [
+      "--font-mono",
+      "\"JetBrains Mono\",monospace"
+    ],
+    [
+      "--tracking-wider",
+      ".05em"
+    ],
+    [
+      "--color-yellow-400",
+      "lab(83.2664% 8.65132 106.895)"
+    ],
+    [
+      "--color-fd-diff-add-symbol",
+      "#0ac864"
+    ],
+    [
+      "--color-purple-900",
+      "lab(24.9401% 45.2703 -51.2728)"
+    ],
+    [
+      "--color-fd-diff-remove",
+      "#c80a641f"
+    ],
+    [
+      "--animate-fd-accordion-down",
+      "fd-accordion-down .2s ease-out"
+    ],
+    [
+      "--animate-fd-fade-out",
+      "fd-fade-out .3s ease"
+    ],
+    [
+      "--color-gray-500",
+      "lab(47.7841% -.393182 -10.0268)"
+    ],
+    [
+      "--animate-fd-dialog-in",
+      "fd-dialog-in .3s cubic-bezier(.16,1,.3,1)"
+    ],
+    [
+      "--popover",
+      "#2c2825"
+    ],
+    [
+      "--color-green-500",
+      "lab(70.5521% -66.5147 45.8073)"
+    ],
+    [
+      "--ring",
+      "#818cf8"
+    ],
+    [
+      "--blur-xl",
+      "24px"
+    ],
+    [
+      "--radix-collapsible-content-height",
+      "0px"
+    ],
+    [
+      "--color-pink-900",
+      "lab(29.4367% 49.3962 3.35757)"
+    ],
+    [
+      "--tw-inset-shadow",
+      "0 0 #0000"
+    ],
+    [
+      "--tw-ring-offset-color",
+      "#fff"
+    ],
+    [
+      "--text-lg--line-height",
+      "calc(1.75/1.125)"
+    ],
+    [
+      "--tw-divide-x-reverse",
+      "0"
+    ],
+    [
+      "--tw-gradient-from",
+      "rgba(0, 0, 0, 0)"
+    ],
+    [
+      "--color-white",
+      "#fff"
+    ],
+    [
+      "--color-red-400",
+      "lab(63.7053% 60.745 31.3109)"
+    ],
+    [
+      "--color-gray-400",
+      "lab(65.9269% -.832707 -8.17473)"
+    ],
+    [
+      "--color-blue-400",
+      "lab(65.0361% -1.42065 -56.9802)"
+    ],
+    [
+      "--tw-shadow-alpha",
+      "100%"
+    ],
+    [
+      "--tw-gradient-to",
+      "rgba(0, 0, 0, 0)"
+    ],
+    [
+      "--fd-banner-height",
+      "0px"
+    ],
+    [
+      "--color-fd-border",
+      "#6663"
+    ],
+    [
+      "--color-fd-primary-foreground",
+      "#171717"
+    ],
+    [
+      "--radius-sm",
+      ".25rem"
+    ],
+    [
+      "--sidebar-foreground",
+      "#e2e8f0"
+    ],
+    [
+      "--font-sans",
+      "\"Plus Jakarta Sans\",sans-serif"
+    ],
+    [
+      "--sidebar-accent",
+      "#484441"
+    ],
+    [
+      "--animate-fd-exitToLeft",
+      "fd-exitToLeft .25s ease"
+    ],
+    [
+      "--shadow-sm",
+      "2px 2px 10px 4px #0000002e,2px 1px 2px 3px #0000002e"
+    ],
+    [
+      "--tw-scale-z",
+      "1"
+    ],
+    [
+      "--radius",
+      "1.25rem"
+    ],
+    [
+      "--color-zinc-950",
+      "lab(2.51107% .242703 -.886115)"
+    ],
+    [
+      "--shadow-lg",
+      "2px 2px 10px 4px #0000002e,2px 4px 6px 3px #0000002e"
+    ],
+    [
+      "--color-fd-muted",
+      "#212121"
+    ],
+    [
+      "--popover-foreground",
+      "#e2e8f0"
+    ],
+    [
+      "--font-weight-bold",
+      "700"
+    ],
+    [
+      "--color-red-500",
+      "lab(55.4814% 75.0732 48.8528)"
+    ],
+    [
+      "--color-background",
+      "#000"
+    ],
+    [
+      "--container-sm",
+      "24rem"
+    ],
+    [
+      "--tw-ring-offset-width",
+      "0px"
+    ],
+    [
+      "--_number-flow-d-opacity",
+      "0"
+    ],
+    [
+      "--color-zinc-300",
+      "lab(84.9837% .601262 -2.17986)"
+    ],
+    [
+      "--tw-gradient-via-position",
+      "50%"
+    ],
+    [
+      "--default-font-family",
+      "\"Plus Jakarta Sans\",sans-serif"
+    ],
+    [
+      "--text-xs--line-height",
+      "calc(1/.75)"
+    ],
+    [
+      "--tw-space-x-reverse",
+      "0"
+    ],
+    [
+      "--container-lg",
+      "32rem"
+    ],
+    [
+      "--spacing-fd-container",
+      "1400px"
+    ],
+    [
+      "--animate-fd-fade-in",
+      "fd-fade-in .3s ease"
+    ],
+    [
+      "--tw-gradient-to-position",
+      "100%"
+    ],
+    [
+      "--destructive-foreground",
+      "#1e1b18"
+    ],
+    [
+      "--fd-tocnav-height",
+      "0px"
+    ],
+    [
+      "--default-transition-duration",
+      ".15s"
+    ],
+    [
+      "--chart-4",
+      "#4338ca"
+    ],
+    [
+      "--chart-2",
+      "#6366f1"
+    ],
+    [
+      "--animate-pulse",
+      "pulse 2s cubic-bezier(.4,0,.6,1)infinite"
+    ],
+    [
+      "--radius-2xl",
+      "1rem"
+    ],
+    [
+      "--animate-fd-dialog-out",
+      "fd-dialog-out .3s cubic-bezier(.16,1,.3,1)"
+    ],
+    [
+      "--color-fd-diff-add",
+      "#0eb4641a"
+    ],
+    [
+      "--text-7xl--line-height",
+      "1"
+    ],
+    [
+      "--_number-flow-d-width",
+      "0"
+    ],
+    [
+      "--radius-md",
+      ".375rem"
+    ],
+    [
+      "--radius-lg",
+      ".5rem"
+    ],
+    [
+      "--color-neutral-900",
+      "lab(7.78201% -.0000149012 0)"
+    ],
+    [
+      "--container-xs",
+      "20rem"
+    ],
+    [
+      "--text-xl",
+      "1.25rem"
+    ],
+    [
+      "--sidebar-primary",
+      "#818cf8"
+    ],
+    [
+      "--tw-gradient-from-position",
+      "0%"
+    ],
+    [
+      "--color-fd-accent",
+      "#6868684d"
+    ],
+    [
+      "--padding-right",
+      "calc(.25rem*4)"
+    ],
+    [
+      "--ease-in-out",
+      "cubic-bezier(.4,0,.2,1)"
+    ],
+    [
+      "--tw-ring-offset-shadow",
+      "0 0 #0000"
+    ],
+    [
+      "--color-neutral-100",
+      "lab(96.52% -.0000298023 .0000119209)"
+    ],
+    [
+      "--animate-fd-collapsible-down",
+      "fd-collapsible-down .15s cubic-bezier(.45,0,.55,1)"
+    ],
+    [
+      "--shadow-2xl",
+      "2px 2px 10px 4px #00000073"
+    ],
+    [
+      "--color-gray-800",
+      "lab(16.1051% -1.18239 -11.7533)"
+    ],
+    [
+      "--leading-relaxed",
+      "1.625"
+    ],
+    [
+      "--color-green-600",
+      "lab(59.0978% -58.6621 41.2579)"
+    ],
+    [
+      "--leading-snug",
+      "1.375"
+    ],
+    [
+      "--accent",
+      "#484441"
+    ],
+    [
+      "--tracking-tighter",
+      "-.05em"
+    ],
+    [
+      "--color-zinc-500",
+      "lab(47.8878% 1.65477 -5.77283)"
+    ],
+    [
+      "--default-transition-timing-function",
+      "cubic-bezier(.4,0,.2,1)"
+    ],
+    [
+      "--color-zinc-900",
+      "lab(8.30603% .618205 -2.16572)"
+    ],
+    [
+      "--color-fd-accent-foreground",
+      "#e6e6e6"
+    ],
+    [
+      "--fd-sidebar-mobile-offset",
+      "100%"
+    ],
+    [
+      "--radius-3xl",
+      "1.5rem"
+    ],
+    [
+      "--_number-flow-d",
+      "0"
+    ],
+    [
+      "--color-fd-secondary-foreground",
+      "#ebebeb"
+    ],
+    [
+      "--color-fd-ring",
+      "#8c8c8c"
+    ],
+    [
+      "--text-2xl--line-height",
+      "calc(2/1.5)"
+    ],
+    [
+      "--container-5xl",
+      "64rem"
+    ],
+    [
+      "--secondary-foreground",
+      "#d1d5db"
+    ],
+    [
+      "--spacing",
+      ".25rem"
+    ],
+    [
+      "--color-fd-muted-foreground",
+      "#b3b3b3cc"
+    ],
+    [
+      "--padding-left",
+      "calc(.25rem*4)"
+    ],
+    [
+      "--tw-translate-z",
+      "0"
+    ],
+    [
+      "--color-fd-diff-remove-symbol",
+      "#e60a64"
+    ],
+    [
+      "--color-yellow-700",
+      "lab(47.8202% 25.2426 66.5015)"
+    ],
+    [
+      "--background",
+      "#000"
+    ],
+    [
+      "--tw-gradient-via",
+      "rgba(0, 0, 0, 0)"
+    ],
+    [
+      "--fd-toc-width",
+      "0px"
+    ],
+    [
+      "--tw-scale-y",
+      "1"
+    ],
+    [
+      "--fd-page-width",
+      "1200px"
+    ],
+    [
+      "--animate-fd-collapsible-up",
+      "fd-collapsible-up .15s cubic-bezier(.45,0,.55,1)"
+    ],
+    [
+      "--shadow",
+      "2px 2px 10px 4px #0000002e,2px 1px 2px 3px #0000002e"
+    ],
+    [
+      "--container-6xl",
+      "72rem"
+    ],
+    [
+      "--tracking-wide",
+      ".025em"
+    ],
+    [
+      "--text-xl--line-height",
+      "calc(1.75/1.25)"
+    ],
+    [
+      "--font-weight-semibold",
+      "600"
+    ],
+    [
+      "--color-fd-popover-foreground",
+      "#dedede"
+    ],
+    [
+      "--container-3xl",
+      "48rem"
+    ],
+    [
+      "--fd-layout-width",
+      "100vw"
+    ],
+    [
+      "--text-sm",
+      ".875rem"
+    ],
+    [
+      "--color-green-400",
+      "lab(78.503% -64.9265 39.7492)"
+    ],
+    [
+      "--tw-translate-y",
+      "0"
+    ],
+    [
+      "--color-fd-success",
+      "lab(70.5521% -66.5147 45.8073)"
+    ],
+    [
+      "--blur-xs",
+      "4px"
+    ],
+    [
+      "--ease-out",
+      "cubic-bezier(0,0,.2,1)"
+    ],
+    [
+      "--color-fd-popover",
+      "#1e1e1e"
+    ],
+    [
+      "--shadow-xl",
+      "2px 2px 10px 4px #0000002e,2px 8px 10px 3px #0000002e"
+    ],
+    [
+      "--color-blue-500",
+      "lab(54.1736% 13.3369 -74.6839)"
+    ],
+    [
+      "--color-gray-900",
+      "lab(8.11897% .811279 -12.254)"
+    ],
+    [
+      "--animate-spin",
+      "spin 1s linear infinite"
+    ],
+    [
+      "--color-fd-foreground",
+      "#ebebeb"
+    ],
+    [
+      "--color-fd-card",
+      "#191919"
+    ],
+    [
+      "--container-4xl",
+      "56rem"
+    ],
+    [
+      "--animate-fd-sidebar-out",
+      "fd-sidebar-out .25s ease"
+    ],
+    [
+      "--color-zinc-400",
+      "lab(65.6464% 1.53497 -5.42429)"
+    ],
+    [
+      "--color-muted",
+      "#2c2825"
+    ],
+    [
+      "--color-blue-900",
+      "lab(26.1542% 15.7545 -51.5504)"
+    ],
+    [
+      "--tw-content",
+      "\"\""
+    ],
+    [
+      "--sidebar-border",
+      "#3a3633"
+    ],
+    [
+      "--chart-5",
+      "#3730a3"
+    ],
+    [
+      "--container-2xs",
+      "18rem"
+    ],
+    [
+      "--fd-nav-height",
+      "0px"
+    ],
+    [
+      "--color-fd-background",
+      "#121212"
+    ],
+    [
+      "--leading-tight",
+      "1.25"
+    ],
+    [
+      "--color-gray-600",
+      "lab(35.6337% -1.58697 -10.8425)"
+    ],
+    [
+      "--animate-fd-accordion-up",
+      "fd-accordion-up .2s ease-out"
+    ],
+    [
+      "--color-purple-400",
+      "lab(63.6946% 47.6127 -59.2066)"
+    ],
+    [
+      "--muted-foreground",
+      "#9ca3af"
+    ],
+    [
+      "--text-4xl",
+      "2.25rem"
+    ],
+    [
+      "--color-green-200",
+      "lab(92.4222% -26.4702 12.9427)"
+    ],
+    [
+      "--tw-divide-y-reverse",
+      "0"
+    ],
+    [
+      "--tw-border-style",
+      "solid"
+    ],
+    [
+      "--breakpoint-md",
+      "48rem"
+    ],
+    [
+      "--tracking-normal",
+      "0em"
+    ],
+    [
+      "--color-fd-warning",
+      "lab(72.7183% 31.8672 97.9407)"
+    ],
+    [
+      "--container-2xl",
+      "42rem"
+    ],
+    [
+      "--tw-shadow",
+      "0 0 #0000"
+    ],
+    [
+      "--text-sm--line-height",
+      "calc(1.25/.875)"
+    ],
+    [
+      "--tw-translate-x",
+      "0"
+    ],
+    [
+      "--color-border",
+      "#3a3633"
+    ],
+    [
+      "--animate-fd-popover-out",
+      "fd-popover-out .13s ease"
+    ],
+    [
+      "--color-gray-200",
+      "lab(91.6229% -.159115 -2.26791)"
+    ],
+    [
+      "--input",
+      "#3a3633"
+    ],
+    [
+      "--text-3xl--line-height",
+      "calc(2.25/1.875)"
+    ],
+    [
+      "--text-5xl",
+      "3rem"
+    ],
+    [
+      "--text-3xl",
+      "1.875rem"
+    ],
+    [
+      "--color-black",
+      "#000"
+    ],
+    [
+      "--text-xs",
+      ".75rem"
+    ],
+    [
+      "--tracking-widest",
+      ".1em"
+    ],
+    [
+      "--color-fd-card-foreground",
+      "#fafafa"
+    ],
+    [
+      "--destructive",
+      "#ef4444"
+    ],
+    [
+      "--animate-fd-enterFromLeft",
+      "fd-enterFromLeft .25s ease"
+    ],
+    [
+      "--font-weight-normal",
+      "400"
+    ],
+    [
+      "--tw-scale-x",
+      "1"
+    ],
+    [
+      "--font-weight-medium",
+      "500"
+    ],
+    [
+      "--chart-3",
+      "#4f46e5"
+    ],
+    [
+      "--color-neutral-400",
+      "lab(66.128% -.0000298023 .0000119209)"
+    ],
+    [
+      "--color-foreground",
+      "#e2e8f0"
+    ],
+    [
+      "--color-green-700",
+      "lab(47.0329% -47.0239 31.4788)"
+    ],
+    [
+      "--sidebar",
+      "#3a3633"
+    ],
+    [
+      "--radius-xs",
+      ".125rem"
+    ],
+    [
+      "--font-serif",
+      "Merriweather,serif"
+    ],
+    [
+      "--animate-fd-sidebar-in",
+      "fd-sidebar-in .25s ease"
+    ],
+    [
+      "--radius-xl",
+      ".75rem"
+    ],
+    [
+      "--tw-space-y-reverse",
+      "0"
+    ],
+    [
+      "--breakpoint-sm",
+      "40rem"
+    ],
+    [
+      "--shadow-2xs",
+      "2px 2px 10px 4px #00000017"
+    ],
+    [
+      "--container-xl",
+      "36rem"
+    ],
+    [
+      "--primary",
+      "#818cf8"
+    ],
+    [
+      "--color-yellow-500",
+      "lab(76.3898% 14.5258 98.4589)"
+    ],
+    [
+      "--animate-fd-exitToRight",
+      "fd-exitToRight .25s ease"
+    ],
+    [
+      "--text-4xl--line-height",
+      "calc(2.5/2.25)"
+    ],
+    [
+      "--foreground",
+      "#e2e8f0"
+    ],
+    [
+      "--color-fd-info",
+      "lab(54.1736% 13.3369 -74.6839)"
+    ],
+    [
+      "--container-7xl",
+      "80rem"
+    ],
+    [
+      "--color-fd-error",
+      "lab(55.4814% 75.0732 48.8528)"
+    ],
+    [
+      "--secondary",
+      "#3a3633"
+    ],
+    [
+      "--text-base",
+      "1rem"
+    ],
+    [
+      "--blur-sm",
+      "8px"
+    ],
+    [
+      "--sidebar-ring",
+      "#818cf8"
+    ],
+    [
+      "--color-fd-primary",
+      "#fafafa"
+    ],
+    [
+      "--default-mono-font-family",
+      "\"JetBrains Mono\",monospace"
+    ],
+    [
+      "--chart-1",
+      "#818cf8"
+    ],
+    [
+      "--tracking-tight",
+      "-.025em"
+    ]
+  ],
+  "headings": [
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "mx-auto mb-3 mt-4 max-w-6xl text-balance text-4xl font-bold !text-white lg:mb-7 lg:text-7xl",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "72px",
+      "fontWeight": "700",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 144,
+      "id": "",
+      "lineHeight": "72px",
+      "maxWidth": "1152px",
+      "padding": "0px",
+      "tag": "H1",
+      "text": "Migos AI Hotel Lobby Video Generator",
+      "width": 1152,
+      "x": 144,
+      "y": 158
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "sr-only",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 1,
+      "id": "",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H2",
+      "text": "Migos AI Video Generator",
+      "width": 1,
+      "x": 168,
+      "y": 594
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "text-pretty text-3xl font-bold leading-tight text-white lg:text-4xl xl:text-[2.75rem]",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "44px",
+      "fontWeight": "700",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 110,
+      "id": "",
+      "lineHeight": "55px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H2",
+      "text": "What is Migos AI Video Trend",
+      "width": 462.078125,
+      "x": 112,
+      "y": 1595
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "mb-6 text-pretty text-2xl font-bold lg:text-3xl",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "30px",
+      "fontWeight": "700",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 36,
+      "id": "",
+      "lineHeight": "36px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H3",
+      "text": "Migos AI Hotel Lobby Video Showcase",
+      "width": 1216,
+      "x": 112,
+      "y": 2090.125
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "mt-4 text-pretty text-3xl font-bold leading-tight text-white lg:text-5xl",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "48px",
+      "fontWeight": "700",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 120,
+      "id": "",
+      "lineHeight": "60px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H2",
+      "text": "How to Make a Hotel Lobby AI Video in 3 Simple Steps",
+      "width": 768,
+      "x": 336,
+      "y": 3022.5625
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "mt-6 text-lg font-bold leading-snug text-white",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 24.75,
+      "id": "",
+      "lineHeight": "24.75px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H3",
+      "text": "Upload Two Clear Photos",
+      "width": 342,
+      "x": 137,
+      "y": 3378.5625
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "mt-6 text-lg font-bold leading-snug text-white",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 24.75,
+      "id": "",
+      "lineHeight": "24.75px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H3",
+      "text": "Press the button",
+      "width": 342,
+      "x": 549,
+      "y": 3378.5625
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "mt-6 text-lg font-bold leading-snug text-white",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 24.75,
+      "id": "",
+      "lineHeight": "24.75px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H3",
+      "text": "Downland & Share",
+      "width": 342,
+      "x": 961,
+      "y": 3378.5625
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "text-foreground mb-4 text-3xl font-semibold tracking-tight md:text-4xl",
+      "color": "rgb(226, 232, 240)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "36px",
+      "fontWeight": "600",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 40,
+      "id": "",
+      "lineHeight": "40px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H2",
+      "text": "Key Features for a Migos AI Video Maker",
+      "width": 896,
+      "x": 272,
+      "y": 3691.8125
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "text-sm font-medium",
+      "color": "rgb(235, 235, 235)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 20,
+      "id": "",
+      "lineHeight": "20px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H3",
+      "text": "Cast Two Subjects From Separate Photos",
+      "width": 274.625,
+      "x": 193,
+      "y": 3910.8125
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "text-sm font-medium",
+      "color": "rgb(235, 235, 235)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 20,
+      "id": "",
+      "lineHeight": "20px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H3",
+      "text": "Keep the Full Duo in View",
+      "width": 164.515625,
+      "x": 597.6640625,
+      "y": 3910.8125
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "text-sm font-medium",
+      "color": "rgb(235, 235, 235)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 40,
+      "id": "",
+      "lineHeight": "20px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H3",
+      "text": "Complete Orange-Booth Scene, Ready to Use",
+      "width": 278.1015625,
+      "x": 999.890625,
+      "y": 3908.8125
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "text-sm font-medium",
+      "color": "rgb(235, 235, 235)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 20,
+      "id": "",
+      "lineHeight": "20px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H3",
+      "text": "Real Back-and-Forth Performance",
+      "width": 230.90625,
+      "x": 193,
+      "y": 4139.8125
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "text-sm font-medium",
+      "color": "rgb(235, 235, 235)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 20,
+      "id": "",
+      "lineHeight": "20px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H3",
+      "text": "Made for Funny and Unexpected Pairings",
+      "width": 270.625,
+      "x": 597.6640625,
+      "y": 4139.8125
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "text-sm font-medium",
+      "color": "rgb(235, 235, 235)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 20,
+      "id": "",
+      "lineHeight": "20px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H3",
+      "text": "Original and Rights-Aware Creation",
+      "width": 235.2734375,
+      "x": 1002.328125,
+      "y": 4139.8125
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "mt-4 text-4xl font-semibold",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "36px",
+      "fontWeight": "600",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 40,
+      "id": "",
+      "lineHeight": "40px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H2",
+      "text": "Migos AI Video FAQs",
+      "width": 1216,
+      "x": 112,
+      "y": 4493.3125
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "font-semibold",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 24,
+      "id": "",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H3",
+      "text": "What is Hotel Lobby AI video?",
+      "width": 226.65625,
+      "x": 152,
+      "y": 4637.3125
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "font-semibold",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 24,
+      "id": "",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H3",
+      "text": "Why is the Hotel Lobby AI video trend a thing?",
+      "width": 347.9296875,
+      "x": 784,
+      "y": 4637.3125
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "font-semibold",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 24,
+      "id": "",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H3",
+      "text": "Does the Hotel Lobby AI template include music?",
+      "width": 374.671875,
+      "x": 152,
+      "y": 4813.3125
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "font-semibold",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 24,
+      "id": "",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H3",
+      "text": "Can I use pets, fictional characters, or famous people?",
+      "width": 415.296875,
+      "x": 784,
+      "y": 4813.3125
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "font-semibold",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 24,
+      "id": "",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H3",
+      "text": "Why do the two faces blend together?",
+      "width": 293.53125,
+      "x": 152,
+      "y": 4989.3125
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "font-semibold",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 24,
+      "id": "",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H3",
+      "text": "Can the same person appear in both roles?",
+      "width": 325.03125,
+      "x": 784,
+      "y": 4989.3125
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "font-semibold",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 24,
+      "id": "",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H3",
+      "text": "How long does a Hotel Lobby AI video take to generate?",
+      "width": 427.40625,
+      "x": 152,
+      "y": 5141.3125
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "font-semibold",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 24,
+      "id": "",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H3",
+      "text": "Is the Hotel Lobby AI video template free?",
+      "width": 319.6953125,
+      "x": 784,
+      "y": 5141.3125
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "font-semibold",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 24,
+      "id": "",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H3",
+      "text": "How does Migos AI pricing work?",
+      "width": 252.890625,
+      "x": 152,
+      "y": 5293.3125
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "text-4xl font-bold tracking-tight sm:text-5xl",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "48px",
+      "fontWeight": "700",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 48,
+      "id": "",
+      "lineHeight": "48px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H2",
+      "text": "Migos AI Pricing and Credit Plans",
+      "width": 1216,
+      "x": 112,
+      "y": 5589.3125
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "mb-4 text-balance text-3xl font-semibold md:text-5xl text-white",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "48px",
+      "fontWeight": "600",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 96,
+      "id": "",
+      "lineHeight": "48px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "H2",
+      "text": "Ready to Make Your Hotel Lobby AI Video?",
+      "width": 768,
+      "x": 336,
+      "y": 6455.0625
+    }
+  ],
+  "images": [
+    {
+      "alt": "",
+      "src": "https://migosai.com/_next/image?url=%2Flogo.png&w=128&q=75"
+    },
+    {
+      "alt": "Migos AI",
+      "src": "https://migosai.com/logo.png"
+    }
+  ],
+  "sections": [
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "fixed inset-x-0 top-0 z-50 dark transition-colors duration-300",
+      "color": "rgb(235, 235, 235)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 0,
+      "id": "",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "HEADER",
+      "text": "Migos AIHow It WorksFAQPricingShowcaseAI Rap Song GeneratorSign In",
+      "width": 1425,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "relative pt-24 dark",
+      "color": "rgb(235, 235, 235)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 442,
+      "id": "hero",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "96px 0px 0px",
+      "tag": "SECTION",
+      "text": "TRENDINGCreate Your Hotel Lobby AI VideoMigos AI Hotel Lobby Video Gen",
+      "width": 1440,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "container mx-auto px-4 pt-8 pb-24",
+      "color": "rgb(235, 235, 235)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 1053,
+      "id": "generator",
+      "lineHeight": "24px",
+      "maxWidth": "1280px",
+      "padding": "32px 32px 96px",
+      "tag": "SECTION",
+      "text": "Migos AI Video GeneratorHotel Lobby AI Video GeneratorAdd one clear, f",
+      "width": 1280,
+      "x": 80,
+      "y": 442
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "py-16 md:py-24",
+      "color": "rgb(235, 235, 235)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 925,
+      "id": "",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "96px 0px",
+      "tag": "SECTION",
+      "text": "Migos AI Video GeneratorHotel Lobby AI Video GeneratorAdd one clear, f",
+      "width": 1216,
+      "x": 112,
+      "y": 474
+    },
+    {
+      "background": "rgb(0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "pt-16 pb-16 space-y-16 bg-black text-white dark",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 1411.5625,
+      "id": "showcase",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "64px 0px",
+      "tag": "SECTION",
+      "text": "HOTEL LOBBY AI EXAMPLESWhat is Migos AI Video TrendTwo-Photo DuoOrange",
+      "width": 1440,
+      "x": 0,
+      "y": 1495
+    },
+    {
+      "background": "rgb(0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "bg-black py-20 text-white dark",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 659.25,
+      "id": "how-it-works",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "80px 0px",
+      "tag": "SECTION",
+      "text": "WORKFLOWHow to Make a Hotel Lobby AI Video in 3 Simple StepsMigos AI k",
+      "width": 1440,
+      "x": 0,
+      "y": 2906.5625
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "py-16 md:py-24",
+      "color": "rgb(235, 235, 235)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 823,
+      "id": "features",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "96px 0px",
+      "tag": "SECTION",
+      "text": "Key Features for a Migos AI Video MakerA convincing Hotel Lobby–style ",
+      "width": 1440,
+      "x": 0,
+      "y": 3565.8125
+    },
+    {
+      "background": "rgb(0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "py-16 relative overflow-hidden bg-black text-white dark",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 1072.5,
+      "id": "faq",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "64px 0px",
+      "tag": "SECTION",
+      "text": "FAQMigos AI Video FAQsAnswers about the Migos AI format, photos, music",
+      "width": 1440,
+      "x": 0,
+      "y": 4388.8125
+    },
+    {
+      "background": "rgb(0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "bg-black py-20 text-white dark",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 865.75,
+      "id": "pricing",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "80px 0px",
+      "tag": "SECTION",
+      "text": "Migos AI Pricing and Credit PlansPick a one-time credit pack that fits",
+      "width": 1440,
+      "x": 0,
+      "y": 5461.3125
+    },
+    {
+      "background": "rgb(0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "relative py-16 overflow-hidden bg-black text-white dark",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 504,
+      "id": "cta",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "64px 0px",
+      "tag": "SECTION",
+      "text": "Ready to Make Your Hotel Lobby AI Video?Upload two authorized photos, ",
+      "width": 1440,
+      "x": 0,
+      "y": 6327.0625
+    },
+    {
+      "background": "rgb(0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "",
+      "borderRadius": "0px",
+      "class": "py-16 bg-black text-white dark border-t border-white/5",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 446,
+      "id": "footer",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "64px 0px",
+      "tag": "SECTION",
+      "text": "Migos AIMigos AI turns two photos into a viral Hotel Lobby–style duo v",
+      "width": 1440,
+      "x": 0,
+      "y": 6831.0625
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "",
+      "color": "rgb(255, 255, 255)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 317,
+      "id": "",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "FOOTER",
+      "text": "Migos AIMigos AI turns two photos into a viral Hotel Lobby–style duo v",
+      "width": 1216,
+      "x": 112,
+      "y": 6896.0625
+    },
+    {
+      "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+      "backgroundImage": "none",
+      "border": "0px solid rgba(102, 102, 102, 0.2)",
+      "borderRadius": "0px",
+      "class": "",
+      "color": "rgb(235, 235, 235)",
+      "display": "block",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "gridTemplateColumns": "none",
+      "height": 0,
+      "id": "",
+      "lineHeight": "24px",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "SECTION",
+      "text": "",
+      "width": 1425,
+      "x": 0,
+      "y": 1000
+    }
+  ],
+  "styleSheets": [
+    "https://migosai.com/_next/static/chunks/9914d359984ddacf.css",
+    "https://migosai.com/_next/static/chunks/09e2479264a917ad.css",
+    "https://migosai.com/_next/static/chunks/976cdbdb18c7f73c.css",
+    "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Merriweather:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap",
+    null,
+    null,
+    null,
+    "https://accounts.google.com/gsi/style",
+    null
+  ],
+  "title": "Migos AI | Hotel Lobby AI Video Generator",
+  "url": "https://migosai.com/",
+  "videos": [
+    {
+      "autoplay": false,
+      "class": "mx-auto aspect-video h-auto w-full object-contain",
+      "controls": true,
+      "loop": false,
+      "muted": false,
+      "poster": "",
+      "src": "https://img.migosai.com/video/model.mp4"
+    },
+    {
+      "autoplay": false,
+      "class": "absolute inset-0 h-full w-full object-cover",
+      "controls": false,
+      "loop": true,
+      "muted": true,
+      "poster": "",
+      "src": "https://img.migosai.com/video/01.mp4"
+    },
+    {
+      "autoplay": false,
+      "class": "absolute inset-0 h-full w-full object-cover",
+      "controls": false,
+      "loop": true,
+      "muted": true,
+      "poster": "",
+      "src": "https://img.migosai.com/video/02.mp4"
+    },
+    {
+      "autoplay": false,
+      "class": "absolute inset-0 h-full w-full object-cover",
+      "controls": false,
+      "loop": true,
+      "muted": true,
+      "poster": "",
+      "src": "https://img.migosai.com/video/03.mp4"
+    },
+    {
+      "autoplay": false,
+      "class": "absolute inset-0 h-full w-full object-cover",
+      "controls": false,
+      "loop": true,
+      "muted": true,
+      "poster": "",
+      "src": "https://img.migosai.com/video/04.mp4"
+    }
+  ]
+}

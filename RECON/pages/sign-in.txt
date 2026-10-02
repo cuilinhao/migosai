@@ -1,0 +1,7 @@
+- dialog "Sign In":
+  - heading "Sign In" [level=2]
+  - paragraph: Sign in to your account
+  - button "Sign in with Google" [active]:
+    - heading "Sign in with Google" [level=3]
+  - button "Close":
+    - generic: Close

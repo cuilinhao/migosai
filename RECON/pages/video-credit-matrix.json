@@ -1,0 +1,32 @@
+[
+  {
+    "duration": 5,
+    "resolution": "720P",
+    "credits": 100
+  },
+  {
+    "duration": 10,
+    "resolution": "720P",
+    "credits": 150
+  },
+  {
+    "duration": 10,
+    "resolution": "480P",
+    "credits": 75
+  },
+  {
+    "duration": 5,
+    "resolution": "480P",
+    "credits": 50
+  },
+  {
+    "duration": 15,
+    "resolution": "480P",
+    "credits": 150
+  },
+  {
+    "duration": 15,
+    "resolution": "720P",
+    "credits": 300
+  }
+]

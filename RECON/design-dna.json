@@ -1,0 +1,67 @@
+{
+  "source": "https://migosai.com/",
+  "captured_at": "2026-10-02",
+  "mode": "1:1 public-page visual and interaction rebuild",
+  "font": {
+    "family": "Plus Jakarta Sans",
+    "body_px": 16,
+    "body_line_height_px": 24,
+    "desktop_hero_px": 72,
+    "tablet_mobile_hero_px": 36
+  },
+  "colors": {
+    "--background": "#000",
+    "--foreground": "#e2e8f0",
+    "--primary": "#818cf8",
+    "--muted-foreground": "#9ca3af",
+    "--card": "#2c2825",
+    "--border": "#3a3633"
+  },
+  "hero_gradient": [
+    "#9c40ff",
+    "#8fdfff",
+    "#9c40ff"
+  ],
+  "generator": {
+    "form_background": "#0c0c0c",
+    "card_radius_px": 12,
+    "desktop_columns": 2,
+    "tablet_mobile_columns": 1,
+    "gap_px": 32,
+    "aspect_ratios": [
+      "9:16",
+      "16:9",
+      "4:3",
+      "3:4"
+    ],
+    "durations_seconds": [
+      5,
+      10,
+      15
+    ],
+    "resolutions": [
+      "720P",
+      "480P"
+    ]
+  },
+  "faq": "static numbered question-and-answer blocks, all visible",
+  "showcase": {
+    "home": {
+      "count": 4,
+      "container_aspect": "9:16",
+      "fit": "cover"
+    },
+    "page": {
+      "count": 8,
+      "container_aspect": "16:9",
+      "desktop_columns": 3,
+      "playback": "dialog with native controls"
+    }
+  },
+  "evidence": [
+    "pages/home-styles.json",
+    "pages/detail-styles.json",
+    "pages/responsive.json",
+    "pages/video-credit-matrix.json"
+  ]
+}

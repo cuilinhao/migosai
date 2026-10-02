@@ -1,0 +1,243 @@
+{
+  "containers": [
+    {
+      "class": "fixed inset-x-0 top-0 z-50 dark transition-colors duration-300",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "HEADER",
+      "width": 1425
+    },
+    {
+      "class": "py-24 md:py-36",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "showcases",
+      "maxWidth": "none",
+      "padding": "144px 0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "py-16 bg-black text-white dark border-t border-white/5",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "footer",
+      "maxWidth": "none",
+      "padding": "64px 0px",
+      "tag": "SECTION",
+      "width": 1425
+    },
+    {
+      "class": "",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "FOOTER",
+      "width": 1216
+    },
+    {
+      "class": "",
+      "columns": "none",
+      "display": "block",
+      "gap": "normal",
+      "id": "",
+      "maxWidth": "none",
+      "padding": "0px",
+      "tag": "SECTION",
+      "width": 1425
+    }
+  ],
+  "headings": [
+    {
+      "class": "sr-only",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "lineHeight": "24px",
+      "tag": "H1",
+      "text": "Migos AI Showcases",
+      "width": 1,
+      "x": -1,
+      "y": -1
+    },
+    {
+      "class": "mx-auto mb-6 max-w-full text-3xl font-bold text-pretty md:max-w-5xl lg:text-4xl",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "36px",
+      "fontWeight": "700",
+      "lineHeight": "40px",
+      "tag": "H2",
+      "text": "Hotel Lobby AI Videos Made with Migos AI",
+      "width": 1024,
+      "x": 200.5,
+      "y": 144
+    }
+  ],
+  "links": [
+    {
+      "href": "/",
+      "text": "Migos AI"
+    },
+    {
+      "href": "/#how-it-works",
+      "text": "How It Works"
+    },
+    {
+      "href": "/#faq",
+      "text": "FAQ"
+    },
+    {
+      "href": "/pricing",
+      "text": "Pricing"
+    },
+    {
+      "href": "/showcases",
+      "text": "Showcase"
+    },
+    {
+      "href": "/ai-rap-song-generator",
+      "text": "AI Rap Song Generator"
+    },
+    {
+      "href": "#",
+      "text": ""
+    },
+    {
+      "href": "#",
+      "text": ""
+    },
+    {
+      "href": "#",
+      "text": ""
+    },
+    {
+      "href": "/#features",
+      "text": "Features"
+    },
+    {
+      "href": "/ai-rap-song-generator",
+      "text": "AI Rap Song Generator"
+    },
+    {
+      "href": "/#how-it-works",
+      "text": "How It Works"
+    },
+    {
+      "href": "/pricing",
+      "text": "Pricing"
+    },
+    {
+      "href": "/#faq",
+      "text": "FAQ"
+    },
+    {
+      "href": "/privacy-policy",
+      "text": "Privacy Policy"
+    },
+    {
+      "href": "/terms-of-service",
+      "text": "Terms of Service"
+    }
+  ],
+  "media": [
+    {
+      "autoplay": false,
+      "class": "absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105",
+      "controls": false,
+      "height": 217.8671875,
+      "loop": false,
+      "muted": true,
+      "objectFit": "cover",
+      "src": "https://img.migosai.com/video/01.mp4",
+      "width": 387.328125
+    },
+    {
+      "autoplay": false,
+      "class": "absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105",
+      "controls": false,
+      "height": 217.875,
+      "loop": false,
+      "muted": true,
+      "objectFit": "cover",
+      "src": "https://img.migosai.com/video/02.mp4",
+      "width": 387.3359375
+    },
+    {
+      "autoplay": false,
+      "class": "absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105",
+      "controls": false,
+      "height": 217.875,
+      "loop": false,
+      "muted": true,
+      "objectFit": "cover",
+      "src": "https://img.migosai.com/video/03.mp4",
+      "width": 387.3359375
+    },
+    {
+      "autoplay": false,
+      "class": "absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105",
+      "controls": false,
+      "height": 217.8671875,
+      "loop": false,
+      "muted": true,
+      "objectFit": "cover",
+      "src": "https://img.migosai.com/video/04.mp4",
+      "width": 387.328125
+    },
+    {
+      "autoplay": false,
+      "class": "absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105",
+      "controls": false,
+      "height": 217.875,
+      "loop": false,
+      "muted": true,
+      "objectFit": "cover",
+      "src": "https://img.migosai.com/video/05.mp4",
+      "width": 387.3359375
+    },
+    {
+      "autoplay": false,
+      "class": "absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105",
+      "controls": false,
+      "height": 217.875,
+      "loop": false,
+      "muted": true,
+      "objectFit": "cover",
+      "src": "https://img.migosai.com/video/06.mp4",
+      "width": 387.3359375
+    },
+    {
+      "autoplay": false,
+      "class": "absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105",
+      "controls": false,
+      "height": 217.8671875,
+      "loop": false,
+      "muted": true,
+      "objectFit": "cover",
+      "src": "https://img.migosai.com/video/07.mp4",
+      "width": 387.328125
+    },
+    {
+      "autoplay": false,
+      "class": "absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105",
+      "controls": false,
+      "height": 217.875,
+      "loop": false,
+      "muted": true,
+      "objectFit": "cover",
+      "src": "https://img.migosai.com/video/08.mp4",
+      "width": 387.3359375
+    }
+  ],
+  "title": "Showcases — Migos AI",
+  "url": "https://migosai.com/showcases"
+}

@@ -1,0 +1,50 @@
+{
+  "containers": [],
+  "headings": [
+    {
+      "class": "bg-linear-to-r from-[#9c40ff] via-[#8fdfff] to-[#9c40ff] bg-clip-text text-transparent",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "700",
+      "lineHeight": "32px",
+      "tag": "H1",
+      "text": "Sign In",
+      "width": 76.6171875,
+      "x": 513.5,
+      "y": 441
+    },
+    {
+      "class": "",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "lineHeight": "20px",
+      "tag": "H2",
+      "text": "Sign in to your account",
+      "width": 398,
+      "x": 513.5,
+      "y": 479
+    },
+    {
+      "class": "",
+      "fontFamily": "\"Plus Jakarta Sans\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "lineHeight": "20px",
+      "tag": "H3",
+      "text": "Sign in with Google",
+      "width": 127.78125,
+      "x": 660.609375,
+      "y": 531
+    }
+  ],
+  "links": [
+    {
+      "href": "/",
+      "text": "Migos AI"
+    }
+  ],
+  "media": [],
+  "title": "Sign In - Migos AI | Hotel Lobby AI Video Generator",
+  "url": "https://migosai.com/sign-in"
+}

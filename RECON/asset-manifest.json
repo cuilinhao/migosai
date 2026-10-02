@@ -1,0 +1,234 @@
+{
+  "count": 8,
+  "bytes": 67823230,
+  "assets": [
+    {
+      "filename": "Showcases — Migos AI(1).mp4",
+      "source_path": "/Users/pgy/Desktop/复刻站/Showcases — Migos AI(1).mp4",
+      "sha256": "f30f13f51b92609e05eca9681cb31ac101edda3fddc1fdbdfe8d5cba4cd50467",
+      "media": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "tags": {}
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "tags": {}
+          }
+        ],
+        "format": {
+          "duration": "10.375000",
+          "size": "17323805"
+        }
+      },
+      "usage": "User-provided showcase media; matching to original 01-08 order still pending"
+    },
+    {
+      "filename": "Showcases — Migos AI(2).mp4",
+      "source_path": "/Users/pgy/Desktop/复刻站/Showcases — Migos AI(2).mp4",
+      "sha256": "895c9e11b193f8d49c3d3fdab2d375a4c3e5c9d513454534b0eb166279db8776",
+      "media": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "tags": {}
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "tags": {}
+          }
+        ],
+        "format": {
+          "duration": "10.375000",
+          "size": "17765064"
+        }
+      },
+      "usage": "User-provided showcase media; matching to original 01-08 order still pending"
+    },
+    {
+      "filename": "Showcases — Migos AI(3).mp4",
+      "source_path": "/Users/pgy/Desktop/复刻站/Showcases — Migos AI(3).mp4",
+      "sha256": "f0d67ff4741bae3fe1dab4fa3f74c996bbde0760455a0c88a1daecb31e348d0f",
+      "media": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "tags": {}
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "tags": {}
+          }
+        ],
+        "format": {
+          "duration": "5.041667",
+          "size": "4769275"
+        }
+      },
+      "usage": "User-provided showcase media; matching to original 01-08 order still pending"
+    },
+    {
+      "filename": "Showcases — Migos AI(4).mp4",
+      "source_path": "/Users/pgy/Desktop/复刻站/Showcases — Migos AI(4).mp4",
+      "sha256": "576f9a256e000dd5caf4ab6145a55ecc7ef501385f8bc5e7c6db2da5869d3daa",
+      "media": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "tags": {}
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "tags": {}
+          }
+        ],
+        "format": {
+          "duration": "15.069002",
+          "size": "9197669"
+        }
+      },
+      "usage": "User-provided showcase media; matching to original 01-08 order still pending"
+    },
+    {
+      "filename": "Showcases — Migos AI(5).mp4",
+      "source_path": "/Users/pgy/Desktop/复刻站/Showcases — Migos AI(5).mp4",
+      "sha256": "24fea91a236238d589b4a109f429cfc94cf5b2bfce537c6c56c43d823439fb4b",
+      "media": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "tags": {}
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "tags": {}
+          }
+        ],
+        "format": {
+          "duration": "15.022993",
+          "size": "1075847"
+        }
+      },
+      "usage": "User-provided showcase media; matching to original 01-08 order still pending"
+    },
+    {
+      "filename": "Showcases — Migos AI(6).mp4",
+      "source_path": "/Users/pgy/Desktop/复刻站/Showcases — Migos AI(6).mp4",
+      "sha256": "895693dfff03918faf58b3776548acc45d70477d88de50c57203b24e750b0d4c",
+      "media": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "tags": {}
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "tags": {}
+          }
+        ],
+        "format": {
+          "duration": "15.022993",
+          "size": "1059353"
+        }
+      },
+      "usage": "User-provided showcase media; matching to original 01-08 order still pending"
+    },
+    {
+      "filename": "Showcases — Migos AI(7).mp4",
+      "source_path": "/Users/pgy/Desktop/复刻站/Showcases — Migos AI(7).mp4",
+      "sha256": "405da4cca5827cc1b9a33c8dfc06f983a471f7106277436976c947efc7736079",
+      "media": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "tags": {}
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "tags": {}
+          }
+        ],
+        "format": {
+          "duration": "15.022993",
+          "size": "1094398"
+        }
+      },
+      "usage": "User-provided showcase media; matching to original 01-08 order still pending"
+    },
+    {
+      "filename": "Showcases — Migos AI.mp4",
+      "source_path": "/Users/pgy/Desktop/复刻站/Showcases — Migos AI.mp4",
+      "sha256": "8d76b3bf85bbca1cb825cb55a52908ee7477fa824589f24dcd614a3b3f80a922",
+      "media": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "tags": {}
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "tags": {}
+          }
+        ],
+        "format": {
+          "duration": "10.375000",
+          "size": "15537819"
+        }
+      },
+      "usage": "User-provided showcase media; matching to original 01-08 order still pending"
+    }
+  ],
+  "separate_home_reference": {
+    "observed_url": "https://img.migosai.com/video/model.mp4",
+    "local_match": "not yet verified"
+  }
+}
