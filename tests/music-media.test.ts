@@ -18,4 +18,10 @@ describe('media HTTP range semantics',()=>{
  it('returns 206 and a valid Content-Range for an explicit range',()=>{const response=mediaResponse({...object(),range:{offset:5,length:10}} as R2ObjectBody,true);expect(response.status).toBe(206);expect(response.headers.get('Content-Range')).toBe('bytes 5-14/100');expect(response.headers.get('Content-Length')).toBe('10');});
 });
 import { createCheckout } from '../lib/server/payments';
-it('links the checkout success redirect to its own recorded order',async()=>{const d=database();let sent:any;const fetcher=vi.spyOn(globalThis,'fetch').mockImplementation(async(_url,init)=>{sent=JSON.parse(String(init?.body));return Response.json({id:'ch_created',checkout_url:'https://checkout.creem.io/ch_created'});});try{const result=await createCheckout({...jobEnv(d.db),CREEM_API_KEY:'test-key',CREEM_MODE:'test',CREEM_PRODUCT_STARTER:'prod_test'},{id:'u',email:'a@b.c',name:'Test'},'starter');expect((result as any).orderId).toBe(sent.request_id);expect(new URL(sent.success_url).searchParams.get('orderId')).toBe(sent.request_id);expect(d.sqlite.prepare('SELECT checkout_id FROM orders WHERE id=?').get(sent.request_id)?.checkout_id).toBe('ch_created');}finally{fetcher.mockRestore();}});
+it('rejects an unknown credit pack before contacting the payment API',async()=>{
+ const d=database(),fetcher=vi.spyOn(globalThis,'fetch').mockRejectedValue(new Error('unexpected network request'));
+ try{
+  await expect(createCheckout(jobEnv(d.db),{id:'u',email:'a@b.c',name:'Test'},'forged')).rejects.toThrow(/Unknown credit pack/);
+  expect(fetcher).not.toHaveBeenCalled();
+ }finally{fetcher.mockRestore();}
+});

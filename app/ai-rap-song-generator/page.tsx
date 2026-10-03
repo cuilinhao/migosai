@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
-import Link from "next/link";
+import { getTranslations, localizeMetadata } from "@/lib/i18n/server";
+import { localizePageContent } from "@/components/sections/localized-page-content";
+import Link from "@/components/i18n/localized-link";
 import { SongGenerator } from "@/components/generator/song-generator";
 import { WorkflowSection, FeaturesSection, FaqSection } from "@/components/sections/marketing-sections";
 
-export const metadata: Metadata = { title: "AI Rap Song Generator", description: "Generate a complete rap song from an idea or your own lyrics." };
+export async function generateMetadata() { return localizeMetadata({ title: "AI Rap Song Generator", description: "Generate a complete rap song from an idea or your own lyrics." }); }
 
 const steps = [
   { title: "Describe your idea or paste lyrics", description: "Write a short prompt for genre, mood, and vocal style, or paste your own lyrics with section tags like [Verse] and [Chorus]. A rough idea is enough to start." },
@@ -27,13 +28,14 @@ const faqs = [
   { question: "How long does generation take?", answer: "Generation time varies with the model and current demand. Once a track is ready, you can listen to it and download the audio." },
 ];
 
-export default function RapSongPage() {
-  return <div className="mi-song-page">
+export default async function RapSongPage() {
+  const t = await getTranslations();
+  return localizePageContent(<div className="mi-song-page">
     <section className="mi-song-hero"><a className="mi-hero-badge" href="#generator"><span>NEW</span> Generate unlimited AI rap songs — try it free ›</a><h1>AI <span>Rap Song</span> Generator</h1><p>Create studio-quality rap songs instantly with AI. Describe the mood, paste your lyrics, or start from a short idea — get full vocal tracks with beats, flow, and hooks in minutes.</p></section>
     <section id="generator" className="mi-song-generator-section"><h2 className="mi-sr-only">AI Rap Song Generator</h2><SongGenerator /></section>
     <WorkflowSection title="How to Create Rap Songs with AI" description="Go from a creative idea—and optional lyrics—to a complete rap track in one generation. No music theory required." steps={steps} />
     <FeaturesSection title="Advanced Features of AI Rap Song Generator" description="Create studio-quality rap songs instantly. Generate royalty-free vocal tracks in any hip-hop style." features={features} />
     <FaqSection title="FAQs about AI Rap Song Generator" description="Everything you need to know about generating rap songs with AI." items={faqs} />
-    <section className="mi-song-cta"><h2>Start Creating AI<br />Rap Songs Today</h2><p>New to AI music or an experienced creator? Generate studio-quality rap tracks fast with our AI Rap Song Generator.</p><Link className="mi-primary-button" href="#generator">Try AI Rap Song Generator ⚡</Link></section>
-  </div>;
+    <section className="mi-song-cta"><h2>Start Creating AI Rap Songs Today</h2><p>New to AI music or an experienced creator? Generate studio-quality rap tracks fast with our AI Rap Song Generator.</p><Link className="mi-primary-button" href="#generator">Try AI Rap Song Generator ⚡</Link></section>
+  </div>, t);
 }

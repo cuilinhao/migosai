@@ -1,11 +1,12 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/i18n/localized-link";
 import { CreditCard, Music2, UserRound, WandSparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useLocale } from "@/components/i18n/locale-provider";
 import { useAuth } from "@/components/auth-provider";
 import type { CreateSongRequest, GenerationResponse } from "@/lib/contracts";
-import { readApi, useGeneration } from "./use-generation";
+import { readApi, useGeneration, useGenerationTranslations } from "./use-generation";
 
 const models: { value: CreateSongRequest["model"]; label: string }[] = [
   { value: "v6", label: "Suno V6" }, { value: "v6-wild", label: "Suno V6 Wild" },
@@ -17,6 +18,8 @@ function Switch({ checked, onChange, label }: { checked: boolean; onChange: (val
 }
 
 export function SongGenerator() {
+  const t = useGenerationTranslations();
+  const locale = useLocale();
   const { user, credits, loading: authLoading, openSignIn, refresh } = useAuth();
   const [model, setModel] = useState<CreateSongRequest["model"]>("v6");
   const [custom, setCustom] = useState(false);
@@ -51,20 +54,20 @@ export function SongGenerator() {
 
   return <div className="mi-generator-grid mi-song-grid">
     <div className="mi-song-form mi-panel">
-      <h2>AI Rap Song Generator</h2>
-      <div className="mi-song-toolbar"><Switch checked={custom} onChange={setCustom} label="Custom Mode" /><label className="mi-model-label">Model<select value={model} onChange={(event) => setModel(event.target.value as CreateSongRequest["model"])}>{models.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}</select></label></div>
+      <h2>{t('AI Rap Song Generator')}</h2>
+      <div className="mi-song-toolbar"><Switch checked={custom} onChange={setCustom} label={t("Custom Mode")} /><label className="mi-model-label">{t("Model")}<select value={model} onChange={(event) => setModel(event.target.value as CreateSongRequest["model"])}>{models.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}</select></label></div>
       {custom ? <>
-        <label className="mi-field-label" htmlFor="mi-song-title">Title</label><input id="mi-song-title" className="mi-text-input" value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Midnight Hustle" />
-        <label className="mi-field-label" htmlFor="mi-song-style">Style of Music</label><textarea id="mi-song-style" className="mi-text-area mi-style-area" maxLength={1000} value={style} onChange={(event) => setStyle(event.target.value)} placeholder="rap, hip-hop, trap, boom bap, hard drums, punchy bass" /><span className="mi-character-count">{style.length}/1000</span>
-      </> : <><label className="mi-field-label" htmlFor="mi-song-prompt">Prompt</label><textarea id="mi-song-prompt" className="mi-text-area" value={prompt} onChange={(event) => setPrompt(event.target.value)} placeholder="Describe your song, mood, and sound" /></>}
-      <Switch checked={instrumental} onChange={setInstrumental} label="Instrumental" />
-      {custom && !instrumental && <><label className="mi-field-label" htmlFor="mi-song-lyrics">Lyrics</label><textarea id="mi-song-lyrics" className="mi-text-area mi-lyrics-area" value={lyrics} onChange={(event) => setLyrics(event.target.value)} placeholder="Paste your rap lyrics with [Verse], [Chorus], and [Bridge] tags for the best result" /></>}
-      <button type="button" className="mi-primary-button mi-generate-button" disabled={busy || authLoading} onClick={generate}>{user ? <WandSparkles size={17} /> : <UserRound size={17} />}{busy ? "Creating rap song…" : authLoading ? "Checking account…" : user ? "Generate Rap Song" : "Sign In to Generate Rap"}</button>
-      <div className="mi-credit-line"><span>10 credits cost, {credits} credits remaining</span><Link href="/pricing" className="mi-buy-inline"><CreditCard size={15} /> Buy Credits</Link></div>
-      {error && <p className="mi-error" role="alert">{error} {credits < 10 && user ? <Link href="/pricing">Buy Credits</Link> : null}</p>}
-      {generation && <div className="mi-generation-status" role="status">{generation.status === "completed" ? "Your rap song is ready." : generation.status === "failed" || generation.status === "cancelled" ? (generation.error ?? "Song generation could not be completed.") : `${generation.status[0].toUpperCase()}${generation.status.slice(1)}… ${generation.progress}%`}</div>}
-      {pollError && <p className="mi-error" role="alert">{pollError}</p>}
+        <label className="mi-field-label" htmlFor="mi-song-title">{t('Title')}</label><input id="mi-song-title" className="mi-text-input" value={title} onChange={(event) => setTitle(event.target.value)} placeholder={t('Midnight Hustle')} />
+        <label className="mi-field-label" htmlFor="mi-song-style">{t('Style of Music')}</label><textarea id="mi-song-style" className="mi-text-area mi-style-area" maxLength={1000} value={style} onChange={(event) => setStyle(event.target.value)} placeholder={t('rap, hip-hop, trap, boom bap, hard drums, punchy bass')} /><span className="mi-character-count">{style.length}/1000</span>
+      </> : <><label className="mi-field-label" htmlFor="mi-song-prompt">{t('Prompt')}</label><textarea id="mi-song-prompt" className="mi-text-area" value={prompt} onChange={(event) => setPrompt(event.target.value)} placeholder={t('Describe your song, mood, and sound')} /></>}
+      <Switch checked={instrumental} onChange={setInstrumental} label={t("Instrumental")} />
+      {custom && !instrumental && <><label className="mi-field-label" htmlFor="mi-song-lyrics">{t('Lyrics')}</label><textarea id="mi-song-lyrics" className="mi-text-area mi-lyrics-area" value={lyrics} onChange={(event) => setLyrics(event.target.value)} placeholder={t('Paste your rap lyrics with [Verse], [Chorus], and [Bridge] tags for the best result')} /></>}
+      <button type="button" className="mi-primary-button mi-generate-button" disabled={busy || authLoading} onClick={generate}>{user ? <WandSparkles size={17} /> : <UserRound size={17} />}{t(busy ? "Creating rap song…" : authLoading ? "Checking account…" : user ? "Generate Rap Song" : "Sign In to Generate Rap")}</button>
+      <div className="mi-credit-line"><span>{t("10 credits cost, {credits} credits remaining", { credits: credits.toLocaleString(locale) })}</span><Link href="/pricing" className="mi-buy-inline"><CreditCard size={15} /> {t("Buy Credits")}</Link></div>
+      {error && <p className="mi-error" role="alert">{t(error)} {credits < 10 && user ? <Link href="/pricing">{t('Buy Credits')}</Link> : null}</p>}
+      {generation && <div className="mi-generation-status" role="status">{generation.status === "completed" ? t("Your rap song is ready.") : generation.status === "failed" || generation.status === "cancelled" ? t(generation.error ?? "Song generation could not be completed.") : t("{status}… {progress}%", { status: t(generation.status), progress: generation.progress.toLocaleString(locale) })}</div>}
+      {pollError && <p className="mi-error" role="alert">{t(pollError)}</p>}
     </div>
-    <div className="mi-song-result mi-panel"><h2><Music2 size={18} /> Generated Rap Song</h2>{generation?.status === "completed" && generation.audioUrls?.length ? <div className="mi-audio-results">{generation.audioUrls.map((url, index) => <div className="mi-audio-result" key={`${url}-${index}`}><strong>Track {index + 1}</strong><audio src={url} controls preload="none" /><a href={url} download={`migos-ai-rap-${index + 1}.mp3`}>Download MP3</a></div>)}</div> : <div className="mi-song-empty"><Music2 size={31} /><span>{generation && !["failed", "cancelled"].includes(generation.status) ? "Generating your song…" : "No Song Generated"}</span></div>}</div>
+    <div className="mi-song-result mi-panel"><h2><Music2 size={18} /> {t("Generated Rap Song")}</h2>{generation?.status === "completed" && generation.audioUrls?.length ? <div className="mi-audio-results">{generation.audioUrls.map((url, index) => <div className="mi-audio-result" key={`${url}-${index}`}><strong>{t("Track {number}", { number: index + 1 })}</strong><audio src={url} controls preload="none" /><a href={url} download={`migos-ai-rap-${index + 1}.mp3`}>{t('Download MP3')}</a></div>)}</div> : <div className="mi-song-empty"><Music2 size={31} /><span>{t(generation && !["failed", "cancelled"].includes(generation.status) ? "Generating your song…" : "No Song Generated")}</span></div>}</div>
   </div>;
 }

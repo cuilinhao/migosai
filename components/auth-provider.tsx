@@ -5,6 +5,7 @@ import { createContext, useCallback, useContext, useEffect, useState, type React
 import { X } from "lucide-react";
 import type { MeResponse, User } from "@/lib/contracts";
 import { authReturnTo } from "@/components/ui/auth-return";
+import { useTranslations } from "@/components/i18n/locale-provider";
 
 type AuthContextValue = {
   user: User | null;
@@ -25,6 +26,7 @@ export function useAuth(): AuthContextValue {
 }
 
 export function GoogleSignInButton({ authConfigured }: { authConfigured: boolean }) {
+  const t = useTranslations();
   const [error, setError] = useState("");
   const signIn = () => {
     if (!authConfigured) {
@@ -36,22 +38,24 @@ export function GoogleSignInButton({ authConfigured }: { authConfigured: boolean
   };
   return <>
     <button className="mi-google-button" type="button" onClick={signIn}>
-      <span className="mi-google-mark" aria-hidden="true">G</span> Sign in with Google
+      <span className="mi-google-mark" aria-hidden="true">G</span> {t("Sign in with Google")}
     </button>
-    {error && <p className="mi-error" role="alert">{error}</p>}
+    {error && <p className="mi-error" role="alert">{t(error)}</p>}
   </>;
 }
 
 export function AuthCard({ kind = "sign-in", authConfigured }: { kind?: "sign-in" | "sign-up"; authConfigured: boolean }) {
+  const t = useTranslations();
   const isUp = kind === "sign-up";
   return <div className="mi-auth-card">
-    <h1>{isUp ? "Sign Up" : "Sign In"}</h1>
-    <p>{isUp ? "Create an account" : "Sign in to your account"}</p>
+    <h1>{t(isUp ? "Sign Up" : "Sign In")}</h1>
+    <p>{t(isUp ? "Create an account" : "Sign in to your account")}</p>
     <GoogleSignInButton authConfigured={authConfigured} />
   </div>;
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const t = useTranslations();
   const [user, setUser] = useState<User | null>(null);
   const [credits, setCredits] = useState(0);
   const [authConfigured, setAuthConfigured] = useState(false);
@@ -89,10 +93,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       <Dialog.Portal>
         <Dialog.Overlay className="mi-dialog-overlay" />
         <Dialog.Content className="mi-auth-dialog" aria-describedby="mi-auth-description">
-          <Dialog.Title>Sign In</Dialog.Title>
-          <Dialog.Description id="mi-auth-description">Sign in to your account</Dialog.Description>
+          <Dialog.Title>{t("Sign In")}</Dialog.Title>
+          <Dialog.Description id="mi-auth-description">{t("Sign in to your account")}</Dialog.Description>
           <GoogleSignInButton authConfigured={authConfigured} />
-          <Dialog.Close className="mi-dialog-close" aria-label="Close"><X size={18} /></Dialog.Close>
+          <Dialog.Close className="mi-dialog-close" aria-label={t("Close")}><X size={18} /></Dialog.Close>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

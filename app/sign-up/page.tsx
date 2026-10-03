@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
+import { localizeMetadata } from "@/lib/i18n/server";
 import { AuthPage } from "@/components/ui/auth-page";
 
-export const metadata: Metadata = { title: "Sign Up" };
+export async function generateMetadata() { return localizeMetadata({ title: "Sign Up" }); }
 
 export default function SignUpPage() { return <AuthPage kind="sign-up" />; }

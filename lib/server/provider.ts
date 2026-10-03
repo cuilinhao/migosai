@@ -3,6 +3,14 @@ import { ApiError } from './errors';
 import type { Env } from './env';
 export class ProviderError extends Error{constructor(message:string,public uncertain=false,public transientQuery=false){super(message);}}
 export function normalizeProviderStatus(s:string):'pending'|'processing'|'completed'|'failed'|'cancelled'{if(['completed','succeeded','success'].includes(s))return 'completed';if(['cancelled','canceled'].includes(s))return 'cancelled';if(['failed','error','rejected'].includes(s))return 'failed';return s==='processing'?'processing':'pending';}
+export function providerContentPolicyRejected(data:unknown):boolean{
+ const error=(data as {error?:unknown}|null)?.error;
+ if(!error||typeof error!=='object')return false;
+ const {code,message}=error as {code?:unknown;message?:unknown};
+ if(typeof code!=='string')return false;
+ if(['content_policy_blocked','content_policy_violation','safety_rejected'].includes(code))return true;
+ return code==='task_failed'&&typeof message==='string'&&/^(?:Blocked by a specific content policy|Rejected by (?:the )?(?:content|safety) policy)\b/i.test(message);
+}
 // One source image per avatar task makes result-to-left/right mapping unambiguous even with partial failures.
 export function usableAsset(result:unknown):string{const assets=(result as {usable_assets?:{asset_url?:string}[]})?.usable_assets;if(!Array.isArray(assets)||assets.length!==1||!/^asset:\/\/[\w-]+$/.test(assets[0]?.asset_url??''))throw new ProviderError('Image review did not return one approved reference. Please use a different photo.');return assets[0].asset_url!;}
 export function validateSong(value:unknown):CreateSongRequest{

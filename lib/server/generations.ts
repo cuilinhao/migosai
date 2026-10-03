@@ -6,8 +6,9 @@ import { validateVideo,getVideoCost } from '../video-options';
 import { validateSong } from './provider';
 import { reserveGeneration } from './billing';
 import { generationResponse } from './jobs';
-export async function createGeneration(request:Request,kind:'video'|'music'){const env=await getEnv();sameOrigin(request,appOrigin(env));const user=await requireUser(request,env);providerConfigured(env);const input=await jsonBody(request);let payload,cost:number;
- if(kind==='video'){moderationConfigured(env);try{payload=validateVideo(input);}catch{throw new ApiError(400,'Invalid video options.');}cost=getVideoCost(payload.duration,payload.resolution);for(const key of [payload.leftImage,payload.rightImage]){const owned=await database(env).prepare('SELECT key FROM uploads WHERE key=? AND user_id=?').bind(key,user.id).first();if(!owned)throw new ApiError(400,'Please upload both photos to your account.');}}
+import { validateVideoUploads } from './reference-uploads';
+export async function createGeneration(request:Request,kind:'video'|'music'){const env=await getEnv();sameOrigin(request,appOrigin(env));const user=await requireUser(request,env);providerConfigured(env,kind==='video'?'kie':'apimart');const input=await jsonBody(request);let payload,cost:number;
+ if(kind==='video'){moderationConfigured(env);try{payload=validateVideo(input);}catch{throw new ApiError(400,'Invalid video options.');}const referenceDuration=await validateVideoUploads(database(env),user.id,payload);cost=getVideoCost(payload.duration,payload.resolution,payload.model,referenceDuration);}
  else{payload=validateSong(input);cost=10;}
- const header=request.headers.get('Idempotency-Key');if(header&&!/^[\w-]{8,128}$/.test(header))throw new ApiError(400,'Invalid request identifier.');const key=header??await sha256(`${kind}:${JSON.stringify(payload)}:${Math.floor(Date.now()/60000)}`);const job=await reserveGeneration(database(env),user.id,key,kind,payload,cost);return Response.json(generationResponse(job),{status:202,headers:{'Cache-Control':'no-store'}});
+ const header=request.headers.get('Idempotency-Key');if(header&&!/^[\w-]{8,128}$/.test(header))throw new ApiError(400,'Invalid request identifier.');const key=header??await sha256(`${kind}:${JSON.stringify(payload)}:${Math.floor(Date.now()/60000)}`);const storedPayload=kind==='video'?{...payload,provider:'kie'}:payload;const job=await reserveGeneration(database(env),user.id,key,kind,storedPayload,cost);return Response.json(generationResponse(job),{status:202,headers:{'Cache-Control':'no-store'}});
 }

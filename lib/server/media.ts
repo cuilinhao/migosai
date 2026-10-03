@@ -6,8 +6,8 @@ export async function verifyMediaSignature(env:Env,key:string,url:URL){const exp
 const MAX_MEDIA_BYTES=64*1024*1024;
 const PART_BYTES=5*1024*1024;
 /** Retains one 5 MiB multipart buffer plus the current network chunk, regardless of total size. */
-export async function storeProviderMedia(env:Env,url:string,key:string,kind:'video'|'music'){
- if(!validMediaUrl(url,env.APIMART_MEDIA_HOSTS??''))throw new ApiError(502,'The provider returned an unapproved media host. Support must review this result.');
+export async function storeProviderMedia(env:Env,url:string,key:string,kind:'video'|'music',provider:'apimart'|'kie'='apimart'){
+ if(!validMediaUrl(url,(provider==='kie'?env.KIE_MEDIA_HOSTS:env.APIMART_MEDIA_HOSTS)??''))throw new ApiError(502,'The provider returned an unapproved media host. Support must review this result.');
  const signal=AbortSignal.timeout(60000);
  const response=await fetch(url,{redirect:'manual',signal});
  if(!response.ok){await response.body?.cancel().catch(()=>{});throw new ApiError(502,'Could not download the generated media.');}

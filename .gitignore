@@ -1,5 +1,6 @@
 node_modules/
 .next/
+.next-dev/
 .open-next/
 .wrangler/
 dist/
@@ -15,3 +16,8 @@ coverage/
 .superpowers/
 
 *.tsbuildinfo
+
+# Generated verification reports and browser captures stay local.
+/QA/*
+!/QA/README.md
+/docs/superpowers/

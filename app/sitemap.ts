@@ -1,8 +1,13 @@
-import type { MetadataRoute } from 'next';
+import type { MetadataRoute } from "next";
+import { locales, localizeHref } from "../lib/i18n/routing";
+import { publicPages, SITE_URL } from "../content/public-pages";
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  return ['', '/pricing', '/showcases', '/ai-rap-song-generator', '/privacy-policy', '/terms-of-service'].map((path) => ({
-    url: `https://migosai.design${path}`,
-    changeFrequency: path.includes('policy') || path.includes('terms') ? 'yearly' as const : 'monthly' as const,
-    priority: path === '' ? 1 : 0.7,
-  }));
+  return publicPages.flatMap(({ path, priority, changeFrequency, lastModified }) => locales.map((locale) => ({
+    url: new URL(localizeHref(path, locale), SITE_URL).href,
+    alternates: { languages: Object.fromEntries([...locales.map((language) => [language, new URL(localizeHref(path, language), SITE_URL).href]), ["x-default", new URL(path, SITE_URL).href]]) },
+    priority,
+    changeFrequency,
+    ...(lastModified ? { lastModified } : {}),
+  })));
 }

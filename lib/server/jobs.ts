@@ -1,11 +1,13 @@
 import type { CreateVideoRequest,CreateSongRequest,GenerationResponse,GenerationStatus } from '../contracts';
-import { database,providerConfigured,moderationConfigured,type Env } from './env';
+import { database,providerConfigured,moderationConfigured,appOrigin,type Env } from './env';
 import { refundGeneration,type Job,type JobFence } from './billing';
-import { ProviderError,providerRequest,normalizeProviderStatus,usableAsset,musicPayload } from './provider';
+import { ProviderError,providerRequest,normalizeProviderStatus,providerContentPolicyRejected,usableAsset,musicPayload } from './provider';
 import { signedMediaUrl,storeProviderMedia } from './media';
 import { videoPrompt } from '../prompts/video';
 import { createModerationMediaUrl } from './moderation-media';
 import { createVideoModeration, getVideoModeration, SeeApiError } from './seeapi';
+import { createKieVideo, getKieVideo } from './kie';
+import { getVideoSettings } from '../video-options';
 type Avatar={key:string;side:'left'|'right';taskId?:string;url?:string};
 export function generationResponse(job:Job):GenerationResponse{
  const keys:string[]=JSON.parse(job.result_keys??'[]');
@@ -98,10 +100,10 @@ async function advanceModeration(env:Env,job:Job,fence:JobFence){
  }
 }
 
-async function quarantineVideo(env:Env,job:Job,fence:JobFence,url:string,cost:number|null){
+async function quarantineVideo(env:Env,job:Job,fence:JobFence,url:string,cost:number|null,provider:'apimart'|'kie'='apimart'){
  const db=database(env),key=`users/${job.user_id}/results/${job.id}/${crypto.randomUUID()}`;
  try{
-  await storeProviderMedia(env,url,key,'video');
+  await storeProviderMedia(env,url,key,'video',provider);
   const object=await env.MEDIA!.head(key);
   if(!object?.etag)throw new Error('Could not verify the stored video.');
   const now=Math.floor(Date.now()/1000),expiresAt=now+3600;
@@ -118,28 +120,48 @@ async function quarantineVideo(env:Env,job:Job,fence:JobFence,url:string,cost:nu
 export async function advanceJob(env:Env,id:string):Promise<void>{const db=database(env),owner=crypto.randomUUID();const acquired=await db.prepare("UPDATE generations SET lease_until=unixepoch()+240,lease_owner=? WHERE id=? AND lease_until<unixepoch() AND next_poll<=unixepoch() AND status NOT IN('completed','failed','cancelled') AND stage!='manual_review'").bind(owner,id).run();if(!acquired.meta.changes)return;const job=await db.prepare('SELECT * FROM generations WHERE id=?').bind(id).first<Job>();if(!job||job.lease_owner!==owner)return;const fence:JobFence={owner,stage:job.stage};
  try{
   if(job.kind==='video'&&job.stage.startsWith('moderation_')){await advanceModeration(env,job,fence);return;}
-  providerConfigured(env);
+  // Pin the provider on reservation so a rollout never queries or resubmits an
+  // existing APIMart task through Kie. Historical payloads remain APIMart jobs.
+  const payload=JSON.parse(job.payload) as CreateVideoRequest&{provider?:'kie'};
+  const provider=job.kind==='video'&&payload.provider==='kie'?'kie':'apimart';
+  providerConfigured(env,provider);
   if(job.kind==='video'&&(job.stage==='new'||job.stage==='ready'))moderationConfigured(env);
   if(job.stage.startsWith('submitting')){await patch(db,id,fence,{stage:'manual_review',error:'The provider submission could not be confirmed. Support is reviewing this request; it will not be resubmitted automatically.'});return;}
-  const payload=JSON.parse(job.payload) as CreateVideoRequest&CreateSongRequest;
-  if(job.kind==='video'&&(job.stage==='new'||job.stage==='reviewing')){
+  if(provider==='kie'&&(job.stage==='new'||job.stage==='ready')){
+   const references=await Promise.all([payload.leftImage,payload.rightImage].map(key=>signedMediaUrl(env,key)));
+   let videoUrls:string[]|undefined,audioUrls:string[]|undefined;
+   // Only explicit new settings opt into template media. Never change an old reservation.
+   if(payload.model){
+    const settings=getVideoSettings(payload),origin=appOrigin(env);
+    if(payload.referenceVideo)videoUrls=[await signedMediaUrl(env,payload.referenceVideo)];
+    else if(settings.motion==='template'&&settings.scene==='hotel-lobby')videoUrls=[`${origin}/templates/hotel-lobby/motion-${payload.duration}.mp4`];
+    if(settings.soundtrack!=='ai'){
+     if(payload.referenceAudio)audioUrls=[await signedMediaUrl(env,payload.referenceAudio)];
+     else if(settings.soundtrack==='template')audioUrls=[`${origin}/templates/hotel-lobby/audio-${payload.duration}.wav`];
+    }
+   }
+   await patch(db,id,fence,{stage:'submitting_generation',status:'processing',progress:45});
+   const taskId=await createKieVideo(env,payload,references,{videoUrls,audioUrls});
+   await patch(db,id,fence,{stage:'polling',provider_id:taskId,status:'processing'});return;
+  }
+  if(provider==='apimart'&&job.kind==='video'&&(job.stage==='new'||job.stage==='reviewing')){
    const avatars:Avatar[]=job.assets?JSON.parse(job.assets):[{key:payload.leftImage,side:'left'},{key:payload.rightImage,side:'right'}];
    const index=avatars.findIndex(a=>!a.url);const avatar=avatars[index];
-   if(avatar&&!avatar.taskId){const source=await signedMediaUrl(env,avatar.key);await patch(db,id,fence,{stage:'submitting_avatar',status:'reviewing',assets:JSON.stringify(avatars)});const data=await providerRequest(env,'/v1/seedance2/private-avatar/assets',{model:'seedance-2.5',asset_type:'Image',assets:[{url:source,name:`${id}-${avatar.side}`}]});if(typeof data?.id!=='string')throw new ProviderError('Image review submission could not be confirmed.',true);avatar.taskId=data.id;await patch(db,id,fence,{stage:'reviewing',assets:JSON.stringify(avatars),progress:10+index*15});return;}
+   if(avatar&&!avatar.taskId){const source=await signedMediaUrl(env,avatar.key);await patch(db,id,fence,{stage:'submitting_avatar',status:'reviewing',assets:JSON.stringify(avatars)});const data=await providerRequest(env,'/v1/seedance2/private-avatar',{group:{name:`${id}-${avatar.side}`},asset_type:'Image',assets:[{url:source,name:`${id}-${avatar.side}`}]});if(typeof data?.id!=='string')throw new ProviderError('Image review submission could not be confirmed.',true);avatar.taskId=data.id;await patch(db,id,fence,{stage:'reviewing',assets:JSON.stringify(avatars),progress:10+index*15});return;}
    if(avatar){const data=await providerRequest(env,`/v1/tasks/${encodeURIComponent(avatar.taskId!)}`);const status=normalizeProviderStatus(data?.status);if(status==='failed'||status==='cancelled'){await refundGeneration(db,id,status,'Image review failed. Your credits have been returned.',fence);return;}if(status!=='completed')return;avatar.url=usableAsset(data.result);await patch(db,id,fence,{assets:JSON.stringify(avatars),progress:25+index*15});if(avatars.some(a=>!a.url))return;}
    await patch(db,id,fence,{stage:'ready',assets:JSON.stringify(avatars)});return;
   }
   if(job.stage==='ready'||job.kind==='music'&&job.stage==='new'){
-   const avatars:Avatar[]=JSON.parse(job.assets??'[]');const body=job.kind==='video'?{model:'seedance-2.5',image_urls:avatars.map(a=>a.url),prompt:videoPrompt(payload),duration:payload.duration,resolution:payload.resolution,size:payload.aspect,generate_audio:true,nsfw_check:true,omni_reference_task_type:'reference'}:musicPayload(payload);
+   const avatars:Avatar[]=JSON.parse(job.assets??'[]');const body=job.kind==='video'?{model:'seedance-2.0-fast',image_urls:avatars.map(a=>a.url),prompt:videoPrompt(payload),duration:payload.duration,resolution:payload.resolution,size:payload.aspect,generate_audio:true,nsfw_check:true}:musicPayload(JSON.parse(job.payload) as CreateSongRequest);
    await patch(db,id,fence,{stage:'submitting_generation',status:'processing',progress:45});const data=await providerRequest(env,job.kind==='video'?'/v1/videos/generations':'/v1/music/generations',body);if(typeof data?.[0]?.task_id!=='string')throw new ProviderError('Generation submission could not be confirmed.',true);await patch(db,id,fence,{stage:'polling',provider_id:data[0].task_id,status:'processing'});return;
   }
   if(job.stage==='polling'){
-   const data=await providerRequest(env,`${job.kind==='video'?'/v1/tasks/':'/v1/music/tasks/'}${encodeURIComponent(job.provider_id!)}`);const status=normalizeProviderStatus(data?.status);
-   if(status==='failed'||status==='cancelled'){await refundGeneration(db,id,status,'The provider could not complete your generation. Your credits have been returned.',fence);return;}
-   if(status!=='completed'){await patch(db,id,fence,{progress:Math.max(45,Math.min(95,Number(data?.progress)||45))});return;}
+   const data=provider==='kie'?await getKieVideo(env,job.provider_id!,payload.model):await providerRequest(env,`${job.kind==='video'?'/v1/tasks/':'/v1/music/tasks/'}${encodeURIComponent(job.provider_id!)}`);const status=normalizeProviderStatus(data?.status);
+   if(status==='failed'||status==='cancelled'){const message=job.kind==='video'&&status==='failed'&&providerContentPolicyRejected(data)?'The generation service rejected this content. Please use different reference photos. Your credits have been returned.':'The provider could not complete your generation. Your credits have been returned.';await refundGeneration(db,id,status,message,fence);return;}
+   if(status!=='completed'){await patch(db,id,fence,{progress:Math.max(45,Math.min(95,Number(data?.progress)||45)),error:null});return;}
    const urls=job.kind==='video'?[data?.result?.videos?.[0]?.url?.[0]]:data?.result?.music?.map((m:{audio_url?:string})=>m.audio_url);
    if(!Array.isArray(urls)||!urls.length||urls.length>4||urls.some(u=>typeof u!=='string'))throw new ProviderError('The provider returned an incomplete result. Support must review this generation.',true);
-   if(job.kind==='video'){await quarantineVideo(env,job,fence,urls[0],typeof data.cost==='number'?data.cost:null);return;}
+   if(job.kind==='video'){await quarantineVideo(env,job,fence,urls[0],typeof data.cost==='number'?data.cost:null,provider);return;}
    const keys:string[]=[];for(let i=0;i<urls.length;i++)keys.push(await storeProviderMedia(env,urls[i],`users/${job.user_id}/results/${job.id}/${i}`,job.kind));
    await patch(db,id,fence,{status:'completed',stage:'terminal',result_keys:JSON.stringify(keys),progress:100,error:null,provider_cost:typeof data.cost==='number'?data.cost:null});return;
   }

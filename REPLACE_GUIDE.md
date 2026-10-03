@@ -1,28 +1,42 @@
-# 替换与维护指南
+# 配置与维护指南
 
-此工程的营销页、计费和后端任务共用一些配置。修改品牌、套餐或供应商时，同时检查展示内容、服务端校验和外部控制台，避免页面文字与实际扣费不一致。
+## 环境配置
 
-| 要替换的内容 | 主要位置 | 同步检查 |
-| --- | --- | --- |
-| 品牌名称与站点描述 | `app/layout.tsx`、`components/site-header.tsx`、`components/site-footer.tsx`、`content/home.ts`、页面文案 | `app/sitemap.ts`、`app/robots.ts`、法务页、OAuth 同意屏幕与支付商品名称 |
-| Logo、颜色、字体 | `public/logo.png`、`app/globals.css`、`app/interactive.css`、`app/layout.tsx` | 1440/768/390 截图与移动菜单、对比度 |
-| 展示视频与封面 | `public/videos/`、`public/posters/`、`RECON/asset-manifest.json` | 首页前四例为 9:16 裁切，案例页八例为 16:9 横屏；预览片单独使用 `/videos/preview.mp4` |
-| 首页流程、特性、FAQ | `content/home.ts`、`components/sections/marketing-sections.tsx`、`app/page.tsx` | 不把静态 FAQ 改成与原站不符的默认折叠状态 |
-| 积分包与价格 | `content/pricing.ts`、`components/pricing-cards.tsx` | `lib/server/payments.ts` 的服务端订单校验、Creem 四个商品、Worker 商品环境变量、购买回跳 |
-| 视频选项及扣费 | `lib/video-options.ts`、`components/generator/duo-video-generator.tsx` | 测试中的六组时长/清晰度价格，服务端余额检查及商品说明 |
-| 音乐模型与表单 | `lib/contracts.ts`、`components/generator/song-generator.tsx`、`lib/server/` 的音乐请求映射 | APIMart 实际支持的版本、10 积分扣费、成功输出格式与媒体白名单 |
-| 视频安全审核 | `lib/server/jobs.ts`、`lib/server/seeapi.ts`、`lib/server/moderation-media.ts`、`migrations/0003_video_moderation.sql` | SeeAPI 凭据、32 帧采样与判定规则、固定请求体/幂等键、签名候选 URL、积分退回和持久清理；审核未明确通过前不得开放结果媒体 |
-| 域名与回调 | `wrangler.jsonc` 的 `APP_URL` 与 Worker 路由、`app/layout.tsx`、`app/sitemap.ts`、`app/robots.ts` | Google OAuth 回调、Creem 成功页/Webhook、R2 媒体 URL、Cloudflare DNS；当前使用根域及 `www` Worker 路由 |
-| 法务与客服信息 | `app/privacy-policy/page.tsx`、`app/terms-of-service/page.tsx`、页脚 | 正式运营主体、有效联系方式、数据保留及退款政策须由运营方确认 |
-| 支持邮箱 | 计划地址 `support@migosai.design`、域名 DNS 邮件记录 | 用户自行创建 Zoho 邮箱；完成后核验收发、转发及 MX/SPF/DKIM，再把地址写入网站联系方式 |
+以 [`.env.example`](.env.example) 为变量清单。开发使用被 Git 忽略的 `.dev.vars`；生产密钥使用 Cloudflare Workers Secrets。`DB`、`MEDIA`、`ASSETS` 和 Worker 自引用是 Wrangler 绑定，不是环境变量中的凭据字符串。
 
-## 服务配置顺序
+| 配置组 | 用途 |
+| --- | --- |
+| `APP_URL`、Google OAuth | 正式站点源地址与登录回调 |
+| `MEDIA_SIGNING_SECRET` | 私有媒体短期签名，至少 32 字符随机值 |
+| `KIE_API_KEY`、`KIE_MEDIA_HOSTS` | 新视频生成及输出 CDN 允许列表 |
+| `APIMART_API_KEY`、`APIMART_MEDIA_HOSTS` | 音乐和历史视频任务 |
+| `SEEAPI_API_KEY` | 视频发布前的内容审核 |
+| `WAFFO_*` | 商户、店铺、四档商品、环境及商户 RSA 私钥 |
 
-1. 按 [`.env.example`](.env.example) 准备本地变量；生产密钥只写入 Workers Secrets。不要在代码、文档、截图或 Git 提交里放真实值。
-2. 对目标环境应用 D1 迁移并核验绑定到正确数据库；R2 必须为私有用户媒体准备独立桶。
-3. Google 正式客户端、域名回调与真实登录已验证；更换域名或客户端后重新验证账户隔离与首次赠送积分。
-4. Creem 四个商品、API Key、正式网站 Checkout 创建和三个 Webhook 事件已验证存在；商家资料已提交，正在审核且当前无需补操作。提交后的真实付款页仍提示账户验证，待审核放行后以真实签名事件验证一次性入账；页面回跳仅显示等待，不能代替 Webhook。
-5. APIMart 的音乐和视频已在先前部署的正式后端验证一次积分扣费、真实 cron、生产 R2 与授权读取，视频还验证了私有双图签名输入和素材审核。新版 SeeAPI 审核已部署，NSFW 独立快照 231 项测试及本地待审/人工/拦截 UI 验收通过，生产干净视频 32 帧审核和授权读取通过（`QA/production-moderation.json`）。更换供应商/CDN 后重新核对 `APIMART_MEDIA_HOSTS`，更换审核服务时必须保留私有候选、明确通过才开放媒体、拦截幂等退款和技术故障人工保留等规则；仍需从浏览器 UI 复查提交、状态展示、结果播放和失败退款，真实违规拦截尚未验证。
-6. 完成 `npm run typecheck`、`npm test`、`npm run cf:build`，在 Worker 预览与正式域名复查页面、账户、付款和生成。更新 `CLONE_REPORT.md` 与 `CLONE_AUDIT.md` 中对应状态。
+生产 `APP_URL` 必须使用可公开访问的 HTTPS 源地址，供服务商读取参考素材。媒体 CDN 仅加入服务商实际返回且核实过的精确主机名。Waffo 沙箱和生产使用各自的密钥，`WAFFO_MODE` 必须与目标环境一致。
 
-修改套餐价格或积分时，不要只改卡片文案。当前源站卡片的“约多少条视频”与生成器单次积分显示本就不一致，新的商品说明应以实际服务端报价为准并明确告知购买者。
+## 数据库与发布
+
+1. 安装锁定依赖并运行 `npm test`、`npm run typecheck`、`npm run cf:build`。
+2. 检查 `wrangler.jsonc` 的账户、D1、R2、路由和环境是否属于本次目标；生产配置含站点专用资源 ID，复制工程时需替换。
+3. 新环境执行本地迁移 `npm run db:local`。生产发布前检查远端待执行迁移及备份，再用 `npm run db:remote` 应用缺少的迁移。声音与动作功能依赖 `0005_reference_uploads.sql`。
+4. 在确认的源码版本运行 `npm run deploy`，记录提交和发布版本。以 [QA 说明](QA/README.md) 核查线上页面、认证、媒体访问及关键交互。
+
+保留已有任务、积分账本及历史付款记录。不要把忽略目录中的凭据、数据库转储、原始日志或真实账户截图放入发布源码。
+
+## Waffo 正式收款验收
+
+目前商户配置、四档商品和 Webhook 已配置；沙箱付款、签名通知及幂等入账已验证。正式创建付款仍因商户审批返回 403，尚无生产交易验收。
+
+商户审批通过后，复核 `WAFFO_MODE=prod`、价格、积分和商品状态，再从正式站点创建新的 Checkout。完成交易后核查签名回调、金额与商品绑定、积分只入账一次，以及重复通知和退款人工核对路径。付款回跳参数和接口拒绝未签名请求都不能代替真实交易验证。
+
+回调入口为 `/api/webhooks/waffo`，处理 `order.completed`、`refund.succeeded`、`refund.failed`。旧 Creem 路由已移除，历史订单保留；旧服务商后台 Webhook 是否已删除需另行核查。
+
+## 内容与素材替换
+
+- 公开文案使用 `content/` 和 `lib/i18n/messages/`；同步六种语言、FAQ 结构化数据、canonical、hreflang、sitemap 与 `public/llms.txt`。
+- 模板动作与音轨按 [`public/templates/hotel-lobby/README.txt`](public/templates/hotel-lobby/README.txt) 的时长和格式约束替换。
+- 视频费用改动需同步服务端报价、控件展示和相关测试。套餐改动需同时核对站内配置与 Waffo 商品。
+- 法务正文中的运营主体、联系方式、保留期限和退款说明仍需运营方确认后更新。
+
+Chrome 下载到本地文件尚未验收通过。修改播放或下载逻辑时，应分别验证浏览器播放、授权读取和最终文件保存，不能用其中一项代替另外两项。

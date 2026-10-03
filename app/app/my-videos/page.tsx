@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
+import { localizeMetadata } from "@/lib/i18n/server";
 import { MyVideos } from "@/components/account/account-pages";
 
-export const metadata: Metadata = { title: "My Videos" };
+export async function generateMetadata() { return localizeMetadata({ title: "My Videos" }); }
 export default function MyVideosPage() { return <MyVideos/>; }

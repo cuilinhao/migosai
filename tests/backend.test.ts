@@ -25,11 +25,15 @@ describe('provider transitions',()=>{
  it('rejects a legacy music model instead of silently substituting V6',()=>expect(()=>validateSong({model:'v5',custom:false,instrumental:false,prompt:'Original rap'})).toThrow(/available Suno V6/i));
  it('rejects partially successful or unidentifiable avatar results',()=>{expect(()=>usableAsset({usable_assets:[]})).toThrow();expect(()=>usableAsset({usable_assets:[{asset_url:'https://example.com/a'}]})).toThrow();expect(usableAsset({usable_assets:[{asset_url:'asset://a'}]})).toBe('asset://a');});
 });
-function paidEvent(){return {id:'evt_1',eventType:'checkout.completed',object:{id:'ch_1',request_id:'o',status:'completed',product:{id:'prod_1'},metadata:{userId:'u',packId:'starter'},order:{id:'ord_1',status:'paid',amount:990,currency:'USD',product:'prod_1'}}};}
-function orderDB(){const d=database();d.sqlite.exec("INSERT INTO orders(id,user_id,pack_id,product_id,amount,currency,credits,checkout_id) VALUES('o','u','starter','prod_1',990,'USD',300,'ch_1')");return d;}
 describe('verified payment accounting',()=>{
- it('credits an exact paid order once across duplicate and alternative event ids',async()=>{const {db,sqlite}=orderDB();const e=paidEvent();await applyCheckout(db,e);await applyCheckout(db,e);await applyCheckout(db,{...e,id:'evt_2'});expect(sqlite.prepare('SELECT credits FROM users').get()?.credits).toBe(400);});
- it('rejects wrong amount, product, account and unpaid checkout',async()=>{for(const field of ['amount','product','user','status']){const {db,sqlite}=orderDB(),e=paidEvent();if(field==='amount')e.object.order.amount=1;if(field==='product')e.object.product.id='evil';if(field==='user')e.object.metadata.userId='evil';if(field==='status')e.object.order.status='pending';await expect(applyCheckout(db,e)).rejects.toThrow();expect(sqlite.prepare('SELECT credits FROM users').get()?.credits).toBe(100);}});
+ it('cannot credit a historical Creem order with a Waffo event',async()=>{
+  const {db,sqlite}=database();
+  sqlite.exec("INSERT INTO orders(id,user_id,pack_id,product_id,amount,currency,credits,checkout_id) VALUES('o','u','starter','prod_1',990,'USD',300,'ch_1')");
+  const env={...jobEnv(db),WAFFO_MODE:'test',WAFFO_STORE_ID:'STO_1234567890123456789012'};
+  const event={eventType:'order.completed',eventId:'PAY_1234567890123456789012',storeId:env.WAFFO_STORE_ID,mode:'test',data:{orderId:'ORD_1234567890123456789012',orderMerchantExternalId:'o'}};
+  await expect(applyCheckout(env,event as never)).rejects.toThrow();
+  expect(sqlite.prepare('SELECT credits FROM users').get()?.credits).toBe(100);
+ });
 });
 import { vi } from 'vitest';
 import { advanceJob } from '../lib/server/jobs';

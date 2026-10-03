@@ -1,5 +1,0 @@
-import { getEnv,database } from '@/lib/server/env';
-import { readLimited,verifyHmac } from '@/lib/server/security';
-import { applyCheckout,recordReviewEvent } from '@/lib/server/payments';
-import { api,ApiError } from '@/lib/server/errors';
-export const POST=api(async(request)=>{const env=await getEnv();if(!env.CREEM_WEBHOOK_SECRET)throw new ApiError(503,'Payment webhook is not configured.');const raw=new TextDecoder().decode(await readLimited(request,256*1024));if(!await verifyHmac(env.CREEM_WEBHOOK_SECRET,raw,request.headers.get('creem-signature')??''))throw new ApiError(401,'Invalid webhook signature.');let event:any;try{event=JSON.parse(raw);}catch{throw new ApiError(400,'Invalid webhook JSON.');}if(typeof event.id!=='string'||typeof event.eventType!=='string')throw new ApiError(400,'Invalid webhook event.');const db=database(env);if(event.eventType==='checkout.completed')await applyCheckout(db,event);else if(['refund.created','dispute.created'].includes(event.eventType))await recordReviewEvent(db,event);return Response.json({received:true});});

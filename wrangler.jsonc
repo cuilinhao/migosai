@@ -42,12 +42,15 @@
   },
   "vars": {
     "APP_URL": "https://migosai.design",
-    "CREEM_MODE": "production",
-    "CREEM_PRODUCT_STARTER": "prod_1SpvmYTKzgZJ9LIWoeFncu",
-    "CREEM_PRODUCT_CREATOR": "prod_2SyIzwEnUEaHEe8FlvoCjj",
-    "CREEM_PRODUCT_PRO": "prod_HEU2RWQKve3qUqn81kXkI",
-    "CREEM_PRODUCT_BUSINESS": "prod_5V4BbpqGG028sxd8P74Jq1",
-    "APIMART_MEDIA_HOSTS": "getapib.org"
+    "WAFFO_MODE": "prod",
+    "WAFFO_MERCHANT_ID": "MER_0bgzn7efD1clpUtkReYznH",
+    "WAFFO_STORE_ID": "STO_4ZOpv7dTwwVXkBd4b2tsNr",
+    "WAFFO_PRODUCT_STARTER": "PROD_1wvkxxVnjVU2t1txQtLzBD",
+    "WAFFO_PRODUCT_CREATOR": "PROD_6PdKlCbO19s7emXrKxpiVZ",
+    "WAFFO_PRODUCT_PRO": "PROD_7IpB2s4ptadpNtlnDNmgEH",
+    "WAFFO_PRODUCT_BUSINESS": "PROD_1ZAixY4b2O5H31tNjX9Ke2",
+    "APIMART_MEDIA_HOSTS": "getapib.org",
+    "KIE_MEDIA_HOSTS": "tempfile.aiquickdraw.com"
   },
   "routes": [
     {
