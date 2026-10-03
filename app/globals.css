@@ -269,3 +269,8 @@ img,video{max-width:100%}
   .legal-section h2{font-size:24px;line-height:1.6}
   .legal-section h3{font-size:16px}
 }
+.home-showcase .mi-showcase-home{grid-template-columns:repeat(3,minmax(0,1fr));max-width:900px;margin-inline:auto}
+.geo-showcase-caption{margin:10px 0 0;font-size:12px;line-height:1.5;color:#9ca3af}
+@media(max-width:639px){.home-showcase .mi-showcase-home{grid-template-columns:1fr;max-width:280px}}
+.site-footer .footer-top{padding-bottom:32px}
+.site-footer p.footer-bottom{margin:0;padding-bottom:24px;line-height:1.6}

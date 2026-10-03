@@ -3,15 +3,17 @@
 import Link from "@/components/i18n/localized-link";
 import { useTranslations } from "@/components/i18n/locale-provider";
 import { VideoCard } from "@/components/video-card";
+import { ownExamples } from "@/content/own-examples";
 import { HOTEL_LOBBY_PATH } from "@/content/public-pages";
 
-export function ShowcaseGrid({ limit = 9, portrait = false }: { limit?: number; portrait?: boolean }) {
+export function ShowcaseGrid({ limit = ownExamples.length, portrait = false }: { limit?: number; portrait?: boolean }) {
   const t = useTranslations();
   return <div className={`mi-showcase-grid ${portrait ? "mi-showcase-home" : ""}`}>
-    {Array.from({ length: Math.min(limit, 9) }, (_, index) => {
-      const number = String(index + 1).padStart(2, "0");
-      return <div className="geo-showcase-item" key={number}>
-        <VideoCard src={`/videos/showcase-${number}.mp4`} poster={`/posters/showcase-${number}.jpg`} label={t("Hotel Lobby reference example {number}", { number })} portrait={portrait} />
+    {ownExamples.slice(0, limit).map((example) => {
+      const caption = `${t("Made with LobbyDuo")} · ${example.model} · ${t(example.stage)}`;
+      return <div className="geo-showcase-item" key={example.id}>
+        <VideoCard src={example.src} poster={example.poster} label={caption} portrait={portrait} />
+        <p className="geo-showcase-caption">{caption}</p>
         <Link className="geo-showcase-link" href={HOTEL_LOBBY_PATH}>{t("Make your own with the Hotel Lobby AI Video Generator")}</Link>
       </div>;
     })}

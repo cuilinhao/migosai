@@ -12,6 +12,7 @@ const routes = {
   "/terms-of-service": () => import("@/app/terms-of-service/page"),
   "/refund-policy": () => import("@/app/refund-policy/page"),
   "/acceptable-use-policy": () => import("@/app/acceptable-use-policy/page"),
+  "/contact": () => import("@/app/contact/page"),
   "/hotel-lobby-ai-video-generator": () => import("@/app/hotel-lobby-ai-video-generator/page"),
   "/hotel-lobby-ai-video-generator-free": () => import("@/app/hotel-lobby-ai-video-generator-free/page"),
   "/hotel-lobby-ai-template": () => import("@/app/hotel-lobby-ai-template/page"),

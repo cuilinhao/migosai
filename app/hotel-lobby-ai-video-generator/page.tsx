@@ -47,9 +47,9 @@ export default async function HotelLobbyPage() {
     </GeoSection>
     <FaqSection title="Hotel Lobby AI Video Generator FAQ" description="Direct answers about photos, credits, templates and generation." items={hotelLobbyFaqs} />
     <GeoSection id="showcase" title="Hotel Lobby video reference gallery">
-      <p>Explore the orange-booth look in these reference clips. They illustrate the visual format; they are not documented generation results from this tool.</p>
-      <ShowcaseGrid limit={4} portrait />
-      <p className="geo-note">Suggested starting settings for your own clip: two clear portraits, 9:16, 5 seconds, 480p (50 credits). These are recommendations, not the source settings of the reference videos. <Link href="/showcases">See all nine references</Link>.</p>
+      <p>These clips were generated with this tool. Results vary with your photos, model and settings.</p>
+      <ShowcaseGrid portrait />
+      <p className="geo-note">Suggested starting settings for your own clip: two clear portraits, 9:16, 5 seconds, 480p (50 credits). <Link href="/showcases">See more examples</Link>.</p>
     </GeoSection>
     <GeoCta local />
     <GeoRelatedLinks current={HOTEL_LOBBY_PATH} />

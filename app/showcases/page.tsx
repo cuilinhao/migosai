@@ -10,7 +10,7 @@ export default async function ShowcasesPage() {
   return localizePageContent(<><div className="mi-showcases-page">
     <h1 className="mi-sr-only">Hotel Lobby AI Reference Examples</h1>
     <h2>Hotel Lobby AI Reference Examples</h2>
-    <p>Watch reference clips of the orange-booth duo format, with a hanging microphone and side-by-side performances.</p>
+    <p>The first clips below were generated with LobbyDuo. Further down, you will find third-party examples of the trend with links to their sources.</p>
     <ShowcaseGrid />
   </div><VideoExamples showAll /></>, t);
 }

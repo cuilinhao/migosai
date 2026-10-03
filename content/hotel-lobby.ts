@@ -33,8 +33,8 @@ export const hotelLobbyFaqs = [
     answer: "Use two separate, clear photos with one front-facing person in each image. Similar lighting, visible faces and uncropped heads give the model better visual references. Half-body or full-body shots are useful when the face is still large enough to recognize. Avoid heavy filters, sunglasses, motion blur and crowded group pictures. This tool accepts JPG, PNG and WebP files up to 10 MB per photo.",
   },
   {
-    question: "Is the Hotel Lobby AI video trend the same as the Migos AI video?",
-    answer: "People often use both names for the two-person, orange-booth performance format. The visual reference is the Hotel Lobby performance by Quavo and Takeoff on COLORS; the search phrase Migos AI video describes AI-made variations of that look. This is an independent creation tool, with no affiliation or endorsement implied. Generated clips do not include a promise to reproduce the original song or performance exactly.",
+    question: "Is a Hotel Lobby AI video the same as the original Hotel Lobby performance?",
+    answer: "No. The visual reference is the 2022 Hotel Lobby performance by Quavo and Takeoff on COLORS. AI versions only borrow the two-person, orange-booth format and put new performers in it. This is an independent creation tool, with no affiliation or endorsement implied, and generated clips do not reproduce the original song or performance.",
   },
   {
     question: "Can I make a Hotel Lobby AI video without a prompt?",

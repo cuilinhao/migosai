@@ -11,6 +11,8 @@ LobbyDuo 是运行于 [migosai.design](https://migosai.design) 的双图视频�
 - 新视频使用 Kie；音乐及切换前的历史视频任务保留 APIMart 路径。视频通过 SeeAPI 审核后才开放读取。
 - 四档一次性积分包支持 Stripe 托管 Checkout。通过 `PAYMENT_PROVIDER=stripe`、固定 Price ID 与服务端 Secrets 配置启用；签名通知和服务端付款复核通过后才幂等发放积分。历史 Waffo 订单与回调保留。用户已创建 LobbyDuo 独立 Stripe 正式账户及独立 sandbox；正式账户状态页已核实：账户代表身份证明任务于 2026-10-03 完成，已激活任务为空，Payments 与 Payouts 均活跃，原支付即将暂停提示已消失；Cartes Bancaires 支付仍暂停。LobbyDuo 独立正式账户的四档一次性 USD Product/Price 已建立并逐项核实，四个 live Price 已填入本地 `wrangler.jsonc`，映射见[配置与维护指南](REPLACE_GUIDE.md#stripe-配置与收款验收)。沙盒 Product/Price 仅用于隔离测试。正式受限 API Key 与 Webhook Secrets 已配置，本站正式 Webhook 已启用；当前线上版本 C `47972888-26cc-4ae2-b82f-34d5571c5082` 已于 2026-10-03 约 21:38（Asia/Shanghai）发布到 100% 流量，包含 Stripe 新 Checkout 和 LobbyDuo 网站品牌。生产 Google 登录、Starter 正式 Checkout 创建及取消回跳已验收通过；尚未输入卡信息或实际扣款，真实收款和生产到账尚未验收。
 - 服务条款、隐私、退款和内容使用政策公开说明肖像授权、模型来源及现有审核流程；客服和举报邮箱为 `support@migosai.design`。未使用积分包可在购买后 14 天内申请退款，已确认失败的生成返还积分。
+- 品牌为 LobbyDuo。“Migos AI” 只作为潮流搜索词出现在首页标题、H1 和说明中；页脚、服务条款、联系页（`/contact`）与 `llms.txt` 声明本站与 migosai.com、Migos、Quavo、Takeoff、COLORS 均无关联。购买需年满 18 岁。
+- 首页、`/showcases` 和 Hotel Lobby 生成器页的 “Made with LobbyDuo” 示例只使用本站生成的视频（`content/own-examples.ts`、`public/videos/lobbyduo/`）。原先从 migosai.com 下载的 9 条示例与生成器预览片、以及 10 条 YouTube 名人/版权角色视频已移出公开目录，本地归档在被忽略的 `.local-evidence/removed-public-media/`。示例和内置 Hotel Lobby 模板动作/配乐（`public/templates/hotel-lobby/`）均于 2026-10-03 用 Seedream 4.0 生成的原创动物角色照片和 Wan 3.0 重新生成，来源记录见 `docs/media-sources.json` 与模板 README；来源不明的旧模板已归档。其余第三方示例保留来源链接，并标注“非 LobbyDuo 制作”。
 
 默认视频为 Wan、Hotel Lobby、10 秒、480p、9:16，使用模板时消耗 60 积分；5 秒 480p 模板消耗 30 积分。最终价格以服务端验证后的参数和参考片段时长为准。50 欢迎积分不足支付默认组合，需要调整设置或购买积分。
 

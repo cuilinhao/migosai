@@ -6,7 +6,6 @@ import Link from "@/components/i18n/localized-link";
 import { useTranslations } from "@/components/i18n/locale-provider";
 import { VideoCard } from "@/components/video-card";
 import { landscapeVideoExamples, portraitVideoExamples, type VideoExample } from "@/content/video-examples";
-import { youtubeShowcaseExamples } from "@/content/youtube-showcase";
 
 function ExampleFigure({ example }: { example: VideoExample }) {
   const t = useTranslations();
@@ -15,7 +14,7 @@ function ExampleFigure({ example }: { example: VideoExample }) {
     <figcaption>
       <h3>{t(example.title)}</h3>
       <a href={example.sourceUrl} target="_blank" rel="noopener noreferrer nofollow">
-        {t("Reference example by {source}", { source: example.sourceName })}
+        {t("Third-party clip, not made with LobbyDuo · Source: {source}", { source: example.sourceName })}
         <ExternalLink size={12} aria-hidden="true" />
       </a>
     </figcaption>
@@ -27,7 +26,7 @@ export function VideoExamples({ showAll = false }: { showAll?: boolean }) {
   const railRef = useRef<HTMLDivElement>(null);
   const featured = landscapeVideoExamples.filter((example) => example.homeFeatured);
   const landscape = showAll ? [...featured, ...landscapeVideoExamples.filter((example) => !example.homeFeatured)] : featured;
-  const portrait = showAll ? [...youtubeShowcaseExamples, ...portraitVideoExamples] : portraitVideoExamples;
+  const portrait = portraitVideoExamples;
   const scrollRail = (direction: number) => {
     const rail = railRef.current;
     if (rail) rail.scrollBy({ left: direction * rail.clientWidth * 0.8, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
@@ -38,7 +37,7 @@ export function VideoExamples({ showAll = false }: { showAll?: boolean }) {
       <header className="reference-examples-intro">
         <p className="reference-examples-eyebrow">{t("The photos, the performance")}</p>
         <h2 id="video-examples-title">{t("Hotel Lobby AI video examples")}</h2>
-        <p className="reference-examples-description">{t("Cats, chihuahuas, grandmas, anime heroes, best friends: the orange booth works with any two performers. Explore clips from creators on X and other tools, with the original sources linked below.")}</p>
+        <p className="reference-examples-description">{t("These clips were made by other creators on X and with other AI tools, not with LobbyDuo. Each one links to its original source. Copyright stays with the original creators; contact us to have a clip removed.")}</p>
       </header>
       <div className="reference-landscape-grid">
         {landscape.map((example) => <ExampleFigure key={example.id} example={example} />)}

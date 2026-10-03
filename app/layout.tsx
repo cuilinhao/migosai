@@ -14,7 +14,7 @@ import { GoogleAnalytics } from "@/components/google-analytics";
 
 const baseMetadata: Metadata = {
   metadataBase: new URL("https://migosai.design"),
-  title: { default: "LobbyDuo | Hotel Lobby AI Video Generator", template: "%s | LobbyDuo" },
+  title: { default: "Hotel Lobby AI Video Generator | LobbyDuo", template: "%s | LobbyDuo" },
   description: "Create Hotel Lobby–style AI duo videos from two photos with LobbyDuo.",
 };
 
