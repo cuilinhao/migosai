@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>LobbyDuo</title>
+  <rect width="64" height="64" rx="12" fill="#000"/>
+  <path d="M18 12h10v31h20v10H18z" fill="#ec352d"/>
+</svg>

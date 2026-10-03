@@ -87,7 +87,7 @@ export function MyOrders() {
   const t = useGenerationTranslations();
   const locale = useLocale();
   const { data, loading, error, signedIn } = useAccountData<Order[]>("/api/orders", (body) => Array.isArray(body.orders) ? body.orders as Order[] : []);
-  return <div className="account-page"><div className="account-page-heading account-page-heading-lined"><h1>{t('My Orders')}</h1><p>{t('Orders for Migos AI generation credits.')}</p></div>
+  return <div className="account-page"><div className="account-page-heading account-page-heading-lined"><h1>{t('My Orders')}</h1><p>{t('Orders for LobbyDuo generation credits.')}</p></div>
     <AccountMessage loading={loading} error={error} signedIn={signedIn}/>
     {signedIn && !loading && !error && <div className="account-table-scroll"><table className="account-table orders-table"><thead><tr><th>{t('Order No')}</th><th>{t('Product Name')}</th><th>{t('Amount')}</th><th>{t('Status')}</th><th>{t('Paid At')}</th></tr></thead><tbody>{data?.length ? data.map((order) => <tr key={order.id}><td className="account-code">{order.id}</td><td>{t("{pack} Credits", { pack: t(creditPacks.find((pack) => pack.id === order.packId)?.name ?? order.packId) })}</td><td>{new Intl.NumberFormat(locale, { style: "currency", currency: order.currency || "USD" }).format(order.amountCents/100)}</td><td>{t(order.status)}</td><td>{dateTime(order.createdAt, locale)}</td></tr>) : <tr><td colSpan={5} className="account-table-empty">{t('No orders found')}</td></tr>}</tbody></table></div>}
   </div>;

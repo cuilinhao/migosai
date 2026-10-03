@@ -205,7 +205,7 @@ for path, page in pages.items():
         fetch(image)
 
 llms = fetch("/llms.txt").decode()
-assert llms.startswith("# Migos AI")
+assert llms.startswith("# LobbyDuo")
 assert welcome_copy in llms, "llms.txt welcome-credit policy mismatch"
 for path in english_geo:
     assert SITE + path in llms, (path, "Missing llms.txt entry")

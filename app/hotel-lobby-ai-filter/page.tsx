@@ -13,7 +13,7 @@ import { defaultVideoSettings, getVideoCost } from "@/lib/video-options";
 import { HOTEL_LOBBY_PATH } from "@/content/public-pages";
 
 const PAGE_PATH = "/hotel-lobby-ai-filter";
-const title = "Hotel Lobby AI Filter & Face Swap (2026) | Migos AI";
+const title = "Hotel Lobby AI Filter & Face Swap (2026) | LobbyDuo";
 const description = "Compare Hotel Lobby filters, face swaps and two-photo AI video generation. Follow the mobile browser steps, photo requirements and HEIC conversion guidance.";
 
 export async function generateMetadata() { return localizeMetadata(geoMetadata(title, description, PAGE_PATH)); }
@@ -23,9 +23,9 @@ export default async function HotelLobbyFilterPage() {
   return localizePageContent(<div className="geo-page">
     <GeoHeader
       title="Hotel Lobby AI Filter & Face Swap (2026)"
-      intro="Looking for a Hotel Lobby AI filter on your phone? Migos AI generates a new duo video from two separate reference photos. Here is how that differs from a filter or face swap, and how to use the generator in a mobile browser."
+      intro="Looking for a Hotel Lobby AI filter on your phone? LobbyDuo generates a new duo video from two separate reference photos. Here is how that differs from a filter or face swap, and how to use the generator in a mobile browser."
     >
-      <p className="geo-note">Use the website directly. Migos AI has no separate native app to install. Google sign-in and sufficient credits are required to generate.</p>
+      <p className="geo-note">Use the website directly. LobbyDuo has no separate native app to install. Google sign-in and sufficient credits are required to generate.</p>
     </GeoHeader>
 
     <GeoSection id="filter-vs-face-swap" title="Hotel Lobby filter, face swap or AI video generator?">
@@ -34,7 +34,7 @@ export default async function HotelLobbyFilterPage() {
       </div>
       <GeoTable
         caption="Three ways to approach the Hotel Lobby look"
-        headings={["Workflow", "Typical input", "What changes", "Available in Migos AI?"]}
+        headings={["Workflow", "Typical input", "What changes", "Available in LobbyDuo?"]}
         rows={[
           ["Photo or video filter", "An existing photo, clip or camera feed", "Applies a visual effect, such as a color treatment or overlay; capabilities depend on the filter", "No selectable filter library or live camera filter"],
           ["Face swap", "A source face and an existing target image or video", "Replaces a face within the target scene", "Motion-reference video upload is available; there is no dedicated face-swap editor"],

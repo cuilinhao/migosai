@@ -26,8 +26,8 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="site-header-inner">
-        <Link className="brand" href="/" onClick={close} aria-label={t("Migos AI home")}>
-          <img className="brand-logo" src="/logo.png" alt=""/><span>Migos AI</span>
+        <Link className="brand" href="/" onClick={close} aria-label={t("LobbyDuo home")}>
+          <span className="brand-logo" aria-hidden="true">L</span><span>LobbyDuo</span>
         </Link>
         <nav className="desktop-nav" aria-label={t("Primary navigation")}>
           {links.map(({ label, href, icon: Icon }) => <Link className={pathname === href ? "active" : ""} href={href} key={label}><Icon size={15} strokeWidth={1.8}/>{t(label)}</Link>)}

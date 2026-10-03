@@ -14,8 +14,8 @@ import { GoogleAnalytics } from "@/components/google-analytics";
 
 const baseMetadata: Metadata = {
   metadataBase: new URL("https://migosai.design"),
-  title: { default: "Migos AI | Hotel Lobby AI Video Generator", template: "%s | Migos AI" },
-  description: "Create Hotel Lobby–style AI duo videos from two photos with Migos AI.",
+  title: { default: "LobbyDuo | Hotel Lobby AI Video Generator", template: "%s | LobbyDuo" },
+  description: "Create Hotel Lobby–style AI duo videos from two photos with LobbyDuo.",
 };
 
 export async function generateMetadata(): Promise<Metadata> { return localizeMetadata(baseMetadata); }

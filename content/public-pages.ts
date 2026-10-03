@@ -23,8 +23,10 @@ export const publicPages: PublicPage[] = [
   { path: "/pricing", label: "Pricing", priority: 0.7, changeFrequency: "monthly" },
   { path: "/showcases", label: "Reference Examples", priority: 0.7, changeFrequency: "monthly" },
   { path: "/ai-rap-song-generator", label: "AI Rap Song Generator", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/privacy-policy", label: "Privacy Policy", priority: 0.7, changeFrequency: "yearly" },
-  { path: "/terms-of-service", label: "Terms of Service", priority: 0.7, changeFrequency: "yearly" },
+  { path: "/privacy-policy", label: "Privacy Policy", priority: 0.7, changeFrequency: "yearly", lastModified: "2026-10-03" },
+  { path: "/terms-of-service", label: "Terms of Service", priority: 0.7, changeFrequency: "yearly", lastModified: "2026-10-03" },
+  { path: "/refund-policy", label: "Refund Policy", priority: 0.7, changeFrequency: "yearly", lastModified: "2026-10-03" },
+  { path: "/acceptable-use-policy", label: "Acceptable Use Policy", priority: 0.7, changeFrequency: "yearly", lastModified: "2026-10-03" },
 ];
 
 export const hotelLobbyPages = publicPages.filter((page) => page.path.startsWith("/hotel-lobby-") || page.path.startsWith("/blog/best-hotel-lobby-"));

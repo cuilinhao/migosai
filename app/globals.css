@@ -20,7 +20,7 @@ img,video{max-width:100%}
 .site-header{position:fixed;inset:0 0 auto;z-index:50;background:rgba(0,0,0,.94);height:80px;backdrop-filter:blur(12px)}
 .site-header-inner{width:min(100% - 48px,1216px);height:100%;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px}
 .brand{display:inline-flex;align-items:center;gap:10px;white-space:nowrap;font-size:22px;font-weight:700;letter-spacing:-.045em;color:#a5a0ff}
-.brand-logo{display:block;width:25px;height:25px;object-fit:contain}
+.brand-logo{display:inline-grid;place-items:center;flex-shrink:0;width:25px;height:25px;color:#ec352d;font-family:Arial,sans-serif;font-size:27px;font-weight:900;line-height:1;letter-spacing:0}
 .brand-mark{display:inline-grid;place-items:center;width:22px;height:25px;color:#ec352d;font-weight:700;font-size:25px;line-height:1;font-family:Arial,sans-serif;letter-spacing:-.14em;transform:scaleX(.72)}
 .site-header .brand{flex-shrink:0}
 .desktop-nav{display:flex;align-items:center;gap:20px}
@@ -141,6 +141,7 @@ img,video{max-width:100%}
 .pricing-card.recommended .buy-button{background:#fff;border-color:#fff;color:#111}
 .pricing-card.recommended .buy-button:hover{background:#e4e4e7}
 .pricing-error{text-align:center;color:#fca5a5;margin:18px 0 0;font-size:13px}
+.pricing-payment-note{text-align:center;color:#aaaabd;margin:22px 0;font-size:13px;line-height:1.6}
 
 /* Legal copy */
 .legal-page{padding:185px 0 110px;min-height:100vh}
@@ -184,7 +185,7 @@ img,video{max-width:100%}
 .dashboard-shell{min-height:100vh;display:grid;grid-template-columns:240px minmax(0,1fr);background:#393430;color:#f7f7f9}
 .dashboard-sidebar{position:sticky;top:0;height:100vh;padding:16px;display:flex;flex-direction:column;background:#393430}
 .dashboard-brand{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;color:#fff;white-space:nowrap}
-.dashboard-brand img{width:32px;height:32px;border-radius:50%;background:#050505;object-fit:cover}
+.dashboard-brand .brand-logo{width:32px;height:32px;border-radius:50%;background:#050505;font-size:30px}
 .dashboard-nav{display:flex;flex-direction:column;gap:4px;margin-top:31px}
 .dashboard-nav a{height:32px;display:flex;align-items:center;gap:10px;border-radius:6px;color:#f1f1f3;padding:0 9px;font-size:14px}
 .dashboard-nav a:hover{background:#4d4845}

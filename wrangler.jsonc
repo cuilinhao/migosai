@@ -42,6 +42,12 @@
   },
   "vars": {
     "APP_URL": "https://migosai.design",
+    "PAYMENT_PROVIDER": "stripe",
+    "STRIPE_MODE": "live",
+    "STRIPE_PRICE_STARTER": "price_1UMRzp9IlL4CIeBl9E1a7Qyl",
+    "STRIPE_PRICE_CREATOR": "price_1UMS0f9IlL4CIeBlkVqz536C",
+    "STRIPE_PRICE_PRO": "price_1UMS1N9IlL4CIeBl5K9zRWEy",
+    "STRIPE_PRICE_BUSINESS": "price_1UMS3X9IlL4CIeBlFNf4NK88",
     "WAFFO_MODE": "prod",
     "WAFFO_MERCHANT_ID": "MER_0bgzn7efD1clpUtkReYznH",
     "WAFFO_STORE_ID": "STO_4ZOpv7dTwwVXkBd4b2tsNr",

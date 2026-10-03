@@ -15,12 +15,14 @@ export function CheckoutReturnStatus() {
   const { user, loading, openSignIn, refresh } = useAuth();
   const [orderId, setOrderId] = useState<string | null>(null);
   const [returned, setReturned] = useState(false);
+  const [cancelled, setCancelled] = useState(false);
   const [state, setState] = useState<ReturnState>("idle");
   const [confirmedCredits, setConfirmedCredits] = useState(0);
   const [retry, setRetry] = useState(0);
 
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
+    if (query.get("checkout") === "cancelled") { setCancelled(true); return; }
     if (query.get("checkout") !== "completed") return;
     setReturned(true);
     setOrderId(query.get("orderId"));
@@ -56,6 +58,7 @@ export function CheckoutReturnStatus() {
     return () => { active = false; if (timer) clearTimeout(timer); };
   }, [returned, user?.id, orderId, retry, refresh]);
 
+  if (cancelled) return <div className="mi-checkout-return" role="status"><strong>{t('Checkout cancelled')}</strong><p>{t('You can choose a credit pack to try again. Check your orders before making another purchase.')}</p><Link href="/app/my-orders">{t('View My Orders')}</Link></div>;
   if (!returned) return null;
   if (!orderId || !orderIdPattern.test(orderId)) return <div className="mi-checkout-return" role="alert"><strong>{t('Order confirmation unavailable')}</strong><p>{t('We could not identify this checkout return. Check your order history before purchasing again.')}</p><Link href="/app/my-orders">{t('View My Orders')}</Link></div>;
   if (!loading && !user) return <div className="mi-checkout-return" role="status"><strong>{t('Sign in to check your order')}</strong><p>{t('Your payment status must be confirmed through your account.')}</p><button type="button" onClick={openSignIn}>{t('Sign In')}</button></div>;

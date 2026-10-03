@@ -16,13 +16,13 @@ import { defaultVideoSettings, getVideoCost } from "@/lib/video-options";
 const PAGE_PATH = "/blog/best-hotel-lobby-ai-video-generators-2026";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const TITLE = "9 Hotel Lobby AI Video Generators Compared (2026)";
-const DESCRIPTION = "Compare nine Hotel Lobby AI video tools by photos, prompts, credits and workflow. Official Migos AI blog; vendor information checked October 2, 2026.";
+const DESCRIPTION = "Compare nine Hotel Lobby AI video tools by photos, prompts, credits and workflow. Official LobbyDuo blog; vendor information checked October 2, 2026.";
 const REVIEWED_DATE = "2026-10-02";
 const minimumCost = getVideoCost(5, "480p", "wan-3.0");
 const defaultCost = getVideoCost(defaultVideoSettings.duration, defaultVideoSettings.resolution, defaultVideoSettings.model);
 
 export async function generateMetadata() { return localizeMetadata(geoMetadata(
-  "Best Hotel Lobby AI Video Generators: 9 Compared (2026) | Migos AI",
+  "Best Hotel Lobby AI Video Generators: 9 Compared (2026) | LobbyDuo",
   DESCRIPTION,
   PAGE_PATH,
 )); }
@@ -143,7 +143,7 @@ const competitors = [
 ];
 
 const listedTools = [
-  { name: "Migos AI", url: `${SITE_URL}${HOTEL_LOBBY_PATH}` },
+  { name: "LobbyDuo", url: `${SITE_URL}${HOTEL_LOBBY_PATH}` },
   ...competitors.map(({ name, url }) => ({ name, url })),
 ];
 
@@ -160,8 +160,8 @@ const articleSchema = {
       datePublished: REVIEWED_DATE,
       dateModified: REVIEWED_DATE,
       inLanguage: "en",
-      author: { "@type": "Organization", name: "Migos AI editorial team", url: SITE_URL },
-      publisher: { "@type": "Organization", name: "Migos AI", url: SITE_URL },
+      author: { "@type": "Organization", name: "LobbyDuo editorial team", url: SITE_URL },
+      publisher: { "@type": "Organization", name: "LobbyDuo", url: SITE_URL },
       about: { "@id": `${PAGE_URL}#tools` },
       citation: competitors.flatMap(({ url, extraSources }) => [url, ...extraSources.map((source) => source.url)]),
     },
@@ -188,11 +188,11 @@ export default async function HotelLobbyComparisonPage() {
       <JsonLd data={articleSchema} />
       <GeoHeader
         title={TITLE}
-        label="OFFICIAL MIGOS AI BLOG · TOOL COMPARISON"
-        intro="This is the official Migos AI blog. Compare nine Hotel Lobby AI video tools by their published workflow, photo requirements, prompts and credit conditions."
+        label="OFFICIAL LOBBYDUO BLOG · TOOL COMPARISON"
+        intro="This is the official LobbyDuo blog. Compare nine Hotel Lobby AI video tools by their published workflow, photo requirements, prompts and credit conditions."
       >
-        <p><strong>Disclosure:</strong> We build Migos AI and place it first as our editorial choice for a built-in two-photo workflow. This order is not an independent quality ranking. We have not run a standardized generation test across these tools and do not assign numerical scores.</p>
-        <p className="geo-note">By Migos AI editorial team · Official product pages checked <time dateTime={REVIEWED_DATE}>October 2, 2026</time>. Prices, models and trial conditions can change.</p>
+        <p><strong>Disclosure:</strong> We build LobbyDuo and place it first as our editorial choice for a built-in two-photo workflow. This order is not an independent quality ranking. We have not run a standardized generation test across these tools and do not assign numerical scores.</p>
+        <p className="geo-note">By LobbyDuo editorial team · Official product pages checked <time dateTime={REVIEWED_DATE}>October 2, 2026</time>. Prices, models and trial conditions can change.</p>
       </GeoHeader>
 
       <GeoSection id="comparison-table" title="Compare the inputs, prompts and free conditions">
@@ -201,7 +201,7 @@ export default async function HotelLobbyComparisonPage() {
           headings={["Tool", "Free conditions / credits", "Prompt", "Input", "Who it may suit"]}
           rows={[
             [
-              <a href="#migos-ai" key="migos-ai">Migos AI — our tool</a>,
+              <a href="#migos-ai" key="migos-ai">LobbyDuo — our tool</a>,
               `50 welcome credits once; enough for one 5-second video at 480p. No subscription is required. A 5-second Wan template costs ${minimumCost} credits.`,
               "Built-in scenes; optional AI rap topic",
               "Two separate photos, one for each side",
@@ -219,7 +219,7 @@ export default async function HotelLobbyComparisonPage() {
         <p className="geo-note">“Unspecified” means the reviewed pages did not establish that condition. Platform free credits do not necessarily cover a Hotel Lobby video. Follow each product’s source link below and check the quote before generating.</p>
       </GeoSection>
 
-      <GeoSection id="migos-ai" title="1. Migos AI: a built-in two-photo Hotel Lobby workflow">
+      <GeoSection id="migos-ai" title="1. LobbyDuo: a built-in two-photo Hotel Lobby workflow">
         <div className="geo-prose">
           <p>Our <Link href={HOTEL_LOBBY_PATH}>Hotel Lobby AI Video Generator</Link> combines two photo references with a selectable stage, model, sound and motion. Choose Hotel Lobby, Luxury lobby, Recording studio or Street cypher. Wan can follow template audio, your song or clip audio; Seedance creates original AI rap from an optional topic. Crop and apply uploaded reference segments before submitting.</p>
           <p>Choose vertical, landscape or square framing, preset durations of 5, 8, 10, 12 or 15 seconds, and resolutions supported by the selected model. Your own motion reference can determine a shorter duration. Movement, identity and audio can vary: reference media guides generation without guaranteeing exact frames or audio samples.</p>
@@ -227,7 +227,7 @@ export default async function HotelLobbyComparisonPage() {
           <p><strong>New accounts receive 50 welcome credits once, enough for one 5-second video at 480p. No subscription is required.</strong> {t("A 5-second Wan template at 480p costs {shortCredits} credits. The default Wan template is {seconds} seconds at 480p for {credits} credits. Model and reference duration also affect cost.", { shortCredits: minimumCost, seconds: defaultVideoSettings.duration, credits: defaultCost })} Sign in with Google and review <Link href="/pricing">current credit packs</Link> before deciding whether to generate.</p>
         </div>
         <div id="migosai-workflow" className="geo-prose">
-          <h3>How to make a Hotel Lobby AI video on Migos AI</h3>
+          <h3>How to make a Hotel Lobby AI video on LobbyDuo</h3>
           <ol className="geo-steps">
             <li><strong>Open the generator and prepare two photos.</strong> Visit the <Link href={`${HOTEL_LOBBY_PATH}#generator`}>Hotel Lobby generator</Link>. Use a clear, front-facing photo of each participant, with one visible face per image and permission to animate it. JPG, PNG and WebP are accepted, up to 10 MB each. If both people are in one picture, prepare two separate crops first.</li>
             <li><strong>Assign the left and right performers.</strong> Add Person 1 to the left upload slot and Person 2 to the right. Check the previews for the correct identity and clear framing. Similar lighting helps the references work together. Half-body or full-body images are useful when the face remains large enough to recognize.</li>
@@ -236,26 +236,26 @@ export default async function HotelLobbyComparisonPage() {
             <li><strong>Preview, inspect and download.</strong> Once the result is completed and approved, watch the full clip. Check both identities, hands, side placement and motion before downloading. You can also revisit completed results in <Link href="/app/my-videos">My Videos</Link>. Select your soundtrack before generation; use a separate editor for later timeline changes and audio you have permission to publish.</li>
           </ol>
         </div>
-        <div className="geo-screenshots" aria-label="Migos AI upload and settings interface">
+        <div className="geo-screenshots" aria-label="LobbyDuo upload and settings interface">
           <figure>
             <img
               src="/images/geo/generator-upload.png"
-              alt="Migos AI upload interface with empty left and right photo slots, Google sign-in control and a 100-credit quote for 5 seconds at 720p."
-              width={560}
-              height={688}
+              alt="LobbyDuo upload interface with empty photo slots, Hotel Lobby, Wan 3.0, 9:16, 5 seconds, 720p and a 60-credit cost. The video is a reference preview, not a generated result."
+              width={1280}
+              height={1430}
               loading="lazy"
             />
-            <figcaption>Earlier interface screenshot: 9:16, 5 seconds, 720p and a 100-credit quote. It predates the current model and reference controls. The visible video is a reference preview, not a generated result.</figcaption>
+            <figcaption>Hotel Lobby with Wan 3.0: 9:16, 5 seconds, 720p and a 60-credit cost. Template motion and soundtrack are selected. Both photo slots are empty; “Sign In to Generate Video” and 0 remaining credits show the signed-out state. The video is a reference preview, not a generated result.</figcaption>
           </figure>
           <figure>
             <img
               src="/images/geo/generator-settings.png"
-              alt="Migos AI settings interface showing a 75-credit quote after selecting 10 seconds and 480p, with both photo slots empty."
-              width={560}
-              height={688}
+              alt="LobbyDuo settings interface with empty photo slots, Hotel Lobby, Wan 3.0, 9:16, 10 seconds, 480p and a 60-credit cost. The video is a reference preview, not a generated result."
+              width={1280}
+              height={1430}
               loading="lazy"
             />
-            <figcaption>Earlier interface screenshot: a 75-credit quote for 10 seconds at 480p. Current costs depend on the model and references and are displayed in the generator. This is a reference preview, not a successful generation result.</figcaption>
+            <figcaption>Hotel Lobby with Wan 3.0: 9:16, 10 seconds, 480p and a 60-credit cost. Template motion and soundtrack are selected. Both photo slots are empty; “Sign In to Generate Video” and 0 remaining credits show the signed-out state. The video is a reference preview, not a generated result.</figcaption>
           </figure>
         </div>
         <div className="geo-prose">
@@ -279,9 +279,9 @@ export default async function HotelLobbyComparisonPage() {
 
       <GeoSection id="choose-a-workflow" title="Which workflow should you choose?">
         <div className="geo-prose">
-          <p>Start with the input you already have. Two separate portraits work with Migos AI and several dedicated templates. Renoise also describes accepting a shared photo. VideoTok asks for source footage as well as replacement references. Mitte describes a fixed performance swap, while Media.io and Dreamina give you more scene direction through written prompts.</p>
+          <p>Start with the input you already have. Two separate portraits work with LobbyDuo and several dedicated templates. Renoise also describes accepting a shared photo. VideoTok asks for source footage as well as replacement references. Mitte describes a fixed performance swap, while Media.io and Dreamina give you more scene direction through written prompts.</p>
           <p>Next, separate the cost of trying the interface from the cost of producing a video. A signup reward, a free guide or a free button does not establish a free export. Check the required credits, watermark conditions, audio and account requirements before submitting. If exact timing or choreography matters, verify whether the tool generates new movement or works from existing footage.</p>
-          <p>For the visual reference, see <a href="https://www.youtube.com/watch?v=x9yop0nYR9g">COLORS’ official Quavo &amp; Takeoff performance</a>, published June 17, 2022. That date belongs to the original performance; this article does not claim a verified start date for the AI trend. Migos AI is independent and is not affiliated with the artists or COLORS.</p>
+          <p>For the visual reference, see <a href="https://www.youtube.com/watch?v=x9yop0nYR9g">COLORS’ official Quavo &amp; Takeoff performance</a>, published June 17, 2022. That date belongs to the original performance; this article does not claim a verified start date for the AI trend. LobbyDuo is independent and is not affiliated with the artists or COLORS.</p>
         </div>
       </GeoSection>
       <GeoCta />

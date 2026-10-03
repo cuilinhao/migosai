@@ -16,14 +16,14 @@ export default async function HomePage() {
   return localizePageContent(<>
     <section id="hero" className="hero"><div className="hero-glow"/><div className="section-container hero-inner">
       <div className="trending-badge"><span className="trending-label">TRENDING</span><span className="trending-copy">Create Your Hotel Lobby AI Video</span><span className="trending-arrow" aria-hidden="true">›</span></div>
-      <h1><span className="gradient-text">Migos AI</span><br className="mobile-break"/> Hotel Lobby<br className="desktop-break"/> Video Generator</h1>
-      <p>Recreate the viral Migos AI video trend with two photos using Migos AI. Turn your chosen duo into a Quavo and Takeoff–inspired Hotel Lobby performance, complete with the recognizable orange COLORS-style backdrop, hanging microphone, and coordinated rap movements.</p>
+      <h1><span className="gradient-text">LobbyDuo</span><br className="mobile-break"/> Hotel Lobby<br className="desktop-break"/> Video Generator</h1>
+      <p>Recreate the viral Hotel Lobby AI video trend with two photos using LobbyDuo. Turn your chosen duo into a Quavo and Takeoff–inspired Hotel Lobby performance, complete with the recognizable orange COLORS-style backdrop, hanging microphone, and coordinated rap movements.</p>
       <Link className="geo-inline-link" href={HOTEL_LOBBY_PATH}>Try the Hotel Lobby AI Video Generator</Link>
     </div></section>
     <section id="generator" className="generator-section"><DuoVideoGenerator/></section>
     <section className="trend-section marketing-section"><div className="section-container trend-grid">
-      <div><p className="eyebrow">HOTEL LOBBY AI EXAMPLES</p><h2>What is the Migos AI video trend?</h2><div className="trend-tags"><span>Two-Photo Duo</span><span>Orange Booth</span><span>Hanging Mic</span></div></div>
-      <div className="trend-copy"><p>A hotel-lobby AI video is a short, punchy performance inspired by the 2022 Hotel Lobby visual. Upload two portraits and Migos AI brings them together in the warm orange booth, with a hanging mic overhead and coordinated rap moves.</p><p>Migos AI builds around two recognizable faces. It keeps the performers side by side, using their expressions, hand gestures, and back-and-forth performance to make the pairing feel like a real duet.</p><p>Combine friends, couples, coworkers, characters, or pets. The larger the contrast between your two choices, the more surprising and shareable your Hotel Lobby video becomes.</p></div>
+      <div><p className="eyebrow">HOTEL LOBBY AI EXAMPLES</p><h2>What is the Hotel Lobby AI video trend?</h2><div className="trend-tags"><span>Two-Photo Duo</span><span>Orange Booth</span><span>Hanging Mic</span></div></div>
+      <div className="trend-copy"><p>A hotel-lobby AI video is a short, punchy performance inspired by the 2022 Hotel Lobby visual. Upload two portraits and LobbyDuo brings them together in the warm orange booth, with a hanging mic overhead and coordinated rap moves.</p><p>LobbyDuo builds around two recognizable faces. It keeps the performers side by side, using their expressions, hand gestures, and back-and-forth performance to make the pairing feel like a real duet.</p><p>Combine friends, couples, coworkers, characters, or pets. The larger the contrast between your two choices, the more surprising and shareable your Hotel Lobby video becomes.</p></div>
     </div></section>
     <section id="showcase" className="marketing-section home-showcase"><div className="section-container">
       <SectionHeading title="Hotel Lobby AI Reference Examples" description="Explore the orange backdrop, hanging microphone, and duo performance style in these reference clips."/>
@@ -37,7 +37,7 @@ export default async function HomePage() {
     <WorkflowSection/>
     <FeaturesSection/>
     <FaqSection items={homeFaqItems}/>
-    <section id="pricing" className="marketing-section home-pricing"><div className="section-container"><SectionHeading title="Migos AI Pricing and Credit Plans" description="Pick a one-time credit pack that fits your Hotel Lobby AI workflow."/><PricingCards/></div></section>
-    <section id="cta" className="marketing-section home-cta"><div className="section-container"><SectionHeading title="Ready to make your Hotel Lobby AI video?" description="Upload two authorized photos, keep the hanging mic and fixed framing, and generate your Migos AI Hotel Lobby video."/><Link className="pill-gradient-button" href="/#generator">Create Hotel Lobby AI Video</Link></div></section>
+    <section id="pricing" className="marketing-section home-pricing"><div className="section-container"><SectionHeading title="LobbyDuo Pricing and Credit Plans" description="Pick a one-time credit pack that fits your Hotel Lobby AI workflow."/><PricingCards/></div></section>
+    <section id="cta" className="marketing-section home-cta"><div className="section-container"><SectionHeading title="Ready to make your Hotel Lobby AI video?" description="Upload two authorized photos, keep the hanging mic and fixed framing, and generate your LobbyDuo Hotel Lobby video."/><Link className="pill-gradient-button" href="/#generator">Create Hotel Lobby AI Video</Link></div></section>
   </>, t);
 }

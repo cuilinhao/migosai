@@ -18,7 +18,7 @@ export function SectionHeading({ eyebrow, title, description, align = "center" }
   </div>;
 }
 
-export function WorkflowSection({ title = "How to Make a Hotel Lobby AI Video in 3 Simple Steps", description = "Migos AI keeps the setup short, so you can turn an idea into a share-ready performance. You provide the two stars and generate a share-ready clip.", steps = workflowSteps }: { title?: string; description?: string; steps?: TextItem[] }) {
+export function WorkflowSection({ title = "How to Make a Hotel Lobby AI Video in 3 Simple Steps", description = "LobbyDuo keeps the setup short, so you can turn an idea into a share-ready performance. You provide the two stars and generate a share-ready clip.", steps = workflowSteps }: { title?: string; description?: string; steps?: TextItem[] }) {
   const t = useTranslations();
   return <section id="how-it-works" className="marketing-section workflow-section"><div className="section-container">
     <SectionHeading eyebrow="WORKFLOW" title={title} description={description}/>
@@ -27,7 +27,7 @@ export function WorkflowSection({ title = "How to Make a Hotel Lobby AI Video in
   </div></section>;
 }
 
-export function FeaturesSection({ title = "Key Features for a Migos AI Video Maker", description = "A convincing Hotel Lobby–style video starts with clear faces, a full duo, and a performance that feels ready to share.", features = featureItems }: { title?: string; description?: string; features?: TextItem[] }) {
+export function FeaturesSection({ title = "Key Features for a LobbyDuo Video Maker", description = "A convincing Hotel Lobby–style video starts with clear faces, a full duo, and a performance that feels ready to share.", features = featureItems }: { title?: string; description?: string; features?: TextItem[] }) {
   const t = useTranslations();
   return <section id="features" className="marketing-section features-section"><div className="section-container">
     <SectionHeading title={title} description={description}/>
@@ -35,7 +35,7 @@ export function FeaturesSection({ title = "Key Features for a Migos AI Video Mak
   </div></section>;
 }
 
-export function FaqSection({ eyebrow = "FAQ", title = "Migos AI Video FAQs", description = "Answers about the Migos AI format, photos, music, generation, and pricing.", items }: { eyebrow?: string; title?: string; description?: string; items: FaqItem[] }) {
+export function FaqSection({ eyebrow = "FAQ", title = "LobbyDuo Video FAQs", description = "Answers about the LobbyDuo format, photos, music, generation, and pricing.", items }: { eyebrow?: string; title?: string; description?: string; items: FaqItem[] }) {
   const t = useTranslations();
   return <section id="faq" className="marketing-section faq-section"><div className="section-container">
     <SectionHeading eyebrow={eyebrow} title={title} description={description}/>

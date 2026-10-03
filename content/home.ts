@@ -1,6 +1,6 @@
 export const workflowSteps = [
   { title: "Upload Two Clear Photos", description: "One front-facing photo per person or pet, with a face that is easy to see. Give each role its own image." },
-  { title: "Press the button", description: "Choose a stage, model, sound and motion reference, then let Migos AI create your duo performance." },
+  { title: "Press the button", description: "Choose a stage, model, sound and motion reference, then let LobbyDuo create your duo performance." },
   { title: "Download & Share", description: "Preview your finished video and share the performance with friends or post it on TikTok, Instagram Reels, or YouTube Shorts." },
 ];
 
@@ -14,13 +14,13 @@ export const featureItems = [
 ];
 
 export const homeFaqItems = [
-  { question: "What is Hotel Lobby AI video?", answer: "It is the AI version of the viral Hotel Lobby duo setup: two people, pets, or characters in an orange booth, trading verses by the hanging mic. Upload two photos and Migos AI creates a short performance inspired by that format." },
+  { question: "What is Hotel Lobby AI video?", answer: "It is the AI version of the viral Hotel Lobby duo setup: two people, pets, or characters in an orange booth, trading verses by the hanging mic. Upload two photos and LobbyDuo creates a short performance inspired by that format." },
   { question: "Why is the Hotel Lobby AI video trend a thing?", answer: "A TikTok trend made unlikely pairings feel like a real rap performance. The clip is quick, funny, and easy to share, which makes the format especially popular for short videos." },
   { question: "Does the Hotel Lobby AI template include music?", answer: "Yes. Wan uses the template soundtrack, your cropped song or audio from your motion clip. Seedance creates original AI rap from an optional topic. Audio references guide generation without guaranteeing sample-for-sample reproduction. Use music you have permission to publish." },
-  { question: "Can I use pets, fictional characters, or famous people?", answer: "The character image can work with people, pets, and recognizable characters. Only upload images you own or have permission to use, especially when featuring public figures or copyrighted characters." },
+  { question: "Whose photos and characters can I use?", answer: "Use your own photos or material you are authorized to use, with permission from every person depicted. Pets and fictional characters also require appropriate image and intellectual property rights. Unauthorized celebrity or public-figure impersonation and misleading endorsements are prohibited. See our Acceptable Use Policy." },
   { question: "Why do the two faces blend together?", answer: "Face blending usually happens when reference photos are crowded, poorly lit, or similar. Clear, separate portraits give the generator a stronger starting point." },
-  { question: "Can the same person appear in both roles?", answer: "Yes. Upload a different photo of the same person to each image slot, and Migos AI can cast them in both roles. Distinct outfits or expressions usually make the result more entertaining." },
-  { question: "How long does a Hotel Lobby AI video take to generate?", answer: "Generation time varies with demand and processing conditions. Migos AI shows progress after you submit, so you can leave the page and return when your video is ready." },
+  { question: "Can the same person appear in both roles?", answer: "Yes. Upload a different photo of the same person to each image slot, and LobbyDuo can cast them in both roles. Distinct outfits or expressions usually make the result more entertaining." },
+  { question: "How long does a Hotel Lobby AI video take to generate?", answer: "Generation time varies with demand and processing conditions. LobbyDuo shows progress after you submit, so you can leave the page and return when your video is ready." },
   { question: "Is the Hotel Lobby AI video template free?", answer: "New accounts receive 50 welcome credits once, enough for one 5-second video at 480p. No subscription is required. The required credit amount is displayed before generation so you can check the cost before proceeding." },
-  { question: "How does Migos AI pricing work?", answer: "Migos AI offers one-time credit packs with no subscription. Credits are used when you create videos or songs, and the Pricing section below shows every available pack." },
+  { question: "How does LobbyDuo pricing work?", answer: "LobbyDuo offers one-time credit packs with no subscription. Credits are used when you create videos or songs, and the Pricing section below shows every available pack." },
 ];

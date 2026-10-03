@@ -3,7 +3,7 @@ import { localizePageContent } from "@/components/sections/localized-page-conten
 import { ShowcaseGrid } from "@/components/showcase-grid";
 import { VideoExamples } from "@/components/video-examples";
 
-export async function generateMetadata() { return localizeMetadata({ title: "Hotel Lobby AI Reference Examples", description: "Explore reference clips of the Hotel Lobby orange-booth duo format, then create your own video with Migos AI.", alternates: { canonical: "https://migosai.design/showcases" } }); }
+export async function generateMetadata() { return localizeMetadata({ title: "Hotel Lobby AI Reference Examples", description: "Explore reference clips of the Hotel Lobby orange-booth duo format, then create your own video with LobbyDuo.", alternates: { canonical: "https://migosai.design/showcases" } }); }
 
 export default async function ShowcasesPage() {
   const t = await getTranslations();

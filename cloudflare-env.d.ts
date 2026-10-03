@@ -6,6 +6,10 @@ interface CloudflareEnv {
  KIE_API_KEY?: string; KIE_MEDIA_HOSTS?: string;
  SEEAPI_API_KEY?: string;
  APIMART_MEDIA_HOSTS?: string;
+ PAYMENT_PROVIDER?: string;
+ STRIPE_SECRET_KEY?: string; STRIPE_WEBHOOK_SECRET?: string; STRIPE_MODE?: string;
+ STRIPE_PRICE_STARTER?: string; STRIPE_PRICE_CREATOR?: string;
+ STRIPE_PRICE_PRO?: string; STRIPE_PRICE_BUSINESS?: string;
  WAFFO_MERCHANT_ID?: string; WAFFO_PRIVATE_KEY?: string; WAFFO_MODE?: string;
  WAFFO_STORE_ID?: string;
  WAFFO_PRODUCT_STARTER?: string; WAFFO_PRODUCT_CREATOR?: string;

@@ -29,7 +29,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     <button className="dashboard-mobile-toggle" aria-label={t(mobileOpen ? "Close account menu" : "Open account menu")} aria-expanded={mobileOpen} onClick={() => setMobileOpen(!mobileOpen)}>{mobileOpen ? <X size={19}/> : <Menu size={19}/>}</button>
     {mobileOpen && <button className="dashboard-mobile-shade" aria-label={t("Close account menu")} onClick={() => setMobileOpen(false)}/>}
     <aside className={`dashboard-sidebar ${mobileOpen ? "open" : ""}`}>
-      <Link className="dashboard-brand" href="/app/video-generator" onClick={() => setMobileOpen(false)}><img src="/logo.png" alt=""/><span>Migos AI</span></Link>
+      <Link className="dashboard-brand" href="/app/video-generator" onClick={() => setMobileOpen(false)}><span className="brand-logo" aria-hidden="true">L</span><span>LobbyDuo</span></Link>
       <nav className="dashboard-nav" aria-label={t("Account navigation")}>{routes.map(({ href, label, Icon }) => <Link key={href} href={href} onClick={() => setMobileOpen(false)} className={stripLocale(pathname) === href ? "active" : ""}><Icon size={16}/><span>{t(label)}</span></Link>)}</nav>
       <div className="dashboard-sidebar-bottom">
         <LanguageSwitcher />

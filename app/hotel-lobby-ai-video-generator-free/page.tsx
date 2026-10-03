@@ -18,7 +18,7 @@ export async function generateMetadata() { return localizeMetadata(geoMetadata(
 export default async function FreeHotelLobbyGuidePage() {
   const t = await getTranslations();
   return localizePageContent(<div className="geo-page">
-    <GeoHeader title="Free Hotel Lobby AI Video Generator? Check the Credits First" intro="If you are looking for a free Hotel Lobby AI video generator, check what the offer actually covers. Migos AI uses credits for every video and gives new accounts 50 welcome credits once, enough for one 5-second video at 480p. No subscription is required." />
+    <GeoHeader title="Free Hotel Lobby AI Video Generator? Check the Credits First" intro="If you are looking for a free Hotel Lobby AI video generator, check what the offer actually covers. LobbyDuo uses credits for every video and gives new accounts 50 welcome credits once, enough for one 5-second video at 480p. No subscription is required." />
 
     <GeoSection id="free-video" title="Can I generate a Hotel Lobby video for free here?">
       <div className="geo-prose">
@@ -55,7 +55,7 @@ export default async function FreeHotelLobbyGuidePage() {
 
     <GeoSection id="watermark" title="Will the downloaded video have a watermark?">
       <div className="geo-prose">
-        <p>Migos AI does not add its own watermark to the generated video. That does not guarantee that the images you upload or the generation provider’s output contain no visible marks, text or logos.</p>
+        <p>LobbyDuo does not add its own watermark to the generated video. That does not guarantee that the images you upload or the generation provider’s output contain no visible marks, text or logos.</p>
         <p>There is no separate free-watermarked versus paid-unwatermarked export setting in this generator. Review the finished video before sharing it, including any marks already present in your reference photos.</p>
       </div>
     </GeoSection>

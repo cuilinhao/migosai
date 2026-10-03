@@ -9,7 +9,7 @@ export function geoMetadata(title: string, description: string, path: string): M
   const url = `${SITE_URL}${path}`;
   return {
     title: { absolute: title }, description, alternates: { canonical: url },
-    openGraph: { title, description, url, type: "website", siteName: "Migos AI", locale: "en_US" },
+    openGraph: { title, description, url, type: "website", siteName: "LobbyDuo", locale: "en_US" },
     twitter: { card: "summary", title, description },
   };
 }
