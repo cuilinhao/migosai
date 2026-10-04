@@ -22,10 +22,22 @@
 
 1. 安装锁定依赖并运行 `npm test`、`npm run typecheck`、`npm run cf:build`。
 2. 检查 `wrangler.jsonc` 的账户、D1、R2、路由和环境是否属于本次目标；生产配置含站点专用资源 ID，复制工程时需替换。
-3. 新环境执行本地迁移 `npm run db:local`。生产发布前检查远端待执行迁移及备份，再用 `npm run db:remote` 应用缺少的迁移。声音与动作功能依赖 `0005_reference_uploads.sql`。
+3. 新环境执行本地迁移 `npm run db:local`。生产发布前检查远端待执行迁移及备份，再用 `npm run db:remote` 应用缺少的迁移。声音与动作功能依赖 `0005_reference_uploads.sql`；邮箱注册及 One Tap 依赖 `0006_email_and_one_tap_auth.sql`。
 4. 在确认的源码版本运行 `npm run deploy`，记录提交和发布版本。以 [QA 说明](QA/README.md) 核查线上页面、认证、媒体访问及关键交互。
 
 保留已有任务、积分账本及历史付款记录。不要把忽略目录中的凭据、数据库转储、原始日志或真实账户截图放入发布源码。
+
+## 邮箱登录与 Google One Tap
+
+2026-10-04 已完成生产迁移和发布，最终版本为 `50b12c04-5310-4182-8f59-3d31d3278077`；正式源地址、邮箱注册/登录及真实 Chrome One Tap 均已核验。Google 公钥请求须使用 Workers 支持的 `redirect: 'manual'`，并拒绝非成功状态；不可改回 `error`。详见 [QA 记录](QA/README.md#2026-10-04-登录界面邮箱注册与-google-one-tap已上线)。
+
+登录弹窗和独立 `/sign-in`、`/sign-up` 页面共用界面，支持六种语言。邮箱注册使用 8–128 字符密码，服务端通过带随机盐的 scrypt 保存密码哈希；注册成功后建立现有 HttpOnly 会话，新账户积分为 0。邮箱不发送验证邮件，也没有密码找回流程。同一邮箱不能自动合并到 Google 账户；已有 Google 用户继续使用 Google 登录，避免未验证邮箱账户取得他人账户权限。
+
+One Tap 使用现有 `GOOGLE_CLIENT_ID`。发布前，在该 Google Web OAuth 客户端的 **Authorized JavaScript origins** 中确认包含 `https://migosai.design`；本地验证需要加入实际本地源地址。保留现有 **Authorized redirect URI** `https://migosai.design/api/auth/callback/google`，供常规 Google 按钮回退使用。客户端不读取 `GOOGLE_CLIENT_SECRET`。配置方式见 [Google 官方设置文档](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid)。
+
+`/api/auth/google/one-tap` 的 GET 返回客户端 ID 与短期 nonce，POST 在服务端校验 Google RS256 签名、发行方、受众、有效期、邮箱验证状态和一次性 nonce 后建立会话。同一标签页会话最多自动提示一次，退出后不会立即再次提示；浏览器抑制提示或 Google 脚本不可用时，可继续使用常规 Google 按钮或邮箱表单。
+
+迁移 0006 增加密码凭据、nonce 和限流表，以及阻止新大小写重复邮箱的触发器，不改动旧用户、会话或积分。发布前先应用迁移，再部署构建并验证真实 Google 账号。自动化验签测试与本地邮箱测试不能替代 Google 控制台源地址授权和线上 One Tap 握手验收。
 
 ## Waffo 正式收款验收
 
@@ -100,3 +112,15 @@ ORDER BY e.created_at;
 - 法务正文中的运营主体、联系方式、保留期限和退款说明仍需运营方确认后更新。
 
 Chrome 下载到本地文件尚未验收通过。修改播放或下载逻辑时，应分别验证浏览器播放、授权读取和最终文件保存，不能用其中一项代替另外两项。
+
+## 全站主题配色
+
+当前配色依据 `https://hotellobbyvideo.net/` 的实际 CSS 变量，2026-10-04 已上线。统一 tokens 位于 `app/globals.css`：背景 `#fbf6ee`、卡片 `#fffdf9`、正文 `#1d140e`、次要文字 `#5c5047`、分隔线 `#e6d9c6`、强调色 `#e8650f`、深橙色 `#b9460a`。按钮使用 `--brand-gradient`，首页与 CTA 使用 `--stage-gradient`。
+
+生成器、登录、内容页与案例样式分别位于 `interactive.css`、`auth.css`、`geo.css`、`video-examples.css`。后续调整尽量复用变量；深色媒体预览内的浅色文字、Google 官方四彩图标和代表场景的四色样块应保留语义。配色发布无需数据库迁移，仍需核查手机端覆盖顺序及原有控件状态。
+
+### 首页首屏
+
+`components/sections/home-hero.tsx` 与 `app/home-hero.css` 控制首页标题、麦克风、按钮与四张视频卡片；`app/page.tsx` 的 `.home-stage` 同时包住首屏和生成器，使橙色背景随内容延长，不使用固定高度。独立字体在 `public/fonts/home-hero/`（附 OFL 许可），仅作用于首屏。参考视频完整版在 `public/videos/home-hero/`，静音循环在其 `reel/` 子目录，封面在 `public/posters/home-hero/`；替换时同步更新 `docs/media-sources.json`，不能将参考示例标注为本站生成。六语言首屏文案在 `lib/i18n/messages/home-hero.ts`。
+
+`ShowcaseGrid` 已启用 `VideoCard.previewOnVisible`，共享示例卡片会在可见时静音循环、离屏暂停，点击打开有声弹窗；自动播放逻辑集中在 `components/video-card.tsx`，不要重复实现。

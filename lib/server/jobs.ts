@@ -8,6 +8,7 @@ import { createModerationMediaUrl } from './moderation-media';
 import { createVideoModeration, getVideoModeration, SeeApiError } from './seeapi';
 import { createKieVideo, getKieVideo } from './kie';
 import { getVideoSettings } from '../video-options';
+import { getVideoModelUnavailableReason } from '../video-availability';
 type Avatar={key:string;side:'left'|'right';taskId?:string;url?:string};
 export function generationResponse(job:Job):GenerationResponse{
  const keys:string[]=JSON.parse(job.result_keys??'[]');
@@ -124,6 +125,10 @@ export async function advanceJob(env:Env,id:string):Promise<void>{const db=datab
   // existing APIMart task through Kie. Historical payloads remain APIMart jobs.
   const payload=JSON.parse(job.payload) as CreateVideoRequest&{provider?:'kie'};
   const provider=job.kind==='video'&&payload.provider==='kie'?'kie':'apimart';
+  if(provider==='kie'&&(job.stage==='new'||job.stage==='ready')){
+   const unavailableReason=getVideoModelUnavailableReason(payload.model);
+   if(unavailableReason)throw new ProviderError(unavailableReason);
+  }
   providerConfigured(env,provider);
   if(job.kind==='video'&&(job.stage==='new'||job.stage==='ready'))moderationConfigured(env);
   if(job.stage.startsWith('submitting')){await patch(db,id,fence,{stage:'manual_review',error:'The provider submission could not be confirmed. Support is reviewing this request; it will not be resubmitted automatically.'});return;}

@@ -202,7 +202,7 @@ export default async function HotelLobbyComparisonPage() {
           rows={[
             [
               <a href="#migos-ai" key="migos-ai">LobbyDuo — our tool</a>,
-              `50 welcome credits once; enough for one 5-second video at 480p. No subscription is required. A 5-second Wan template costs ${minimumCost} credits.`,
+              t("No free signup credits. Purchase a credit pack to generate. A 5-second Wan template costs {credits} credits.", { credits: minimumCost }),
               "Built-in scenes; optional AI rap topic",
               "Two separate photos, one for each side",
               "People seeking selectable stages, music and motion references",
@@ -224,7 +224,7 @@ export default async function HotelLobbyComparisonPage() {
           <p>Our <Link href={HOTEL_LOBBY_PATH}>Hotel Lobby AI Video Generator</Link> combines two photo references with a selectable stage, model, sound and motion. Choose Hotel Lobby, Luxury lobby, Recording studio or Street cypher. Wan can follow template audio, your song or clip audio; Seedance creates original AI rap from an optional topic. Crop and apply uploaded reference segments before submitting.</p>
           <p>Choose vertical, landscape or square framing, preset durations of 5, 8, 10, 12 or 15 seconds, and resolutions supported by the selected model. Your own motion reference can determine a shorter duration. Movement, identity and audio can vary: reference media guides generation without guaranteeing exact frames or audio samples.</p>
           <h3>Understand the credits before uploading</h3>
-          <p><strong>New accounts receive 50 welcome credits once, enough for one 5-second video at 480p. No subscription is required.</strong> {t("A 5-second Wan template at 480p costs {shortCredits} credits. The default Wan template is {seconds} seconds at 480p for {credits} credits. Model and reference duration also affect cost.", { shortCredits: minimumCost, seconds: defaultVideoSettings.duration, credits: defaultCost })} Sign in with Google and review <Link href="/pricing">current credit packs</Link> before deciding whether to generate.</p>
+          <p><strong>Registration does not include free credits. Purchase a credit pack before generating.</strong> {t("A 5-second Wan template at 480p costs {shortCredits} credits. The default Wan template is {seconds} seconds at 480p for {credits} credits. Model and reference duration also affect cost.", { shortCredits: minimumCost, seconds: defaultVideoSettings.duration, credits: defaultCost })} Sign in with Google and review <Link href="/pricing">current credit packs</Link> before deciding whether to generate.</p>
         </div>
         <div id="migosai-workflow" className="geo-prose">
           <h3>How to make a Hotel Lobby AI video on LobbyDuo</h3>

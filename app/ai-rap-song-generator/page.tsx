@@ -31,7 +31,7 @@ const faqs = [
 export default async function RapSongPage() {
   const t = await getTranslations();
   return localizePageContent(<div className="mi-song-page">
-    <section className="mi-song-hero"><a className="mi-hero-badge" href="#generator"><span>NEW</span> Generate unlimited AI rap songs — try it free ›</a><h1>AI <span>Rap Song</span> Generator</h1><p>Create studio-quality rap songs instantly with AI. Describe the mood, paste your lyrics, or start from a short idea — get full vocal tracks with beats, flow, and hooks in minutes.</p></section>
+    <section className="mi-song-hero"><a className="mi-hero-badge" href="#generator"><span>NEW</span> Generate AI rap songs with purchased credits ›</a><h1>AI <span>Rap Song</span> Generator</h1><p>Create studio-quality rap songs instantly with AI. Describe the mood, paste your lyrics, or start from a short idea — get full vocal tracks with beats, flow, and hooks in minutes.</p></section>
     <section id="generator" className="mi-song-generator-section"><h2 className="mi-sr-only">AI Rap Song Generator</h2><SongGenerator /></section>
     <WorkflowSection title="How to Create Rap Songs with AI" description="Go from a creative idea—and optional lyrics—to a complete rap track in one generation. No music theory required." steps={steps} />
     <FeaturesSection title="Advanced Features of AI Rap Song Generator" description="Create studio-quality rap songs instantly. Generate royalty-free vocal tracks in any hip-hop style." features={features} />

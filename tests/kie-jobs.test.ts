@@ -4,6 +4,7 @@ import { reserveGeneration } from '../lib/server/billing';
 import { advanceJob, generationResponse } from '../lib/server/jobs';
 import { verifyMediaSignature } from '../lib/server/media';
 import { sha256 } from '../lib/server/security';
+import * as videoAvailability from '../lib/video-availability';
 
 const routeEnv = vi.hoisted(() => ({ value: {} as any }));
 vi.mock('../lib/server/env', async () => ({ ...await vi.importActual('../lib/server/env'), getEnv: async () => routeEnv.value }));
@@ -46,7 +47,9 @@ describe('Kie video integration', () => {
     expect(body.input.reference_audio_urls[0]).not.toBe(referenceAudio);
   });
 
-  it('does not lock an alternate stage to the orange template video', async () => {
+  it('does not lock an alternate stage to the orange template video when Seedance is available', async () => {
+    // Exercise Seedance routing after service recovery; outage guards have their own tests.
+    vi.spyOn(videoAvailability, 'getVideoModelUnavailableReason').mockReturnValue(undefined);
     const d = await kieJob(false, { model: 'seedance-2-fast', scene: 'luxury-lobby', motion: 'template', soundtrack: 'ai' });
     const fetcher = vi.spyOn(globalThis, 'fetch').mockResolvedValue(Response.json({ code: 200, data: { taskId: 'kie_task' } }));
     await d.tick();
@@ -70,13 +73,13 @@ describe('Kie video integration', () => {
     routeEnv.value = { ...jobEnv(d.db), APIMART_API_KEY: undefined, APIMART_MEDIA_HOSTS: undefined, KIE_API_KEY: 'kie-test-key', KIE_MEDIA_HOSTS: 'tempfile.aiquickdraw.com' };
     d.sqlite.prepare('INSERT INTO sessions(token_hash,user_id,expires_at) VALUES(?,?,unixepoch()+60)').run(await sha256(token), 'u');
     for (const key of [input.leftImage, input.rightImage]) d.sqlite.prepare('INSERT INTO uploads(key,user_id,content_type) VALUES(?,?,?)').run(key, 'u', 'image/jpeg');
-    const request = () => new Request('https://example.test/api/generations', { method: 'POST', headers: { origin: 'https://example.test', cookie: `migos_session=${token}`, 'Content-Type': 'application/json', 'Idempotency-Key': 'kie-create-once' }, body: JSON.stringify({ ...input, provider: 'apimart' }) });
+    const request = () => new Request('https://example.test/api/generations', { method: 'POST', headers: { origin: 'https://example.test', cookie: `migos_session=${token}`, 'Content-Type': 'application/json', 'Idempotency-Key': 'kie-create-once' }, body: JSON.stringify({ ...input, model: 'wan-3.0', provider: 'apimart' }) });
     const response = await createGeneration(request(), 'video');
     expect(response.status).toBe(202);
-    expect(JSON.parse(String(d.sqlite.prepare('SELECT payload FROM generations').get()?.payload))).toMatchObject({ provider: 'kie' });
+    expect(JSON.parse(String(d.sqlite.prepare('SELECT payload FROM generations').get()?.payload))).toMatchObject({ model: 'wan-3.0', provider: 'kie' });
     const retry = await createGeneration(request(), 'video');
     expect((await retry.json() as {id:string}).id).toBe((await response.json() as {id:string}).id);
-    expect(d.sqlite.prepare('SELECT credits FROM users').get()?.credits).toBe(50);
+    expect(d.sqlite.prepare('SELECT credits FROM users').get()?.credits).toBe(70);
   });
 
   for (const explicitKey of [true, false]) it(`preserves a pre-switch reservation on retry (explicit key: ${explicitKey})`, async () => {
@@ -95,7 +98,9 @@ describe('Kie video integration', () => {
     expect(JSON.parse(String(d.sqlite.prepare('SELECT payload FROM generations').get()?.payload)).provider).toBeUndefined();
   });
 
-  it('submits the ordered signed photos once and saves the Kie task for polling', async () => {
+  it('submits the ordered signed photos once and saves the Kie task for polling when Seedance is available', async () => {
+    // Retain legacy Seedance payload coverage without lifting the production incident switch.
+    vi.spyOn(videoAvailability, 'getVideoModelUnavailableReason').mockReturnValue(undefined);
     const d = await kieJob();
     const fetcher = vi.spyOn(globalThis, 'fetch').mockResolvedValue(Response.json({ code: 200, msg: 'success', data: { taskId: 'kie_task' } }));
     await d.tick();
@@ -183,7 +188,7 @@ describe('Kie video integration', () => {
   });
 
   it('does not repeat a paid POST when submission times out', async () => {
-    const d = await kieJob();
+    const d = await kieJob(false, { model: 'wan-3.0' });
     const fetcher = vi.spyOn(globalThis, 'fetch').mockRejectedValue(new TypeError('network timeout'));
     await d.tick(); await d.tick();
     expect(d.row()).toMatchObject({ stage: 'manual_review' });

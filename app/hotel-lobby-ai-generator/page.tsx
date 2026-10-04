@@ -32,7 +32,7 @@ export default async function HotelLobbyQuickStartPage() {
         ["Request higher resolution", `5 seconds, 720p: ${getVideoCost(5, "720p", "wan-3.0")} credits`, "Resolution is an output setting; the quality of both photo references still matters."],
         ["Request a longer performance", "10 or 15 seconds in the format you need", "Duration affects cost. Read the updated credit amount before generating."],
       ]} />
-      <p className="geo-note">New accounts receive 50 welcome credits once, enough for one 5-second video at 480p. No subscription is required. Read the <Link href="/hotel-lobby-ai-video-generator-free">credit and allowance guide</Link> for the full cost matrix.</p>
+      <p className="geo-note">Registration does not include free credits. Purchase a credit pack before generating. Read the <Link href="/hotel-lobby-ai-video-generator-free">credit and allowance guide</Link> for the full cost matrix.</p>
     </GeoSection>
 
     <GeoSection id="after-submit" title="What happens after I press Generate?">

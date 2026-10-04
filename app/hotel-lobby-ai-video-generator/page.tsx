@@ -15,7 +15,7 @@ export default async function HotelLobbyPage() {
   return localizePageContent(<div className="geo-page">
     <JsonLd data={hotelLobbySchema(`${SITE_URL}${HOTEL_LOBBY_PATH}`)} />
     <GeoHeader title="Hotel Lobby AI Video Generator" intro="Turn two photos into a Hotel Lobby style duo video — no prompt or editing required.">
-      <p className="geo-note">Sign in to generate with credits. Videos start at 50 credits. New accounts receive 50 welcome credits once, enough for one 5-second video at 480p. No subscription is required. <Link href="/pricing">See pricing</Link>.</p>
+      <p className="geo-note">Sign in and purchase a credit pack to generate videos. Registration does not include free credits. Check the displayed cost before generating. <Link href="/pricing">See pricing</Link>.</p>
     </GeoHeader>
     <section id="generator" className="generator-section geo-generator" aria-label="Create a Hotel Lobby AI video"><DuoVideoGenerator /></section>
     <GeoSection id="how-it-works" title="How It Works">

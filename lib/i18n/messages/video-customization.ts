@@ -3,6 +3,8 @@ import type { TranslatedLocale } from '../routing';
 // English sources remain the message keys. Each row provides every supported translation.
 type TranslationRow = readonly [source: string, zhTW: string, ko: string, ja: string, fr: string, es: string];
 const rows: readonly TranslationRow[] = [
+  ['Temporarily unavailable', '暫時無法使用', '일시적으로 사용 불가', '一時的に利用できません', 'Temporairement indisponible', 'Temporalmente no disponible'],
+  ['Seedance audio generation is temporarily unavailable. Please use Wan 3.0 with the Hotel Lobby stage.', 'Seedance 音訊生成暫時無法使用。請使用 Wan 3.0 搭配 Hotel Lobby 舞台。', 'Seedance 오디오 생성을 일시적으로 사용할 수 없습니다. Wan 3.0과 Hotel Lobby 무대를 이용해 주세요.', 'Seedanceの音声生成は一時的に利用できません。Wan 3.0とHotel Lobbyの舞台をご利用ください。', 'La génération audio Seedance est temporairement indisponible. Utilisez Wan 3.0 avec le décor Hotel Lobby.', 'La generación de audio de Seedance no está disponible temporalmente. Usa Wan 3.0 con el escenario Hotel Lobby.'],
   ['Invalid video options', '影片選項無效', '영상 설정이 올바르지 않습니다', '動画の設定が無効です', 'Options vidéo non valides', 'Opciones de vídeo no válidas'],
   ['Invalid reference duration', '參考片段長度無效', '참고 구간 길이가 올바르지 않습니다', '参考クリップの長さが無効です', 'Durée de référence non valide', 'Duración de referencia no válida'],
   ['Apply segment', '套用片段', '구간 적용', '区間を適用', 'Appliquer cet extrait', 'Aplicar fragmento'],

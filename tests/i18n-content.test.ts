@@ -30,8 +30,10 @@ describe("translation catalogs", () => {
   it("renders a localized generator status before hydration", () => {
     const messages = getMessages("ja");
     const html = renderToStaticMarkup(createElement(LocaleProvider, { locale: "ja", messages, children: createElement(VideoPreview, { generation: null, stage: "", error: "" }) }));
-    expect(html).toContain(messages["Reference preview · Upload two photos to generate"]);
-    expect(html).not.toContain(">Reference preview<");
+    expect(html).toContain(messages["The Hotel Lobby look"]);
+    expect(html).toContain(messages["See examples"]);
+    expect(html).toContain('href="/ja/showcases#video-examples"');
+    expect(html).not.toContain(">The Hotel Lobby look<");
   });
   it.each(["fr", "zh-TW"] as const)("offers all languages with %s selected and native labels", (locale) => {
     const html = renderToStaticMarkup(createElement(LocaleProvider, { locale, messages: getMessages(locale), children: createElement(LanguageSwitcher) }));

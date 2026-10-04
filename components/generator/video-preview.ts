@@ -5,10 +5,11 @@ import { useGenerationTranslations } from './use-generation';
 import { createElement } from 'react';
 import { Video } from 'lucide-react';
 import type { GenerationResponse } from '@/lib/contracts';
+import { HotelLobbyPreview, type PreviewSettings } from './hotel-lobby-preview';
 
-type Props = { generation: GenerationResponse | null; stage: string; error: string; pollError?: string };
+type Props = { generation: GenerationResponse | null; stage: string; error: string; pollError?: string; settings?: PreviewSettings };
 
-export function VideoPreview({ generation, stage, error, pollError }: Props) {
+export function VideoPreview({ generation, stage, error, pollError, settings }: Props) {
   const t = useGenerationTranslations();
   const locale = useLocale();
   const ready = generation?.status === 'completed' && Boolean(generation.videoUrl);
@@ -41,11 +42,10 @@ export function VideoPreview({ generation, stage, error, pollError }: Props) {
     media = createElement('div', { className: 'mi-preview-placeholder', role: 'status' }, t(stage));
     caption = 'Your current video request is in progress.';
   } else {
-    media = createElement('video', { src: '/videos/preview.mp4', poster: '/posters/preview.jpg', controls: true, playsInline: true, preload: 'metadata' });
-    caption = 'Reference preview · Upload two photos to generate';
+    return createElement(HotelLobbyPreview, { settings });
   }
 
-  return createElement('div', { className: 'mi-video-preview mi-panel' },
+  return createElement('div', { className: 'mi-video-preview mi-panel mi-preview-result' },
     createElement('h2', null, createElement(Video, { size: 17 }), ' ', t('Video Preview')),
     createElement('div', { className: 'mi-preview-media' }, media),
     createElement('p', null, t(caption)));

@@ -1,11 +1,12 @@
 {
-  "updated": "2026-10-03",
+  "updated": "2026-10-04",
   "notes": [
-    "All showcase videos on the home page, /showcases and the Hotel Lobby generator page are LobbyDuo output. /videos/preview.mp4 is a copy of wan-3-corgi-cat.mp4.",
+    "The “Made with LobbyDuo” gallery on the home page, /showcases and the Hotel Lobby generator page contains the three Wan 3.0 template outputs listed below. /videos/preview.mp4 is a copy of wan-3-corgi-cat.mp4. The separate Seedance model examples section on /showcases contains two audio-enabled diagnostic outputs generated via Kie on 2026-10-04; these are not Hotel Lobby template outputs.",
     "Performer photos are original AI-generated characters created with Seedream 4.0 via Kie on 2026-10-03 (no real people). Source photos and raw outputs are archived locally under .local-evidence/lobbyduo-examples-20261003/.",
     "The built-in template motion and soundtrack (public/templates/hotel-lobby) were regenerated the same day from a 15-second Wan 3.0 performance of two other original characters with an original AI rap. The earlier template files of undocumented origin are archived under .local-evidence/removed-public-media/templates-hotel-lobby/.",
     "Removed from public/: ten third-party YouTube clips, nine showcase clips and the preview video downloaded from migosai.com, and the previous LobbyDuo examples made from photos that resembled a migosai.com example. All are archived locally under .local-evidence/removed-public-media/.",
-    "Third-party examples that remain in content/video-examples.ts keep their source links and are labelled as not made with LobbyDuo."
+    "Third-party examples that remain in content/video-examples.ts keep their source links and are labelled as not made with LobbyDuo.",
+    "The two Seedance outputs are reused from the recovery tests (153.5 Kie credits total); adding them to the showcase required no additional generation. Raw outputs and test records are archived locally under .local-evidence/seedance-diagnosis-20261004/. Public MP4s are remuxed without re-encoding for fast-start playback, preserving the original video and audio."
   ],
   "videos": [
     {
@@ -38,5 +39,225 @@
       "performers": "c1 pug in a bucket hat and bomber jacket + c2 raccoon in a striped beanie",
       "sha256": "c193ec9808ef7e4fda996cf4c7338c3e4d57dda370505603b76219f9b853d706"
     }
-  ]
+  ],
+  "seedanceModelExamples": [
+    {
+      "id": "seedance-2-corgi-rap",
+      "src": "/videos/lobbyduo/seedance-2-corgi-rap.mp4",
+      "poster": "/posters/lobbyduo/seedance-2-corgi-rap.jpg",
+      "model": "Seedance 2.0",
+      "stage": "Recording studio",
+      "settings": "9:16, 5 seconds, 480p, generate_audio=true",
+      "workflow": "text-to-video, no reference images",
+      "performers": "corgi in a red hoodie",
+      "provider": "Kie",
+      "providerTaskId": "173d843ff87fd6f538384c077c00d364",
+      "kieCredits": 95,
+      "generatedOn": "2026-10-04",
+      "sha256": "4e3660c78337bedc516938fab4e8f8d0dcc63d36c24b9e932e81424a8e94b2fe"
+    },
+    {
+      "id": "seedance-2-fast-pug-raccoon",
+      "src": "/videos/lobbyduo/seedance-2-fast-pug-raccoon.mp4",
+      "poster": "/posters/lobbyduo/seedance-2-fast-pug-raccoon.jpg",
+      "model": "Seedance 2.0 Fast",
+      "stage": "Street cypher",
+      "settings": "9:16, 5 seconds, 480p, generate_audio=true",
+      "workflow": "image-to-video using two original Seedream 4.0 animal photos from 2026-10-03",
+      "performers": "c1 pug in a bucket hat and bomber jacket + c2 raccoon in a striped beanie",
+      "provider": "Kie",
+      "providerTaskId": "aa7d4b24d45571003e260f3d58906e92",
+      "kieCredits": 58.5,
+      "generatedOn": "2026-10-04",
+      "sha256": "1e9aa9341b247901bb6084e479a0665a7bb114d8d92b6a27654f827c67dbc0fd"
+    }
+  ],
+  "homeHeroReferenceExamples": {
+    "sourcePage": "https://hotellobbyvideo.net/",
+    "importedOn": "2026-10-04",
+    "provenance": "Reference-site examples downloaded from hotellobbyvideo.net for the requested home hero reproduction. These examples were not generated with LobbyDuo.",
+    "generatedWithLobbyDuo": false,
+    "notes": [
+      "The reference page plays the 6-second silent reel versions initially and switches to the full video when the viewer enables sound.",
+      "Original downloads are preserved without transcoding. All eight MP4s and four WebP posters were successfully decoded with ffmpeg; full videos include non-silent AAC audio, while the reel files have no audio stream."
+    ],
+    "videos": [
+      {
+        "id": "site-grandma-and-grandson",
+        "src": "/videos/home-hero/site-grandma-and-grandson.mp4",
+        "reel": "/videos/home-hero/reel/site-grandma-and-grandson.mp4",
+        "poster": "/posters/home-hero/site-grandma-and-grandson.webp",
+        "sourceVideo": "https://hotellobbyvideo.net/examples/site-grandma-and-grandson.mp4",
+        "sourceReel": "https://hotellobbyvideo.net/examples/reel/site-grandma-and-grandson.mp4",
+        "sourcePoster": "https://hotellobbyvideo.net/examples/site-grandma-and-grandson.webp",
+        "videoMetadata": {
+          "format": "MP4",
+          "videoCodec": "h264",
+          "width": 540,
+          "height": 940,
+          "bytes": 1217618,
+          "sha256": "a56543513b76ece5015482c81799eba755d4a3226e94e870d47eebc6faaf7fd4",
+          "durationSeconds": 12.096,
+          "hasAudio": true,
+          "audio": {
+            "codec": "aac",
+            "sampleRateHz": 32000,
+            "channels": 2,
+            "meanVolumeDb": -16.1,
+            "maxVolumeDb": -2.1
+          }
+        },
+        "reelMetadata": {
+          "format": "MP4",
+          "videoCodec": "h264",
+          "width": 320,
+          "height": 558,
+          "bytes": 118872,
+          "sha256": "c639d00db03f30c2f91f20032a70cc387f49fd4c6f5adebb848797bd3b891e2d",
+          "durationSeconds": 6.0,
+          "hasAudio": false
+        },
+        "posterMetadata": {
+          "format": "WebP",
+          "videoCodec": "webp",
+          "width": 540,
+          "height": 940,
+          "bytes": 24448,
+          "sha256": "5fe6102415051e89c202975677b6da6f8a2875aa978630f39936a0ab805ea0b1"
+        }
+      },
+      {
+        "id": "site-best-friends",
+        "src": "/videos/home-hero/site-best-friends.mp4",
+        "reel": "/videos/home-hero/reel/site-best-friends.mp4",
+        "poster": "/posters/home-hero/site-best-friends.webp",
+        "sourceVideo": "https://hotellobbyvideo.net/examples/site-best-friends.mp4",
+        "sourceReel": "https://hotellobbyvideo.net/examples/reel/site-best-friends.mp4",
+        "sourcePoster": "https://hotellobbyvideo.net/examples/site-best-friends.webp",
+        "videoMetadata": {
+          "format": "MP4",
+          "videoCodec": "h264",
+          "width": 540,
+          "height": 940,
+          "bytes": 1308296,
+          "sha256": "6551d2af6b51c1bf80b7ec75d8bd8d66926d9641d0f878e8b8d5288cd9c262c9",
+          "durationSeconds": 12.096,
+          "hasAudio": true,
+          "audio": {
+            "codec": "aac",
+            "sampleRateHz": 32000,
+            "channels": 2,
+            "meanVolumeDb": -12.9,
+            "maxVolumeDb": -1.3
+          }
+        },
+        "reelMetadata": {
+          "format": "MP4",
+          "videoCodec": "h264",
+          "width": 320,
+          "height": 558,
+          "bytes": 148792,
+          "sha256": "bbec01b252a745e5f56a5e3fa4d24de45d1060c1c7e669b5c5c83947064db6c7",
+          "durationSeconds": 6.0,
+          "hasAudio": false
+        },
+        "posterMetadata": {
+          "format": "WebP",
+          "videoCodec": "webp",
+          "width": 540,
+          "height": 940,
+          "bytes": 24824,
+          "sha256": "0a2f58019ece6191fec63b765951c0029d9869d86984d90f1e823231d464a9e3"
+        }
+      },
+      {
+        "id": "site-man-and-dog",
+        "src": "/videos/home-hero/site-man-and-dog.mp4",
+        "reel": "/videos/home-hero/reel/site-man-and-dog.mp4",
+        "poster": "/posters/home-hero/site-man-and-dog.webp",
+        "sourceVideo": "https://hotellobbyvideo.net/examples/site-man-and-dog.mp4",
+        "sourceReel": "https://hotellobbyvideo.net/examples/reel/site-man-and-dog.mp4",
+        "sourcePoster": "https://hotellobbyvideo.net/examples/site-man-and-dog.webp",
+        "videoMetadata": {
+          "format": "MP4",
+          "videoCodec": "h264",
+          "width": 540,
+          "height": 960,
+          "bytes": 1015456,
+          "sha256": "2455350e1b06bcf317611a278c276897d31b8a4f82ee2bce4febc91eb552abeb",
+          "durationSeconds": 10.030998,
+          "hasAudio": true,
+          "audio": {
+            "codec": "aac",
+            "sampleRateHz": 44100,
+            "channels": 2,
+            "meanVolumeDb": -9.6,
+            "maxVolumeDb": 0.0
+          }
+        },
+        "reelMetadata": {
+          "format": "MP4",
+          "videoCodec": "h264",
+          "width": 320,
+          "height": 570,
+          "bytes": 151081,
+          "sha256": "3bba6a38c5735279b72f416021fa08f1f675c2d5f1a5511cb101435be91c06bd",
+          "durationSeconds": 6.0,
+          "hasAudio": false
+        },
+        "posterMetadata": {
+          "format": "WebP",
+          "videoCodec": "webp",
+          "width": 540,
+          "height": 960,
+          "bytes": 21412,
+          "sha256": "49a66dac0f32490b7addb13f287db522d4a581361cee6de95a0b20f19b6102da"
+        }
+      },
+      {
+        "id": "site-young-couple",
+        "src": "/videos/home-hero/site-young-couple.mp4",
+        "reel": "/videos/home-hero/reel/site-young-couple.mp4",
+        "poster": "/posters/home-hero/site-young-couple.webp",
+        "sourceVideo": "https://hotellobbyvideo.net/examples/site-young-couple.mp4",
+        "sourceReel": "https://hotellobbyvideo.net/examples/reel/site-young-couple.mp4",
+        "sourcePoster": "https://hotellobbyvideo.net/examples/site-young-couple.webp",
+        "videoMetadata": {
+          "format": "MP4",
+          "videoCodec": "h264",
+          "width": 540,
+          "height": 940,
+          "bytes": 1159153,
+          "sha256": "993a97f7d8df0ee05703239bdad3d2645b69717859cb8e6f3ad3af4364b1c2cc",
+          "durationSeconds": 10.08,
+          "hasAudio": true,
+          "audio": {
+            "codec": "aac",
+            "sampleRateHz": 32000,
+            "channels": 2,
+            "meanVolumeDb": -15.1,
+            "maxVolumeDb": -1.1
+          }
+        },
+        "reelMetadata": {
+          "format": "MP4",
+          "videoCodec": "h264",
+          "width": 320,
+          "height": 558,
+          "bytes": 146789,
+          "sha256": "860d27be349855025da36b671cddcdae97bf77cdf387229fe9af1d95e48f7142",
+          "durationSeconds": 6.0,
+          "hasAudio": false
+        },
+        "posterMetadata": {
+          "format": "WebP",
+          "videoCodec": "webp",
+          "width": 540,
+          "height": 940,
+          "bytes": 24950,
+          "sha256": "84656f562c54df84872f8992136a417fd3ca6aa144a6dd892e89c9b864c28d86"
+        }
+      }
+    ]
+  }
 }

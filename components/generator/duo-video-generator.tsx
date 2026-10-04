@@ -7,11 +7,13 @@ import { useLocale } from "@/components/i18n/locale-provider";
 import { useAuth } from "@/components/auth-provider";
 import type { GenerationResponse, VideoSettings } from "@/lib/contracts";
 import { defaultVideoSettings, getVideoCost, updateVideoSettings, videoScenes } from "@/lib/video-options";
+import { getVideoModelUnavailableReason } from "@/lib/video-availability";
 import { readApi, useGeneration, useGenerationTranslations } from "./use-generation";
 import { captureVideoSubmission, executeVideoSubmission, type UploadedPair } from "./video-submission";
 import { uploadPhoto, type PhotoUploadProgress } from "./photo-upload";
 import { preparePhoto } from "./prepare-photo";
 import { VideoPreview } from "./video-preview";
+import { getResumableVideo } from './generation-history';
 import { VideoSettingsPicker } from './video-settings';
 import { SoundMotionSettings } from './sound-motion-settings';
 import { uploadReference } from './reference-upload';
@@ -43,11 +45,15 @@ export function DuoVideoGenerator() {
   const ownerRef = useRef(user?.id); ownerRef.current = user?.id;
   const effectiveSettings = { ...settings, duration: settings.motion === 'video' && referenceVideo ? Math.max(settings.model === 'wan-3.0' ? 2 : 4, Math.round(referenceVideo.duration)) : settings.duration };
   const { duration, resolution } = effectiveSettings;
+  const seedanceUnavailableReason = getVideoModelUnavailableReason('seedance-2');
+  const modelUnavailableReason = getVideoModelUnavailableReason(settings.model);
   const referenceAudio = settings.soundtrack === 'song' ? referenceSong?.file : settings.soundtrack === 'clip' ? referenceVideo?.audioFile : undefined;
   const mediaPreparing = videoPreparing || songPreparing;
   const updateSettings = (patch: Partial<VideoSettings>) => {
     if (submitting.current) return;
     const next = updateVideoSettings(settings, patch);
+    const unavailableReason = getVideoModelUnavailableReason(next.model);
+    if (unavailableReason) { setSettingsNotice(unavailableReason); return; }
     const adjusted = (['model', 'scene', 'soundtrack', 'resolution'] as const).some(field => next[field] !== settings[field] && !Object.hasOwn(patch, field));
     setSettingsNotice(adjusted ? 'Settings were adjusted for compatibility. Your uploaded media is retained.' : '');
     setSettings(next); idempotency.current = null; uploaded.current = null;
@@ -90,7 +96,7 @@ export function DuoVideoGenerator() {
         const response = await readApi<{ generations: (GenerationResponse & { kind: string })[] }>(
           await fetch('/api/generations', { cache: 'no-store' }));
         if (active && !submitting.current && !submittedJob.current) {
-          setGeneration(response.generations.find(item => item.kind === 'video') ?? null);
+          setGeneration(getResumableVideo(response.generations));
         }
       } catch { /* A failed history lookup must not replace the current task. */ }
     })();
@@ -143,6 +149,8 @@ export function DuoVideoGenerator() {
   };
   const submit = async () => {
     if (submitting.current || activeJob || preparationRef.current.video || preparationRef.current.audio) return;
+    const unavailableReason = getVideoModelUnavailableReason(settings.model);
+    if (unavailableReason) { setError(unavailableReason); return; }
     if (!user) { openSignIn(); return; }
     if (!left || !right) { setError("Upload one photo for each person to continue."); return; }
     if (credits < cost) { setError(`You need ${cost} credits to create this video.`); return; }
@@ -218,13 +226,17 @@ export function DuoVideoGenerator() {
       <div className="mi-video-form-body">
       <div className="mi-upload-grid">{slot("left", left, leftInput)}{slot("right", right, rightInput)}</div>
       <p className="mi-upload-hint">{t('JPG, PNG or WebP · Up to 10 MB each')}</p>
-      <fieldset className="mi-scene-field" disabled={busy || activeJob}><legend>{t('Stage')}</legend><div className="mi-scene-grid" role="radiogroup" aria-label={t('Stage')}>{videoScenes.map(scene => <button type="button" key={scene.id} role="radio" aria-checked={settings.scene === scene.id} className={`mi-scene-card mi-scene-${scene.id} ${settings.scene === scene.id ? 'selected' : ''}`} onClick={() => updateSettings({ scene: scene.id })}><span className="mi-scene-swatch"/><strong>{t(scene.label)}</strong><small>{t(scene.description)}</small></button>)}</div></fieldset>
+      {seedanceUnavailableReason && <p id="mi-seedance-unavailable" className="mi-settings-note" role="status">{t(seedanceUnavailableReason)}</p>}
+      <fieldset className="mi-scene-field" disabled={busy || activeJob}><legend>{t('Stage')}</legend><div className="mi-scene-grid" role="radiogroup" aria-label={t('Stage')}>{videoScenes.map(scene => {
+        const unavailableReason = scene.id !== 'hotel-lobby' ? seedanceUnavailableReason : undefined;
+        return <button type="button" key={scene.id} role="radio" aria-checked={settings.scene === scene.id} disabled={Boolean(unavailableReason)} aria-describedby={unavailableReason ? 'mi-seedance-unavailable' : undefined} title={unavailableReason ? t(unavailableReason) : undefined} className={`mi-scene-card mi-scene-${scene.id} ${settings.scene === scene.id ? 'selected' : ''}`} onClick={() => updateSettings({ scene: scene.id })}><span className="mi-scene-swatch"/><strong>{t(scene.label)}</strong><small>{t(unavailableReason ? 'Temporarily unavailable' : scene.description)}</small></button>;
+      })}</div></fieldset>
       <VideoSettingsPicker value={effectiveSettings} onChange={updateSettings} disabled={busy || activeJob} ownMotion={settings.motion === 'video' && Boolean(referenceVideo)}/>
       <SoundMotionSettings key={user?.id ?? 'anonymous'} value={effectiveSettings} onChange={updateSettings} video={referenceVideo} song={referenceSong} onVideoChange={value => changeReference('video', value)} onSongChange={value => changeReference('audio', value)} onVideoBusy={value => markPreparing('video', value)} onSongBusy={value => markPreparing('audio', value)} disabled={busy || activeJob}/>
       {settingsNotice && <p className="mi-settings-note" role="status">{t(settingsNotice)}</p>}
       {referenceProgress !== null && <p className="mi-settings-note" role="status">{t('Uploading reference media…')} {formatPercent(referenceProgress)}</p>}
       {mediaPreparing && <p className="mi-settings-note" role="status">{t('Preparing reference media…')}</p>}
-      <button className="mi-primary-button mi-generate-button" type="button" onClick={submit} disabled={busy || activeJob || mediaPreparing || authLoading || Boolean(user && (!left || !right))}>{!user && !authLoading ? <UserRound size={17} /> : <Sparkles size={17} />}{busy ? uploading ? t("{stage} {progress}%", { stage: t(uploadStage), progress: uploadPercent }) : t(stage) : authLoading ? t("Checking account…") : activeJob ? t("{status}… {progress}%", { status: t(generation?.error ? "Video status" : "Video in progress"), progress }) : t(user ? "Generate Video" : "Sign In to Generate Video")}</button>
+      <button className="mi-primary-button mi-generate-button" type="button" onClick={submit} disabled={busy || activeJob || mediaPreparing || authLoading || Boolean(modelUnavailableReason) || Boolean(user && (!left || !right))}>{!user && !authLoading ? <UserRound size={17} /> : <Sparkles size={17} />}{busy ? uploading ? t("{stage} {progress}%", { stage: t(uploadStage), progress: uploadPercent }) : t(stage) : authLoading ? t("Checking account…") : activeJob ? t("{status}… {progress}%", { status: t(generation?.error ? "Video status" : "Video in progress"), progress }) : t(user ? "Generate Video" : "Sign In to Generate Video")}</button>
       {uploading && <div className="mi-generation-progress">
         <div className="mi-generation-progress-label" role="status"><span>{t(uploadStage)}</span><strong>{formatPercent(uploadPercent)}</strong></div>
         <div className="mi-generation-progress-track" role="progressbar" aria-label={t("Photo upload progress")} aria-valuemin={0} aria-valuemax={100} aria-valuenow={uploadPercent}><div className="mi-generation-progress-fill" style={{ width: `${uploadPercent}%` }} /></div>
@@ -242,6 +254,6 @@ export function DuoVideoGenerator() {
       {pollError && <p className="mi-error" role="alert">{t(pollError)}</p>}
       </div>
     </div>
-    <VideoPreview generation={generation} stage={busy ? stage : ''} error={error} pollError={generation ? pollError : ''} />
+    <VideoPreview generation={generation} stage={busy ? stage : ''} error={error} pollError={generation ? pollError : ''} settings={effectiveSettings} />
   </div>;
 }

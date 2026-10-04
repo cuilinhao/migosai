@@ -5,25 +5,27 @@ import { GeoCta, GeoHeader, GeoRelatedLinks, GeoSection, GeoTable, geoMetadata }
 import { defaultVideoSettings, getVideoCost, videoDurations } from "@/lib/video-options";
 
 const path = "/hotel-lobby-ai-video-generator-free";
-const welcomeCredits = 50;
 const minimumCost = getVideoCost(5, "480p", "wan-3.0");
 const defaultCost = getVideoCost(defaultVideoSettings.duration, defaultVideoSettings.resolution, defaultVideoSettings.model);
 
-export async function generateMetadata() { return localizeMetadata(geoMetadata(
-  "Free Hotel Lobby AI Video Generator? Credits & Limits (2026)",
-  `Is Hotel Lobby AI video generation free? See the ${welcomeCredits}-credit welcome grant, five-second Wan template costs of ${minimumCost} credits, sign-in requirements and watermark details.`,
-  path,
-)); }
+export async function generateMetadata() {
+  const t = await getTranslations();
+  return localizeMetadata(geoMetadata(
+    "Free Hotel Lobby AI Video Generator? Credits & Limits (2026)",
+    t("Is Hotel Lobby AI video generation free? Registration includes no free credits. Review paid credit packs, five-second Wan template costs of {credits} credits, sign-in requirements and watermark details.", { credits: minimumCost }),
+    path,
+  ));
+}
 
 export default async function FreeHotelLobbyGuidePage() {
   const t = await getTranslations();
   return localizePageContent(<div className="geo-page">
-    <GeoHeader title="Free Hotel Lobby AI Video Generator? Check the Credits First" intro="If you are looking for a free Hotel Lobby AI video generator, check what the offer actually covers. LobbyDuo uses credits for every video and gives new accounts 50 welcome credits once, enough for one 5-second video at 480p. No subscription is required." />
+    <GeoHeader title="Free Hotel Lobby AI Video Generator? Check the Credits First" intro="LobbyDuo requires purchased credits for every video. Registration does not include free credits. You can browse the guides and reference videos for free." />
 
     <GeoSection id="free-video" title="Can I generate a Hotel Lobby video for free here?">
       <div className="geo-prose">
-        <p>Yes. A new account receives {welcomeCredits} welcome credits once, enough for one 5-second video at 480p. No subscription is required. A five-second Wan template video requires {minimumCost} credits. Viewing the public generator, guides and reference clips does not spend generation credits.</p>
-        <p>Before submitting, the <Link href="/hotel-lobby-ai-video-generator#generator">Hotel Lobby AI Video Generator</Link> displays both the selected video cost and your remaining balance. You need enough credits for that configuration. The welcome grant is issued once per account and does not reset the next day.</p>
+        <p>{t("No. Registration does not include free credits. Purchase a credit pack before generating. A five-second Wan template video requires {credits} credits. Viewing the public generator, guides and reference clips does not spend generation credits.", { credits: minimumCost })}</p>
+        <p>Before submitting, the <Link href="/hotel-lobby-ai-video-generator#generator">Hotel Lobby AI Video Generator</Link> displays both the selected video cost and your remaining balance. You need enough credits for that configuration.</p>
       </div>
     </GeoSection>
 
@@ -48,7 +50,7 @@ export default async function FreeHotelLobbyGuidePage() {
 
     <GeoSection id="daily-limit" title="Is there a daily free allowance?">
       <div className="geo-prose">
-        <p>No daily free-video allowance is currently offered. The {welcomeCredits}-credit welcome grant is issued once per account, not every day. Generation uses your available balance, and the form waits for your current video request to finish before accepting another.</p>
+        <p>No. Registration does not include free credits, and there is no daily free-video allowance. Generation uses your available balance, and the form waits for your current video request to finish before accepting another.</p>
         <p>There is no advertised daily reset that makes a paid video free. Keep an eye on the displayed balance and the selected cost instead of planning around a number of free daily attempts.</p>
       </div>
     </GeoSection>

@@ -10,15 +10,16 @@ const render = (generation: GenerationResponse | null, stage = '', error = '', p
 describe('current video preview', () => {
   it('shows an explicitly labelled reference only before a request starts', () => {
     const html = render(null);
-    expect(html).toContain('/videos/preview.mp4');
-    expect(html).toContain('Reference preview');
+    expect(html).toContain('/posters/hotel-lobby-examples/noiz-boxer-kangaroo.webp');
+    expect(html).toContain('Reference example by Noiz');
+    expect(html).toContain('The Hotel Lobby look');
   });
 
   it('shows current task progress without playing the reference while generation is pending', () => {
     const html = render({ id: 'job-1', status: 'reviewing', progress: 55, statusMessage: 'Checking video safety before delivery…' });
     expect(html).toContain('Checking video safety before delivery');
     expect(html).toContain('55%');
-    expect(html).not.toContain('/videos/preview.mp4');
+    expect(html).not.toContain('/posters/hotel-lobby-examples/noiz-boxer-kangaroo.webp');
     expect(html).not.toContain('<video');
   });
 
@@ -44,13 +45,13 @@ describe('current video preview', () => {
   it('shows an upload stage without presenting the reference as the requested result', () => {
     const html = render(null, 'Uploading photos…');
     expect(html).toContain('Uploading photos');
-    expect(html).not.toContain('/videos/preview.mp4');
+    expect(html).not.toContain('/posters/hotel-lobby-examples/noiz-boxer-kangaroo.webp');
   });
 
   it('shows the failure reason without a playable reference video', () => {
     const html = render({ id: 'job-2', status: 'failed', progress: 65, error: 'Image review failed.' });
     expect(html).toContain('Image review failed.');
-    expect(html).not.toContain('/videos/preview.mp4');
+    expect(html).not.toContain('/posters/hotel-lobby-examples/noiz-boxer-kangaroo.webp');
     expect(html).not.toContain('<video');
   });
 
@@ -58,8 +59,8 @@ describe('current video preview', () => {
     const html = render({ id: 'job-3', status: 'completed', progress: 100, videoUrl: '/api/media/users/u/results/video' });
     expect(html).toContain('src="/api/media/users/u/results/video"');
     expect(html).toContain('controls');
-    expect(html).not.toContain('/videos/preview.mp4');
-    expect(html).not.toContain('/posters/preview.jpg');
+    expect(html).not.toContain('/videos/hotel-lobby-examples/noiz-boxer-kangaroo.mp4');
+    expect(html).not.toContain('/posters/hotel-lobby-examples/noiz-boxer-kangaroo.webp');
   });
 
   it('keeps a completed but unreleased video private', () => {

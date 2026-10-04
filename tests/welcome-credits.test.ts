@@ -11,7 +11,7 @@ const profile = {
   picture: 'https://example.test/profile.png',
 };
 
-describe('one-time welcome credits through Google sign-in', () => {
+describe('Google sign-in without complimentary credits', () => {
   let db: ReturnType<typeof database>['db'];
   let sqlite: ReturnType<typeof database>['sqlite'];
 
@@ -55,23 +55,44 @@ describe('one-time welcome credits through Google sign-in', () => {
     return user;
   }
 
-  it('makes 50 free credits available to a newly registered user without an order', async () => {
+  it('registers a new user with zero credits and no credit grant', async () => {
     const user = await signIn();
 
-    expect(user.credits).toBe(50);
+    expect(user.credits).toBe(0);
     expect(sqlite.prepare('SELECT count(*) AS n FROM orders WHERE user_id=?').get(user.id)).toMatchObject({ n: 0 });
     expect(sqlite.prepare('SELECT amount,kind,reference_id FROM credit_ledger WHERE user_id=?').all(user.id))
-      .toEqual([{ amount: 50, kind: 'welcome', reference_id: user.id }]);
+      .toEqual([]);
   });
 
-  it('grants once across repeated logins and never restores credits spent on generation', async () => {
+  it('keeps the balance at zero across repeated logins', async () => {
     const first = await signIn();
-    expect(await signIn()).toMatchObject({ id: first.id, credits: 50 });
-
-    await reserveGeneration(db, first.id, 'spend-welcome-credits', 'video', {}, 50);
+    expect(await signIn()).toMatchObject({ id: first.id, credits: 0 });
     expect(await signIn()).toMatchObject({ id: first.id, credits: 0 });
     expect(sqlite.prepare("SELECT count(*) AS n FROM credit_ledger WHERE user_id=? AND kind='welcome'").get(first.id))
-      .toMatchObject({ n: 1 });
+      .toMatchObject({ n: 0 });
+  });
+
+  it.each(['video', 'music'])('requires purchased credits before a new user can generate %s', async kind => {
+    const user = await signIn();
+
+    await expect(reserveGeneration(db, user.id, 'unpaid-generation', kind, {}, 30))
+      .rejects.toMatchObject({ status: 402 });
+    expect(sqlite.prepare('SELECT credits FROM users WHERE id=?').get(user.id)).toMatchObject({ credits: 0 });
+    expect(sqlite.prepare('SELECT count(*) AS n FROM generations WHERE user_id=?').get(user.id)).toMatchObject({ n: 0 });
+    expect(sqlite.prepare('SELECT count(*) AS n FROM credit_ledger WHERE user_id=?').get(user.id)).toMatchObject({ n: 0 });
+  });
+
+  it('preserves purchased credits without adding a welcome grant or restoring spent credits on login', async () => {
+    sqlite.prepare('INSERT INTO users(id,email,name,google_sub) VALUES(?,?,?,?)')
+      .run('paid-user', profile.email, profile.name, profile.sub);
+    sqlite.prepare("INSERT INTO credit_ledger(id,user_id,amount,kind,reference_id) VALUES(?,?,300,'payment',?)")
+      .run('paid-user:payment', 'paid-user', 'paid-order');
+
+    expect(await signIn()).toMatchObject({ id: 'paid-user', credits: 300 });
+    await reserveGeneration(db, 'paid-user', 'paid-generation', 'video', {}, 30);
+    expect(await signIn()).toMatchObject({ id: 'paid-user', credits: 270 });
+    expect(sqlite.prepare("SELECT count(*) AS n FROM credit_ledger WHERE user_id=? AND kind='welcome'").get('paid-user'))
+      .toMatchObject({ n: 0 });
   });
 
   it.each([

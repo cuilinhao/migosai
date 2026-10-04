@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Verify the crawlable GEO contract against a running Next.js server.
 
-Usage: python3 scripts/check-geo.py http://127.0.0.1:3011 [report.json] [welcome_credits]
+Usage: python3 scripts/check-geo.py http://127.0.0.1:3011 [report.json]
 Uses only Python's standard library. No browser, account or paid API required.
 """
 import json
@@ -18,7 +18,6 @@ from xml.etree import ElementTree
 BASE = sys.argv[1].rstrip("/") if len(sys.argv) > 1 else "http://127.0.0.1:3011"
 SITE = "https://migosai.design"
 CORE = "/hotel-lobby-ai-video-generator"
-WELCOME_CREDITS = int(sys.argv[3]) if len(sys.argv) > 3 else 50
 HTTP_CLIENT = os.environ.get("GEO_HTTP_CLIENT", "urllib")
 assert HTTP_CLIENT in ("urllib", "curl"), "Unsupported GEO_HTTP_CLIENT"
 GEO = [CORE, CORE + "-free", "/hotel-lobby-ai-template", "/hotel-lobby-ai-filter",
@@ -27,6 +26,12 @@ GEO = [CORE, CORE + "-free", "/hotel-lobby-ai-template", "/hotel-lobby-ai-filter
 
 def normalize(text):
     return re.sub(r"\s+", " ", text).strip()
+
+
+def assert_paid_credit_copy(text, label):
+    text = normalize(text)
+    assert not re.search(r"\b[1-9]\d*(?:[\s-]+welcome[\s-]+credits?|[\s-]+credit[\s-]+welcome[\s-]+grant)\b", text, re.I), (label, "Signup-credit promotion is no longer offered")
+    assert re.search(r"\b(?:paid|purchase|buy)\b[^.!?]{0,160}\bcredits?(?:\s+packs?)?\b", text, re.I), (label, "Missing paid-credit requirement")
 
 
 class Page(HTMLParser):
@@ -41,6 +46,7 @@ class Page(HTMLParser):
         self.ids = set()
         self.links = []
         self.images = []
+        self.showcase_items = 0
         self.jsonld = []
         self.faqs = []
         self.visible = []
@@ -70,6 +76,8 @@ class Page(HTMLParser):
             self.links.append(a["href"])
         if tag == "img" and a.get("src", "").startswith("/"):
             self.images.append(a["src"])
+        if tag == "div" and "geo-showcase-item" in a.get("class", "").split():
+            self.showcase_items += 1
         if tag == "article" and "faq-item" in a.get("class", "").split():
             self.faq = {}
         if tag in ("h1", "h2", "title") or (self.faq is not None and tag in ("h3", "p")):
@@ -161,17 +169,14 @@ graph = core.jsonld[0]["@graph"]
 assert {node["@type"] for node in graph} >= {"SoftwareApplication", "FAQPage", "BreadcrumbList"}
 application = next(node for node in graph if node["@type"] == "SoftwareApplication")
 assert "offers" not in application, "Unverified free-price offer"
-if WELCOME_CREDITS < 50:
-    assert application.get("isAccessibleForFree") is not True, "Free-generation flag conflicts with credit policy"
-welcome_copy = f"{WELCOME_CREDITS} welcome credits once"
-assert welcome_copy in normalize(" ".join(core.visible)), "Welcome-credit policy mismatch"
-assert welcome_copy in application["description"], "Schema trial description mismatch"
+assert application.get("isAccessibleForFree") is not True, "Free-generation flag conflicts with paid-credit policy"
+assert_paid_credit_copy(" ".join(core.visible), "Core page")
+assert_paid_credit_copy(application["description"], "SoftwareApplication description")
 faq = next(node for node in graph if node["@type"] == "FAQPage")
 expected = [(normalize(node["name"]), normalize(node["acceptedAnswer"]["text"])) for node in faq["mainEntity"]]
 visible = [(item["h3"], item["p"]) for item in core.faqs]
 assert len(visible) == 8 and visible == expected, "FAQ schema must match visible FAQ exactly"
-if WELCOME_CREDITS < 50:
-    assert visible[0][1].startswith("No."), "Welcome grant cannot cover the minimum video cost"
+assert visible[0][1].startswith("No."), "Free-generation FAQ must explain the paid-credit requirement"
 faq_matches = len(visible)
 for prefix in locale_prefixes:
     localized_core = pages[prefix + CORE]
@@ -179,7 +184,9 @@ for prefix in locale_prefixes:
         assert prefix + path in pages[prefix or "/"].links, (prefix + path, "Missing footer link")
         if path != CORE:
             assert prefix + path in localized_core.links, (prefix + path, "Missing core page link")
-    assert pages[prefix + "/showcases"].links.count(prefix + CORE) >= 9, "Expected eight showcase links plus footer"
+    showcase = pages[prefix + "/showcases"]
+    assert showcase.showcase_items > 0, (prefix, "Missing first-party showcase cards")
+    assert showcase.links.count(prefix + CORE) >= showcase.showcase_items + 1, (prefix, "Each first-party showcase and the footer must link to the generator")
     if prefix:
         localized_graph = localized_core.jsonld[0]["@graph"]
         localized_faq = next(node for node in localized_graph if node["@type"] == "FAQPage")
@@ -188,8 +195,7 @@ for prefix in locale_prefixes:
         assert len(localized_visible) == 8 and localized_visible == localized_expected, (prefix, "Localized FAQ/schema mismatch")
         localized_app = next(node for node in localized_graph if node["@type"] == "SoftwareApplication")
         assert localized_app["url"] == SITE + prefix + CORE, (prefix, "Schema URL mismatch")
-        if WELCOME_CREDITS < 50:
-            assert localized_app.get("isAccessibleForFree") is not True, (prefix, "Free-generation flag conflicts with credit policy")
+        assert localized_app.get("isAccessibleForFree") is not True, (prefix, "Free-generation flag conflicts with paid-credit policy")
         faq_matches += len(localized_visible)
 
 for path, page in pages.items():
@@ -206,7 +212,7 @@ for path, page in pages.items():
 
 llms = fetch("/llms.txt").decode()
 assert llms.startswith("# LobbyDuo")
-assert welcome_copy in llms, "llms.txt welcome-credit policy mismatch"
+assert_paid_credit_copy(llms, "llms.txt")
 for path in english_geo:
     assert SITE + path in llms, (path, "Missing llms.txt entry")
 for url in re.findall(r"\]\((https://migosai\.design[^)]*)\)", llms):
@@ -219,7 +225,7 @@ crawler_rules.parse(robots.splitlines())
 for bot in ("Googlebot", "GPTBot", "OAI-SearchBot", "ClaudeBot", "PerplexityBot", "Google-Extended"):
     assert all(crawler_rules.can_fetch(bot, SITE + path) for path in paths), (bot, "A public sitemap route is blocked")
 report = {"base": BASE, "result": "pass", "sitemap_routes": len(paths),
-          "expected_welcome_credits": WELCOME_CREDITS,
+          "expected_welcome_credits": 0,
           "http_client": HTTP_CLIENT,
           "faq_exact_matches": faq_matches, "checked_resources": len(cache), "pages": rows,
           "faq_comparison": "Visible and JSON-LD text with equivalent whitespace normalized, including French non-breaking spaces.",

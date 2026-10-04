@@ -5,6 +5,7 @@ import { sha256 } from '../lib/server/security';
 import { advanceJob, generationResponse } from '../lib/server/jobs';
 import { saveReferenceUpload } from '../lib/server/reference-uploads';
 import { POST } from '../app/api/generations/route';
+import * as videoAvailability from '../lib/video-availability';
 const routeEnv = vi.hoisted(() => ({ value: {} as any }));
 vi.mock('../lib/server/env', async () => ({ ...await vi.importActual('../lib/server/env'), getEnv: async () => routeEnv.value }));
 import { createGeneration } from '../lib/server/generations';
@@ -109,10 +110,14 @@ describe('custom generation reservation', () => {
 
   it.each([
     ['wan-3.0', 30], ['seedance-2', 50], ['seedance-2-fast', 40],
-  ] as const)('refunds the actual %s reservation once after a definitive submission rejection', async (model, cost) => {
+  ] as const)('refunds the actual %s reservation once after a definitive submission rejection when the model is available', async (model, cost) => {
+    // Test each provider rejection and stored debit with Seedance service availability restored.
+    if (model !== 'wan-3.0') vi.spyOn(videoAvailability, 'getVideoModelUnavailableReason').mockReturnValue(undefined);
     const d = await setup();
     const patch = model === 'wan-3.0' ? { model } : { model, soundtrack: 'ai', referenceAudio: undefined };
-    const created = await (await POST(d.request(patch), undefined)).json() as { id: string };
+    const response = await POST(d.request(patch), undefined);
+    expect(response.status).toBe(202);
+    const created = await response.json() as { id: string };
     expect(d.sqlite.prepare('SELECT cost FROM generations').get()?.cost).toBe(cost);
     expect(d.sqlite.prepare("SELECT credits FROM users WHERE id='u'").get()?.credits).toBe(100 - cost);
     const fetcher = vi.spyOn(globalThis, 'fetch').mockResolvedValue(Response.json({ code: 422, msg: 'private provider detail', data: null }));

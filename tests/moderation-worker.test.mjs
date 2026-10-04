@@ -46,6 +46,7 @@ beforeAll(async () => {
     },
     bundle: true,
     platform: 'browser',
+    external: ['node:crypto'],
     format: 'esm',
     write: false,
     plugins: [{
@@ -60,6 +61,7 @@ beforeAll(async () => {
     modules: true,
     script: bundled.outputFiles[0].text,
     compatibilityDate: '2026-10-01',
+    compatibilityFlags: ['nodejs_compat'],
     cf: false,
     d1Databases: ['DB'],
     r2Buckets: ['MEDIA'],

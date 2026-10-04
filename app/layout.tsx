@@ -8,6 +8,7 @@ import "@fontsource/plus-jakarta-sans/600.css";
 import "@fontsource/plus-jakarta-sans/700.css";
 import "./globals.css";
 import "./interactive.css";
+import "./auth.css";
 import { AuthProvider } from "@/components/auth-provider";
 import { SiteShell } from "@/components/site-shell";
 import { GoogleAnalytics } from "@/components/google-analytics";

@@ -29,7 +29,7 @@ const entries: ReadonlyArray<readonly [string, string, string, string, string]> 
   ["Contact information", "연락처", "お問い合わせ先", "Coordonnées", "Información de contacto"],
   ["All rights reserved.", "모든 권리 보유.", "無断転載を禁じます。", "Tous droits réservés.", "Todos los derechos reservados."],
   ["Hotel Lobby AI Video Generator", "Hotel Lobby AI 영상 생성기", "Hotel Lobby AI動画ジェネレーター", "Générateur de vidéos Hotel Lobby IA", "Generador de vídeos Hotel Lobby con IA"],
-  ["Free Credits & Limits", "무료 크레딧 및 이용 한도", "無料クレジットと利用制限", "Crédits gratuits et limites", "Créditos gratis y límites"],
+  ["Credits & Limits", "크레딧 및 이용 한도", "クレジットと利用制限", "Crédits et limites", "Créditos y límites"],
   ["Hotel Lobby AI Template", "Hotel Lobby AI 템플릿", "Hotel Lobby AIテンプレート", "Modèle Hotel Lobby IA", "Plantilla Hotel Lobby con IA"],
   ["Hotel Lobby AI Filter & Face Swap", "Hotel Lobby AI 필터 및 얼굴 바꾸기", "Hotel Lobby AIフィルターと顔入れ替え", "Filtre Hotel Lobby IA et échange de visages", "Filtro Hotel Lobby con IA e intercambio de caras"],
   ["Hotel Lobby AI Generator Guide", "Hotel Lobby AI 생성기 가이드", "Hotel Lobby AIジェネレーターガイド", "Guide du générateur Hotel Lobby IA", "Guía del generador Hotel Lobby con IA"],

@@ -1,7 +1,7 @@
 import { getVideoCost } from "../lib/video-options";
 
 export const hotelLobbyTitle = "Hotel Lobby AI Video Generator — Two-Photo Duo Videos (2026)";
-export const hotelLobbyDescription = "Turn two photos into a Hotel Lobby style AI duo video without a prompt. New accounts get 50 welcome credits once, with no subscription required. Sign in, choose your format and generate.";
+export const hotelLobbyDescription = "Turn two photos into a Hotel Lobby style AI duo video without a prompt. Registration includes no free credits. Sign in, purchase a credit pack, choose your format and generate.";
 export const minimumVideoCredits = getVideoCost(5, "480p", "wan-3.0");
 
 export const hotelLobbySteps = [
@@ -15,14 +15,14 @@ export const hotelLobbySteps = [
   },
   {
     title: "Step 3: Generate & download",
-    description: `Sign in with Google and check that your account has enough credits before submitting. A five-second Wan template video at 480p uses ${minimumVideoCredits} credits; new accounts receive 50 welcome credits once, enough for one five-second video at 480p. No subscription is required. Follow the upload, generation and review status shown in the tool. Once the video is completed and approved, preview and download it. Processing time varies with the selected settings, the service queue and review, so allow time for the full process.`,
+    description: `Sign in with Google and check that your account has enough credits before submitting. A five-second Wan template video at 480p uses ${minimumVideoCredits} credits; new accounts start with no credits, so purchase a credit pack before generating. Follow the upload, generation and review status shown in the tool. Once the video is completed and approved, preview and download it. Processing time varies with the selected settings, the service queue and review, so allow time for the full process.`,
   },
 ];
 
 export const hotelLobbyFaqs = [
   {
     question: "Is there a free Hotel Lobby AI video generator?",
-    answer: `Yes. New accounts receive 50 welcome credits once, enough for one five-second video at 480p. No subscription is required. A five-second Wan template video at 480p needs ${minimumVideoCredits} credits. Further generation requires enough remaining or purchased credits. You can browse the template, instructions and reference videos for free. Check the displayed generation cost and the pricing page before deciding whether to add credits to your account.`,
+    answer: `No. Registration does not include free credits. Purchase a credit pack before generating. A five-second Wan template video at 480p needs ${minimumVideoCredits} credits. You can browse the template, instructions and reference videos for free. Check the displayed generation cost and the pricing page before purchasing.`,
   },
   {
     question: "How do I make a Hotel Lobby AI video with two photos?",
