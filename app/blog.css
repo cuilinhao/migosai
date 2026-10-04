@@ -1,0 +1,29 @@
+/* Blog index and articles; reuses the .geo-* guide styles from geo.css. */
+.blog-byline{margin:6px 0 0}
+.blog-prose{max-width:930px}
+.blog-prose>p:first-child{margin-top:0}
+.blog-list{padding-left:22px;max-width:930px;margin:12px 0 20px}
+.blog-list li{padding:6px 0 6px 4px}
+.blog-prose .geo-table-scroll{max-width:1216px}
+.blog-table-compact{min-width:480px}
+.blog-faq .faq-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 40px;max-width:1100px}
+.blog-faq .faq-item p{margin:0}
+.blog-sources{padding-left:20px;max-width:930px;margin:0}
+.blog-sources li{padding:4px 0;font-size:14px}
+.blog-more .geo-link-grid a{line-height:1.45}
+.blog-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;max-width:1216px}
+.blog-card{display:flex;flex-direction:column;gap:12px;padding:26px;border:1px solid var(--border);border-radius:14px;background:var(--card)}
+.blog-card .blog-card-meta{margin:0;color:var(--primary-strong);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;line-height:1.4}
+.blog-card h3{margin:0;font-size:21px;line-height:1.35;letter-spacing:-.02em}
+.geo-page .blog-card h3 a{color:var(--foreground);text-decoration:none}
+.geo-page .blog-card h3 a:hover{color:var(--accent-foreground);text-decoration:underline}
+.blog-card>p{margin:0;font-size:14px;line-height:1.65}
+.blog-card .blog-card-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:auto;padding-top:8px;font-size:13px}
+.geo-page .blog-card-footer a{white-space:nowrap}
+@media(max-width:900px){.blog-faq .faq-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.blog-grid{grid-template-columns:1fr}.blog-card{padding:20px}.blog-card h3{font-size:18px}.blog-table-compact{min-width:0}}
+.blog-list{list-style:disc}
+.blog-prose ol.geo-steps{list-style:decimal}
+.blog-list li::marker,.blog-prose ol.geo-steps li::marker{color:var(--primary-strong);font-weight:700}
+.blog-sources{list-style:disc}
+.blog-article :is(h1,h2,h3):lang(ja),.blog-index :is(h1,h2,h3):lang(ja){word-break:auto-phrase}

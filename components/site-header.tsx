@@ -6,7 +6,7 @@ import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 import { stripLocale } from "@/lib/i18n/routing";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { CircleHelp, Clapperboard, ListChecks, Menu, Music2, X, Zap } from "lucide-react";
+import { CircleHelp, Clapperboard, ListChecks, Menu, Music2, Newspaper, X, Zap } from "lucide-react";
 import { useAuth } from "./auth-provider";
 
 const links = [
@@ -15,7 +15,10 @@ const links = [
   { label: "Pricing", href: "/pricing", icon: Zap },
   { label: "Showcase", href: "/showcases", icon: Clapperboard },
   { label: "AI Rap Song Generator", href: "/ai-rap-song-generator", icon: Music2 },
+  { label: "Blog", href: "/blog", icon: Newspaper },
 ];
+
+const isActive = (pathname: string, href: string) => pathname === href || (href === "/blog" && pathname.startsWith("/blog/"));
 
 export function SiteHeader() {
   const pathname = stripLocale(usePathname());
@@ -30,7 +33,7 @@ export function SiteHeader() {
           <span className="brand-logo" aria-hidden="true">L</span><span>LobbyDuo</span>
         </Link>
         <nav className="desktop-nav" aria-label={t("Primary navigation")}>
-          {links.map(({ label, href, icon: Icon }) => <Link className={pathname === href ? "active" : ""} href={href} key={label}><Icon size={15} strokeWidth={1.8}/>{t(label)}</Link>)}
+          {links.map(({ label, href, icon: Icon }) => <Link className={isActive(pathname, href) ? "active" : ""} aria-current={isActive(pathname, href) ? "page" : undefined} href={href} key={label}><Icon size={15} strokeWidth={1.8}/>{t(label)}</Link>)}
         </nav>
         <div className="header-actions">
           <LanguageSwitcher compact />

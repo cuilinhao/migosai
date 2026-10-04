@@ -60,7 +60,7 @@ export async function GeoRelatedLinks({ current }: { current: string }) {
   const t = await getTranslations();
   return localizePageContent(<aside className="geo-related section-container" aria-label="Related Hotel Lobby guides"><h2>Explore Hotel Lobby AI</h2>
     <div className="geo-link-grid">{hotelLobbyPages.filter((page) => page.path !== current).map((page) => <Link key={page.path} href={page.path}>{page.label}<span aria-hidden="true"> ↗</span></Link>)}</div>
-    <p><Link href="/showcases">Browse reference videos</Link> · <Link href="/pricing">View pricing</Link> · <Link href="/">Back to home</Link></p>
+    <p><Link href="/showcases">Browse reference videos</Link> · <Link href="/pricing">View pricing</Link> · <Link href="/blog">Blog</Link> · <Link href="/">Back to home</Link></p>
   </aside>, t);
 }
 

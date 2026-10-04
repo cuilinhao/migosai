@@ -8,6 +8,7 @@ const entries: ReadonlyArray<readonly [string, string, string, string, string]> 
   ["Pricing", "요금", "料金", "Tarifs", "Precios"],
   ["Showcase", "영상 예시", "作品例", "Exemples", "Ejemplos"],
   ["AI Rap Song Generator", "AI 랩 음악 생성기", "AIラップ楽曲ジェネレーター", "Générateur de rap IA", "Generador de rap con IA"],
+  ["Blog", "블로그", "ブログ", "Blog", "Blog"],
   ["LobbyDuo home", "LobbyDuo 홈", "LobbyDuo ホーム", "Accueil LobbyDuo", "Inicio de LobbyDuo"],
   ["Primary navigation", "주 메뉴", "メインナビゲーション", "Navigation principale", "Navegación principal"],
   ["Mobile navigation", "모바일 메뉴", "モバイルナビゲーション", "Navigation mobile", "Navegación móvil"],

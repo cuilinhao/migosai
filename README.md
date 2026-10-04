@@ -15,6 +15,7 @@ LobbyDuo 是运行于 [migosai.design](https://migosai.design) 的双图视频�
 - 品牌为 LobbyDuo。“Migos AI” 只作为潮流搜索词出现在首页标题、H1 和说明中；页脚、服务条款、联系页（`/contact`）与 `llms.txt` 声明本站与 migosai.com、Migos、Quavo、Takeoff、COLORS 均无关联。购买需年满 18 岁。
 - 首页、`/showcases` 和 Hotel Lobby 生成器页的 “Made with LobbyDuo” 示例只使用本站生成的视频（`content/own-examples.ts`、`public/videos/lobbyduo/`）。原先从 migosai.com 下载的 9 条示例与生成器预览片、以及 10 条 YouTube 名人/版权角色视频已移出公开目录，本地归档在被忽略的 `.local-evidence/removed-public-media/`。示例和内置 Hotel Lobby 模板动作/配乐（`public/templates/hotel-lobby/`）均于 2026-10-03 用 Seedream 4.0 生成的原创动物角色照片和 Wan 3.0 重新生成，来源记录见 `docs/media-sources.json` 与模板 README；来源不明的旧模板已归档。其余第三方示例保留来源链接，并标注“非 LobbyDuo 制作”。
 - `/showcases#seedance-examples` 另展示 2026-10-04 复测成功的两条带声音样片：Seedance 2.0 纯文字生成的柯基录音室短片，以及 Seedance 2.0 Fast 双图生成的巴哥与浣熊街头表演。复用已有输出，不新增生成费用；模型样片与首页的 Hotel Lobby 模板成果分开展示。
+- 博客 `/blog` 收录四篇 Hotel Lobby AI 文章与工具对比。文章正文与元数据在 `content/blog.ts`，五种语言译文在 `lib/i18n/messages/blog-*.json`，只在服务端渲染时使用、不进入客户端文案包；`tests/blog-content.test.tsx` 检查译文完整性、链接与占位符一致、内链有效及 sitemap 收录。
 
 默认视频为 Wan、Hotel Lobby、10 秒、480p、9:16，使用模板时消耗 60 积分；5 秒 480p 模板消耗 30 积分。最终价格以服务端验证后的参数和参考片段时长为准。新账户需先购买现有一次性积分套餐；已有余额不足时也需购买积分后生成。
 
@@ -43,6 +44,8 @@ npm test
 npm run typecheck
 npm run cf:build
 ```
+
+2026-10-04 13:02（Asia/Shanghai）博客栏目已随版本 `926e4dcb-bad6-42f4-aee8-b688112c70c0` 上线：新增 `/blog` 列表页和四篇 Hotel Lobby AI 文章（趋势是什么、使用的歌曲、猫狗版本、问题排查），六种语言完整翻译；顶部导航、页脚和指南页相关链接加入 Blog，sitemap 由 90 增至 120 个 URL，`llms.txt` 同步。771 项测试、类型检查、构建及正式站 156 个多语言页面、120 个 sitemap URL 和 GEO 检查通过；详见 [QA 说明](QA/README.md#2026-10-04-博客栏目已上线)。
 
 2026-10-04 12:25（Asia/Shanghai）示例视频自动播放已随版本 `07a9b886-5d9e-421d-b629-7adc4e2a97d8` 上线：卡片进入视野后静音循环，离屏暂停，点击保留有声弹窗。751 项测试、类型检查、构建及浏览器播放回归通过。
 

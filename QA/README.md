@@ -18,7 +18,7 @@ node scripts/check-i18n.mjs https://migosai.design
 GEO_HTTP_CLIENT=curl python3 scripts/check-geo.py https://migosai.design QA/geo-current.json
 ```
 
-`check-i18n` 检查六种语言的 126 个页面、canonical、语言链接、私有页面 noindex 和 90 个 sitemap URL。`check-geo` 检查公开内容、FAQ 与结构化数据、链接和资源。HTTP 200 不能替代按钮或生成流程验收。
+`check-i18n` 检查六种语言的 156 个页面、canonical、语言链接、私有页面 noindex 和 120 个 sitemap URL。`check-geo` 检查公开内容、FAQ 与结构化数据、链接和资源。HTTP 200 不能替代按钮或生成流程验收。
 
 ## 2026-10-04 主演示视频替换
 
@@ -102,3 +102,13 @@ GEO_HTTP_CLIENT=curl python3 scripts/check-geo.py https://migosai.design QA/geo-
 12:25（Asia/Shanghai）版本 `07a9b886-5d9e-421d-b629-7adc4e2a97d8` 已发布至 100% 流量。仅在 `ShowcaseGrid` 启用已有 `VideoCard.previewOnVisible`：首页、生成器介绍页和示例页的卡片进入可视区域后静音循环，离屏暂停，点击仍打开有声弹窗。尊重减少动态效果偏好及浏览器自动播放限制。
 
 43 个文件、751 项自动化测试、类型检查和 Cloudflare 构建通过；浏览器确认三张卡片无需点击即播放、时间推进、离屏暂停、弹窗有声和关闭恢复，手机仅可见卡片播放且无页面横向溢出。相对上一首屏版仅一个源码文件变更，另 312 项哈希一致；29 项运行绑定与九项 Secrets 保持不变。证据位于 `.local-evidence/showcase-autoplay-release-20261004/`。
+
+## 2026-10-04 博客栏目（已上线）
+
+13:02（Asia/Shanghai）版本 `926e4dcb-bad6-42f4-aee8-b688112c70c0` 已发布到 100% 流量，基线为当时线上版本 `07a9b886-5d9e-421d-b629-7adc4e2a97d8`；发布脚本在上传前和切换流量前均核对线上版本未被并行发布改变，上传绑定与基线一致。
+
+- 范围：新增 `/blog` 列表页和四篇文章（`what-is-hotel-lobby-ai-video`、`hotel-lobby-ai-trend-song`、`hotel-lobby-ai-video-cat-dog`、`hotel-lobby-ai-video-problems-fixes`），六种语言；顶部导航、页脚与指南页相关链接加入 Blog；sitemap 由 90 增至 120 个 URL；`llms.txt` 增加博客条目。文章含 BlogPosting、FAQPage 与 BreadcrumbList 结构化数据。
+- 自动检查：44 个测试文件、771 项测试（新增 `tests/blog-content.test.tsx`）、类型检查、Cloudflare 构建通过。本地 workerd 预览与正式站 `check-i18n` 均为 156 个页面、120 个 sitemap URL、0 失败；`check-geo` 通过（48 条 FAQ 精确匹配）。
+- 正式站浏览器：六语言共 30 个博客页面返回 200，`lang` 正确，可见 FAQ 与 FAQPage 结构化数据一致，Blog 导航高亮，桌面与手机无横向溢出、无页面错误。
+- 首次上传遇到 wrangler `fetch failed` 网络错误，线上未受影响；脚本自动重试后上传和发布成功。回滚可运行 `.local-evidence/blog-release-20261004/rollback.sh` 恢复 `07a9b886`。
+- 发布脚本、日志、检查结果和截图位于忽略目录 `.local-evidence/blog-release-20261004/`。本次未调用付费生成或付款。
