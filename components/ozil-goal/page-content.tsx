@@ -12,6 +12,7 @@ import { OzilShell } from './shell';
 import { OzilCredits } from './credits';
 import { RouteChooser } from './route-chooser';
 import { OzilBlogPreview } from './blog';
+import { OzilGoalExamples } from './examples';
 import './reference.css';
 import './ozil.css';
 export type OzilPageSlug = Exclude<keyof typeof pages, 'footer'>;
@@ -72,7 +73,7 @@ function homeFooterText(value: string) {
 function renderNode(node: SourceNode, locale: Locale, key: string, formatText = text): ReactNode {
   if (typeof node === 'string') return formatText(node);
   if ('slot' in node) {
-    const slots: Record<string, ReactNode> = { generator: <OzilGoalGenerator />, prompt: <PromptBuilder />, 'template-check': <TemplateCheck />, 'photo-check': <PhotoCheck />, captions: <CaptionBoard />, timeline: <BeatTimeline />, sample: <SampleVideo />, 'guide-sample-video': <GuideSampleVideo />, credits: <OzilCredits />, 'route-chooser': <RouteChooser /> };
+    const slots: Record<string, ReactNode> = { generator: <OzilGoalGenerator />, prompt: <PromptBuilder />, 'template-check': <TemplateCheck />, 'photo-check': <PhotoCheck />, captions: <CaptionBoard />, timeline: <BeatTimeline />, sample: <SampleVideo />, 'guide-sample-video': <GuideSampleVideo />, credits: <OzilCredits />, 'route-chooser': <RouteChooser />, 'video-examples': <OzilGoalExamples /> };
     return <Fragment key={key}>{slots[node.slot]}</Fragment>;
   }
   const props: Record<string, unknown> = { key };

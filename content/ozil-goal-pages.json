@@ -581,6 +581,9 @@
           ]
         },
         {
+          "slot": "video-examples"
+        },
+        {
           "tag": "section",
           "attrs": {
             "class": "py-16 sm:py-20"

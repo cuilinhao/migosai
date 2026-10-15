@@ -65,3 +65,16 @@
 @media(max-width:900px){.ozil-page.og{padding-top:64px}}
 
 .ozil-page .og-sample-pause{position:absolute;z-index:2;top:12px;right:12px;display:grid;place-items:center;width:36px;height:36px;border:0;border-radius:50%;color:white;background:#0008;backdrop-filter:blur(8px)}
+
+/* Keep the shared example-card styling above the reference page's reset. */
+.ozil-page .og-examples-section{padding:80px 0 72px;font-family:"Plus Jakarta Sans",sans-serif}
+.ozil-page .og-examples-section .reference-examples-intro{margin-bottom:36px}
+.ozil-page .og-examples-section .reference-examples-eyebrow{margin:0 0 14px}
+.ozil-page .og-examples-section .reference-examples-intro h2{font-size:clamp(28px,3.2vw,44px);font-weight:700}
+.ozil-page .og-examples-section .reference-examples-description{margin:22px 0 0}
+.ozil-page .og-examples-grid{align-items:start}
+.ozil-page .og-examples-grid .mi-video-card{border-radius:24px;background:var(--card)}
+.ozil-page .og-examples-grid .mi-video-card>video,.ozil-page .og-examples-grid .mi-video-card>img{width:100%;height:100%;object-fit:contain;transform:none}
+.ozil-page .og-examples-grid figcaption{padding:12px 2px 0}
+.ozil-page .og-examples-grid h3{margin:0 0 5px;font-size:16px;font-weight:700}
+@media(max-width:639px){.ozil-page .og-examples-section{padding:48px 0}.ozil-page .og-examples-section .reference-examples-intro{margin-bottom:26px}.ozil-page .og-examples-section .reference-examples-description{margin-top:16px}.ozil-page .og-examples-grid .mi-video-card{border-radius:20px}}
