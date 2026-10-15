@@ -11,6 +11,7 @@ import { SampleVideo, GuideSampleVideo } from './media';
 import { OzilShell } from './shell';
 import { OzilCredits } from './credits';
 import { RouteChooser } from './route-chooser';
+import { OzilBlogPreview } from './blog';
 import './reference.css';
 import './ozil.css';
 export type OzilPageSlug = Exclude<keyof typeof pages, 'footer'>;
@@ -89,7 +90,7 @@ export async function OzilGoalPage({ slug = 'home' }: { slug?: OzilPageSlug }) {
   const content = pages[slug].content as SourceNode;
   return <>
     {slug === 'home' && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema(content, locale)).replace(/</g, '\\u003c') }} />}
-    <OzilShell>{renderNode(content, locale, slug)}{renderNode(pages.footer as SourceNode, locale, 'footer', slug === 'home' ? homeFooterText : text)}</OzilShell>
+    <OzilShell>{renderNode(content, locale, slug)}{slug === 'home' && <OzilBlogPreview />}{renderNode(pages.footer as SourceNode, locale, 'footer', slug === 'home' ? homeFooterText : text)}</OzilShell>
   </>;
 }
 export function ozilMetadata(slug: OzilPageSlug) {

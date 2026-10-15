@@ -19,10 +19,12 @@ const links = [
   { label: "Blog", href: "/blog", icon: Newspaper },
 ];
 
-const isActive = (pathname: string, href: string) => pathname === href || (href === "/blog" && pathname.startsWith("/blog/"));
+const isActive = (pathname: string, href: string) => pathname === href || (href.endsWith("/blog") && pathname.startsWith(`${href}/`));
 
 export function SiteHeader() {
   const pathname = stripLocale(usePathname());
+  const isOzil = pathname === "/ozil-goal-generator" || pathname.startsWith("/ozil-goal-generator/");
+  const isOzilBlog = /^\/ozil-goal-generator\/blog(?:\/|$)/.test(pathname);
   const t = useTranslations();
   const { user, credits, openSignIn, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -41,7 +43,8 @@ export function SiteHeader() {
     document.addEventListener("pointerdown", outside);
     return () => { document.removeEventListener("keydown", escape); document.removeEventListener("pointerdown", outside); };
   }, [menuOpen]);
-  const navigationLinks = (mobile = false) => links.map(({ label, href, icon: Icon }) => href === "/ai-rap-song-generator"
+  const contextLinks = links.map(link => link.href === "/blog" && isOzil ? { ...link, href: "/ozil-goal-generator/blog" } : link);
+  const navigationLinks = (mobile = false) => contextLinks.map(({ label, href, icon: Icon }) => href === "/ai-rap-song-generator"
     ? <GeneratorMenu key={href} pathname={pathname} mobile={mobile} onNavigate={close}/>
     : <Link className={isActive(pathname, href) ? "active" : ""} aria-current={isActive(pathname, href) ? "page" : undefined} href={href} key={href} onClick={close}><Icon size={mobile ? 17 : 15} strokeWidth={1.8}/>{t(label)}</Link>);
   return (
@@ -54,7 +57,7 @@ export function SiteHeader() {
           {navigationLinks()}
         </nav>
         <div className="header-actions">
-          <LanguageSwitcher compact />
+          {!isOzilBlog && <LanguageSwitcher compact />}
           {user ? <div className="signed-in-actions"><Link className="credit-badge" href="/app/my-credits">{t("{credits} credits", { credits })}</Link><Link className="sign-in-button account-header-link" href="/app/video-generator">{t("User Center")}</Link><button className="header-signout" onClick={() => void logout()}>{t("Sign Out")}</button></div> : <button className="sign-in-button" onClick={openSignIn}>{t("Sign In")}</button>}
           <button ref={mobileTrigger} className="mobile-menu-button" aria-label={t(menuOpen ? "Close menu" : "Open menu")} aria-expanded={menuOpen} aria-controls="mobile-primary-navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={21}/> : <Menu size={21}/>}</button>
         </div>

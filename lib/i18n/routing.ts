@@ -21,6 +21,8 @@ export function localizeHref(href: string, locale: Locale): string {
   if (!isPagePath(href)) return href;
   const base = stripLocale(href);
   if (!isPagePath(base)) return href;
+  // Ozil articles have native-language slugs; they are not translated UI routes.
+  if (/^\/ozil-goal-generator\/blog(?:[/?#]|$)/.test(base)) return base;
   if (locale === "en") return base;
   return `/${locale}${base === "/" ? "" : base.startsWith("/?") || base.startsWith("/#") ? base.slice(1) : base}`;
 }

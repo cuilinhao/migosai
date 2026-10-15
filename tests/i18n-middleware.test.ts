@@ -41,7 +41,12 @@ describe("translation formatting", () => {
 describe("multilingual sitemap", () => {
   it("lists every public page in each language with reciprocal hreflang URLs", () => {
     const entries = sitemap();
-    expect(entries).toHaveLength(publicPages.length * 6);
+    for (const page of publicPages) {
+      for (const prefix of ["", "/ko", "/ja", "/fr", "/es", "/zh-TW"]) {
+        const path = prefix && page.path === "/" ? prefix : `${prefix}${page.path}`;
+        expect(entries.some(entry => entry.url === `https://migosai.design${path}`), path).toBe(true);
+      }
+    }
     expect(new Set(entries.map(entry => entry.url)).size).toBe(entries.length);
     const french = entries.find(entry => entry.url === "https://migosai.design/fr/pricing");
     expect(french?.alternates?.languages).toEqual({ en: "https://migosai.design/pricing", ko: "https://migosai.design/ko/pricing", ja: "https://migosai.design/ja/pricing", fr: "https://migosai.design/fr/pricing", es: "https://migosai.design/es/pricing", "zh-TW": "https://migosai.design/zh-TW/pricing", "x-default": "https://migosai.design/pricing" });

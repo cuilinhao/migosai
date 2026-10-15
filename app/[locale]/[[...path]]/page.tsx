@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { isLocale } from "@/lib/i18n/routing";
 import AccountLayout from "@/app/app/layout";
 
@@ -42,6 +42,7 @@ type Props = { params: Promise<{ locale: string; path?: string[] }> };
 async function resolvePage(params: Props["params"]) {
   const { locale, path = [] } = await params;
   const pathname = `/${path.join("/")}`;
+  if (isLocale(locale) && /^\/ozil-goal-generator\/blog(?:\/|$)/.test(pathname)) permanentRedirect(pathname);
   if (!isLocale(locale) || !Object.hasOwn(routes, pathname)) notFound();
   return { page: await routes[pathname as keyof typeof routes](), pathname };
 }

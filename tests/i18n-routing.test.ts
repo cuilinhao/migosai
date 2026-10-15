@@ -2,6 +2,13 @@ import { describe, expect, it } from "vitest";
 import { localeFromPath, localizeHref, stripLocale } from "../lib/i18n/routing";
 
 describe("localized navigation", () => {
+  it("keeps natively authored Ozil articles at their canonical URL from every UI language", () => {
+    for (const locale of ["en", "ko", "ja", "fr", "es", "zh-TW"] as const) {
+      expect(localizeHref("/ozil-goal-generator/blog", locale)).toBe("/ozil-goal-generator/blog");
+      expect(localizeHref("/es/ozil-goal-generator/blog/gol-de-ozil-con-mi-foto?from=nav#faq", locale)).toBe("/ozil-goal-generator/blog/gol-de-ozil-con-mi-foto?from=nav#faq");
+    }
+    expect(localizeHref("/ozil-goal-generator/ozil-goal-ai-prompt", "es")).toBe("/es/ozil-goal-generator/ozil-goal-ai-prompt");
+  });
   it("keeps English URLs and creates each requested language URL", () => {
     expect(localizeHref("/pricing", "en")).toBe("/pricing");
     for (const locale of ["ko", "ja", "fr", "es", "zh-TW"] as const) {
