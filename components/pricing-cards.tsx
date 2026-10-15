@@ -6,8 +6,10 @@ import { useAuth } from "./auth-provider";
 import { useLocale, useTranslations } from "@/components/i18n/locale-provider";
 import { trustedCheckoutUrl } from "./ui/checkout-url";
 import { getVideoCost } from "@/lib/video-options";
+import { OZIL_GOAL_CONFIG, OZIL_GOAL_COST } from "@/lib/ozil-goal";
 
 const estimateVideoCredits = getVideoCost(5, "480p", "wan-3.0");
+const starterCredits = creditPacks.find((pack) => pack.id === "starter")!.credits;
 
 export function PricingCards() {
   const t = useTranslations();
@@ -49,7 +51,7 @@ export function PricingCards() {
       <ul className="pack-inclusions"><li><b>{t("Included")}</b> {t("{credits} credits", { credits: pack.credits.toLocaleString(locale) })}</li><li><b>{t("Included")}</b> {t("AI Rap Song Generator")}</li><li><b>{t("Included")}</b> {t("No added watermark")}</li><li><b>{t("Included")}</b> {t(pack.description)}</li></ul>
       <button className="buy-button" disabled={busy !== null} onClick={() => void buy(pack.id)}>{busy === pack.id ? t("Opening checkout…") : t("Buy {pack}", { pack: t(pack.name) })}</button>
     </article>)}</div>
-    <p className="pricing-payment-note">{t("Estimates use {credits} credits per Wan template video. Other models, settings, and reference durations change the cost.", { credits: estimateVideoCredits })}<br/>{t("Secure checkout by Stripe. One-time purchase. No subscription.")}</p>
+    <p className="pricing-payment-note">{t("Estimates use {credits} credits per Wan template video. Other models, settings, and reference durations change the cost.", { credits: estimateVideoCredits })}<br/>{t("Each Ozil goal video costs {credits} credits ({duration} seconds, {aspect}, {resolution}, with sound), so the {starterCredits}-credit Starter pack covers one Ozil video.", { credits: OZIL_GOAL_COST, duration: OZIL_GOAL_CONFIG.duration, aspect: OZIL_GOAL_CONFIG.aspect, resolution: OZIL_GOAL_CONFIG.resolution, starterCredits })}<br/>{t("Secure checkout by Stripe. One-time purchase. No subscription.")}</p>
     {checkoutUrl && <div className="mi-checkout-return" role="status"><strong>{t("Checkout ready")}</strong><p>{t("If a new tab did not open, use the secure link below to continue your purchase.")}</p><a href={checkoutUrl} target="_blank" rel="noopener noreferrer">{t("Continue to Stripe checkout (opens in a new tab)")}</a></div>}
     {error && <p className="pricing-error" role="alert">{t(error)}</p>}
   </div>;

@@ -1,6 +1,6 @@
 # LobbyDuo
 
-> LobbyDuo is an independent web tool at migosai.design for creating Hotel Lobby–style duo performance videos from two photos. Users can choose a stage, model, sound and motion reference. Google sign-in and sufficient generation credits are required. LobbyDuo is not affiliated with migosai.com, Migos, Quavo, Takeoff, Quality Control Music or COLORS.
+> LobbyDuo is an independent web tool at migosai.design for creating Hotel Lobby–style duo performance videos from two photos and Ozil goal–style football clips from one photo. Users can choose a stage, model, sound and motion reference. Google sign-in and sufficient generation credits are required. LobbyDuo is not affiliated with migosai.com, Migos, Quavo, Takeoff, Quality Control Music or COLORS.
 
 ## Core pages
 - [Hotel Lobby AI Video Generator](https://migosai.design/hotel-lobby-ai-video-generator): The interactive two-photo generator, three-step guide, photo requirements, reference gallery and FAQ.
@@ -22,6 +22,22 @@
 - [Acceptable Use Policy](https://migosai.design/acceptable-use-policy): Consent, prohibited content, reporting, and appeals.
 - [Contact](https://migosai.design/contact): Support email, what to include for billing, generation, privacy and content requests.
 
+## Ozil Goal pages
+- [Ozil AI Goal Video Maker](https://migosai.design/ozil-goal-generator): The one-photo Ozil goal generator, video specs, the three beats, a CapCut comparison, photo checklist and FAQ.
+- [Ozil Goal AI Template](https://migosai.design/ozil-goal-generator/ozil-goal-ai-template): What the preset scene fixes and what comes from your photo, a photo check and the cost per video.
+- [Ozil Goal AI Prompt](https://migosai.design/ozil-goal-generator/ozil-goal-ai-prompt): A prompt builder for other image-to-video tools and why one-shot prompts miss beats.
+- [Ozil Goal Trend](https://migosai.design/ozil-goal-generator/ozil-goal-trend): The flying keeper, the Ozil bounce and the missed slide, and how people use the clip.
+- [Ozil Goal Meme](https://migosai.design/ozil-goal-generator/ozil-goal-meme): Why the meme works, who to cast, what ruins it and captions to copy.
+- [Ozil Goal CapCut Template vs AI Generator](https://migosai.design/ozil-goal-generator/ozil-goal-capcut-template): Cost, setup, clip length and failure handling compared, plus a four-question chooser.
+- [AI Football Video From a Photo](https://migosai.design/ozil-goal-generator/ai-football-video-from-photo): Which photo and outfit work, and what to avoid.
+
+## Ozil Goal facts
+- Input: one photo of one consenting adult, ideally head to toe with the face visible. JPG, PNG or WebP, up to 10 MB. No prompt or editing.
+- Output: a 15-second vertical 9:16 MP4 with sound at 768p, generated with MiniMax H3 from a fixed motion reference.
+- Each Ozil video costs 300 credits from the same balance used by the other LobbyDuo generators, so the 300-credit Starter pack covers one Ozil video. Failed generations return credits. Generation time varies.
+- The sample video on the page is an original reference sample made from an AI-generated portrait, not a customer result. Movement, timing, clothing and identity vary between renders; keeping your own clothes is likely, not guaranteed.
+- LobbyDuo does not add its own watermark to Ozil videos. LobbyDuo is not affiliated with Mesut Özil or any player, club, league, federation or broadcaster. Do not upload footballers, celebrities, public figures, children or anyone who has not agreed.
+
 ## Product facts
 - Two separate images are used, one for each performer. JPG, PNG and WebP are accepted, up to 10 MB each.
 - Models: Wan 3.0, Seedance 2.0 and Seedance 2.0 Fast. Stages: Hotel Lobby, Luxury lobby, Recording studio and Street cypher. Wan uses the Hotel Lobby stage; the other stages use Seedance original audio.
@@ -42,4 +58,4 @@
 - Q: Is this an official artist or COLORS product? A: No. LobbyDuo is an independent tool; descriptive references do not imply affiliation or endorsement.
 - Q: Is LobbyDuo the same as migosai.com? A: No. LobbyDuo runs at migosai.design and is operated independently of migosai.com and any other similarly named service.
 
-Content reviewed: 2026-10-04. Check the linked pages and generator for current settings and costs.
+Content reviewed: 2026-10-15. Check the linked pages and generator for current settings and costs.
