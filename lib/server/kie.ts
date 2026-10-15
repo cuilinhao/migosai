@@ -1,6 +1,8 @@
 import type { CreateVideoRequest, VideoModel } from '../contracts';
 import { videoPrompt } from '../prompts/video';
-import type { Env } from './env';
+import { ozilGoalPrompt } from '../prompts/ozil-goal';
+import { KIE_OZIL_GOAL_CONFIG as OZIL_GOAL_CONFIG } from '../ozil-goal';
+import { appOrigin, type Env } from './env';
 import { ApiError } from './errors';
 import { ProviderError } from './provider';
 
@@ -96,6 +98,25 @@ export async function createKieVideo(env: Env, payload: CreateVideoRequest, imag
       resolution: model === 'wan-3.0' ? payload.resolution.toUpperCase() : payload.resolution,
       aspect_ratio: payload.aspect,
       ...(model === 'wan-3.0' ? { audio: true } : { generate_audio: true }),
+      nsfw_checker: true,
+    },
+  });
+  if (!validTaskId(data.taskId)) invalidResponse();
+  return data.taskId;
+}
+
+/** The soccer template accepts one signed portrait; all other inputs are server-owned. */
+export async function createKieOzilGoalVideo(env: Env, imageUrl: string): Promise<string> {
+  const data = await request(env, '/createTask', {
+    model: MODELS[OZIL_GOAL_CONFIG.model],
+    input: {
+      reference_image_urls: [imageUrl],
+      reference_video_urls: [`${appOrigin(env)}${OZIL_GOAL_CONFIG.referencePath}`],
+      prompt: ozilGoalPrompt(),
+      duration: OZIL_GOAL_CONFIG.duration,
+      resolution: OZIL_GOAL_CONFIG.resolution,
+      aspect_ratio: OZIL_GOAL_CONFIG.aspect,
+      generate_audio: true,
       nsfw_checker: true,
     },
   });

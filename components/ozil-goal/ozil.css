@@ -1,0 +1,22 @@
+.ozil-page{background:var(--og-bg);color:var(--og-text);min-height:100dvh;padding-top:80px;font-family:"Ozil Instrument Sans",ui-sans-serif,system-ui,sans-serif;line-height:1.5;isolation:isolate;color-scheme:dark;--font-sans:"Ozil Instrument Sans",ui-sans-serif,system-ui,sans-serif;--default-font-family:var(--font-sans);--og-display-font:"Ozil Barlow Condensed","Arial Narrow",Impact,sans-serif}
+.ozil-page .og-local-header{position:relative;z-index:20;background:var(--og-bg)}
+.ozil-page .og-mobile-menu{display:grid;padding:8px 16px 16px;border-top:1px solid var(--og-line)}
+.ozil-page .og-mobile-menu a{padding:12px 8px;font-size:15px;color:var(--og-muted)}
+.ozil-page .og-credit-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.ozil-page .og-credit-card{display:flex;flex-direction:column;min-width:0;padding:28px;border:1px solid var(--og-line-strong);border-radius:20px;background:var(--og-panel)}
+.ozil-page .og-credit-featured{border-color:var(--og-flash);background:var(--og-flash-soft)}
+.ozil-page .og-credit-description{margin-top:12px;color:var(--og-muted);font-size:14px;min-height:66px}
+.ozil-page .og-credit-value{margin:20px 0;font-size:42px;line-height:1;color:var(--og-text)}
+.ozil-page .og-credit-button{display:flex;align-items:center;justify-content:center;margin-top:auto;min-height:44px;padding:12px 16px;border:1px solid var(--og-line-strong);border-radius:12px;font-size:14px;font-weight:700}
+.ozil-page a:focus-visible,.ozil-page button:focus-visible,.ozil-page input:focus-visible,.ozil-page summary:focus-visible{outline:2px solid var(--og-flash);outline-offset:4px}
+.ozil-page [id]{scroll-margin-top:100px}
+.ozil-page .og-prose{overflow-wrap:anywhere}
+.ozil-page .og-faq details:not([open])>p{display:none}
+.ozil-page .og-generator{scroll-margin-top:100px}
+@media(min-width:1024px){.ozil-page .og-mobile-menu{display:none}}
+@media(max-width:767px){.ozil-page .og-credit-cards{grid-template-columns:1fr}.ozil-page .og-credit-card{padding:24px}.ozil-page .og-credit-description{min-height:0}.ozil-page footer{padding-bottom:90px}}
+@media(prefers-reduced-motion:reduce){.ozil-page .og-reveal{animation:none;opacity:1;transform:none}.ozil-page .og-board__run{animation:none}}
+
+@media(max-width:900px){.ozil-page{padding-top:64px}}
+
+.ozil-page .og-sample-pause{position:absolute;z-index:2;top:12px;right:12px;display:grid;place-items:center;width:36px;height:36px;border:0;border-radius:50%;color:white;background:#0008;backdrop-filter:blur(8px)}

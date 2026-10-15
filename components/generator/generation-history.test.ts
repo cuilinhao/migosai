@@ -5,7 +5,7 @@ import type { GenerationResponse } from '@/lib/contracts';
 import { getResumableVideo } from './generation-history';
 import { VideoPreview } from './video-preview';
 
-type HistoryItem = GenerationResponse & { kind: string };
+type HistoryItem = GenerationResponse & { kind: string; template?: 'ozil-goal' };
 const historyItem = (status: GenerationResponse['status'], patch: Partial<HistoryItem> = {}): HistoryItem => ({
   id: `video-${status}`, kind: 'video', status, progress: 50, ...patch,
 });
@@ -32,5 +32,27 @@ describe('video history restored when opening the generator', () => {
   it('keeps the reference card when there is no video task to resume', () => {
     expect(getResumableVideo([])).toBeNull();
     expect(getResumableVideo([historyItem('processing', { kind: 'music' })])).toBeNull();
+  });
+
+  it('does not resume an Ozil job in the Hotel Lobby generator', () => {
+    const ozil = historyItem('processing', { id: 'ozil', template: 'ozil-goal' });
+    const lobby = historyItem('queued', { id: 'lobby' });
+    expect(getResumableVideo([ozil, lobby])).toEqual(lobby);
+    expect(getResumableVideo([ozil])).toBeNull();
+  });
+
+  it('resumes only the newest unfinished Ozil video in its generator', () => {
+    const ozil = historyItem('reviewing', { id: 'ozil', template: 'ozil-goal' });
+    expect(getResumableVideo([
+      historyItem('processing'),
+      historyItem('completed', { template: 'ozil-goal' }),
+      historyItem('processing', { kind: 'music', template: 'ozil-goal' }),
+      ozil,
+      historyItem('queued', { id: 'older-ozil', template: 'ozil-goal' }),
+    ], 'ozil-goal')).toEqual(ozil);
+  });
+
+  it('does not show a Hotel Lobby job when there is no unfinished Ozil video', () => {
+    expect(getResumableVideo([historyItem('processing')], 'ozil-goal')).toBeNull();
   });
 });

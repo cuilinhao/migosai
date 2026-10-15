@@ -8,5 +8,6 @@ import { SiteFooter } from "./site-footer";
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = stripLocale(usePathname());
   const isStandalonePage = pathname === "/sign-in" || pathname === "/sign-up" || pathname.startsWith("/app/");
-  return isStandalonePage ? <>{children}</> : <><SiteHeader /><main>{children}</main><SiteFooter /></>;
+  const hasOzilFooter = pathname === "/ozil-goal-generator" || pathname.startsWith("/ozil-goal-generator/");
+  return isStandalonePage ? <>{children}</> : <><SiteHeader /><main>{children}</main>{!hasOzilFooter && <SiteFooter />}</>;
 }

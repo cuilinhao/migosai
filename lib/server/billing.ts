@@ -4,6 +4,10 @@ function matchesReservation(job:Job,kind:string,serialized:string):boolean{
  if(job.kind!==kind)return false;
  if(job.payload===serialized)return true;
  if(kind!=='video')return false;
+ const previous=JSON.parse(job.payload),next=JSON.parse(serialized);
+ // Ozil's model, provider and reference settings are server-owned. A retry
+ // keeps its original reservation even after those defaults change.
+ if(previous.template==='ozil-goal'||next.template==='ozil-goal')return previous.template==='ozil-goal'&&next.template==='ozil-goal'&&previous.photo===next.photo&&previous.consent===true&&next.consent===true;
  // Provider routing is server-owned metadata, not part of the user's options.
  // A retry across a provider rollout must keep its original task and debit.
  const options=(value:string)=>JSON.stringify(JSON.parse(value),(key,value)=>key==='provider'?undefined:value);

@@ -4,6 +4,7 @@ interface CloudflareEnv {
  GOOGLE_CLIENT_ID?: string; GOOGLE_CLIENT_SECRET?: string;
  MEDIA_SIGNING_SECRET?: string; APIMART_API_KEY?: string;
  KIE_API_KEY?: string; KIE_MEDIA_HOSTS?: string;
+ FAL_KEY?: string; FAL_MEDIA_HOSTS?: string;
  SEEAPI_API_KEY?: string;
  APIMART_MEDIA_HOSTS?: string;
  PAYMENT_PROVIDER?: string;

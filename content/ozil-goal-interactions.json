@@ -1,0 +1,223 @@
+{
+  "templateChecks": [
+    {
+      "id": "adult",
+      "label": "It shows one adult, alone in the frame",
+      "fix": "Crop to one person, or pick a photo where they stand alone. Group shots confuse the model about who the star is.",
+      "must": true
+    },
+    {
+      "id": "consent",
+      "label": "It is me, or someone who said yes",
+      "fix": "Ask first. Do not upload footballers, celebrities, children or anyone who has not agreed.",
+      "must": true
+    },
+    {
+      "id": "face",
+      "label": "The face is clear and roughly facing the camera",
+      "fix": "Skip sunglasses, masks and caps pulled low. A side profile or a tiny face far away often comes out as a stranger."
+    },
+    {
+      "id": "light",
+      "label": "Even light: daylight or a bright room",
+      "fix": "Harsh shadows and dark rooms hide the features the model needs. Retake by a window if you can."
+    },
+    {
+      "id": "outfit",
+      "label": "The outfit is visible, ideally head to toe",
+      "fix": "A tight face crop gives the model nothing to dress you in. The outfit is half the joke."
+    },
+    {
+      "id": "clothes",
+      "label": "Not wearing a plain sports top or a team shirt",
+      "fix": "Sportswear blends into the players around you. A suit, a cardigan or a loud jumper stands out far more."
+    }
+  ],
+  "photoChecks": [
+    {
+      "id": "adult",
+      "ask": "Is the person an adult who agreed to this?",
+      "weight": 0,
+      "blocker": true,
+      "fix": "Only use photos of adults who said yes. No children, footballers or celebrities."
+    },
+    {
+      "id": "one",
+      "ask": "Is there only one person in the photo?",
+      "weight": 20,
+      "fix": "Crop out everyone else, or pick a solo shot. Group photos confuse the model about who the star is."
+    },
+    {
+      "id": "face",
+      "ask": "Is the face clear and turned roughly towards the camera?",
+      "weight": 25,
+      "fix": "Choose a photo where the face is sharp and not in profile, so the result still looks like them."
+    },
+    {
+      "id": "eyes",
+      "ask": "Are the eyes free of sunglasses, a mask or a low cap?",
+      "weight": 15,
+      "fix": "Pick a shot without sunglasses, masks or a peak over the eyes. These hide what makes a face recognisable."
+    },
+    {
+      "id": "light",
+      "ask": "Is the light even, without harsh shadows or a bright window behind?",
+      "weight": 15,
+      "fix": "Daylight or a bright room works best. Backlit or very dark photos lose detail in the face and clothes."
+    },
+    {
+      "id": "body",
+      "ask": "Can you see most of the outfit, ideally head to toe?",
+      "weight": 15,
+      "fix": "A full or three-quarter shot lets the model keep the clothes. A tight face crop means it has to guess them."
+    },
+    {
+      "id": "kit",
+      "ask": "Is the top something other than a plain green or white sports top?",
+      "weight": 10,
+      "fix": "Plain green or white sportswear can be read as football kit and spoil the contrast. Everyday clothes work better."
+    }
+  ],
+  "captionMoods": [
+    {
+      "id": "all",
+      "label": "All"
+    },
+    {
+      "id": "family",
+      "label": "Family"
+    },
+    {
+      "id": "office",
+      "label": "Work"
+    },
+    {
+      "id": "friends",
+      "label": "Friends"
+    },
+    {
+      "id": "self",
+      "label": "Myself"
+    },
+    {
+      "id": "commentary",
+      "label": "Fake commentary"
+    }
+  ],
+  "captions": [
+    {
+      "mood": "family",
+      "text": "{who} said they “used to play a bit”. Fair enough."
+    },
+    {
+      "mood": "family",
+      "text": "We told {who} it was a family photo. It was not."
+    },
+    {
+      "mood": "family",
+      "text": "Sunday lunch is late because {who} is busy embarrassing a goalkeeper."
+    },
+    {
+      "mood": "family",
+      "text": "{who} has never once let me forget this."
+    },
+    {
+      "mood": "family",
+      "text": "Scouts, {who} is available. Weekends only."
+    },
+    {
+      "mood": "office",
+      "text": "{who} in the Monday meeting vs {who} on a Monday night."
+    },
+    {
+      "mood": "office",
+      "text": "Out of office: {who} is on international duty."
+    },
+    {
+      "mood": "office",
+      "text": "HR has asked {who} to stop doing this in the car park."
+    },
+    {
+      "mood": "office",
+      "text": "{who} closing the quarter like:"
+    },
+    {
+      "mood": "office",
+      "text": "Dress code: business casual. Finish: clinical."
+    },
+    {
+      "mood": "friends",
+      "text": "{who} turned up to five-a-side dressed like this."
+    },
+    {
+      "mood": "friends",
+      "text": "Tag the friend who thinks they would do this. It is {who}."
+    },
+    {
+      "mood": "friends",
+      "text": "Group chat has not recovered. Thanks, {who}."
+    },
+    {
+      "mood": "friends",
+      "text": "{who} after one coffee and zero warm-up."
+    },
+    {
+      "mood": "friends",
+      "text": "Somebody sign {who} before the window shuts."
+    },
+    {
+      "mood": "self",
+      "text": "My agent says I am open to offers."
+    },
+    {
+      "mood": "self",
+      "text": "Retired at 12. Came back for one night only."
+    },
+    {
+      "mood": "self",
+      "text": "Never touched a ball since school. Still got it."
+    },
+    {
+      "mood": "self",
+      "text": "The keeper knew. The defender knew. I knew."
+    },
+    {
+      "mood": "self",
+      "text": "Wore this to the match. Played in it too."
+    },
+    {
+      "mood": "commentary",
+      "text": "And {who} takes it down on the chest. Unbelievable composure."
+    },
+    {
+      "mood": "commentary",
+      "text": "The keeper has gone early and {who} has punished him."
+    },
+    {
+      "mood": "commentary",
+      "text": "Nobody in this stadium expected {who} to start tonight."
+    },
+    {
+      "mood": "commentary",
+      "text": "Look at the touch from {who}. You cannot coach that."
+    },
+    {
+      "mood": "commentary",
+      "text": "That defender will be watching this one back for a while."
+    }
+  ],
+  "beatExplanations": [
+    {
+      "look": "The keeper commits early and flies past.",
+      "lands": "The scale of the dive. A whole professional-looking keeper is beaten before the person has done anything."
+    },
+    {
+      "look": "The ball drops onto the chest and stays under control.",
+      "lands": "The touch. This is the “Ozil bounce” people name the trend after, and it is funnier the less sporty the person looks."
+    },
+    {
+      "look": "A defender slides in, misses and is left on the grass.",
+      "lands": "The run on. The person keeps going as if this happens every weekend, still in their own clothes."
+    }
+  ]
+}

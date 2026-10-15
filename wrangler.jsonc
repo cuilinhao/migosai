@@ -56,7 +56,8 @@
     "WAFFO_PRODUCT_PRO": "PROD_7IpB2s4ptadpNtlnDNmgEH",
     "WAFFO_PRODUCT_BUSINESS": "PROD_1ZAixY4b2O5H31tNjX9Ke2",
     "APIMART_MEDIA_HOSTS": "getapib.org",
-    "KIE_MEDIA_HOSTS": "tempfile.aiquickdraw.com"
+    "KIE_MEDIA_HOSTS": "tempfile.aiquickdraw.com",
+    "FAL_MEDIA_HOSTS": "fal.media,v3.fal.media,v3b.fal.media"
   },
   "routes": [
     {
