@@ -25,7 +25,7 @@
 .ozil-page .og-generator button:disabled,.ozil-page .og-generator fieldset:disabled{opacity:.6;cursor:default}
 .ozil-page .og-generator-footnote{display:grid;gap:4px;text-align:center;font-size:12.5px;line-height:1.35;color:var(--og-muted)}
 .ozil-page .og-generator-footnote p{margin:0}
-.ozil-page .og-generator-error{padding:12px;border:1px solid #fb718566;border-radius:10px;background:#fb718510;color:#fda4af;font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+.ozil-page .og-generator-error{padding:12px;border:1px solid color-mix(in srgb,var(--destructive) 40%,var(--border));border-radius:10px;background:color-mix(in srgb,var(--destructive) 8%,var(--card));color:var(--destructive);font-size:13px;line-height:1.5;overflow-wrap:anywhere}
 .ozil-page .og-generator-progress{display:grid;gap:10px;font-size:13px}
 .ozil-page .og-generator-progress p{display:flex;justify-content:space-between;gap:10px;margin:0}
 .ozil-page .og-generator-progress [role=progressbar]{height:6px;border-radius:999px;overflow:hidden;background:var(--og-line-strong)}
