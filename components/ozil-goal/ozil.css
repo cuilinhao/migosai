@@ -48,9 +48,6 @@
 .ozil-page.og :is(.border-red-300,.border-red-300\/25){border-color:color-mix(in srgb,var(--destructive) 40%,var(--border))}
 .ozil-page.og :is(.bg-red-300\/10,.bg-red-300\/15){background:color-mix(in srgb,var(--destructive) 8%,var(--card))}
 .ozil-page.og .bg-red-300{background:var(--destructive)}
-.ozil-page .og-local-header{position:relative;z-index:20;background:var(--og-bg)}
-.ozil-page .og-mobile-menu{display:grid;padding:8px 16px 16px;border-top:1px solid var(--og-line)}
-.ozil-page .og-mobile-menu a{padding:12px 8px;font-size:15px;color:var(--og-muted)}
 .ozil-page .og-credit-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .ozil-page .og-credit-card{display:flex;flex-direction:column;min-width:0;padding:28px;border:1px solid var(--og-line-strong);border-radius:20px;background:var(--og-panel)}
 .ozil-page .og-credit-featured{border-color:var(--og-flash);background:var(--og-flash-soft)}
@@ -62,7 +59,6 @@
 .ozil-page .og-prose{overflow-wrap:anywhere}
 .ozil-page .og-faq details:not([open])>p{display:none}
 .ozil-page .og-generator{scroll-margin-top:100px}
-@media(min-width:1024px){.ozil-page .og-mobile-menu{display:none}}
 @media(max-width:767px){.ozil-page .og-credit-cards{grid-template-columns:1fr}.ozil-page .og-credit-card{padding:24px}.ozil-page .og-credit-description{min-height:0}.ozil-page footer{padding-bottom:90px}}
 @media(prefers-reduced-motion:reduce){.ozil-page .og-reveal{animation:none;opacity:1;transform:none}.ozil-page .og-board__run{animation:none}}
 

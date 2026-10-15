@@ -18,7 +18,10 @@ export function GeneratorMenu({ pathname, mobile = false, onNavigate }: { pathna
   const trigger = useRef<HTMLButtonElement>(null);
   const focusOnOpen = useRef<"first" | "last" | null>(null);
   const panelId = useId();
-  const active = generators.some(({ href }) => pathname === href || pathname.startsWith(`${href}/`));
+  const current = generators.find(({ href }) => pathname === href || pathname.startsWith(`${href}/`));
+  const active = !!current;
+  // On a generator's own pages the trigger names that generator, so the header shows where you are.
+  const { label: triggerLabel, Icon: TriggerIcon } = current ?? generators[0];
   const links = () => Array.from(root.current?.querySelectorAll<HTMLAnchorElement>("[data-generator-link]") ?? []);
 
   useEffect(() => {
@@ -62,7 +65,7 @@ export function GeneratorMenu({ pathname, mobile = false, onNavigate }: { pathna
     if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
   }}>
     <button ref={trigger} className={`generator-menu-trigger${active ? " active" : ""}`} type="button" aria-expanded={open} aria-controls={panelId} onClick={() => setOpen(value => !value)}>
-      <Music2 size={mobile ? 17 : 15} strokeWidth={1.8}/><span>{t("AI Rap Song Generator")}</span><ChevronDown className="generator-menu-chevron" size={14} aria-hidden="true"/>
+      <TriggerIcon size={mobile ? 17 : 15} strokeWidth={1.8}/><span>{t(triggerLabel)}</span><ChevronDown className="generator-menu-chevron" size={14} aria-hidden="true"/>
     </button>
     <div id={panelId} className="generator-menu-panel" hidden={!open}>
       {generators.map(({ href, label, Icon }) => {
