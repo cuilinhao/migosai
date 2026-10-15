@@ -239,7 +239,7 @@
                         "class": "mt-4 max-w-xl text-[clamp(16.5px,2vw,19px)] leading-snug text-pretty text-[var(--og-muted)]"
                       },
                       "children": [
-                        "Upload one photo and star in the Ozil goal trend: the keeper flies past, the ball bounces off your chest, the defender slides in and misses, and you are on the ball the whole time, in your own clothes. No CapCut, no prompt, no editing."
+                        "Make an Ozil goal AI video from one photo with LobbyDuo. Named after Mesut Özil, the trend puts you on the ball as the keeper dives past, the ball bounces off your chest and a defender slides in and misses. Keep your own clothes. No CapCut, no prompt, no editing."
                       ]
                     },
                     {
@@ -299,7 +299,7 @@
                                 }
                               ]
                             },
-                            "Uses your shared migosai credits"
+                            "Uses your shared credits"
                           ]
                         },
                         {
@@ -367,7 +367,7 @@
                                 }
                               ]
                             },
-                            "Your existing migosai account"
+                            "Your existing account"
                           ]
                         },
                         {
@@ -982,7 +982,7 @@
                             "class": "mt-1.5 text-[15px] leading-relaxed text-[var(--og-muted)]"
                           },
                           "children": [
-                            "A clear photo of one adult in good light, ideally head to toe. The outfit is half the joke, so a photo that shows it beats a tight face crop."
+                            "Upload a clear photo of one adult in good light, ideally head to toe. The outfit is half the joke, so a photo that shows it beats a tight face crop."
                           ]
                         }
                       ]
@@ -1017,7 +1017,7 @@
                             "class": "mt-1.5 text-[15px] leading-relaxed text-[var(--og-muted)]"
                           },
                           "children": [
-                            "Nothing to write or tune: the stadium, players, camera and motion reference are already set. Sign in with your migosai account, check the credit cost, and start the render."
+                            "Sign in to your account, check the credit cost and press Make my video. The stadium, players, camera and motion reference are already set, with nothing to write or tune."
                           ]
                         }
                       ]
@@ -1106,7 +1106,7 @@
                         "class": "mt-3 text-[16.5px] leading-relaxed text-pretty text-[var(--og-muted)]"
                       },
                       "children": [
-                        "These frames come from the original Ozil Goal reference clip. Our MiniMax H3 template uses the same three-beat motion reference. The generated movement, timing, clothing and identity can vary."
+                        "The clip follows three beats: the keeper’s dive, the Ozil bounce and the defender’s slide. These frames show the reference used by our MiniMax H3 template; generated movement, timing, clothing and identity can vary."
                       ]
                     }
                   ]
@@ -1381,7 +1381,7 @@
                         "class": "og-kicker mb-2"
                       },
                       "children": [
-                        "The free route, fairly"
+                        "Compare your options"
                       ]
                     },
                     {
@@ -1400,7 +1400,7 @@
                         "class": "mt-3 text-[16.5px] leading-relaxed text-pretty text-[var(--og-muted)]"
                       },
                       "children": [
-                        "Most posts in the trend come from a CapCut template, and it is a fair option: it is free. Here is the honest difference."
+                        "Use LobbyDuo to make the clip in your browser, or try the Ozil goal CapCut template in CapCut. Template availability and pricing depend on CapCut."
                       ]
                     }
                   ]
@@ -1455,7 +1455,7 @@
                                     "scope": "col"
                                   },
                                   "children": [
-                                    "Ozil Goal"
+                                    "LobbyDuo"
                                   ]
                                 }
                               ]
@@ -1483,7 +1483,7 @@
                                   "tag": "td",
                                   "attrs": {},
                                   "children": [
-                                    "Free"
+                                    "Depends on CapCut"
                                   ]
                                 },
                                 {
@@ -1606,7 +1606,7 @@
                                   "tag": "td",
                                   "attrs": {},
                                   "children": [
-                                    "Your migosai account"
+                                    "Your account"
                                   ]
                                 }
                               ]
@@ -1681,7 +1681,7 @@
                     "class": "mt-5 max-w-[68ch] text-[15.5px] leading-relaxed text-[var(--og-muted)]"
                   },
                   "children": [
-                    "Already have CapCut and the template opens for you? Try it first, it costs nothing. This site is for when you would rather not install another app, the template link will not open where you are, or you want the full 15-second clip from one photo.",
+                    "Already have CapCut and the template opens for you? Check its current price before trying it. LobbyDuo is for when you would rather not install another app, the template link will not open where you are, or you want the full 15-second clip from one photo.",
                     " ",
                     {
                       "tag": "a",
@@ -1743,7 +1743,7 @@
                         "class": "mt-3 text-[16.5px] leading-relaxed text-pretty text-[var(--og-muted)]"
                       },
                       "children": [
-                        "Your photo decides two things: whether the face is recognisably you, and whether the outfit is funny. Thirty seconds here saves a retry."
+                        "Use a clear, well-lit photo of one adult, ideally head to toe. A visible face and outfit help the result look like you and keep the joke."
                       ]
                     }
                   ]
@@ -2329,7 +2329,7 @@
                             "class": "max-w-[68ch] pb-6 text-[15.5px] leading-relaxed text-pretty text-[var(--og-muted)]"
                           },
                           "children": [
-                            "No. Each new video uses {{OZIL_GOAL_COST}} credits per video from your shared migosai balance. CapCut may offer a free route; availability and pricing depend on CapCut."
+                            "No. LobbyDuo uses your existing Migos account and shared credit balance. Each new video costs {{OZIL_GOAL_COST}} credits. CapCut may offer a free route; availability and pricing depend on CapCut."
                           ]
                         }
                       ]
@@ -2373,7 +2373,7 @@
                             "class": "max-w-[68ch] pb-6 text-[15.5px] leading-relaxed text-pretty text-[var(--og-muted)]"
                           },
                           "children": [
-                            "No. It runs in any browser on iPhone, Android or a computer. You sign in with your migosai account so your videos have somewhere to live, then download the MP4 and post it wherever you like."
+                            "No. LobbyDuo runs in any browser on iPhone, Android or a computer. Sign in to your account so your videos have somewhere to live, then download the MP4 and post it wherever you like."
                           ]
                         }
                       ]
@@ -2505,7 +2505,7 @@
                             "class": "max-w-[68ch] pb-6 text-[15.5px] leading-relaxed text-pretty text-[var(--og-muted)]"
                           },
                           "children": [
-                            "Failed generations return credits through the existing migosai generation workflow. Review the error in My videos before trying again."
+                            "Failed generations return credits to your shared balance. Review the error in My videos before trying again."
                           ]
                         }
                       ]
@@ -2637,7 +2637,7 @@
                             "class": "max-w-[68ch] pb-6 text-[15.5px] leading-relaxed text-pretty text-[var(--og-muted)]"
                           },
                           "children": [
-                            "Your photo is processed to create the video through the migosai generation provider. Photo handling and retention follow the migosai Privacy Policy; this page does not promise deletion immediately after rendering."
+                            "Your photo is processed by the generation provider to create the video. Photo handling and retention follow the Privacy Policy; this page does not promise deletion immediately after rendering."
                           ]
                         }
                       ]
@@ -2681,7 +2681,7 @@
                             "class": "max-w-[68ch] pb-6 text-[15.5px] leading-relaxed text-pretty text-[var(--og-muted)]"
                           },
                           "children": [
-                            "Finished videos appear in your shared migosai My videos history. Download the results you want to keep; there is no separate Ozil pack retention period."
+                            "Finished videos appear in your account’s My videos history. Download the results you want to keep; there is no separate Ozil pack retention period."
                           ]
                         }
                       ]
@@ -2725,7 +2725,7 @@
                             "class": "max-w-[68ch] pb-6 text-[15.5px] leading-relaxed text-pretty text-[var(--og-muted)]"
                           },
                           "children": [
-                            "No. The trend carries a footballer’s name and that is the only link. Ozil Goal is an independent tool, not affiliated with any player, club, league, federation or broadcaster. The clip is AI-generated: label it as AI where the platform asks."
+                            "No. The trend carries a footballer’s name and that is the only link. LobbyDuo is an independent tool, not affiliated with any player, club, league, federation or broadcaster. The clip is AI-generated: label it as AI where the platform asks."
                           ]
                         }
                       ]
