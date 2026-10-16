@@ -5,6 +5,8 @@ export const interactiveMessages: Record<TranslatedLocale, Record<string, string
   "zh-TW": zhTW,
   "ko": {
     "AI Rap Song Generator": "AI 랩 노래 생성기",
+    "Turn one photo into the viral Ozil goal video": "사진 한 장으로 화제의 Ozil 골 영상 만들기",
+    "Make a full rap song from a prompt or your lyrics": "프롬프트나 가사로 완성된 랩 곡 만들기",
     "Custom Mode": "사용자 지정 모드",
     "Model": "모델",
     "Title": "제목",
@@ -233,6 +235,8 @@ export const interactiveMessages: Record<TranslatedLocale, Record<string, string
   },
   "ja": {
     "AI Rap Song Generator": "AIラップソング生成ツール",
+    "Turn one photo into the viral Ozil goal video": "写真1枚で話題のOzilゴール動画を作成",
+    "Make a full rap song from a prompt or your lyrics": "プロンプトや歌詞からラップ曲を丸ごと作成",
     "Custom Mode": "カスタムモード",
     "Model": "モデル",
     "Title": "タイトル",
@@ -461,6 +465,8 @@ export const interactiveMessages: Record<TranslatedLocale, Record<string, string
   },
   "fr": {
     "AI Rap Song Generator": "Générateur de rap IA",
+    "Turn one photo into the viral Ozil goal video": "Transformez une photo en vidéo virale du but d’Ozil",
+    "Make a full rap song from a prompt or your lyrics": "Créez un rap complet à partir d’un prompt ou de vos paroles",
     "Custom Mode": "Mode personnalisé",
     "Model": "Modèle",
     "Title": "Titre",
@@ -689,6 +695,8 @@ export const interactiveMessages: Record<TranslatedLocale, Record<string, string
   },
   "es": {
     "AI Rap Song Generator": "Generador de rap con IA",
+    "Turn one photo into the viral Ozil goal video": "Convierte una foto en el vídeo viral del gol de Ozil",
+    "Make a full rap song from a prompt or your lyrics": "Crea una canción de rap completa con un prompt o tu letra",
     "Custom Mode": "Modo personalizado",
     "Model": "Modelo",
     "Title": "Título",

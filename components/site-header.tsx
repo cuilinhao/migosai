@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { CircleHelp, Clapperboard, ListChecks, Menu, Music2, Newspaper, X, Zap } from "lucide-react";
 import { useAuth } from "./auth-provider";
-import { GeneratorMenu } from "./generator-menu";
+import { GeneratorMenu, GeneratorSpotlight } from "./generator-menu";
 
 const links = [
   { label: "How It Works", href: "/#how-it-works", icon: ListChecks },
@@ -53,6 +53,7 @@ export function SiteHeader() {
         <Link className="brand" href="/" onClick={close} aria-label={t("LobbyDuo home")}>
           <span className="brand-logo" aria-hidden="true">L</span><span>LobbyDuo</span>
         </Link>
+        <GeneratorSpotlight pathname={pathname} onNavigate={close}/>
         <nav className="desktop-nav" aria-label={t("Primary navigation")}>
           {navigationLinks()}
         </nav>
