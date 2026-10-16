@@ -48,16 +48,51 @@ describe('Stripe Checkout creation', () => {
     expect(sqlite.prepare('SELECT credits FROM users WHERE id=?').get('u')).toEqual({ credits: 100 });
   });
 
+  it.each([
+    ['test', 'c'], ['live', 'c'], ['test', 'f'], ['live', 'f'],
+    ['test', 'g'], ['live', 'g'], ['test', 'opaque'], ['live', 'opaque'],
+  ] as const)('accepts Stripe-hosted checkout in %s mode with the %s route without changing the session or fragment', async (mode, route) => {
+    const { db, sqlite } = database();
+    const id = `cs_${mode}_checkout123`;
+    // Stripe owns the URL shape; its API contract does not derive it from id.
+    const path = route === 'opaque' ? '/checkout/opaqueFixture123' : `/${route}/pay/${id}`;
+    const url = `https://checkout.stripe.com${path}?locale=en#fid=fixture%2Fvalue`;
+    checkoutApi({ livemode: mode === 'live' }, { id, url, livemode: mode === 'live' });
+    const result = await createCheckout({ ...env(db), STRIPE_MODE: mode, STRIPE_SECRET_KEY: `sk_${mode}_fixtureOnly123` }, user, 'starter');
+    expect(result.checkoutUrl).toBe(url);
+    expect(sqlite.prepare('SELECT checkout_id,provider_mode,status FROM orders').get()).toEqual({ checkout_id: id, provider_mode: mode, status: 'pending' });
+    expect(sqlite.prepare('SELECT credits FROM users WHERE id=?').get('u')).toEqual({ credits: 100 });
+  });
+
   it.each([{ unit_amount: 991 }, { currency: 'eur' }, { livemode: true }, { type: 'recurring', recurring: { interval: 'month' } }, { active: false }])('rejects a mismatched fixed price before inserting an order: %j', async mismatch => {
     const { db, sqlite } = database(); checkoutApi(mismatch);
     await expect(createCheckout(env(db), user, 'starter')).rejects.toMatchObject({ status: 503 });
     expect(sqlite.prepare('SELECT count(*) AS n FROM orders').get()).toEqual({ n: 0 });
   });
 
-  it.each(['https://checkout.stripe.com.evil.test/c/pay/cs_test_checkout123', 'http://checkout.stripe.com/c/pay/cs_test_checkout123', 'https://user@checkout.stripe.com/c/pay/cs_test_checkout123', 'https://checkout.stripe.com:8443/c/pay/cs_test_checkout123', 'https://checkout.stripe.com/c/pay/cs_test_other'])('rejects untrusted checkout redirects: %s', async url => {
+  it.each(['https://checkout.stripe.com.evil.test/c/pay/cs_test_checkout123', 'http://checkout.stripe.com/c/pay/cs_test_checkout123', 'https://user@checkout.stripe.com/c/pay/cs_test_checkout123', 'https://checkout.stripe.com:8443/c/pay/cs_test_checkout123'])('rejects untrusted checkout redirects: %s', async url => {
     const { db, sqlite } = database(); checkoutApi({}, { url });
     await expect(createCheckout(env(db), user, 'starter')).rejects.toMatchObject({ status: 502 });
     expect(sqlite.prepare('SELECT checkout_id FROM orders').get()).toEqual({ checkout_id: null });
+  });
+
+  it.each([
+    'https://checkout.stripe.com.evil.test/f/pay/cs_test_checkout123',
+    'http://checkout.stripe.com/f/pay/cs_test_checkout123',
+    'https://user@checkout.stripe.com/f/pay/cs_test_checkout123',
+    'https://checkout.stripe.com:8443/f/pay/cs_test_checkout123',
+  ])('rejects unsafe f/pay redirects: %s', async url => {
+    const { db, sqlite } = database(); checkoutApi({}, { url });
+    await expect(createCheckout(env(db), user, 'starter')).rejects.toMatchObject({ status: 502 });
+    expect(sqlite.prepare('SELECT checkout_id FROM orders').get()).toEqual({ checkout_id: null });
+  });
+
+  it.each([{ id: 'cs_live_wrongmode' }, { id: 'invalid' }, { amount_total: 1 }, { metadata: {} }])('still rejects an invalid session even when Stripe supplies a trusted URL: %j', async mismatch => {
+    const { db, sqlite } = database();
+    checkoutApi({}, { ...mismatch, url: 'https://checkout.stripe.com/checkout/opaqueFixture123' });
+    await expect(createCheckout(env(db), user, 'starter')).rejects.toMatchObject({ status: 502 });
+    expect(sqlite.prepare('SELECT checkout_id FROM orders').get()).toEqual({ checkout_id: null });
+    expect(sqlite.prepare('SELECT credits FROM users WHERE id=?').get('u')).toEqual({ credits: 100 });
   });
 
   it('does not fall back to another provider when Stripe configuration is absent', async () => {

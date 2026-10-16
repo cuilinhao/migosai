@@ -12,6 +12,7 @@ const origin = 'https://app.example.invalid';
 const secret = 'whsec_workerFixture123';
 const priceId = 'price_worker123';
 const sessionId = 'cs_test_worker123';
+const hostedCheckoutUrl = `https://checkout.stripe.com/f/pay/${sessionId}#fid=worker%2Ffixture`;
 let worker, db, metadata, requests, upstreamStatus;
 const price = () => ({ id: priceId, object: 'price', active: true, livemode: false, currency: 'usd', unit_amount: 990, type: 'one_time', recurring: null, product: 'prod_worker123' });
 const paid = () => ({ id: sessionId, object: 'checkout.session', livemode: false, mode: 'payment', status: 'complete', payment_status: 'paid', client_reference_id: metadata.orderId, metadata, amount_total: 990, amount_subtotal: 990, currency: 'usd', payment_intent: 'pi_worker123' });
@@ -55,7 +56,7 @@ beforeAll(async () => {
       if (url.pathname === '/v1/checkout/sessions' && request.method === 'POST') {
         const body = new URLSearchParams(await request.text());
         metadata = Object.fromEntries([...body].filter(([key]) => key.startsWith('metadata[')).map(([key, value]) => [key.slice(9, -1), value]));
-        return Response.json({ ...paid(), status: 'open', payment_status: 'unpaid', url: `https://checkout.stripe.com/c/pay/${sessionId}` });
+        return Response.json({ ...paid(), status: 'open', payment_status: 'unpaid', url: hostedCheckoutUrl });
       }
       if (url.pathname === `/v1/checkout/sessions/${sessionId}`) return Response.json(confirmed());
       return new Response('Unexpected Stripe request', { status: 400 });
@@ -88,7 +89,7 @@ describe('Stripe Checkout and accounting in workerd', () => {
     const response = await checkout();
     expect(response.status).toBe(200);
     const result = await response.json();
-    expect(result.checkoutUrl).toBe(`https://checkout.stripe.com/c/pay/${sessionId}`);
+    expect(result.checkoutUrl).toBe(hostedCheckoutUrl);
     expect(requests).toEqual([
       { host: 'api.stripe.com', path: `/v1/prices/${priceId}`, method: 'GET', authorization: 'Bearer sk_test_workerFixture123', idempotency: null },
       { host: 'api.stripe.com', path: '/v1/checkout/sessions', method: 'POST', authorization: 'Bearer sk_test_workerFixture123', idempotency: `stripe:test:${result.orderId}` },

@@ -2,6 +2,10 @@ import { describe, expect, it } from "vitest";
 import { trustedCheckoutUrl } from "./checkout-url";
 
 describe("checkout redirect validation", () => {
+  it.each(["f", "g"])("preserves a Stripe %s/pay checkout and its session fragment", (route) => {
+    const url = `https://checkout.stripe.com/${route}/pay/cs_live_example#fid=fixture%2Fvalue`;
+    expect(trustedCheckoutUrl(url)).toBe(url);
+  });
   it("opens a Stripe hosted checkout with its session fragment intact", () => {
     const url = "https://checkout.stripe.com/c/pay/cs_live_example#fid=test";
     expect(trustedCheckoutUrl(url)).toBe(url);

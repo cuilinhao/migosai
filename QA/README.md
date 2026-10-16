@@ -2,6 +2,14 @@
 
 自动化测试源码保留在 `tests/` 和 `components/**/*.test.*`。原始浏览器截图、生产账户与订单记录、供应商响应和生成的测试报告留在被忽略的本地归档，本目录只维护可复现的验证说明。
 
+## 2026-10-16 Stripe 收银台地址兼容修复
+
+11:34（Asia/Shanghai）版本 `0c4cb833-f936-438a-bd9d-5a1daa322f9d` 已发布到 100% 流量。线上购买此前提示 `The payment service returned an invalid checkout address.`，但 Stripe Dashboard 中对应 Checkout 创建请求实际返回 HTTP 200：Stripe 会返回 `/f/pay/` 或 `/g/pay/`，原代码只接受 `/c/pay/{sessionId}`，在记录 Checkout ID 前误拒有效地址。
+
+服务端现使用经过认证的 Stripe API 返回的 URL，不再推断 Stripe 内部路径；保留 HTTPS、精确 `checkout.stripe.com`、无 userinfo、无异常端口，以及 session ID 模式、金额、币种和 metadata 核验。回归测试覆盖 test/live 下的旧路径、新路径、opaque 路径和 query/fragment 保留，并验证恶意域名及不匹配 session 仍被拒绝。938 项测试、类型检查、Cloudflare 构建和独立代码审查通过；全部运行时绑定与十项 Secrets 保留。
+
+发布后在 yihao Chrome 中通过正式登录态逐项点击四档购买按钮：均返回 HTTP 200 并打开真实 Stripe 收银台，商品分别为 Starter / 300 积分 / USD 9.90、Creator / 1200 积分 / USD 29.90、Pro / 2200 积分 / USD 49.90、Business / 5000 积分 / USD 99.90。Starter 的普通银行卡表单及取消回跳通过，取消后账户余额不变。按本轮四个准确订单 ID 的生产 D1 只读核验显示 live Checkout 已记录、订单均为 pending、payment 账本均为零。本轮未输入卡信息、未实际扣款；上述结果验证支付入口，不替代真实收款与到账验收。
+
 ## 提交和部署前
 
 ```sh

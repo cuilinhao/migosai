@@ -21,8 +21,10 @@ function checkoutUrl(value: unknown, sessionId: string, mode: 'test' | 'live'): 
   let url: URL;
   try { url = new URL(value); }
   catch { throw new ApiError(502, 'The payment service returned an invalid checkout address.'); }
+  // Stripe owns the URL path (including c/pay, f/pay and g/pay). Use the
+  // authenticated API response; validate its origin and the session separately.
   if (url.protocol !== 'https:' || url.hostname !== 'checkout.stripe.com' ||
-    url.username || url.password || url.port || url.pathname !== `/c/pay/${sessionId}`) {
+    url.username || url.password || url.port) {
     throw new ApiError(502, 'The payment service returned an invalid checkout address.');
   }
   return url.href;
