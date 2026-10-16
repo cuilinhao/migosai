@@ -125,8 +125,9 @@ img,video{max-width:100%}
 .pricing-page h1{font-size:72px;line-height:1;letter-spacing:normal;color:var(--foreground);text-align:center;margin:0 auto 28px;font-weight:700;max-width:1160px;text-wrap:balance}
 .pricing-page-intro{text-align:center;font-size:20px;line-height:1.45;color:var(--muted);margin:0 auto 80px;max-width:740px}
 .pricing-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
-.pricing-card{min-width:0;min-height:518px;display:flex;flex-direction:column;border-radius:16px;border:1px solid var(--border);background:var(--card);padding:24px;color:var(--foreground)}
-.pricing-card.recommended{border-color:var(--primary);box-shadow:0 0 0 1px #e8650f40}
+.pricing-card{min-width:0;min-height:518px;display:flex;flex-direction:column;border-radius:16px;border:1px solid var(--border);background:var(--card);padding:24px;color:var(--foreground);cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.pricing-card:hover{border-color:#e8650f80}
+.pricing-card.selected{border-color:var(--primary);box-shadow:0 0 0 1px #e8650f40}
 .pricing-card-top{display:flex;align-items:center;justify-content:space-between;gap:5px;min-height:28px}
 .pricing-card h3{font-size:16px;margin:0;font-weight:700}
 .recommended-badge{border-radius:50px;background:var(--accent);color:var(--accent-foreground);padding:4px 11px;font-size:12px;line-height:1.2;font-weight:700;white-space:nowrap}
@@ -139,8 +140,8 @@ img,video{max-width:100%}
 .pack-inclusions b{color:var(--primary-strong);font-weight:600}
 .buy-button{width:100%;min-height:36px;border-radius:100px;border:1px solid var(--border);color:var(--foreground);background:var(--card);margin-top:auto;font-size:13px;font-weight:500}
 .buy-button:hover{border-color:var(--primary);background:var(--paper-deep)}
-.pricing-card.recommended .buy-button{background:var(--brand-gradient);border-color:var(--primary);color:var(--primary-foreground)}
-.pricing-card.recommended .buy-button:hover{background:var(--primary-strong)}
+.pricing-card.selected .buy-button{background:var(--brand-gradient);border-color:var(--primary);color:var(--primary-foreground)}
+.pricing-card.selected .buy-button:hover{background:var(--primary-strong)}
 .pricing-error{text-align:center;color:var(--destructive);margin:18px 0 0;font-size:13px}
 .pricing-payment-note{text-align:center;color:var(--muted);margin:22px 0;font-size:13px;line-height:1.6}
 
