@@ -1,0 +1,1337 @@
+{
+  "site": "https://flyingcar-ai.app/",
+  "pages": {
+    "home": {
+      "source": "https://flyingcar-ai.app/",
+      "sha256": "5dc68168d314f52f2f4ed0483e2753b9c2e976ba0093d9afe85a2f85121610c1",
+      "sourceHeadings": [
+        "Create Your Own Tesla Roadster Flying Car Video",
+        "MAKE YOUR OWN FLYING ROADSTER AI VIDEO",
+        "1 DESCRIBE YOUR SCENE",
+        "2 ADD AN OPTIONAL PHOTO",
+        "3 CHOOSE LENGTH",
+        "FLYING CAR AI VIDEO EXAMPLES",
+        "OVERPASS LAUNCH",
+        "THRUSTER HOVER",
+        "DOWNTOWN FLYBY",
+        "HIGHWAY LEAP",
+        "MADE FOR CREATORS, OWNERS & BRANDS",
+        "Creators who post daily",
+        "Car owners & enthusiasts",
+        "Dealers, detailers & brands",
+        "FLYING CAR VIDEO PRICING. PAY ONCE.",
+        "BEFORE YOU FLY: FLYING CAR VIDEO FAQ",
+        "What is the flying Tesla Roadster AI video trend?",
+        "Can I make a ‘Day 1 owning a Tesla Roadster’ video?",
+        "Are these real Tesla flying car videos or AI-generated clips?",
+        "Can I use the flying car videos on TikTok, Instagram Reels or YouTube Shorts?",
+        "What is the Tesla Roadster flying car AI video generator?",
+        "How does it work?",
+        "Is this affiliated with Tesla, Inc.?",
+        "Do I need to upload a photo?",
+        "Can I upload a picture of my own car?",
+        "What do I actually receive?",
+        "Can I choose how long the video is?",
+        "How much does it cost?",
+        "Can each credit use a different prompt?",
+        "Do unused credits expire?",
+        "What happens if a generation fails?",
+        "How long does a video take?",
+        "Can I use the video commercially?",
+        "HOW IT WORKS: FROM PROMPT TO FLIGHT",
+        "WRITE THE FLIGHT",
+        "ADD A PHOTO OR SKIP IT",
+        "PAY ONCE, GET THE CLIP",
+        "FLYING CAR AI BLOG",
+        "How to make a Tesla Roadster flying car video with AI",
+        "Tesla flying car AI video trend: Roadster memes explained",
+        "WHAT DOES YOUR CAR DO WHEN THE ROAD ENDS?"
+      ],
+      "sourceTextCharacters": 5470,
+      "faqCount": 17,
+      "coverage": {
+        "preservedUnits": [
+          {
+            "tag": "p",
+            "text": "TESLA ROADSTER FLYING CAR · AI VIDEO GENERATOR",
+            "sha256": "de721d70fa1fcfdad14ea222969a0988fd3318867f72abbfe1f0cc590330af97"
+          },
+          {
+            "tag": "h1",
+            "text": "Create Your Own Tesla Roadster Flying Car Video",
+            "sha256": "a2cac5167c2d70ca61a05bb5fe71b2152ff7d5a77b88553528337fca2b99b726"
+          },
+          {
+            "tag": "p",
+            "text": "Make your own take on the flying Tesla Roadster video trend. Describe a traffic-jam escape, a rocket-thruster takeoff or a flight above the city — the scene is yours. Start with text or add one optional photo. Get a 5–30 second vertical AI clip, silent and watermark-free.",
+            "sha256": "28ab5d59a4480ed3548afcffca922f66cd720093eca42f9e820ae6547a4c6abc"
+          },
+          {
+            "tag": "h2",
+            "text": "FLYING CAR AI VIDEO EXAMPLES",
+            "sha256": "7b3a20f7a1f0f408a90e11d1c37102c64bec2aabbe294acdd0088ce9bc3dd5c6"
+          },
+          {
+            "tag": "p",
+            "text": "Four AI-generated flying-car clips, not real Tesla footage. Your scene will be different — write your own prompt in the creator above and the model builds it from your words.",
+            "sha256": "60dd79c583dbf60a22bb69ce17bf19d5c128ba60acfe821a6f03d66b3e6b8d2e"
+          },
+          {
+            "tag": "h3",
+            "text": "OVERPASS LAUNCH",
+            "sha256": "d6a5b26e8f2c6bf612023a52cb56634d8020dff8616de4a509ba2827a6d59658"
+          },
+          {
+            "tag": "h3",
+            "text": "THRUSTER HOVER",
+            "sha256": "3329f135f7f4000e855315ed33f2ba4d1d670f5fb5a55e940b0d5db50c46cb15"
+          },
+          {
+            "tag": "h3",
+            "text": "DOWNTOWN FLYBY",
+            "sha256": "72dba82e9098a1d023cc6902db8ae9b7941239517ebd444f3729e3c1e769e98f"
+          },
+          {
+            "tag": "h3",
+            "text": "HIGHWAY LEAP",
+            "sha256": "246f1458ea997c0ad090fa1cc6a085d4ddf6868b8e97fceac8aeebe0beb432ad"
+          },
+          {
+            "tag": "h2",
+            "text": "MADE FOR CREATORS, OWNERS & BRANDS",
+            "sha256": "046fdb3f678bc06393be0da3de304a298691366867960049b9217a4ddfd6f9c0"
+          },
+          {
+            "tag": "h3",
+            "text": "Creators who post daily",
+            "sha256": "3d6a0d6f854826ff5c987f2bf85a5988135bf995dcaa2fc74de76479f4f13c1c"
+          },
+          {
+            "tag": "p",
+            "text": "One idea becomes a finished clip without a shoot, a timeline or a stock-footage hunt. Rewrite the prompt and keep the series going.",
+            "sha256": "adbb15a3b8707cff290dd662a14c634988380c617f5f87d74c701dba00c631c6"
+          },
+          {
+            "tag": "h3",
+            "text": "Car owners & enthusiasts",
+            "sha256": "99e4c86706d7af94068f5eb14e94630c9016df257ae4a19d7f07d1fa5d75b4d5"
+          },
+          {
+            "tag": "p",
+            "text": "Put your own car in a scene it could never reach. Add one photo as guidance and describe where it should fly.",
+            "sha256": "2047121dd5cb7f9888fe99f5e3915631ea33ce92efcd5506f328abaec5fc0e0b"
+          },
+          {
+            "tag": "h3",
+            "text": "Dealers, detailers & brands",
+            "sha256": "80b5a69d513848efcea618a8fc26e0c298f5d82e90b5439eae113c44df5f2208"
+          },
+          {
+            "tag": "p",
+            "text": "Turn authorized vehicle photos into flying-car clips. Each credit can explore a new scene or angle using the same optional reference photo.",
+            "sha256": "7902cc91d316c76f7461190d70cd072024c331abc3d2777c3c02d84863ea96d9"
+          },
+          {
+            "tag": "h2",
+            "text": "BEFORE YOU FLY: FLYING CAR VIDEO FAQ",
+            "sha256": "01f69fb87628abc06ffb3011b026b519b2ab36942146f47ef3493d7550ecf638"
+          },
+          {
+            "tag": "h3",
+            "text": "What is the flying Tesla Roadster AI video trend?",
+            "sha256": "5ebe2a5928559c1705be39dbe0760d4298b0458cb3ac26b7b114de3c74a5263c"
+          },
+          {
+            "tag": "h3",
+            "text": "Can I make a ‘Day 1 owning a Tesla Roadster’ video?",
+            "sha256": "6cac2e75da770abbc129c2241bf9641af42f60d58081f6afea38b4baed1c098e"
+          },
+          {
+            "tag": "h3",
+            "text": "Are these real Tesla flying car videos or AI-generated clips?",
+            "sha256": "1b8000ea5f7f6c00334907f75eedccd1994c1f16ddfdde54e8f0fdd83e4b5368"
+          },
+          {
+            "tag": "h3",
+            "text": "Can I use the flying car videos on TikTok, Instagram Reels or YouTube Shorts?",
+            "sha256": "b4dcbd9e83769334ea69682fdb2dcc1a63b2839fc793639b8f4d9b699ff21d37"
+          },
+          {
+            "tag": "h3",
+            "text": "What is the Tesla Roadster flying car AI video generator?",
+            "sha256": "3242816f8ac61619b39b0b2895e3ba78e3818634fdb6266b457a31057b7fe027"
+          },
+          {
+            "tag": "h3",
+            "text": "How does it work?",
+            "sha256": "c3f15799af503a465b85ed883d3196734ccaeffa61a95d63bd53dc2618f3d785"
+          },
+          {
+            "tag": "h3",
+            "text": "Is this affiliated with Tesla, Inc.?",
+            "sha256": "fa8587ef8fca88355cc524fbab87392e7bcc2b20dc8840c10996cfffa1aaad8a"
+          },
+          {
+            "tag": "h3",
+            "text": "Do I need to upload a photo?",
+            "sha256": "4f6dd36d4fe84d58c08e0cb33f48fbea67cdaacb0c6cd769accd8a4079cd40fc"
+          },
+          {
+            "tag": "h3",
+            "text": "Can I upload a picture of my own car?",
+            "sha256": "9e0e530438c0772125907aed249869fc77415d710422a61bd297aba0de99648c"
+          },
+          {
+            "tag": "h3",
+            "text": "What do I actually receive?",
+            "sha256": "6b92847b03bf7ece0ccd94c3e6af4d6da90ce5f31447ce7ee4e2373ee61cbe86"
+          },
+          {
+            "tag": "h3",
+            "text": "Can I choose how long the video is?",
+            "sha256": "986cffee8f1cb47799aba641fb36e6cfa472d7b8add85ef4240343b82e7a2c38"
+          },
+          {
+            "tag": "h3",
+            "text": "How much does it cost?",
+            "sha256": "e5198872e9f0d03e4957c33dbeb2d39e963eaa926ebe03099fd2365087927ed8"
+          },
+          {
+            "tag": "h3",
+            "text": "Can each credit use a different prompt?",
+            "sha256": "97f81066d09ebfba4038b2b6fd1d5876a005ea5afbc0e9f9684f7bcdb7852cd1"
+          },
+          {
+            "tag": "h3",
+            "text": "Do unused credits expire?",
+            "sha256": "f377fbf5336c64577a81626e4650ae366c0526c94578e4cac50074ec030365c4"
+          },
+          {
+            "tag": "h3",
+            "text": "What happens if a generation fails?",
+            "sha256": "b0557e6a190e53fecfd4b1fcf49832d6dc76d42077d9edd317fb88d9a3d74443"
+          },
+          {
+            "tag": "h3",
+            "text": "How long does a video take?",
+            "sha256": "bb9db5b6aeec0d1bd55247a0839d53e41911aa849f016ac40abb0d7e17fc085d"
+          },
+          {
+            "tag": "h3",
+            "text": "Can I use the video commercially?",
+            "sha256": "9ea567b22375bd85cb135eb4be6b2c854cc4ec46522427d80524ff08b86e54ae"
+          },
+          {
+            "tag": "h2",
+            "text": "HOW IT WORKS: FROM PROMPT TO FLIGHT",
+            "sha256": "7ce0bf46d4e4d26054d7b0221f3ff81e169a577291b3fc3d65b7ce3f581115d1"
+          },
+          {
+            "tag": "h3",
+            "text": "WRITE THE FLIGHT",
+            "sha256": "89344b061b80400ad786d040145c27c36dff4e79b4eec6dc0f90ec91a1520758"
+          },
+          {
+            "tag": "p",
+            "text": "Describe the place, the car, the camera move and the mood. The prompt is yours to write — text alone is enough.",
+            "sha256": "fec63b3ba35b93d00fbecc3d4a30d6d2e5d809957b4e02362c80d8d1522d8b57"
+          },
+          {
+            "tag": "h3",
+            "text": "ADD A PHOTO OR SKIP IT",
+            "sha256": "bad114de626f969e81af9c1621b03049db071d1a9da77f7420827d0ba2ec05d8"
+          },
+          {
+            "tag": "p",
+            "text": "One optional reference image can anchor a specific car or person. Skip it and the scene is built entirely from your words.",
+            "sha256": "925af8da2af8b53567e8b167dc20c5eb6f2f2f76b9fe3bb66e4612e0cc08a5a2"
+          },
+          {
+            "tag": "h2",
+            "text": "FLYING CAR AI BLOG",
+            "sha256": "56ff9f573fb357a70a745d0fb12fd8ec3a68ede3db35c4389ef6174d296c2f39"
+          },
+          {
+            "tag": "p",
+            "text": "Understand the trend, then learn how to turn your own idea into a flying-car scene.",
+            "sha256": "1013feb264c95c44ee036b23344fb5476942859cf287c4b95b3217ebf8dec67d"
+          },
+          {
+            "tag": "p",
+            "text": "STEP-BY-STEP GUIDE",
+            "sha256": "d37da4a597a6e242699aece7aee17380ccdf29047ef6199a72e471a93fc0f5a1"
+          },
+          {
+            "tag": "h3",
+            "text": "How to make a Tesla Roadster flying car video with AI",
+            "sha256": "d25880bf6fe18c78d70a4578211abf7fd9f362b5bb2b33bd1f5dc871738d1644"
+          },
+          {
+            "tag": "p",
+            "text": "Plan your scene, use an optional photo, choose a length and prepare your vertical clip for sharing.",
+            "sha256": "840ae3a0c46e0a0e40e65bbb4310dbe49f26e9894dd21219be7c9c03fc8c1b05"
+          },
+          {
+            "tag": "p",
+            "text": "TREND EXPLAINED",
+            "sha256": "d1be0af9768ba6015479e6797655fa155917426ce3c1a50fc09b09639a61ad89"
+          },
+          {
+            "tag": "h3",
+            "text": "Tesla flying car AI video trend: Roadster memes explained",
+            "sha256": "4b6bf0018fca08119aa000b35014e90fc66280c2db73bbefb853417aa3ebf07d"
+          },
+          {
+            "tag": "p",
+            "text": "Explore flying-car stories, traffic escapes and the difference between fictional AI clips and real footage.",
+            "sha256": "f48cd2404566b4b6272b2be7707fbc135af61b574ac4c86c745344661ab60552"
+          },
+          {
+            "tag": "p",
+            "text": "YOUR SCENE IS WAITING",
+            "sha256": "4b1d53e926bd41e00da9ae3f039ac19624f593eccb386a1d31d46af8b3c11283"
+          },
+          {
+            "tag": "h2",
+            "text": "WHAT DOES YOUR CAR DO WHEN THE ROAD ENDS?",
+            "sha256": "f247416f0873fe9b112ce5bf1c1819aab72ba36e3756e0a2171be2cdc4dd534c"
+          },
+          {
+            "tag": "faq-answer",
+            "text": "The flying Roadster trend imagines a sports car lifting off, escaping traffic or flying above a city. It follows renewed attention around Tesla's October 15, 2026 Roadster demonstration. Flying Car AI lets you create a fictional scene in your own words; the videos on this site are AI-generated entertainment, not footage of the real vehicle.",
+            "sha256": "8261c22b78b85286f71a24c2bc57a66aad91c6c59507207c5ebac2fbdf4d0a29"
+          },
+          {
+            "tag": "faq-answer",
+            "text": "Yes. You can describe your own first-day flying-car story, choose a length from 5 to 30 seconds and optionally add one reference photo. You write the prompt yourself. The result is a silent vertical MP4; add a caption or audio in your own editor before posting if you want them.",
+            "sha256": "00db36e1783f0576ce1a1407a870712e39857f6c5ccb370d697a97aacb5add37"
+          },
+          {
+            "tag": "faq-answer",
+            "text": "Every example on this site is AI-generated. This is a creative video generator, not a source of Roadster launch footage or evidence of real vehicle capabilities. Label your creation as AI-generated when sharing it so viewers can distinguish fiction from real-world footage.",
+            "sha256": "9d56c65d3af6781487f392157798bc5176318586ed083c95b2c176e49fe5bf2d"
+          },
+          {
+            "tag": "faq-answer",
+            "text": "The 9:16 vertical MP4 format fits TikTok, Instagram Reels and YouTube Shorts. Review the result, follow each platform's current AI-content rules and disclose AI generation where required. The download is silent and has no watermark; views or virality are not guaranteed.",
+            "sha256": "dca5cf6bb349e25d09f0af6d737ece150eab7fc9c951808f2efdf3629c5560f1"
+          },
+          {
+            "tag": "faq-answer",
+            "text": "No. Flying Car AI is an independent creative tool. We are not affiliated with, endorsed by, or sponsored by Tesla, Inc. or any vehicle manufacturer. “Tesla Roadster” is used descriptively to describe the kind of scene you can ask for.",
+            "sha256": "5dd5cd7d5d5991580decdf92fe84fa9ed987eed757f9cf03753c45fc8c3ae38e"
+          },
+          {
+            "tag": "faq-answer",
+            "text": "No. Text-only is a fully supported mode: the model builds the whole scene from your description. Adding a photo is optional and is used only as visual guidance for the subject or vehicle it contains.",
+            "sha256": "e5608d9dae76f1ca10d18872ab3f8c5928d404dd88c7178c4c2df7600b5c853d"
+          },
+          {
+            "tag": "faq-answer",
+            "text": "You may use the result commercially if you hold the rights to every input and follow the rules of the platform where you post it. Because output is AI-generated, review it before publishing and disclose AI generation where a platform or law requires it.",
+            "sha256": "0ee00f36ea8a4f024f6145ddf6e6532ec17e58a22710dac55d83cd0eb5bbeb99"
+          }
+        ],
+        "adaptedOrSlottedUnits": [
+          {
+            "tag": "h2",
+            "text": "MAKE YOUR OWN FLYING ROADSTER AI VIDEO",
+            "sha256": "64c76b2297efac3729451d6a7ec790fcc3abd00b16d28afc16e86732a2110718",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "p",
+            "text": "Describe the scene in your own words, choose a length, and you can change the prompt for every credit in your pack.",
+            "sha256": "35d20dd3120e9f88a36cae85a5a0fc1c0e5d7f4b12850a32f3c73cc0a01ff4ef",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "p",
+            "text": "Describe the sceneWrite it in your own words. The more specific the better: place, time of day, camera move, mood.",
+            "sha256": "b52e425c21829871d06e6f62f645a2487fe94c8f0f92db4cd854972ba6b94c28",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "p",
+            "text": "Add one photo — optionalA car, a person, a location. It guides the model; it is never required.",
+            "sha256": "cbe8b2f7ccff166b11411a7e8a02bd37df6801bb998867b18ee594f0696b0a39",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "p",
+            "text": "Pick a pack and pay onceNo subscription. No account. Failed renders return the credit automatically.",
+            "sha256": "607818125362c00a1e84d89f686bcc85dc1fb8f2e5145ab742d69fb03966cca4",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "p",
+            "text": "WHAT YOU GET",
+            "sha256": "33b68f3d344e9c9123a81d3e9dd3f8b40b00aed4d7be2622210e6faec5b392a6",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "li",
+            "text": "A 9:16 vertical MP4, 5–30 seconds, silent, no watermark",
+            "sha256": "824c958d396d39ef223b82f7ca922c4ba1d72b11fef105f0937e9f24126341ed",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "li",
+            "text": "Text-only or one optional reference photo",
+            "sha256": "395364c2ed984d32e6391ac917b5be20ed1e5c862d5e6ef8d1ca1c3310ed8ae7",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "li",
+            "text": "A private result link and an email when it's ready",
+            "sha256": "ed3ead3ee935cd795c795490d070b39ece56a007e02e1232d8aa4db2268260a1",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "li",
+            "text": "A new prompt for every credit in your pack",
+            "sha256": "6a5d162e0811685cbb441399cbcfa3b54d3f1294d4f2f3f6953609698c3b68e1",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "li",
+            "text": "Failed generation? The credit comes back automatically",
+            "sha256": "16ec2873dd8b870029267902146fbab96494f3528dde2d90cd7fe3ba44ff00ef",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "li",
+            "text": "Unused credits never expire",
+            "sha256": "752c381b7fb10d3743949d4627857fca7b74e402d4e697393d68df29e1c7e250",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "h3",
+            "text": "1 DESCRIBE YOUR SCENE",
+            "sha256": "dc0e51e87a239afa0ea5c3afcad62ad2d26a4047a6ecd6cf7bfad5b07bc05159",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "h3",
+            "text": "2 ADD AN OPTIONAL PHOTO",
+            "sha256": "a530d7941ce39732dc466f6b157579ee0d62f45a78450c14dd2c92b27b272d7e",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "p",
+            "text": "Use it for: a specific car, a person, or your own street.",
+            "sha256": "7f970a4a151b1ca85ced2bdd11f084fc48135911752b4de29e6dc00f512c89f0",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "li",
+            "text": "One image only — the model treats it as visual guidance.",
+            "sha256": "d7a08b2d37412b260137645d5f26fc3b3584769fba62e80fde2d7301e0fdfc1f",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "li",
+            "text": "Clear, well-lit photos hold details best.",
+            "sha256": "c4553a9c7fea32842dd392ecf43767613a6830634ca3b0a316190e317131ec10",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "li",
+            "text": "No photo? The scene is built from your text alone.",
+            "sha256": "d440b7437dd6ac59749fedacc4eb6ccd42635899dd64a8c9e399a61025c7054f",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "h3",
+            "text": "3 CHOOSE LENGTH",
+            "sha256": "4102112b84f0639336e9515f574ef63b5da1e62e9120578fc4a1c8aca165c06f",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "p",
+            "text": "Longer clips take longer to render. Your length is saved on the order and reused for extra videos in the same pack.",
+            "sha256": "4d3cd8b4437b337602dbdfde11366ed7a750cf84d595f91af7a20922c395edd1",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "p",
+            "text": "Starts at $4.99 · pay once · no subscription · no account",
+            "sha256": "6c558c3504ae984437d3de48d2fc0ae8088703de0043a93242912f283136269f",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "h2",
+            "text": "FLYING CAR VIDEO PRICING. PAY ONCE.",
+            "sha256": "5c12ab6408e602e96ea713faa9ffcc59da04cd1da668ea45707914a25c9b2b67",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "p",
+            "text": "Pick any length from 5 to 30 seconds — a 10-second video is $9.99, and the price scales with the length you choose.",
+            "sha256": "567cec5ca493d05d3b67ae3302c0f9bd87945514c8dd6172ad8cf9f8851e26a8",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "p",
+            "text": "1 VIDEO",
+            "sha256": "25bf634741c1895209a932807914305fbde1a692c40db09242209a1fb1c728a5",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "p",
+            "text": "Try the idea",
+            "sha256": "21559594f100d34ed6f3e35fdad8c83cea441028274775f21480b2b787dbaca4",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "p",
+            "text": "3 VIDEOS",
+            "sha256": "ab38eed048352cdd54b8841ebbddd8fa577dd28e23d8dc4baad626d03b1c1c97",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "p",
+            "text": "Change the scene",
+            "sha256": "8dec986f47a67e07eda5b0d58315a5634f663a8bc6f5bcb2db3684deb286f516",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "p",
+            "text": "10 VIDEOS",
+            "sha256": "f24d0c324670735596c01858a6b5b066e078e9e7da2d44a8d7c3cc0fa18a6e8b",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "p",
+            "text": "Build a series",
+            "sha256": "fe8e20559e1db07f3e5f005c48227fa96173867f80b56b755a6b7bbc24413db2",
+            "reason": "Generator or shared-credit slot; verified by functional component tests."
+          },
+          {
+            "tag": "p",
+            "text": "No login, no subscription, no editing app. Three steps from an idea to a downloadable MP4.",
+            "sha256": "c6620f9ffee02eea0dd5f66750664d3fd57c4070c9fa20fe89210ec222b6cd2f",
+            "reason": "Billing, authentication, delivery or input-format adaptation for migosai."
+          },
+          {
+            "tag": "h3",
+            "text": "PAY ONCE, GET THE CLIP",
+            "sha256": "ba0675873b3569f8a8502160e3efc1768349418766b95bf6ddcd4521f8fa730e",
+            "reason": "Billing, authentication, delivery or input-format adaptation for migosai."
+          },
+          {
+            "tag": "p",
+            "text": "Stripe Checkout collects your email. We render the video, email your private link, and keep any unused credits waiting for your next idea.",
+            "sha256": "c9340f4ad79804fc45a540e74420791c53926f1965659c1833a1270d8da40205",
+            "reason": "Billing, authentication, delivery or input-format adaptation for migosai."
+          },
+          {
+            "tag": "p",
+            "text": "Write it, add a photo if you have one, and watch it take off. One-time pricing from $4.99 — a 10-second video is $9.99.",
+            "sha256": "02bdc44bed2cb618a6aebf9e42a5ff4b9a28e7f73322353c9e37e547beed9bfa",
+            "reason": "Billing, authentication, delivery or input-format adaptation for migosai."
+          },
+          {
+            "tag": "faq-answer",
+            "text": "It's a no-login web app that turns a written scene — and, if you want, one photo — into a short cinematic video of a flying car. Describe the moment you want to see, choose a pack, and we render it for you.",
+            "sha256": "526d7fe5a2ddf6820382e37fcd14a39479af6e61cba4a5e1ed06a563a6e6a3f3",
+            "reason": "Billing, authentication, delivery or input-format adaptation for migosai."
+          },
+          {
+            "tag": "faq-answer",
+            "text": "Three steps: describe your scene in your own words, optionally add a reference photo, then pay once at Stripe Checkout. The finished MP4 is delivered through a private result link and emailed to you.",
+            "sha256": "83acd198a919486022f9d95b532ae40d52ed2f59be11da98f4c54a06ff93a030",
+            "reason": "Billing, authentication, delivery or input-format adaptation for migosai."
+          },
+          {
+            "tag": "faq-answer",
+            "text": "Yes, as long as it's your photo or you have permission to use it. One reference image is supported (JPEG, PNG, WebP or HEIC, up to 10 MB). The render won't always reproduce every detail, but the image helps keep the subject consistent.",
+            "sha256": "bd724b4cc6591393d29c18ea4e9ab47306ca50bd2f7d46ae0eb99164b7798ee0",
+            "reason": "Billing, authentication, delivery or input-format adaptation for migosai."
+          },
+          {
+            "tag": "faq-answer",
+            "text": "A 9:16 vertical MP4 with the length you chose in the creator (5 to 30 seconds) — silent, watermark-free and ready to post. You can watch it and download it from your private result page, and the link also arrives by email.",
+            "sha256": "6eb7914a1263562efd551d8d1e8c39197b4b339f1eab853b2f057142b3a6393d",
+            "reason": "Billing, authentication, delivery or input-format adaptation for migosai."
+          },
+          {
+            "tag": "faq-answer",
+            "text": "Yes. Drag the length slider in the creator to pick anything from 5 to 30 seconds. Your choice is saved on the order and reused for extra videos from the same pack.",
+            "sha256": "d93cf5bab534049f6c25894b27711f050b7cd303ed54d93d7b90921e72c1399b",
+            "reason": "Billing, authentication, delivery or input-format adaptation for migosai."
+          },
+          {
+            "tag": "faq-answer",
+            "text": "Prices scale with the length you choose. One video is $4.99 at 5 seconds, $9.99 at 10 seconds, and $29.99 at 30 seconds. Packs multiply the same rate with the bundle discount: 3 videos from $9.99 (about the price of 2 at 10 seconds), 10 videos from $29.99 (about the price of 6). It's a one-time payment: no subscription, no account and no automatic renewal. The price you see is the price you pay — it never changes at checkout.",
+            "sha256": "0dede70c6da72162bc1ac5aace99430248455f3cf0dedbc7bc9ad6e67d968dce",
+            "reason": "Billing, authentication, delivery or input-format adaptation for migosai."
+          },
+          {
+            "tag": "faq-answer",
+            "text": "Yes. Every credit is a fresh scene. After your first video, the result page lets you rewrite the prompt and spend another credit on a different idea. Your optional reference photo is reused unless you start a new order.",
+            "sha256": "b49f894f48644da9aabb274b97db0ee56ed01d4bedeb217b09dd84e34e74921e",
+            "reason": "Billing, authentication, delivery or input-format adaptation for migosai."
+          },
+          {
+            "tag": "faq-answer",
+            "text": "No. Credits stay attached to your private order link until you use them. Keep that link somewhere safe — without accounts, it is the only way back to your pack.",
+            "sha256": "c7b0091fffe8add28f839e211e2beeb77b6359260054bb98ad594301d0467ff6",
+            "reason": "Billing, authentication, delivery or input-format adaptation for migosai."
+          },
+          {
+            "tag": "faq-answer",
+            "text": "The credit is returned to your order automatically. You can then retry with the same prompt or a new one from the result page. A refund of credits does not change the original Stripe payment.",
+            "sha256": "fe3c69c231e84d9f6ad065c9330efeeed4763d468ebc9e4bc04d0ac283a86218",
+            "reason": "Billing, authentication, delivery or input-format adaptation for migosai."
+          },
+          {
+            "tag": "faq-answer",
+            "text": "Rendering time depends on your chosen length and the provider's queue. We email your private link when it is ready, and the result page updates itself while you wait.",
+            "sha256": "3aaea61ae48cc17836ba6a045d4c25d04e29538752409f895b8fb33697d2b7ad",
+            "reason": "Billing, authentication, delivery or input-format adaptation for migosai."
+          }
+        ]
+      }
+    },
+    "how-to-make-a-tesla-roadster-flying-car-video": {
+      "source": "https://flyingcar-ai.app/how-to-make-a-tesla-roadster-flying-car-video",
+      "sha256": "113e8ed2720f051777b4d1ef9d7cb88d079f70e2042e4bf122a7da508e410c50",
+      "sourceHeadings": [
+        "How to make a Tesla Roadster flying car video with AI",
+        "How to make a flying Tesla Roadster AI video: step by step",
+        "The format decides the shot",
+        "Fiction, fact, and the “flying Roadster” claim",
+        "Three premises that survive vertical video",
+        "Traffic jam escape",
+        "“Day 1 owning a Tesla Roadster”",
+        "Low-angle flying-Tesla sightline",
+        "Writing the prompt as a shot specification",
+        "Reference photos: the trade-off",
+        "Length, cost, and what you are buying",
+        "Diagnosing a bad render instead of rerolling blindly",
+        "Publishing checklist",
+        "Frequently asked questions",
+        "Are the flying Tesla Roadster videos on this site real?",
+        "What format is the video?",
+        "How long does rendering take?",
+        "Do I need a photo to make a flying car video?",
+        "How does the pricing work?",
+        "Can I use the video commercially?"
+      ],
+      "sourceTextCharacters": 11540,
+      "faqCount": 6,
+      "coverage": {
+        "preservedUnits": [
+          {
+            "tag": "p",
+            "text": "GUIDE",
+            "sha256": "865e00469ca53ed369ee10f7763c4868c9def359d2b9fd1315a9c57d78c0b086"
+          },
+          {
+            "tag": "h1",
+            "text": "How to make a Tesla Roadster flying car video with AI",
+            "sha256": "d25880bf6fe18c78d70a4578211abf7fd9f362b5bb2b33bd1f5dc871738d1644"
+          },
+          {
+            "tag": "p",
+            "text": "By Flying Car AI · Updated October 17, 2026",
+            "sha256": "9be349d8e987870ba51f133b20032c335c48bd74be39364b1ab77af90c9270e2"
+          },
+          {
+            "tag": "p",
+            "text": "To make a Tesla Roadster flying car AI video, describe the car and one flight action, add a reference photo if you want one, choose a clip length, and review the result before sharing. This guide explains how to plan a traffic-jam escape or a “Day 1 owning a Tesla Roadster” scene for TikTok, Reels and Shorts. Every example here is fictional AI-generated footage.",
+            "sha256": "b2f765e2fc5fce89c09100f971424a04a5e493d53253eb2a7928c59e32eadac3"
+          },
+          {
+            "tag": "figcaption",
+            "text": "A fictional AI render, not Tesla footage. More example clips.",
+            "sha256": "5e45e25f31405ac145784d4219cbbaf41a9cf6368575c8a92635180dde224288"
+          },
+          {
+            "tag": "p",
+            "text": "Looking for the context behind these clips? Read our Tesla flying car AI video trend guide.",
+            "sha256": "64efaa3a683a49e3e4a1b58693292a0c6031795dbf2963677ed0f75ceb65155d"
+          },
+          {
+            "tag": "h2",
+            "text": "How to make a flying Tesla Roadster AI video: step by step",
+            "sha256": "b3e0a4b72b8a525b95e4c007c8220d9af92b091615f7adf23fe93a06d34bbd79"
+          },
+          {
+            "tag": "li",
+            "text": "Write your own scene. Open the flying car AI video creator and describe the car, one action, the setting, lighting and camera movement. The prompt begins empty; no preset is required.",
+            "sha256": "59022e9936ae62b13dcc1e827f5067282da34b6ff91ffaa9b0f3b4706683c6a9"
+          },
+          {
+            "tag": "li",
+            "text": "Add a photo if needed. Use one image you own or have permission to use when a particular vehicle matters. You can also work entirely from text.",
+            "sha256": "6aba891a7df73fd1f7bb2ae0f00d9fff26d7fd9a7f40cc8b36c7c25793ce6dd5"
+          },
+          {
+            "tag": "li",
+            "text": "Review the generated scene. Inspect the car shape, motion and framing before downloading. A reference photo does not guarantee an exact likeness.",
+            "sha256": "be7017f28e731c3e1d32b2683e005168b52dc26696f7047ca76d0f03e084c517"
+          },
+          {
+            "tag": "li",
+            "text": "Prepare the vertical clip for sharing. Keep the 9:16 frame, add any audio or captions in your editor, and identify the footage as AI-generated when publishing.",
+            "sha256": "efb47c984d56624b64f601925d7a75a5970dcef6e82d544ae1d2be4bab2aa276"
+          },
+          {
+            "tag": "h2",
+            "text": "The format decides the shot",
+            "sha256": "933a3a6acc666d13fe800ab1359d790210a9f2390115bc0228647ef7dc99c20e"
+          },
+          {
+            "tag": "p",
+            "text": "The delivered file is a 9:16 vertical MP4 between 5 and 30 seconds long, rendered at 480p and shipped without audio or a watermark. Those four constraints should shape the scene before you write a word of prompt, because each one removes a technique you might otherwise rely on.",
+            "sha256": "0e36c6ec02baf4c7f25cdee4a66d6ea91d40a11b311c4a97bec2ead3fbedb988"
+          },
+          {
+            "tag": "li",
+            "text": "Vertical framing. A wide traffic shot loses its context when cropped to 9:16. Vertical motion — a lift, a dive, a climb — reads better because the frame has room to travel. Put the horizon high or low rather than through the middle, and keep one subject in frame.",
+            "sha256": "b0db9bb3293b229df30752da0c845add498aab03b4e14f787ab549f9cc90a31a"
+          },
+          {
+            "tag": "li",
+            "text": "480p detail. Badges, panel gaps, number plates and fine trim do not survive at this resolution. Build the shot around silhouette, colour and light instead of small details you expect the model to preserve.",
+            "sha256": "7a32e75cdfa3bb93fc2c6c1296c4af6b5c63902d512d8fa5f2192727a98c3e9f"
+          },
+          {
+            "tag": "li",
+            "text": "Five to thirty seconds. Five to eight seconds behaves like a loop: one action, one camera move. Ten to fifteen seconds holds a single beat with a start and an end. Twenty to thirty seconds needs two or three beats, and every extra second is another chance for the model to drift.",
+            "sha256": "0ec720ae85a9ce73484924519f5cad1e5939dd222117988fbe2139376ce77cf0"
+          },
+          {
+            "tag": "li",
+            "text": "No audio track. Timing has to be carried by the image. Music or voice-over is added later in an editor, so do not write a prompt that depends on a sound cue to land.",
+            "sha256": "ab10c196bc96f14a3a69b316f24a1e2a632e8ee45d3316129bee0b008165e962"
+          },
+          {
+            "tag": "p",
+            "text": "A useful way to think about the prompt is a shot specification for a camera operator who has never seen the location: it has to describe what is in frame and how the frame moves, not just the mood of the scene.",
+            "sha256": "3f29d2fa962a55fc0b642aec3bfdc97a52ea6f09ee8a4d1040416fcb62f5d7b3"
+          },
+          {
+            "tag": "h2",
+            "text": "Fiction, fact, and the “flying Roadster” claim",
+            "sha256": "d5015bc999c55260169a8010f89e1e1f3b90ce2b9313058c6054adc381c0db6f"
+          },
+          {
+            "tag": "p",
+            "text": "A flying car render is a fabricated image however photoreal it looks. It is not a Tesla announcement, a press asset, a demonstration or evidence that a consumer flying Roadster exists. Flying Car AI is independent and not affiliated with Tesla, Inc.; the car name describes the subject, it does not claim a relationship.",
+            "sha256": "8c330a84747953941cedec0e6b1a2577e47fea35fa4e68d0f1d5618051cba9e9"
+          },
+          {
+            "tag": "p",
+            "text": "That distinction has practical consequences. Synthetic footage falls under platform policy on AI media, and presenting a fictional clip as a real product launch can mislead viewers about what was demonstrated. If you publish commentary about real Tesla news, keep the factual post and the AI render separate, or label the render before the first frame rather than in a comment.",
+            "sha256": "dd79876745c40ef8708058ff410cc2a6c97c64f78dd62fc09040b1d70e24b9c4"
+          },
+          {
+            "tag": "h2",
+            "text": "Three premises that survive vertical video",
+            "sha256": "02b34f747e252f4fd33f9852fddaf90141281b08b2baf5c5e7ee7b6891c1aa2c"
+          },
+          {
+            "tag": "p",
+            "text": "The subject is implausible, so the scene has to give the viewer something to accept it against. These structures hold up because each one sets a visual conflict the model can render in one continuous shot.",
+            "sha256": "6dcc8d8f7dffc4149320db489e7edc5a897d1cca4cda69ad81ce9cc83610dc49"
+          },
+          {
+            "tag": "h3",
+            "text": "Traffic jam escape",
+            "sha256": "57ca688b5ae6408da176bed67e2a58a747a59f78b0d868326a5469bf9eac95ff"
+          },
+          {
+            "tag": "p",
+            "text": "The conflict is static versus vertical. Put the camera at bumper height among stopped cars so the Roadster’s lift is measured against something familiar. Give the movement a clear start in the lane and a clear end above the roofline. The premise fails when the frame contains too many vehicles: at 480p the background becomes a mass of shapes and the lift loses its scale. Fewer cars, stronger side light and a fixed low camera solve that.",
+            "sha256": "9b0dec7f5b6cad1a0413c772613ffbf4311615e61add3d83332e964676d4cb59"
+          },
+          {
+            "tag": "h3",
+            "text": "“Day 1 owning a Tesla Roadster”",
+            "sha256": "4e91434f8604eb7a44efdc246f18399f6be9468a9a189942f178abfe308abf62"
+          },
+          {
+            "tag": "p",
+            "text": "This is a narrative premise rather than a stunt, so give it a simple arc. One continuous movement is easier to describe and review than several requested cuts: the car pulls out of a driveway and lifts as it clears the street. Keep the location quiet; a domestic setting is easier to read in nine seconds than a landmark. Do not ask for a key turn, a door opening and a lift in the same clip; the model will merge them.",
+            "sha256": "b3c52f4f68075fd9914827c518ba34314d8b802adc23fb17a6c3421d25b10018"
+          },
+          {
+            "tag": "h3",
+            "text": "Low-angle flying-Tesla sightline",
+            "sha256": "af94a0bb041851dca8f411906e691e633c69efdb52ff91765716ce25c717ebf2"
+          },
+          {
+            "tag": "p",
+            "text": "The camera looks up and the car crosses the sky. This is the most legible version at low resolution because the subject is a silhouette against a simple background. Its failure mode is scale: if the car becomes a dot, the shot reads as a distant drone. Specify a low angle, a close pass and a direction of travel, and keep the sky simple enough that the silhouette holds.",
+            "sha256": "5e557f8e26a6cf2f025b550745be02b0c69232818571ef8d9683ca0ba14e7bbd"
+          },
+          {
+            "tag": "h2",
+            "text": "Writing the prompt as a shot specification",
+            "sha256": "53fa1d39ea1a8e0e6070b771adbe168f53ab9350a83630aab938e3f251d5c34a"
+          },
+          {
+            "tag": "p",
+            "text": "Write a prompt a reader can picture without guessing: one main vehicle, a clear action and a camera position. Conflicting movements and crowded scenes can make the result harder to control. These are starting points for iteration, rather than guarantees about how a model will interpret your words.",
+            "sha256": "97b9c55c0ff5fba0952b8e3e35ea98953e6abb67c31d47f833eabb1882a51191"
+          },
+          {
+            "tag": "li",
+            "text": "Subject and geometry: the vehicle’s shape and colour, and how it sits in frame.",
+            "sha256": "4d00772f3f9f479684e4009f481667ea30d02916e4b23f924a5c56aa8947e4f7"
+          },
+          {
+            "tag": "li",
+            "text": "Action: one movement with a start and an end, described in space.",
+            "sha256": "5cf36032a4c191e5839242b129f03b8bb2d4dbe5061938d48ee28bf11cec0bd8"
+          },
+          {
+            "tag": "li",
+            "text": "Environment: the street, overpass or skyline, and what sits near the car.",
+            "sha256": "1495a9a679abcc7efa0a91de3b7c7ca9a55f9c2bc62fffeb1ba1ea4963ba3457"
+          },
+          {
+            "tag": "li",
+            "text": "Camera: angle, height, distance, and whether it is static, tracking or handheld.",
+            "sha256": "a1fb8ed60fa9f4c0d530d0f97877f9f3ca34b4ac63eb9ed7bd98cabda5901a57"
+          },
+          {
+            "tag": "li",
+            "text": "Light: time of day and light direction, which decides how readable the car is.",
+            "sha256": "6a166d52f60a4f528be15c5aa2055cb4f8cd3442e83b89024b07a0bfdef8e421"
+          },
+          {
+            "tag": "p",
+            "text": "Spatial language is the difference between a usable take and an average one. “The car rises out of the lane and clears the roof of the car in front” gives the model a relationship to render; “a flying car in traffic” gives it a theme. Keep the field to one to three sentences; the input limit is 12 to 600 characters. Negations are weak constraints, so instead of listing things you do not want, describe an environment with no surface for them to appear on.",
+            "sha256": "9dd8f5b15cb55044c4b0c397cfe3b00c6e54269f8e2d22d4f4c2b9822a8dd71f"
+          },
+          {
+            "tag": "p",
+            "text": "Include “Tesla Roadster” if that is the subject you want, then describe the shape, colour and framing. Naming a model alone does not specify the scene or guarantee accurate badges, proportions or details.",
+            "sha256": "6d72941b05d492c90b3509389b1e0a63e7bd952e1d661f6436b89c4c320d68c7"
+          },
+          {
+            "tag": "h2",
+            "text": "Reference photos: the trade-off",
+            "sha256": "5e7da63601e96c37cfdb7f9fa7b3f1c390ee1317b6f6f1fa3a37e5a5e70e7cfd"
+          },
+          {
+            "tag": "p",
+            "text": "One reference image changes what the model has to invent. It anchors shape, colour and some trim, which helps when the car is the point of the shot. The cost is composition: the image can pull its own background, angle and lighting into the render, and a heavily cropped photo gives the model less to work with than no photo at all.",
+            "sha256": "e84e15daa6fce60204ee62de5ae7eb894c57abe5df0d84402517c701ae8a8101"
+          },
+          {
+            "tag": "p",
+            "text": "Use an image you own or have permission to use. A well-lit three-quarter view on a plain background gives a clearer reference than a dark or heavily cropped photo. Several cars in one image can make the intended subject ambiguous. If a specific vehicle is not essential, text-only lets you describe the setting and camera without introducing a reference background. Results vary in both modes.",
+            "sha256": "95e1bd5b5178f274d0dcec4750c344e85248d7550f197aabfa18a217694e62bf"
+          },
+          {
+            "tag": "h2",
+            "text": "Length, cost, and what you are buying",
+            "sha256": "2516528063bbf9c8534d57f420af0226d0c2c7aa8ba7f60c2f0267eb9ad3a2c0"
+          },
+          {
+            "tag": "p",
+            "text": "For feed-style publishing, five to eight seconds is usually enough; the loop repeats and the first frame does most of the work. Ten to fifteen seconds suits one story beat. Twenty to thirty seconds is the right choice only when the scene genuinely has two or three beats, because every additional beat increases the chance that the car changes shape mid-shot.",
+            "sha256": "7b114d212c06b64399b60a2657f5e46e1f073d13184a165599179daa29caa801"
+          },
+          {
+            "tag": "h2",
+            "text": "Diagnosing a bad render instead of rerolling blindly",
+            "sha256": "32ae64a526766a785e499dc26a3cbbd1b709ce69c97de06436dfd9308d5688ab"
+          },
+          {
+            "tag": "p",
+            "text": "Most failed takes fail for a reason you can name, and each reason maps to one prompt change. Change one variable at a time so the next result tells you something.",
+            "sha256": "868f785a8e710be60fb15eaa9fb2147e3fbdd55d8ca494e7e5aac193d605819f"
+          },
+          {
+            "tag": "li",
+            "text": "Car too small or too large: the framing distance is missing. Specify how much of the frame the car fills and where the camera sits.",
+            "sha256": "e191898a8f79c4f113af4b2c17faaba97bde80b4cfe1764c8112ed45b3575c73"
+          },
+          {
+            "tag": "li",
+            "text": "Motion unreadable: direction and camera relationship are missing. Say which way the car moves relative to the camera.",
+            "sha256": "614313da96d7a53fa788b36fbc72cee4b1813c5b62ef185cd4fc71273392532c"
+          },
+          {
+            "tag": "li",
+            "text": "Wheels, reflections or panel gaps melting: the background or motion is too complex. Simplify the scene, reduce speed, reduce the number of vehicles.",
+            "sha256": "530cd8317e8594217b2458316b7165484004e6e64c1ffda4a9da55619f1e5b4a"
+          },
+          {
+            "tag": "li",
+            "text": "Text or logos appearing: the scene implies a surface for them. Remove signage, livery and plates from the environment.",
+            "sha256": "dd3f375450fa20b58b1e488174431b981c7c9af73c1231087959ee6d6ae315e4"
+          },
+          {
+            "tag": "li",
+            "text": "Shape drifting across the clip: too many actions or too long a duration. Cut to one action or a shorter length.",
+            "sha256": "f748a9b75ceec84ad47750b033f1584dee42aee83834c86099d7f554ed351367"
+          },
+          {
+            "tag": "h2",
+            "text": "Publishing checklist",
+            "sha256": "d54f765e7a1aa816908e41b6724cca50180f6fd63bd0f5f999d667b017f16030"
+          },
+          {
+            "tag": "li",
+            "text": "Keep the 9:16 frame intact; a landscape re-upload crops the subject out of the shot.",
+            "sha256": "2710782c985beaef715b6fe65370581fcb61e652ec5b05dea56e85eaa6fadbb7"
+          },
+          {
+            "tag": "li",
+            "text": "Label the clip as AI-generated where the platform offers it, and say so in the caption.",
+            "sha256": "6075b33cafa398aea2de817f5706b01c9ed760ef6b96e834f69a693ec3ad7083"
+          },
+          {
+            "tag": "li",
+            "text": "Add audio in the editor: platform-licensed music, a voice-over or sound design. The delivered file is silent by design.",
+            "sha256": "d0452243e4d356f6114cb08a320ad4f55c461c374ed3958370059e4a6a572871"
+          },
+          {
+            "tag": "li",
+            "text": "Add captions outside the render rather than asking the model to put text in frame.",
+            "sha256": "bcddc44c38efb2cc94fbc2f6dcb3ed1d1187f2429e830edb13ccfe853af70295"
+          },
+          {
+            "tag": "li",
+            "text": "Keep factual commentary about Tesla separate from the fictional clip, and do not imply an endorsement.",
+            "sha256": "288a10f23fd7e82e9df63747b247a4a359f1b740a00259207a5dbadb06c1f158"
+          },
+          {
+            "tag": "li",
+            "text": "Hold the rights to every input image, including people and locations, and do not submit minors.",
+            "sha256": "f6cc2c7361bbce50a6fc1f974f879e614add09f0635a0b4e359f2044dcf2d766"
+          },
+          {
+            "tag": "p",
+            "text": "The terms of service and privacy policy cover rights, credits and data handling in more detail.",
+            "sha256": "48c551dd8f3ad88a6caca1812d859bcf122134932a22a4fa8f795c121bdbc18c"
+          },
+          {
+            "tag": "h2",
+            "text": "Frequently asked questions",
+            "sha256": "e956a9404b467e6b372e082d28cb9d4710af764c2fa5e56a415211e12166be0e"
+          },
+          {
+            "tag": "h3",
+            "text": "Are the flying Tesla Roadster videos on this site real?",
+            "sha256": "100fefc165a6478d1fd7f75be23f9c33ef56674f02664dae21a5932af13934c4"
+          },
+          {
+            "tag": "p",
+            "text": "The renders on this site are fictional AI-generated scenes built from text prompts and optional reference photos. They are not Tesla announcements, press assets, demonstration footage or evidence of a consumer product. Flying Car AI is independent and not affiliated with Tesla, Inc.",
+            "sha256": "dc54e696c1e01b607678528bd2d2a488ffdb99fd68c4b4866d9e0510d19d5d92"
+          },
+          {
+            "tag": "h3",
+            "text": "What format is the video?",
+            "sha256": "ce6c3b3c6ed4f59fed42c94ceb4873ec6f8843d7aca12f636c53c3714b151e70"
+          },
+          {
+            "tag": "p",
+            "text": "A 9:16 vertical MP4, 480p, 5 to 30 seconds depending on the length you choose, silent, with no watermark. Music, voice-over and captions are added later in an editor.",
+            "sha256": "ed4948aa18715055082e7030972202ccdf0a23bb8284939d1f47c594269d09c1"
+          },
+          {
+            "tag": "h3",
+            "text": "How long does rendering take?",
+            "sha256": "d721debd796dd959ee824416ceb1a8483f85cb12d32392530d601d4152bf003d"
+          },
+          {
+            "tag": "h3",
+            "text": "Do I need a photo to make a flying car video?",
+            "sha256": "50e3cd689ae56542c9f93e8a133ea26dcfeb1cf2c64f1532a6beeb2734eacbd9"
+          },
+          {
+            "tag": "p",
+            "text": "No. Text-only is fully supported. One reference image can help keep a specific car or person consistent, but it can also pull its own background and framing into the render, and it must be an image you own or have permission to use.",
+            "sha256": "0209bc82b21068c02f1d068e91d7ddce65b1ca828af4f9b13d2b92bcff311e93"
+          },
+          {
+            "tag": "h3",
+            "text": "How does the pricing work?",
+            "sha256": "eb50e466261d3d82a36485b8937dc2e3fdac1b2a0d12206d8987b9c3566b8619"
+          },
+          {
+            "tag": "h3",
+            "text": "Can I use the video commercially?",
+            "sha256": "9ea567b22375bd85cb135eb4be6b2c854cc4ec46522427d80524ff08b86e54ae"
+          },
+          {
+            "tag": "p",
+            "text": "Only if you hold the rights to every input and comply with the rules of the platform and the law where you publish. Disclose that the clip is AI-generated where required, and do not present it as real footage or as a Tesla statement.",
+            "sha256": "dc7bff2e32d86476d7000eb1e41808fd75189f3a1ef84667147a672b50668980"
+          }
+        ],
+        "adaptedOrSlottedUnits": [
+          {
+            "tag": "li",
+            "text": "Choose the length. Pick 5–30 seconds. Start with one short, clear action rather than packing multiple stunts into a single shot. See length-based pricing before choosing a pack.",
+            "sha256": "d8adfff177af9b657f5a18fb3798ffb37b13d1d8ca5b3393acf91cc260fc0dbf",
+            "reason": "Billing, authentication, delivery or input-format adaptation for migosai."
+          },
+          {
+            "tag": "p",
+            "text": "Length is the main product decision. A ten-second single video is $9.99; five seconds is $4.99 and thirty seconds is $29.99. The price scales with length because the render does: more frames means more compute and a longer window in which the model can fail. That is also why a 30-second clip is not automatically a better purchase than three 10-second clips. Current packs and their length-based prices are listed in the pricing section.",
+            "sha256": "fe2e3d14af9bae12ff1b8b28e8c4b4d06d06d52c9f2450fd25594f531f51fbd6",
+            "reason": "Billing, authentication, delivery or input-format adaptation for migosai."
+          },
+          {
+            "tag": "p",
+            "text": "The chosen length is saved on the order and reused for additional videos in the same pack. A different length means a new order. Pack pricing follows the same rate with the bundle discount: three videos from $9.99 and ten videos from $29.99.",
+            "sha256": "6d8f184f16901ffeb38f9c4ef3850fdec90ad37a5cb783aea8a0705dcfbf78a6",
+            "reason": "Billing, authentication, delivery or input-format adaptation for migosai."
+          },
+          {
+            "tag": "p",
+            "text": "Rendering time varies with the chosen length and the provider's queue. There is no guaranteed completion time; check the order page for the current status.",
+            "sha256": "a2a29709a9201ff20eb8f70c610d4eb42ac23c483ad7e820afb6e06f9edbc991",
+            "reason": "Billing, authentication, delivery or input-format adaptation for migosai."
+          },
+          {
+            "tag": "p",
+            "text": "The price scales with length from a ten-second anchor: $4.99 at 5 seconds, $9.99 at 10 seconds and $29.99 at 30 seconds for a single video. Three-video packs run $9.99–$59.99 and ten-video packs $29.99–$179.99 depending on length. It is a one-time payment.",
+            "sha256": "d8618d7d0d261d35007dc12dc8098e1979f0f99e9d3f36a27514775cd9b23ba3",
+            "reason": "Billing, authentication, delivery or input-format adaptation for migosai."
+          }
+        ]
+      }
+    },
+    "tesla-flying-car-ai-video-trend": {
+      "source": "https://flyingcar-ai.app/tesla-flying-car-ai-video-trend",
+      "sha256": "51fe70e17fa3e1c78dc13a379610ab6fe9ea4d88009c90698a748b7cc42c4acf",
+      "sourceHeadings": [
+        "Tesla flying car AI video trend: Roadster memes explained",
+        "What is the flying Tesla Roadster meme?",
+        "Real Roadster footage and AI video are different things",
+        "Build a flying-car story around one clear change",
+        "Start with a recognizable obstacle",
+        "Choose an ending before adding effects",
+        "Make the viewpoint part of the joke",
+        "Can you make a flying car AI video without a photo?",
+        "Plan for TikTok, Instagram Reels and YouTube Shorts",
+        "Before you create your own flying Tesla video"
+      ],
+      "sourceTextCharacters": 5359,
+      "faqCount": 0,
+      "coverage": {
+        "preservedUnits": [
+          {
+            "tag": "p",
+            "text": "FLYING CAR AI · TREND GUIDE",
+            "sha256": "061a95ae79c17f997f497f5e7dfcdd59e7d6e72908fcdb91fdb65df91fd209da"
+          },
+          {
+            "tag": "h1",
+            "text": "Tesla flying car AI video trend: Roadster memes explained",
+            "sha256": "4b6bf0018fca08119aa000b35014e90fc66280c2db73bbefb853417aa3ebf07d"
+          },
+          {
+            "tag": "p",
+            "text": "By Flying Car AI · Published October 17, 2026",
+            "sha256": "141fb782bb6ab7a35d89d7c6911d7e48815b4b3ca88b084544826fec282783cb"
+          },
+          {
+            "tag": "p",
+            "text": "The Tesla flying car AI video trend turns an everyday driving situation into an impossible escape. A sports car rises above a traffic jam, rolls through the air or takes a commute somewhere unexpected. The appeal is easy to understand: a familiar frustration gets an outrageous visual answer. Here is how to approach that idea as an original short video, with your own scene and a clear AI label.",
+            "sha256": "c00fc77a4c2f536d676568666d1af13ee7d5d1b31768ffcf7e3bff6a39893b0a"
+          },
+          {
+            "tag": "figcaption",
+            "text": "An AI-generated scene from Flying Car AI. This is not Tesla demonstration footage.",
+            "sha256": "facacdec0f4f169a9a99d7e73ec600d994799ec8762e61d31c8c3650ad50f5fe"
+          },
+          {
+            "tag": "h2",
+            "text": "What is the flying Tesla Roadster meme?",
+            "sha256": "0bf26ffb64a3b823fd07ee76a81e64f5d404649f4f87e97e1dde3f3a576239f8"
+          },
+          {
+            "tag": "p",
+            "text": "Flying-car remixes use the Roadster as a starting point for fictional driving stories. A traffic escape, an aerial roll and an intentionally unsuccessful landing are recognizable variations. The reference site FlyingCar.fun groups examples around those stunt themes. This article uses that broad topic as context; the creative workflow below is specific to Flying Car AI.",
+            "sha256": "cf73878c83d7679beae4bdfd0917330c1fa16e751dadb2d0857c77795fcebaad"
+          },
+          {
+            "tag": "p",
+            "text": "A useful distinction is the difference between a subject and a story. “Flying Tesla” names the subject. A story also needs a situation, a change and a final image. If the viewer cannot tell what changed, extra smoke, camera movement or city detail will not make the action easier to follow.",
+            "sha256": "5555b6c5c91ce00abd8b98c44a4b2ebeb3f69e3a3108b9ac89d77f73e88c1161"
+          },
+          {
+            "tag": "h2",
+            "text": "Real Roadster footage and AI video are different things",
+            "sha256": "cf4e960623065ad9308648b39eb1f4ca25c7f21c51c102f7a219c4f6ce96de25"
+          },
+          {
+            "tag": "p",
+            "text": "A vehicle demonstration and a fictional car flying across a skyline should not be treated as the same kind of evidence. To check a real-world claim, find the original recording, its publisher and the context around the shot. A caption, familiar badge or photorealistic finish does not establish authenticity.",
+            "sha256": "a5c4e7fe99bd050c6bc7f685ff7fe998648b9b23bedc7e1e218fb7beebb99d86"
+          },
+          {
+            "tag": "p",
+            "text": "All flying-car examples on this website are AI-generated. They do not document Tesla vehicle capabilities. Flying Car AI is independent and is not affiliated with, endorsed by or sponsored by Tesla, Inc. or any vehicle manufacturer. When sharing your own render, make the fictional nature clear to viewers.",
+            "sha256": "9000bc173fadca16714f24cbcf47d0e5e9bbf19c3a2ee8bc09f6e29de7e19973"
+          },
+          {
+            "tag": "h2",
+            "text": "Build a flying-car story around one clear change",
+            "sha256": "8ce806774de25bba8426d27eafcad0caa50a63ade42de0535d617180846dc83b"
+          },
+          {
+            "tag": "h3",
+            "text": "Start with a recognizable obstacle",
+            "sha256": "5025a52b079ca32dc557ada15d8fe3c3bba68951bdfb6ae2a248ec92730bd2a7"
+          },
+          {
+            "tag": "p",
+            "text": "Give the viewer something to understand before the car moves. Stopped vehicles, a narrow road or the edge of an overpass can establish scale. Keep the main car visible and leave enough empty space above it for the movement. A busy frame can make a dramatic lift difficult to read on a small phone screen.",
+            "sha256": "11a5ee4862167c9b19e14b47eee46a0a2c68e2e61c7e31c713b96aa26aeebca9"
+          },
+          {
+            "tag": "h3",
+            "text": "Choose an ending before adding effects",
+            "sha256": "c38d57d7efdab2c75f7a43c9a4bc23bd1c8cef9d4d1166d0bc1bddf73204bf70"
+          },
+          {
+            "tag": "p",
+            "text": "Decide where the car should be in the final frame. Does it clear the obstacle, hover in place or leave the camera behind? That destination gives the action a direction. Treat smoke, reflections and lighting as supporting details instead of asking every element in the scene to change at once.",
+            "sha256": "0a7ce6d5ae3bb963b6042f29130765b9d903da346ef7b96d8c957c362c9c8d23"
+          },
+          {
+            "tag": "h3",
+            "text": "Make the viewpoint part of the joke",
+            "sha256": "3424c5f6a55405f8ded97ce05f5fd307e38cd2f17893a80e31a6d4085075d627"
+          },
+          {
+            "tag": "p",
+            "text": "A passenger view feels personal; a distant street camera makes the event feel observed. Pick the viewpoint that tells your story and keep it consistent. If you add a first-day ownership caption, write it around your own situation rather than copying another creator's line. Add captions in an editor so you can check spelling, timing and readability separately from the generated image.",
+            "sha256": "7739001cff63d9966c2b9fa005a94f0048ba86b850ab57ec46c44a7ebf8ea648"
+          },
+          {
+            "tag": "h2",
+            "text": "Can you make a flying car AI video without a photo?",
+            "sha256": "acac918dd05e67ee9f436a7f54e34b73a12d7f7d5c2e84d9472d0d9d09ad697f"
+          },
+          {
+            "tag": "p",
+            "text": "Yes. In Flying Car AI, you write your own scene prompt and can leave the photo upload empty. Describe the vehicle, the movement, the setting and the camera. There is no preset picker or required selfie. If a particular car matters, one optional reference image can provide visual guidance.",
+            "sha256": "e779ee8da03a0ade780da1be05506cffc53c055c94a75f445ceb08748a9f46ed"
+          },
+          {
+            "tag": "p",
+            "text": "Use a photo you own or have permission to use. A clear view of one vehicle makes the intended subject easier to identify than a crowded parking lot. A reference is guidance, not a promise of an exact match: inspect the body shape, wheels and reflections in the result. For practical input advice, read our step-by-step flying Roadster video guide.",
+            "sha256": "fe212ef2ef3b0878d9bf013e80c533b7d85b2391950274b61469bc1a7f9b8728"
+          },
+          {
+            "tag": "h2",
+            "text": "Plan for TikTok, Instagram Reels and YouTube Shorts",
+            "sha256": "6d93ef406ba24f7af7f384823e892362b41042d64283d9d433aa907972bae95f"
+          },
+          {
+            "tag": "p",
+            "text": "Flying Car AI uses 9:16 vertical MP4 output with a customer-chosen length of 5–30 seconds. The file is silent and watermark-free. Keep important motion near the center of the composition so interface controls and your later captions do not cover the moment that explains the scene.",
+            "sha256": "0dcd80c81c1bfce0231b49a8fc79c99522a998da3fcccd440183c93b7be771bf"
+          },
+          {
+            "tag": "p",
+            "text": "Start with the shortest length that can show your idea clearly. More seconds give you more time to tell a story, but also more footage to inspect for visual changes. Watch the clip once without a caption: if the action is unclear, simplify the composition before relying on text to explain it.",
+            "sha256": "c2dcea6d2924bb2dc879901df46e3ced72e443b57d865f8c55f5c0cdabf1455c"
+          },
+          {
+            "tag": "p",
+            "text": "Add music or voice-over separately if needed, using audio you are allowed to publish. Check the destination platform's current AI disclosure requirements. Vertical formatting makes a file convenient to share; it does not guarantee reach, recommendations or a particular number of views.",
+            "sha256": "fdae03a42772d00802919569ece877af212df6b84293653a1a1457d05676357a"
+          },
+          {
+            "tag": "h2",
+            "text": "Before you create your own flying Tesla video",
+            "sha256": "9acbf6757998d7e55d5c6f3f654073bd81387a90c15ff20eac58e3b34df2348d"
+          },
+          {
+            "tag": "li",
+            "text": "Choose one main vehicle, one action and a camera position.",
+            "sha256": "50fe014c4d42cf6c2faeb47f3be4120cb8efab6cc0e5d37375f1656e9a37de64"
+          },
+          {
+            "tag": "li",
+            "text": "Write the scene yourself; add a single reference photo only if it helps.",
+            "sha256": "e8620c309a9198f1a41ea530140b8590576924a53c9d15e5192f58f56f19689d"
+          },
+          {
+            "tag": "li",
+            "text": "Review the AI video examples for framing, rather than expecting an identical result.",
+            "sha256": "756c5fe1e4cbdc433bfcd7d12bd588afd5d9cc2dc4985337a39ab9c7828595a7"
+          },
+          {
+            "tag": "li",
+            "text": "Review your render and label it as AI-generated when sharing.",
+            "sha256": "122221f65d055faf6032903665cede6880aa235ff7069542ae5c59b7a5eca19f"
+          },
+          {
+            "tag": "p",
+            "text": "The strongest starting point is an idea that can be explained in one sentence. Give that idea a clear visual beginning and ending, then refine the shot. You can explore the flying car AI video creator or follow the full creation tutorial for a closer look at the process.",
+            "sha256": "4e0aaa81c194bd54feac8b0a4f8337818aa9d7924aa3017a3d93fb815d017bf4"
+          }
+        ],
+        "adaptedOrSlottedUnits": [
+          {
+            "tag": "li",
+            "text": "Check the duration-based pricing before selecting a pack.",
+            "sha256": "bc4725c055ea412cd2671325f2b5bb92b8790b588acc408dc3bc101db44d0828",
+            "reason": "Billing, authentication, delivery or input-format adaptation for migosai."
+          }
+        ]
+      }
+    },
+    "privacy": {
+      "source": "https://flyingcar-ai.app/privacy",
+      "sha256": "f96133865664ad187a95ecc55fb24f46ef9015c234ff1e3dd6123f6bf4f2f4e3",
+      "sourceHeadings": [
+        "PRIVACY POLICY",
+        "WHAT WE COLLECT",
+        "WHO PROCESSES YOUR FILES",
+        "HOW YOUR DATA IS USED",
+        "RETENTION AND DELETION",
+        "YOUR CHOICES",
+        "CHILDREN",
+        "CONTACT"
+      ],
+      "sourceTextCharacters": 2452,
+      "faqCount": 0,
+      "coverage": null
+    },
+    "terms": {
+      "source": "https://flyingcar-ai.app/terms",
+      "sha256": "eff3a3cfeb58f58250ccae2f8254bd018b2b58706727bef6cec0d59e4bfad349",
+      "sourceHeadings": [
+        "TERMS OF SERVICE",
+        "THE SERVICE",
+        "WHO MAY USE IT",
+        "YOUR PROMPTS AND IMAGES",
+        "AI OUTPUT",
+        "PAYMENT AND CREDITS",
+        "FAILED GENERATIONS AND REFUNDS",
+        "YOUR OUTPUT AND RESPONSIBILITY",
+        "SERVICE AVAILABILITY",
+        "LIABILITY",
+        "CHANGES AND CONTACT"
+      ],
+      "sourceTextCharacters": 3825,
+      "faqCount": 0,
+      "coverage": null
+    }
+  },
+  "publishedRoutes": [
+    "/",
+    "/how-to-make-a-tesla-roadster-flying-car-video",
+    "/tesla-flying-car-ai-video-trend",
+    "/privacy",
+    "/terms"
+  ],
+  "privateRoutes": [
+    "/wait/:orderToken",
+    "/result/:resultToken"
+  ],
+  "sourceBundle": {
+    "url": "https://flyingcar-ai.app/assets/index-nlP9j1ZZ.js",
+    "sha256": "2d490f2a853693fe58a7c2854c99802f981478d4fc7edf14df075093739f2b98",
+    "formattedSha256": "e96576cfa7c863a060911b6efbc9417f8bdfa78f6ce0dd26c5a838d784b90bab",
+    "note": "Exact response plus readable formatting of deployed source; public source map returned 404."
+  },
+  "assets": [
+    {
+      "source": "https://images.chibistyle.art/flyingcar/real/overpass-launch.jpg",
+      "path": "/flyingcar/real/overpass-launch.jpg",
+      "bytes": 28669,
+      "sha256": "c46cc41bf11082f9e9df4563226a444036cb7f776d1ccabf597d28596ef59ee0"
+    },
+    {
+      "source": "https://images.chibistyle.art/flyingcar/real/overpass-launch.mp4",
+      "path": "/flyingcar/real/overpass-launch.mp4",
+      "bytes": 2075155,
+      "sha256": "0e16528c7b23ebbef99a72f0cc93a1dd39199e3976797c675dd2b4a6fb3cf00c"
+    },
+    {
+      "source": "https://images.chibistyle.art/flyingcar/real/thruster-hover.jpg",
+      "path": "/flyingcar/real/thruster-hover.jpg",
+      "bytes": 35303,
+      "sha256": "66841ef48a2d7e46cc688610c0413248144aff43a5962aeffcbbf1bfa185c220"
+    },
+    {
+      "source": "https://images.chibistyle.art/flyingcar/real/thruster-hover.mp4",
+      "path": "/flyingcar/real/thruster-hover.mp4",
+      "bytes": 1282151,
+      "sha256": "5bcab65b2929c5ae9f496433ad762a268d456c4cc93a4be11b51af3468805cb7"
+    },
+    {
+      "source": "https://images.chibistyle.art/flyingcar/real/downtown-flyby.jpg",
+      "path": "/flyingcar/real/downtown-flyby.jpg",
+      "bytes": 61286,
+      "sha256": "090cc17ef847f1fa97fd536bcb4818ad278856183392e57453dcb27e4871288f"
+    },
+    {
+      "source": "https://images.chibistyle.art/flyingcar/real/downtown-flyby.mp4",
+      "path": "/flyingcar/real/downtown-flyby.mp4",
+      "bytes": 1738228,
+      "sha256": "42fa2aa6791edf2044169092718e7645c4bb257a6f5a7dec5b932f92de116f66"
+    },
+    {
+      "source": "https://images.chibistyle.art/flyingcar/real/highway-leap.jpg",
+      "path": "/flyingcar/real/highway-leap.jpg",
+      "bytes": 88087,
+      "sha256": "5209529532190879c6b2d93770f86c532b36130d98adcdd9da6e79958d3d3ed1"
+    },
+    {
+      "source": "https://images.chibistyle.art/flyingcar/real/highway-leap.mp4",
+      "path": "/flyingcar/real/highway-leap.mp4",
+      "bytes": 2320618,
+      "sha256": "b0cc7b181ea263d95686c8dfacb4b709e22f1c9b2d35f022e4f111e3a1e741e1"
+    },
+    {
+      "source": "https://flyingcar-ai.app/assets/fonts/9e9f04e3c37952ab-s.p.002ht2t_o636a.woff2",
+      "path": "/flyingcar/fonts/9e9f04e3c37952ab-s.p.002ht2t_o636a.woff2",
+      "bytes": 12004,
+      "sha256": "23aab0b2692a0c89eb7997d3c7cf5bda41276d6cd4ab6cc0edc3edfcece32b09"
+    },
+    {
+      "source": "https://flyingcar-ai.app/assets/fonts/75affa71d1e2f6a7-s.p.13rul5q9jl2r0.woff2",
+      "path": "/flyingcar/fonts/75affa71d1e2f6a7-s.p.13rul5q9jl2r0.woff2",
+      "bytes": 34940,
+      "sha256": "7150c0ec5ad356453013d11affec1fbab95de0dd2dcecb043b4f1cb7f87c4ba4"
+    },
+    {
+      "source": "https://flyingcar-ai.app/assets/flying-car-logo.svg",
+      "path": "/flyingcar/flying-car-logo.svg",
+      "bytes": 1394,
+      "sha256": "22701be36941a2457c5fbaaddcc8cf662d675e4ea6057f2160df9d0ea9f5731b"
+    },
+    {
+      "source": "https://flyingcar-ai.app/assets/og-flying-car-v2.png",
+      "path": "/flyingcar/og-flying-car-v2.png",
+      "bytes": 1553882,
+      "sha256": "120629c6115db5cc98fbca14fd0c04ebc9beedc2c0c170b88082bea816861a93"
+    },
+    {
+      "source": "https://flyingcar-ai.app/favicon.svg",
+      "path": "/flyingcar/favicon.svg",
+      "bytes": 413,
+      "sha256": "67d31acecd405ae627bcca6841aa3bd7c5764175d6bd87fcf17d60fe06bc0737"
+    }
+  ],
+  "changes": [
+    "Original payments replaced by existing migosai credits; authentication and My Videos replace anonymous orders and email links.",
+    "The original legal pages are archived as evidence; navigation uses migosai policies.",
+    "FAQ answers recovered from public literal arrays and rendered as native details/summary.",
+    "Four lazy SSR videos supplied their original MP4 sources from the deployed bundle.",
+    "HEIC removed from displayed accepted formats to match the existing migosai JPEG/PNG/WebP pipeline."
+  ],
+  "gaps": [
+    "No local or accessible GitHub source repository was found.",
+    "No private server system prompt was exposed; no system prompt has been invented."
+  ]
+}

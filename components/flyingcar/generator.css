@@ -1,0 +1,38 @@
+.flyingcar-page .amber-button{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;background:var(--brand-gradient);color:var(--foreground);font-weight:500;cursor:pointer;box-shadow:0 5px var(--accent-foreground);transition:background .15s,transform .15s,box-shadow .15s}
+.flyingcar-page .amber-button:hover:not(:disabled){background:var(--primary-strong);color:var(--primary-foreground)}
+.flyingcar-page .amber-button:active:not(:disabled){transform:translateY(4px);box-shadow:0 1px var(--accent-foreground)}
+.flyingcar-page .amber-button:focus-visible,.flyingcar-page .outline-button:focus-visible{outline:2px solid var(--sunset);outline-offset:4px}
+.flyingcar-page .outline-button{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--input);background:var(--card);color:var(--foreground);font-weight:500;transition:background .15s}
+.flyingcar-page .outline-button:hover{background:var(--accent);border-color:var(--primary-strong)}
+.flyingcar-page .amber-button.generate-button{justify-content:space-between}
+.flyingcar-page .fc-pricing-grid.fc-credit-grid article:last-child{grid-column:auto}
+.flyingcar-page .creator-stage[aria-busy=true] input,.flyingcar-page .creator-stage[aria-busy=true] textarea{cursor:wait;opacity:.65}
+.flyingcar-page .optional-upload.is-over{outline:2px solid var(--sunset);outline-offset:3px}
+.flyingcar-page .optional-upload:focus-within{outline:2px solid var(--sunset);outline-offset:3px}
+.flyingcar-page .consent input{appearance:auto;flex-shrink:0;accent-color:var(--sunset)}
+.flyingcar-page .generate-button:disabled,.flyingcar-page .dialog button:disabled{cursor:default;opacity:.65}
+.flyingcar-page .under-button a,.flyingcar-page .what-you-get a,.flyingcar-page .dialog-note a,.flyingcar-page .form-hint-error a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.flyingcar-page .fc-generation-progress{display:grid;gap:10px;max-width:640px;margin:24px auto;font-size:14px;color:var(--cream)}
+.flyingcar-page .fc-generation-progress p{display:flex;justify-content:space-between;gap:12px;margin:0}
+.flyingcar-page .fc-generation-progress [role=progressbar]{height:7px;border-radius:999px;overflow:hidden;background:var(--paper-deep)}
+.flyingcar-page .fc-generation-progress [role=progressbar]>span{display:block;height:100%;background:var(--sunset);transition:width .3s}
+.flyingcar-page .fc-generation-progress a,.flyingcar-page .fc-generation-result a{color:var(--sunset);text-decoration:underline;text-underline-offset:3px}
+.flyingcar-page .fc-generation-progress small{line-height:1.5;opacity:.8}
+.flyingcar-page .fc-generation-result{display:grid;justify-items:center;gap:14px;margin:24px auto;font-size:16px}
+.flyingcar-page .fc-generation-result video{width:min(100%,300px);max-height:540px;border-radius:12px;background:var(--surface-inverse)}
+.flyingcar-page .fc-generation-result a{display:flex;align-items:center;gap:8px}
+.flyingcar-page .fc-review-backdrop{overflow:auto;z-index:60}
+.flyingcar-page .fc-review-dialog{max-height:calc(100dvh - 48px);overflow:auto;outline:none}
+.flyingcar-page .fc-review-summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:22px 0;padding:16px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.flyingcar-page .fc-review-summary div{display:grid;gap:5px}
+.flyingcar-page .fc-review-summary span{font-size:10px;letter-spacing:1px;opacity:.65}
+.flyingcar-page .fc-review-summary strong{font-size:14px}
+.flyingcar-page .fc-pricing-grid.fc-credit-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.flyingcar-page .fc-pricing-grid.fc-credit-grid article{min-width:0}
+.flyingcar-page .fc-pricing-grid.fc-credit-grid article>strong{white-space:nowrap}
+.flyingcar-page .fc-pricing-grid.fc-credit-grid article>a{display:flex;align-items:center;justify-content:center;text-decoration:none;min-height:46px;border-radius:12px}
+.flyingcar-page .fc-spinner{display:inline-block;flex-shrink:0;animation:fc-generator-spin 1.2s linear infinite}
+@keyframes fc-generator-spin{to{transform:rotate(360deg)}}
+@media(max-width:1000px){.flyingcar-page .fc-pricing-grid.fc-credit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.flyingcar-page .fc-pricing-grid.fc-credit-grid{grid-template-columns:1fr}.flyingcar-page .fc-review-summary{grid-template-columns:1fr 1fr}.flyingcar-page .fc-review-dialog{max-height:calc(100dvh - 28px)}}
+@media(prefers-reduced-motion:reduce){.flyingcar-page .fc-spinner{animation:none}}

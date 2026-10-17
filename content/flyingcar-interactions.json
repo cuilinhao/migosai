@@ -1,0 +1,287 @@
+{
+  "source": "https://flyingcar-ai.app/assets/index-nlP9j1ZZ.js",
+  "evidence": "Deployed public JavaScript, inspected as text; no source bundle was executed.",
+  "prompt": {
+    "default": "",
+    "minLength": 12,
+    "maxLength": 600,
+    "trimBeforeValidation": true,
+    "placeholder": "Describe the scene you want — place, time of day, camera move, mood.",
+    "help": "Describe the car, the place, the action and the camera. Include the vehicle model if you want a specific look.",
+    "presetCount": 0,
+    "publicSystemPrompt": null,
+    "missingEvidence": "No private generation-system prompt or model request body is present in the public client bundle."
+  },
+  "referenceImage": {
+    "optional": true,
+    "maxCount": 1,
+    "accept": [
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+      "image/heic"
+    ],
+    "advertisedMaxBytes": 10485760,
+    "consentRequired": true,
+    "consentText": "It's my photo, or I have permission from anyone in it. No minors. No impersonation."
+  },
+  "duration": {
+    "min": 5,
+    "max": 30,
+    "step": 1,
+    "default": 10
+  },
+  "validationMessages": {
+    "prompt": "Describe your scene in at least 12 characters — one vivid sentence is enough.",
+    "upload": "Hold on — your photo is still uploading.",
+    "consent": "Tick the permission box to use your photo as a reference."
+  },
+  "publicPromptFragments": [
+    {
+      "text": "The car rises out of the lane and clears the roof of the car in front",
+      "kind": "Illustrative phrase in the public tutorial; not a complete preset",
+      "source": "https://flyingcar-ai.app/how-to-make-a-tesla-roadster-flying-car-video"
+    },
+    {
+      "text": "a flying car in traffic",
+      "kind": "Vague counterexample in the public tutorial; not a complete preset",
+      "source": "https://flyingcar-ai.app/how-to-make-a-tesla-roadster-flying-car-video"
+    }
+  ],
+  "promptChecklist": [
+    "Subject and geometry: the vehicle’s shape and colour, and how it sits in frame.",
+    "Action: one movement with a start and an end, described in space.",
+    "Environment: the street, overpass or skyline, and what sits near the car.",
+    "Camera: angle, height, distance, and whether it is static, tracking or handheld.",
+    "Light: time of day and light direction, which decides how readable the car is."
+  ],
+  "faq": {
+    "homeSource": [
+      [
+        "What is the flying Tesla Roadster AI video trend?",
+        "The flying Roadster trend imagines a sports car lifting off, escaping traffic or flying above a city. It follows renewed attention around Tesla's October 15, 2026 Roadster demonstration. Flying Car AI lets you create a fictional scene in your own words; the videos on this site are AI-generated entertainment, not footage of the real vehicle."
+      ],
+      [
+        "Can I make a ‘Day 1 owning a Tesla Roadster’ video?",
+        "Yes. You can describe your own first-day flying-car story, choose a length from 5 to 30 seconds and optionally add one reference photo. You write the prompt yourself. The result is a silent vertical MP4; add a caption or audio in your own editor before posting if you want them."
+      ],
+      [
+        "Are these real Tesla flying car videos or AI-generated clips?",
+        "Every example on this site is AI-generated. This is a creative video generator, not a source of Roadster launch footage or evidence of real vehicle capabilities. Label your creation as AI-generated when sharing it so viewers can distinguish fiction from real-world footage."
+      ],
+      [
+        "Can I use the flying car videos on TikTok, Instagram Reels or YouTube Shorts?",
+        "The 9:16 vertical MP4 format fits TikTok, Instagram Reels and YouTube Shorts. Review the result, follow each platform's current AI-content rules and disclose AI generation where required. The download is silent and has no watermark; views or virality are not guaranteed."
+      ],
+      [
+        "What is the Tesla Roadster flying car AI video generator?",
+        "It's a no-login web app that turns a written scene — and, if you want, one photo — into a short cinematic video of a flying car. Describe the moment you want to see, choose a pack, and we render it for you."
+      ],
+      [
+        "How does it work?",
+        "Three steps: describe your scene in your own words, optionally add a reference photo, then pay once at Stripe Checkout. The finished MP4 is delivered through a private result link and emailed to you."
+      ],
+      [
+        "Is this affiliated with Tesla, Inc.?",
+        "No. Flying Car AI is an independent creative tool. We are not affiliated with, endorsed by, or sponsored by Tesla, Inc. or any vehicle manufacturer. “Tesla Roadster” is used descriptively to describe the kind of scene you can ask for."
+      ],
+      [
+        "Do I need to upload a photo?",
+        "No. Text-only is a fully supported mode: the model builds the whole scene from your description. Adding a photo is optional and is used only as visual guidance for the subject or vehicle it contains."
+      ],
+      [
+        "Can I upload a picture of my own car?",
+        "Yes, as long as it's your photo or you have permission to use it. One reference image is supported (JPEG, PNG, WebP or HEIC, up to 10 MB). The render won't always reproduce every detail, but the image helps keep the subject consistent."
+      ],
+      [
+        "What do I actually receive?",
+        "A 9:16 vertical MP4 with the length you chose in the creator (5 to 30 seconds) — silent, watermark-free and ready to post. You can watch it and download it from your private result page, and the link also arrives by email."
+      ],
+      [
+        "Can I choose how long the video is?",
+        "Yes. Drag the length slider in the creator to pick anything from 5 to 30 seconds. Your choice is saved on the order and reused for extra videos from the same pack."
+      ],
+      [
+        "How much does it cost?",
+        "Prices scale with the length you choose. One video is $4.99 at 5 seconds, $9.99 at 10 seconds, and $29.99 at 30 seconds. Packs multiply the same rate with the bundle discount: 3 videos from $9.99 (about the price of 2 at 10 seconds), 10 videos from $29.99 (about the price of 6). It's a one-time payment: no subscription, no account and no automatic renewal. The price you see is the price you pay — it never changes at checkout."
+      ],
+      [
+        "Can each credit use a different prompt?",
+        "Yes. Every credit is a fresh scene. After your first video, the result page lets you rewrite the prompt and spend another credit on a different idea. Your optional reference photo is reused unless you start a new order."
+      ],
+      [
+        "Do unused credits expire?",
+        "No. Credits stay attached to your private order link until you use them. Keep that link somewhere safe — without accounts, it is the only way back to your pack."
+      ],
+      [
+        "What happens if a generation fails?",
+        "The credit is returned to your order automatically. You can then retry with the same prompt or a new one from the result page. A refund of credits does not change the original Stripe payment."
+      ],
+      [
+        "How long does a video take?",
+        "Rendering time depends on your chosen length and the provider's queue. We email your private link when it is ready, and the result page updates itself while you wait."
+      ],
+      [
+        "Can I use the video commercially?",
+        "You may use the result commercially if you hold the rights to every input and follow the rules of the platform where you post it. Because output is AI-generated, review it before publishing and disclose AI generation where a platform or law requires it."
+      ]
+    ],
+    "guideSource": [
+      [
+        "Are the flying Tesla Roadster videos on this site real?",
+        "The renders on this site are fictional AI-generated scenes built from text prompts and optional reference photos. They are not Tesla announcements, press assets, demonstration footage or evidence of a consumer product. Flying Car AI is independent and not affiliated with Tesla, Inc."
+      ],
+      [
+        "What format is the video?",
+        "A 9:16 vertical MP4, 480p, 5 to 30 seconds depending on the length you choose, silent, with no watermark. Music, voice-over and captions are added later in an editor."
+      ],
+      [
+        "How long does rendering take?",
+        "Rendering time varies with the chosen length and the provider's queue. There is no guaranteed completion time; check the order page for the current status."
+      ],
+      [
+        "Do I need a photo to make a flying car video?",
+        "No. Text-only is fully supported. One reference image can help keep a specific car or person consistent, but it can also pull its own background and framing into the render, and it must be an image you own or have permission to use."
+      ],
+      [
+        "How does the pricing work?",
+        "The price scales with length from a ten-second anchor: $4.99 at 5 seconds, $9.99 at 10 seconds and $29.99 at 30 seconds for a single video. Three-video packs run $9.99–$59.99 and ten-video packs $29.99–$179.99 depending on length. It is a one-time payment."
+      ],
+      [
+        "Can I use the video commercially?",
+        "Only if you hold the rights to every input and comply with the rules of the platform and the law where you publish. Disclose that the clip is AI-generated where required, and do not present it as real footage or as a Tesla statement."
+      ]
+    ],
+    "home": [
+      [
+        "What is the flying Tesla Roadster AI video trend?",
+        "The flying Roadster trend imagines a sports car lifting off, escaping traffic or flying above a city. It follows renewed attention around Tesla's October 15, 2026 Roadster demonstration. Flying Car AI lets you create a fictional scene in your own words; the videos on this site are AI-generated entertainment, not footage of the real vehicle."
+      ],
+      [
+        "Can I make a ‘Day 1 owning a Tesla Roadster’ video?",
+        "Yes. You can describe your own first-day flying-car story, choose a length from 5 to 30 seconds and optionally add one reference photo. You write the prompt yourself. The result is a silent vertical MP4; add a caption or audio in your own editor before posting if you want them."
+      ],
+      [
+        "Are these real Tesla flying car videos or AI-generated clips?",
+        "Every example on this site is AI-generated. This is a creative video generator, not a source of Roadster launch footage or evidence of real vehicle capabilities. Label your creation as AI-generated when sharing it so viewers can distinguish fiction from real-world footage."
+      ],
+      [
+        "Can I use the flying car videos on TikTok, Instagram Reels or YouTube Shorts?",
+        "The 9:16 vertical MP4 format fits TikTok, Instagram Reels and YouTube Shorts. Review the result, follow each platform's current AI-content rules and disclose AI generation where required. The download is silent and has no watermark; views or virality are not guaranteed."
+      ],
+      [
+        "What is the Tesla Roadster flying car AI video generator?",
+        "It turns a written scene — and, if you want, one photo — into a short cinematic video of a flying car. Describe the moment, sign in with your migosai account and use your shared credits to generate it."
+      ],
+      [
+        "How does it work?",
+        "Three steps: describe your scene in your own words, optionally add a reference photo, then sign in and use your migosai credits. The finished MP4 is available to watch and download in My Videos."
+      ],
+      [
+        "Is this affiliated with Tesla, Inc.?",
+        "No. Flying Car AI is an independent creative tool. We are not affiliated with, endorsed by, or sponsored by Tesla, Inc. or any vehicle manufacturer. “Tesla Roadster” is used descriptively to describe the kind of scene you can ask for."
+      ],
+      [
+        "Do I need to upload a photo?",
+        "No. Text-only is a fully supported mode: the model builds the whole scene from your description. Adding a photo is optional and is used only as visual guidance for the subject or vehicle it contains."
+      ],
+      [
+        "Can I upload a picture of my own car?",
+        "Yes, as long as it's your photo or you have permission to use it. One reference image is supported (JPEG, PNG or WebP, up to 10 MB). The render won't always reproduce every detail, but the image helps keep the subject consistent."
+      ],
+      [
+        "What do I actually receive?",
+        "A 9:16 vertical MP4 with the length you chose in the creator (5 to 30 seconds) — silent, watermark-free and ready to review. Watch and download it from your migosai My Videos history."
+      ],
+      [
+        "Can I choose how long the video is?",
+        "Yes. Drag the length slider to choose 5 to 30 seconds. The generator shows the shared-credit cost before you start. You can choose a different length for your next generation."
+      ],
+      [
+        "How much does it cost?",
+        "Use your shared migosai credits. The generator shows the credit cost for your selected length before you start. Sign in with your migosai account, and check progress and finished clips in My Videos. Failed generations return credits through the existing migosai workflow."
+      ],
+      [
+        "Can each credit use a different prompt?",
+        "Yes. Write a fresh prompt for each generation, with or without one reference photo. Each generation uses the credit cost shown in the creator from your shared migosai balance."
+      ],
+      [
+        "Do unused credits expire?",
+        "Credit validity follows your existing migosai plan and pricing terms. Your balance belongs to your migosai account and is shared across its video tools."
+      ],
+      [
+        "What happens if a generation fails?",
+        "Failed generations return credits through the existing migosai workflow. Check the error in My Videos and try again with the same prompt or a new scene."
+      ],
+      [
+        "How long does a video take?",
+        "Rendering time depends on your chosen length and the provider's queue. Check the status and your finished clip in My Videos."
+      ],
+      [
+        "Can I use the video commercially?",
+        "You may use the result commercially if you hold the rights to every input and follow the rules of the platform where you post it. Because output is AI-generated, review it before publishing and disclose AI generation where a platform or law requires it."
+      ]
+    ],
+    "guide": [
+      [
+        "Are the flying Tesla Roadster videos on this site real?",
+        "The renders on this site are fictional AI-generated scenes built from text prompts and optional reference photos. They are not Tesla announcements, press assets, demonstration footage or evidence of a consumer product. Flying Car AI is independent and not affiliated with Tesla, Inc."
+      ],
+      [
+        "What format is the video?",
+        "A 9:16 vertical MP4, 480p, 5 to 30 seconds depending on the length you choose, silent, with no watermark. Music, voice-over and captions are added later in an editor."
+      ],
+      [
+        "How long does rendering take?",
+        "Rendering time varies with the chosen length and the provider's queue. There is no guaranteed completion time; check My Videos for the current status."
+      ],
+      [
+        "Do I need a photo to make a flying car video?",
+        "No. Text-only is fully supported. One reference image can help keep a specific car or person consistent, but it can also pull its own background and framing into the render, and it must be an image you own or have permission to use."
+      ],
+      [
+        "How does the pricing work?",
+        "Use your shared migosai credits. The generator shows the credit cost for your selected length before you start. Sign in with your migosai account, and check progress and finished clips in My Videos. Failed generations return credits through the existing migosai workflow."
+      ],
+      [
+        "Can I use the video commercially?",
+        "Only if you hold the rights to every input and comply with the rules of the platform and the law where you publish. Disclose that the clip is AI-generated where required, and do not present it as real footage or as a Tesla statement."
+      ]
+    ]
+  },
+  "examples": [
+    {
+      "slug": "overpass-launch",
+      "poster": "/flyingcar/real/overpass-launch.jpg",
+      "video": "/flyingcar/real/overpass-launch.mp4",
+      "durationSeconds": 15
+    },
+    {
+      "slug": "thruster-hover",
+      "poster": "/flyingcar/real/thruster-hover.jpg",
+      "video": "/flyingcar/real/thruster-hover.mp4",
+      "durationSeconds": 10
+    },
+    {
+      "slug": "downtown-flyby",
+      "poster": "/flyingcar/real/downtown-flyby.jpg",
+      "video": "/flyingcar/real/downtown-flyby.mp4",
+      "durationSeconds": 15
+    },
+    {
+      "slug": "highway-leap",
+      "poster": "/flyingcar/real/highway-leap.jpg",
+      "video": "/flyingcar/real/highway-leap.mp4",
+      "durationSeconds": 10
+    }
+  ],
+  "originalApiFlow": [
+    "POST /api/uploads → PUT uploadUrl → POST /api/uploads/:assetId/complete (optional)",
+    "POST /api/orders {prompt,imageAssetId,packageType,duration}",
+    "POST /api/orders/:orderToken/checkout",
+    "/wait/:orderToken → GET /api/orders/:orderToken",
+    "/result/:resultToken → GET /api/results/:resultToken",
+    "POST /api/orders/:orderToken/regenerate {prompt}"
+  ],
+  "integrationPolicy": "Use migosai authentication, shared credits, generation API and My Videos. Do not call the original order/payment APIs."
+}

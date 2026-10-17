@@ -1,0 +1,80 @@
+[
+  {
+    "source": "https://images.chibistyle.art/flyingcar/real/overpass-launch.jpg",
+    "path": "/flyingcar/real/overpass-launch.jpg",
+    "bytes": 28669,
+    "sha256": "c46cc41bf11082f9e9df4563226a444036cb7f776d1ccabf597d28596ef59ee0"
+  },
+  {
+    "source": "https://images.chibistyle.art/flyingcar/real/overpass-launch.mp4",
+    "path": "/flyingcar/real/overpass-launch.mp4",
+    "bytes": 2075155,
+    "sha256": "0e16528c7b23ebbef99a72f0cc93a1dd39199e3976797c675dd2b4a6fb3cf00c"
+  },
+  {
+    "source": "https://images.chibistyle.art/flyingcar/real/thruster-hover.jpg",
+    "path": "/flyingcar/real/thruster-hover.jpg",
+    "bytes": 35303,
+    "sha256": "66841ef48a2d7e46cc688610c0413248144aff43a5962aeffcbbf1bfa185c220"
+  },
+  {
+    "source": "https://images.chibistyle.art/flyingcar/real/thruster-hover.mp4",
+    "path": "/flyingcar/real/thruster-hover.mp4",
+    "bytes": 1282151,
+    "sha256": "5bcab65b2929c5ae9f496433ad762a268d456c4cc93a4be11b51af3468805cb7"
+  },
+  {
+    "source": "https://images.chibistyle.art/flyingcar/real/downtown-flyby.jpg",
+    "path": "/flyingcar/real/downtown-flyby.jpg",
+    "bytes": 61286,
+    "sha256": "090cc17ef847f1fa97fd536bcb4818ad278856183392e57453dcb27e4871288f"
+  },
+  {
+    "source": "https://images.chibistyle.art/flyingcar/real/downtown-flyby.mp4",
+    "path": "/flyingcar/real/downtown-flyby.mp4",
+    "bytes": 1738228,
+    "sha256": "42fa2aa6791edf2044169092718e7645c4bb257a6f5a7dec5b932f92de116f66"
+  },
+  {
+    "source": "https://images.chibistyle.art/flyingcar/real/highway-leap.jpg",
+    "path": "/flyingcar/real/highway-leap.jpg",
+    "bytes": 88087,
+    "sha256": "5209529532190879c6b2d93770f86c532b36130d98adcdd9da6e79958d3d3ed1"
+  },
+  {
+    "source": "https://images.chibistyle.art/flyingcar/real/highway-leap.mp4",
+    "path": "/flyingcar/real/highway-leap.mp4",
+    "bytes": 2320618,
+    "sha256": "b0cc7b181ea263d95686c8dfacb4b709e22f1c9b2d35f022e4f111e3a1e741e1"
+  },
+  {
+    "source": "https://flyingcar-ai.app/assets/fonts/9e9f04e3c37952ab-s.p.002ht2t_o636a.woff2",
+    "path": "/flyingcar/fonts/9e9f04e3c37952ab-s.p.002ht2t_o636a.woff2",
+    "bytes": 12004,
+    "sha256": "23aab0b2692a0c89eb7997d3c7cf5bda41276d6cd4ab6cc0edc3edfcece32b09"
+  },
+  {
+    "source": "https://flyingcar-ai.app/assets/fonts/75affa71d1e2f6a7-s.p.13rul5q9jl2r0.woff2",
+    "path": "/flyingcar/fonts/75affa71d1e2f6a7-s.p.13rul5q9jl2r0.woff2",
+    "bytes": 34940,
+    "sha256": "7150c0ec5ad356453013d11affec1fbab95de0dd2dcecb043b4f1cb7f87c4ba4"
+  },
+  {
+    "source": "https://flyingcar-ai.app/assets/flying-car-logo.svg",
+    "path": "/flyingcar/flying-car-logo.svg",
+    "bytes": 1394,
+    "sha256": "22701be36941a2457c5fbaaddcc8cf662d675e4ea6057f2160df9d0ea9f5731b"
+  },
+  {
+    "source": "https://flyingcar-ai.app/assets/og-flying-car-v2.png",
+    "path": "/flyingcar/og-flying-car-v2.png",
+    "bytes": 1553882,
+    "sha256": "120629c6115db5cc98fbca14fd0c04ebc9beedc2c0c170b88082bea816861a93"
+  },
+  {
+    "source": "https://flyingcar-ai.app/favicon.svg",
+    "path": "/flyingcar/favicon.svg",
+    "bytes": 413,
+    "sha256": "67d31acecd405ae627bcca6841aa3bd7c5764175d6bd87fcf17d60fe06bc0737"
+  }
+]

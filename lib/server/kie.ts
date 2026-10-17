@@ -1,4 +1,5 @@
 import type { CreateVideoRequest, VideoModel } from '../contracts';
+import type { FlyingCarPayload } from '../flyingcar';
 import { videoPrompt } from '../prompts/video';
 import { ozilGoalPrompt } from '../prompts/ozil-goal';
 import { KIE_OZIL_GOAL_CONFIG as OZIL_GOAL_CONFIG } from '../ozil-goal';
@@ -7,10 +8,12 @@ import { ApiError } from './errors';
 import { ProviderError } from './provider';
 
 const API_URL = 'https://api.kie.ai/api/v1/jobs';
-const MODELS: Record<VideoModel, string> = {
+type KieVideoModel = VideoModel | 'seedance-2-5';
+const MODELS: Record<KieVideoModel, string> = {
   'wan-3.0': 'wan/3-0-video',
   'seedance-2': 'bytedance/seedance-2',
   'seedance-2-fast': 'bytedance/seedance-2-fast',
+  'seedance-2-5': 'bytedance/seedance-2-5',
 };
 export type KieVideoReferences = { videoUrls?: string[]; audioUrls?: string[] };
 const TASK_ID = /^[A-Za-z0-9_-]{1,200}$/;
@@ -124,7 +127,25 @@ export async function createKieOzilGoalVideo(env: Env, imageUrl: string): Promis
   return data.taskId;
 }
 
-export async function getKieVideo(env: Env, taskId: string, model: VideoModel = 'seedance-2'): Promise<KieVideoResult> {
+/** FlyingCar uses one optional image and the user's prompt, without template media. */
+export async function createKieFlyingCarVideo(env: Env, payload: FlyingCarPayload, imageUrl?: string): Promise<string> {
+  const data = await request(env, '/createTask', {
+    model: MODELS[payload.model],
+    input: {
+      prompt: payload.prompt,
+      duration: payload.duration,
+      resolution: payload.resolution,
+      aspect_ratio: payload.aspect,
+      generate_audio: false,
+      nsfw_checker: true,
+      ...(imageUrl ? { reference_image_urls: [imageUrl] } : {}),
+    },
+  });
+  if (!validTaskId(data.taskId)) invalidResponse();
+  return data.taskId;
+}
+
+export async function getKieVideo(env: Env, taskId: string, model: KieVideoModel = 'seedance-2'): Promise<KieVideoResult> {
   if (!validTaskId(taskId)) throw new ProviderError('The video task identifier is invalid.');
   const providerModel = MODELS[model];
   if (!providerModel) invalidResponse();

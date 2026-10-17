@@ -7,13 +7,15 @@ import { getMessages } from "../lib/i18n";
 const render = (node: React.ReactNode, locale: "en" | "ja" = "en") => renderToStaticMarkup(<LocaleProvider locale={locale} messages={getMessages(locale)}>{node}</LocaleProvider>);
 
 describe("generator navigation", () => {
-  it("leads with the Ozil Goal Generator on pages outside the generators", () => {
+  it("leads with Flying Car and preserves the existing generator choices", () => {
     const html = render(<GeneratorMenu pathname="/"/>);
+    expect(html.indexOf('href="/flying-car-ai-video-generator"')).toBeGreaterThan(-1);
+    expect(html.indexOf('href="/flying-car-ai-video-generator"')).toBeLessThan(html.indexOf('href="/ozil-goal-generator"'));
     expect(html.indexOf('href="/ozil-goal-generator"')).toBeGreaterThan(-1);
     expect(html.indexOf('href="/ozil-goal-generator"')).toBeLessThan(html.indexOf('href="/ai-rap-song-generator"'));
     // The first slide is the one visible before the rotation starts.
-    expect(html).toMatch(/generator-menu-slide is-shown"><svg[^]*?<span>Ozil Goal Generator<\/span><b class="generator-new-badge">NEW<\/b>/);
-    expect(html).toContain('<span class="sr-only">Ozil Goal Generator / AI Rap Song Generator</span>');
+    expect(html).toMatch(/generator-menu-slide is-shown"><svg[^]*?<span>Flying Car AI Generator<\/span><b class="generator-new-badge">NEW<\/b>/);
+    expect(html).toContain('<span class="sr-only">Flying Car AI Generator / Ozil Goal Generator / AI Rap Song Generator</span>');
   });
 
   it("names the current generator on its own pages", () => {
@@ -23,11 +25,12 @@ describe("generator navigation", () => {
     expect(html).toContain('aria-current="page" href="/ai-rap-song-generator"');
   });
 
-  it("shows the header shortcut everywhere except the Ozil pages", () => {
-    expect(render(<GeneratorSpotlight pathname="/"/>)).toContain('class="generator-spotlight" href="/ozil-goal-generator"');
-    expect(render(<GeneratorSpotlight pathname="/ai-rap-song-generator"/>)).toContain('href="/ozil-goal-generator"');
-    expect(render(<GeneratorSpotlight pathname="/ozil-goal-generator"/>)).toBe("");
-    expect(render(<GeneratorSpotlight pathname="/ozil-goal-generator/blog/what-is-ozil-goal"/>)).toBe("");
+  it("shows the newest generator shortcut outside its own pages", () => {
+    expect(render(<GeneratorSpotlight pathname="/"/>)).toContain('class="generator-spotlight" href="/flying-car-ai-video-generator"');
+    expect(render(<GeneratorSpotlight pathname="/ai-rap-song-generator"/>)).toContain('href="/flying-car-ai-video-generator"');
+    expect(render(<GeneratorSpotlight pathname="/ozil-goal-generator"/>)).toContain('href="/flying-car-ai-video-generator"');
+    expect(render(<GeneratorSpotlight pathname="/flying-car-ai-video-generator"/>)).toBe("");
+    expect(render(<GeneratorSpotlight pathname="/flying-car-ai-video-generator/tesla-flying-car-ai-video-trend"/>)).toBe("");
   });
 
   it("localizes the generator cards and links", () => {

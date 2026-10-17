@@ -1,0 +1,3590 @@
+{
+  "header": {
+    "tag": "header",
+    "attrs": {
+      "class": "fc-site-header"
+    },
+    "children": [
+      {
+        "tag": "div",
+        "attrs": {
+          "class": "header-inner"
+        },
+        "children": [
+          {
+            "tag": "a",
+            "attrs": {
+              "class": "logo",
+              "href": "/flying-car-ai-video-generator",
+              "aria-label": "Flying Car AI — home"
+            },
+            "children": [
+              {
+                "tag": "img",
+                "attrs": {
+                  "src": "/flyingcar/flying-car-logo.svg",
+                  "alt": ""
+                },
+                "children": []
+              },
+              {
+                "tag": "span",
+                "attrs": {},
+                "children": [
+                  "FLYING ",
+                  {
+                    "tag": "em",
+                    "attrs": {},
+                    "children": [
+                      "CAR AI"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "nav",
+            "attrs": {
+              "aria-label": "Main navigation"
+            },
+            "children": [
+              {
+                "tag": "a",
+                "attrs": {
+                  "href": "/flying-car-ai-video-generator#examples"
+                },
+                "children": [
+                  "Examples"
+                ]
+              },
+              {
+                "tag": "a",
+                "attrs": {
+                  "href": "/flying-car-ai-video-generator#how-it-works"
+                },
+                "children": [
+                  "How it works"
+                ]
+              },
+              {
+                "tag": "a",
+                "attrs": {
+                  "href": "/flying-car-ai-video-generator#pricing"
+                },
+                "children": [
+                  "Pricing"
+                ]
+              },
+              {
+                "tag": "a",
+                "attrs": {
+                  "href": "/flying-car-ai-video-generator#faq"
+                },
+                "children": [
+                  "FAQ"
+                ]
+              },
+              {
+                "tag": "a",
+                "attrs": {
+                  "href": "/flying-car-ai-video-generator#blog"
+                },
+                "children": [
+                  "Blog"
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "a",
+            "attrs": {
+              "href": "/flying-car-ai-video-generator#create",
+              "data-slot": "button",
+              "data-variant": "amber",
+              "data-size": "default",
+              "class": "group/button inline-flex shrink-0 items-center justify-center rounded-lg border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 border-0 bg-(--sunset) text-(--night) shadow-[0_5px_#a8661a] hover:bg-(--ember) active:translate-y-[4px] active:shadow-[0_1px_#a8661a] h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 header-cta"
+            },
+            "children": [
+              "Create your video"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "tag": "footer",
+    "attrs": {},
+    "children": [
+      {
+        "tag": "div",
+        "attrs": {
+          "class": "fc-footer-inner section-width"
+        },
+        "children": [
+          {
+            "tag": "div",
+            "attrs": {
+              "class": "fc-footer-brand"
+            },
+            "children": [
+              {
+                "tag": "a",
+                "attrs": {
+                  "class": "logo",
+                  "href": "/flying-car-ai-video-generator",
+                  "aria-label": "Flying Car AI — home"
+                },
+                "children": [
+                  {
+                    "tag": "img",
+                    "attrs": {
+                      "src": "/flyingcar/flying-car-logo.svg",
+                      "alt": ""
+                    },
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "attrs": {},
+                    "children": [
+                      "FLYING ",
+                      {
+                        "tag": "em",
+                        "attrs": {},
+                        "children": [
+                          "CAR AI"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "p",
+                "attrs": {},
+                "children": [
+                  "A prompt-led AI video studio for flying-car scenes. Your words, an optional photo, and a 5–30 second clip in your migosai My Videos history."
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "div",
+            "attrs": {
+              "class": "footer-links"
+            },
+            "children": [
+              {
+                "tag": "div",
+                "attrs": {},
+                "children": [
+                  {
+                    "tag": "p",
+                    "attrs": {
+                      "class": "fc-eyebrow"
+                    },
+                    "children": [
+                      "EXPLORE"
+                    ]
+                  },
+                  {
+                    "tag": "a",
+                    "attrs": {
+                      "href": "/flying-car-ai-video-generator#examples"
+                    },
+                    "children": [
+                      "Examples"
+                    ]
+                  },
+                  {
+                    "tag": "a",
+                    "attrs": {
+                      "href": "/flying-car-ai-video-generator#how-it-works"
+                    },
+                    "children": [
+                      "How it works"
+                    ]
+                  },
+                  {
+                    "tag": "a",
+                    "attrs": {
+                      "href": "/flying-car-ai-video-generator#pricing"
+                    },
+                    "children": [
+                      "Pricing"
+                    ]
+                  },
+                  {
+                    "tag": "a",
+                    "attrs": {
+                      "href": "/flying-car-ai-video-generator#faq"
+                    },
+                    "children": [
+                      "FAQ"
+                    ]
+                  },
+                  {
+                    "tag": "a",
+                    "attrs": {
+                      "href": "/flying-car-ai-video-generator/how-to-make-a-tesla-roadster-flying-car-video"
+                    },
+                    "children": [
+                      "Guide"
+                    ]
+                  },
+                  {
+                    "tag": "a",
+                    "attrs": {
+                      "href": "/flying-car-ai-video-generator/tesla-flying-car-ai-video-trend"
+                    },
+                    "children": [
+                      "Flying car trend"
+                    ]
+                  },
+                  {
+                    "tag": "a",
+                    "attrs": {
+                      "href": "/flying-car-ai-video-generator#create"
+                    },
+                    "children": [
+                      "Create your video"
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "div",
+                "attrs": {},
+                "children": [
+                  {
+                    "tag": "p",
+                    "attrs": {
+                      "class": "fc-eyebrow"
+                    },
+                    "children": [
+                      "LEGAL"
+                    ]
+                  },
+                  {
+                    "tag": "a",
+                    "attrs": {
+                      "href": "/privacy-policy"
+                    },
+                    "children": [
+                      "Privacy"
+                    ]
+                  },
+                  {
+                    "tag": "a",
+                    "attrs": {
+                      "href": "/terms-of-service"
+                    },
+                    "children": [
+                      "Terms"
+                    ]
+                  },
+                  {
+                    "tag": "a",
+                    "attrs": {
+                      "href": "/contact"
+                    },
+                    "children": [
+                      "Contact"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "div",
+            "attrs": {
+              "class": "footer-disclaimer"
+            },
+            "children": [
+              {
+                "tag": "strong",
+                "attrs": {},
+                "children": [
+                  "Independent creative tool."
+                ]
+              },
+              " Flying Car AI is not affiliated with, endorsed by or sponsored by Tesla, Inc. or any vehicle manufacturer. “Tesla Roadster” is used descriptively, not as a brand claim. All videos are AI-generated; results vary and should be reviewed before publishing."
+            ]
+          },
+          {
+            "tag": "div",
+            "attrs": {
+              "class": "fc-footer-bottom"
+            },
+            "children": [
+              {
+                "tag": "span",
+                "attrs": {},
+                "children": [
+                  "© 2026 Flying Car AI. All videos are AI-generated."
+                ]
+              },
+              {
+                "tag": "nav",
+                "attrs": {},
+                "children": [
+                  {
+                    "tag": "a",
+                    "attrs": {
+                      "href": "/privacy-policy"
+                    },
+                    "children": [
+                      "Privacy"
+                    ]
+                  },
+                  {
+                    "tag": "a",
+                    "attrs": {
+                      "href": "/terms-of-service"
+                    },
+                    "children": [
+                      "Terms"
+                    ]
+                  },
+                  {
+                    "tag": "a",
+                    "attrs": {
+                      "href": "/contact"
+                    },
+                    "children": [
+                      "Contact migosai support"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "home": {
+    "title": "Tesla Roadster AI Video Generator | Custom Flying Car Videos",
+    "description": "Create your own Tesla Roadster flying car AI video from text or an optional photo. Use shared migosai credits for silent, watermark-free vertical clips.",
+    "content": {
+      "tag": "div",
+      "attrs": {
+        "class": "flyingcar-main"
+      },
+      "children": [
+        {
+          "tag": "section",
+          "attrs": {
+            "class": "fc-hero section-width"
+          },
+          "children": [
+            {
+              "tag": "div",
+              "attrs": {
+                "class": "hero-copy"
+              },
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {
+                    "class": "fc-eyebrow"
+                  },
+                  "children": [
+                    "TESLA ROADSTER FLYING CAR · AI VIDEO GENERATOR"
+                  ]
+                },
+                {
+                  "tag": "h1",
+                  "attrs": {},
+                  "children": [
+                    "Create Your Own ",
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "Tesla Roadster"
+                      ]
+                    },
+                    " Flying Car Video"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {
+                    "class": "hero-lede"
+                  },
+                  "children": [
+                    "Make your own take on the flying Tesla Roadster video trend. Describe a traffic-jam escape, a rocket-thruster takeoff or a flight above the city — the scene is yours. Start with text or add one optional photo. Get a 5–30 second vertical AI clip, silent and watermark-free."
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "attrs": {
+                    "class": "hero-actions"
+                  },
+                  "children": [
+                    {
+                      "tag": "a",
+                      "attrs": {
+                        "href": "/flying-car-ai-video-generator#create",
+                        "data-slot": "button",
+                        "data-variant": "amber",
+                        "data-size": "default",
+                        "class": "group/button inline-flex shrink-0 items-center justify-center rounded-lg border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 border-0 bg-(--sunset) text-(--night) shadow-[0_5px_#a8661a] hover:bg-(--ember) active:translate-y-[4px] active:shadow-[0_1px_#a8661a] h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 big"
+                      },
+                      "children": [
+                        "Create my video"
+                      ]
+                    },
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "Use your migosai account and shared credits. A photo is optional."
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "attrs": {
+                    "class": "hero-chips",
+                    "aria-label": "What you get"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "5–30 SECOND MP4"
+                      ]
+                    },
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "9:16 · SILENT"
+                      ]
+                    },
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "NO WATERMARK"
+                      ]
+                    },
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "SHARED MIGOSAI CREDITS"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "attrs": {
+                "class": "hero-media"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "attrs": {
+                    "class": "video-frame"
+                  },
+                  "children": [
+                    {
+                      "tag": "video",
+                      "attrs": {
+                        "src": "/flyingcar/real/overpass-launch.mp4",
+                        "poster": "/flyingcar/real/overpass-launch.jpg",
+                        "autoplay": "",
+                        "muted": "",
+                        "loop": "",
+                        "playsinline": "",
+                        "preload": "metadata",
+                        "aria-label": "A flying car lifting off above an overpass at sunset",
+                        "data-flyingcar-media": "reference"
+                      },
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "create",
+            "class": "creator section-width"
+          },
+          "children": [
+            {
+              "tag": "div",
+              "attrs": {
+                "class": "fc-section-heading split"
+              },
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "MAKE YOUR OWN FLYING ROADSTER AI VIDEO"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Describe the scene in your own words, choose a length, and use your shared migosai credits for each new idea."
+                  ]
+                }
+              ]
+            },
+            {
+              "slot": "generator"
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "class": "examples section-width",
+            "id": "examples"
+          },
+          "children": [
+            {
+              "tag": "div",
+              "attrs": {
+                "class": "fc-section-heading split"
+              },
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "FLYING CAR AI VIDEO EXAMPLES"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Four AI-generated flying-car clips, not real Tesla footage. Your scene will be different — write your own prompt in the creator above and the model builds it from your words."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "attrs": {
+                "class": "example-grid"
+              },
+              "children": [
+                {
+                  "tag": "article",
+                  "attrs": {},
+                  "children": [
+                    {
+                      "tag": "div",
+                      "attrs": {
+                        "class": "video-frame"
+                      },
+                      "children": [
+                        {
+                          "tag": "span",
+                          "attrs": {
+                            "class": "rec"
+                          },
+                          "children": [
+                            {
+                              "tag": "i",
+                              "attrs": {},
+                              "children": []
+                            },
+                            "REAL OUTPUT"
+                          ]
+                        },
+                        {
+                          "tag": "video",
+                          "attrs": {
+                            "poster": "/flyingcar/real/overpass-launch.jpg",
+                            "autoplay": "",
+                            "muted": "",
+                            "loop": "",
+                            "playsinline": "",
+                            "preload": "metadata",
+                            "aria-label": "A flying car launching over a highway overpass at sunset",
+                            "src": "/flyingcar/real/overpass-launch.mp4",
+                            "data-flyingcar-media": "reference"
+                          },
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "attrs": {
+                        "class": "example-body"
+                      },
+                      "children": [
+                        {
+                          "tag": "div",
+                          "attrs": {
+                            "class": "example-top"
+                          },
+                          "children": [
+                            {
+                              "tag": "h3",
+                              "attrs": {},
+                              "children": [
+                                "OVERPASS LAUNCH"
+                              ]
+                            },
+                            {
+                              "tag": "span",
+                              "attrs": {},
+                              "children": [
+                                "Sunset jump · text-only"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "attrs": {},
+                  "children": [
+                    {
+                      "tag": "div",
+                      "attrs": {
+                        "class": "video-frame"
+                      },
+                      "children": [
+                        {
+                          "tag": "span",
+                          "attrs": {
+                            "class": "rec"
+                          },
+                          "children": [
+                            {
+                              "tag": "i",
+                              "attrs": {},
+                              "children": []
+                            },
+                            "REAL OUTPUT"
+                          ]
+                        },
+                        {
+                          "tag": "video",
+                          "attrs": {
+                            "poster": "/flyingcar/real/thruster-hover.jpg",
+                            "autoplay": "",
+                            "muted": "",
+                            "loop": "",
+                            "playsinline": "",
+                            "preload": "metadata",
+                            "aria-label": "A flying car hovering in a studio sky",
+                            "src": "/flyingcar/real/thruster-hover.mp4",
+                            "data-flyingcar-media": "reference"
+                          },
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "attrs": {
+                        "class": "example-body"
+                      },
+                      "children": [
+                        {
+                          "tag": "div",
+                          "attrs": {
+                            "class": "example-top"
+                          },
+                          "children": [
+                            {
+                              "tag": "h3",
+                              "attrs": {},
+                              "children": [
+                                "THRUSTER HOVER"
+                              ]
+                            },
+                            {
+                              "tag": "span",
+                              "attrs": {},
+                              "children": [
+                                "Studio sky · text-only"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "attrs": {},
+                  "children": [
+                    {
+                      "tag": "div",
+                      "attrs": {
+                        "class": "video-frame"
+                      },
+                      "children": [
+                        {
+                          "tag": "span",
+                          "attrs": {
+                            "class": "rec"
+                          },
+                          "children": [
+                            {
+                              "tag": "i",
+                              "attrs": {},
+                              "children": []
+                            },
+                            "REAL OUTPUT"
+                          ]
+                        },
+                        {
+                          "tag": "video",
+                          "attrs": {
+                            "poster": "/flyingcar/real/downtown-flyby.jpg",
+                            "autoplay": "",
+                            "muted": "",
+                            "loop": "",
+                            "playsinline": "",
+                            "preload": "metadata",
+                            "aria-label": "A flying car flying through a rainy downtown street",
+                            "src": "/flyingcar/real/downtown-flyby.mp4",
+                            "data-flyingcar-media": "reference"
+                          },
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "attrs": {
+                        "class": "example-body"
+                      },
+                      "children": [
+                        {
+                          "tag": "div",
+                          "attrs": {
+                            "class": "example-top"
+                          },
+                          "children": [
+                            {
+                              "tag": "h3",
+                              "attrs": {},
+                              "children": [
+                                "DOWNTOWN FLYBY"
+                              ]
+                            },
+                            {
+                              "tag": "span",
+                              "attrs": {},
+                              "children": [
+                                "Rainy street · text-only"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "attrs": {},
+                  "children": [
+                    {
+                      "tag": "div",
+                      "attrs": {
+                        "class": "video-frame"
+                      },
+                      "children": [
+                        {
+                          "tag": "span",
+                          "attrs": {
+                            "class": "rec"
+                          },
+                          "children": [
+                            {
+                              "tag": "i",
+                              "attrs": {},
+                              "children": []
+                            },
+                            "REAL OUTPUT"
+                          ]
+                        },
+                        {
+                          "tag": "video",
+                          "attrs": {
+                            "poster": "/flyingcar/real/highway-leap.jpg",
+                            "autoplay": "",
+                            "muted": "",
+                            "loop": "",
+                            "playsinline": "",
+                            "preload": "metadata",
+                            "aria-label": "A flying car leaping over rush-hour traffic",
+                            "src": "/flyingcar/real/highway-leap.mp4",
+                            "data-flyingcar-media": "reference"
+                          },
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "attrs": {
+                        "class": "example-body"
+                      },
+                      "children": [
+                        {
+                          "tag": "div",
+                          "attrs": {
+                            "class": "example-top"
+                          },
+                          "children": [
+                            {
+                              "tag": "h3",
+                              "attrs": {},
+                              "children": [
+                                "HIGHWAY LEAP"
+                              ]
+                            },
+                            {
+                              "tag": "span",
+                              "attrs": {},
+                              "children": [
+                                "Rush hour · text-only"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "class": "audience section-width",
+            "aria-labelledby": "audience-title"
+          },
+          "children": [
+            {
+              "tag": "h2",
+              "attrs": {
+                "id": "audience-title"
+              },
+              "children": [
+                "MADE FOR CREATORS, OWNERS & BRANDS"
+              ]
+            },
+            {
+              "tag": "div",
+              "attrs": {
+                "class": "audience-grid"
+              },
+              "children": [
+                {
+                  "tag": "article",
+                  "attrs": {},
+                  "children": [
+                    {
+                      "tag": "b",
+                      "attrs": {
+                        "class": "value-num"
+                      },
+                      "children": [
+                        "01"
+                      ]
+                    },
+                    {
+                      "tag": "h3",
+                      "attrs": {},
+                      "children": [
+                        "Creators who post daily"
+                      ]
+                    },
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "One idea becomes a finished clip without a shoot, a timeline or a stock-footage hunt. Rewrite the prompt and keep the series going."
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "attrs": {},
+                  "children": [
+                    {
+                      "tag": "b",
+                      "attrs": {
+                        "class": "value-num"
+                      },
+                      "children": [
+                        "02"
+                      ]
+                    },
+                    {
+                      "tag": "h3",
+                      "attrs": {},
+                      "children": [
+                        "Car owners & enthusiasts"
+                      ]
+                    },
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "Put your own car in a scene it could never reach. Add one photo as guidance and describe where it should fly."
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "attrs": {},
+                  "children": [
+                    {
+                      "tag": "b",
+                      "attrs": {
+                        "class": "value-num"
+                      },
+                      "children": [
+                        "03"
+                      ]
+                    },
+                    {
+                      "tag": "h3",
+                      "attrs": {},
+                      "children": [
+                        "Dealers, detailers & brands"
+                      ]
+                    },
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "Turn authorized vehicle photos into flying-car clips. Each credit can explore a new scene or angle using the same optional reference photo."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slot": "credits"
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "faq",
+            "class": "faq"
+          },
+          "children": [
+            {
+              "tag": "h2",
+              "attrs": {},
+              "children": [
+                "BEFORE YOU FLY: FLYING CAR VIDEO FAQ"
+              ]
+            },
+            {
+              "tag": "details",
+              "attrs": {
+                "class": "faq-row"
+              },
+              "children": [
+                {
+                  "tag": "summary",
+                  "attrs": {
+                    "class": "faq-trigger"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "What is the flying Tesla Roadster AI video trend?"
+                      ]
+                    },
+                    {
+                      "tag": "b",
+                      "attrs": {
+                        "class": "faq-plus",
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "attrs": {
+                    "class": "faq-content"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "The flying Roadster trend imagines a sports car lifting off, escaping traffic or flying above a city. It follows renewed attention around Tesla's October 15, 2026 Roadster demonstration. Flying Car AI lets you create a fictional scene in your own words; the videos on this site are AI-generated entertainment, not footage of the real vehicle."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "attrs": {
+                "class": "faq-row"
+              },
+              "children": [
+                {
+                  "tag": "summary",
+                  "attrs": {
+                    "class": "faq-trigger"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "Can I make a ‘Day 1 owning a Tesla Roadster’ video?"
+                      ]
+                    },
+                    {
+                      "tag": "b",
+                      "attrs": {
+                        "class": "faq-plus",
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "attrs": {
+                    "class": "faq-content"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "Yes. You can describe your own first-day flying-car story, choose a length from 5 to 30 seconds and optionally add one reference photo. You write the prompt yourself. The result is a silent vertical MP4; add a caption or audio in your own editor before posting if you want them."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "attrs": {
+                "class": "faq-row"
+              },
+              "children": [
+                {
+                  "tag": "summary",
+                  "attrs": {
+                    "class": "faq-trigger"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "Are these real Tesla flying car videos or AI-generated clips?"
+                      ]
+                    },
+                    {
+                      "tag": "b",
+                      "attrs": {
+                        "class": "faq-plus",
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "attrs": {
+                    "class": "faq-content"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "Every example on this site is AI-generated. This is a creative video generator, not a source of Roadster launch footage or evidence of real vehicle capabilities. Label your creation as AI-generated when sharing it so viewers can distinguish fiction from real-world footage."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "attrs": {
+                "class": "faq-row"
+              },
+              "children": [
+                {
+                  "tag": "summary",
+                  "attrs": {
+                    "class": "faq-trigger"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "Can I use the flying car videos on TikTok, Instagram Reels or YouTube Shorts?"
+                      ]
+                    },
+                    {
+                      "tag": "b",
+                      "attrs": {
+                        "class": "faq-plus",
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "attrs": {
+                    "class": "faq-content"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "The 9:16 vertical MP4 format fits TikTok, Instagram Reels and YouTube Shorts. Review the result, follow each platform's current AI-content rules and disclose AI generation where required. The download is silent and has no watermark; views or virality are not guaranteed."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "attrs": {
+                "class": "faq-row"
+              },
+              "children": [
+                {
+                  "tag": "summary",
+                  "attrs": {
+                    "class": "faq-trigger"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "What is the Tesla Roadster flying car AI video generator?"
+                      ]
+                    },
+                    {
+                      "tag": "b",
+                      "attrs": {
+                        "class": "faq-plus",
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "attrs": {
+                    "class": "faq-content"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "It turns a written scene — and, if you want, one photo — into a short cinematic video of a flying car. Describe the moment, sign in with your migosai account and use your shared credits to generate it."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "attrs": {
+                "class": "faq-row"
+              },
+              "children": [
+                {
+                  "tag": "summary",
+                  "attrs": {
+                    "class": "faq-trigger"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "How does it work?"
+                      ]
+                    },
+                    {
+                      "tag": "b",
+                      "attrs": {
+                        "class": "faq-plus",
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "attrs": {
+                    "class": "faq-content"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "Three steps: describe your scene in your own words, optionally add a reference photo, then sign in and use your migosai credits. The finished MP4 is available to watch and download in My Videos."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "attrs": {
+                "class": "faq-row"
+              },
+              "children": [
+                {
+                  "tag": "summary",
+                  "attrs": {
+                    "class": "faq-trigger"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "Is this affiliated with Tesla, Inc.?"
+                      ]
+                    },
+                    {
+                      "tag": "b",
+                      "attrs": {
+                        "class": "faq-plus",
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "attrs": {
+                    "class": "faq-content"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "No. Flying Car AI is an independent creative tool. We are not affiliated with, endorsed by, or sponsored by Tesla, Inc. or any vehicle manufacturer. “Tesla Roadster” is used descriptively to describe the kind of scene you can ask for."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "attrs": {
+                "class": "faq-row"
+              },
+              "children": [
+                {
+                  "tag": "summary",
+                  "attrs": {
+                    "class": "faq-trigger"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "Do I need to upload a photo?"
+                      ]
+                    },
+                    {
+                      "tag": "b",
+                      "attrs": {
+                        "class": "faq-plus",
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "attrs": {
+                    "class": "faq-content"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "No. Text-only is a fully supported mode: the model builds the whole scene from your description. Adding a photo is optional and is used only as visual guidance for the subject or vehicle it contains."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "attrs": {
+                "class": "faq-row"
+              },
+              "children": [
+                {
+                  "tag": "summary",
+                  "attrs": {
+                    "class": "faq-trigger"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "Can I upload a picture of my own car?"
+                      ]
+                    },
+                    {
+                      "tag": "b",
+                      "attrs": {
+                        "class": "faq-plus",
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "attrs": {
+                    "class": "faq-content"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "Yes, as long as it's your photo or you have permission to use it. One reference image is supported (JPEG, PNG or WebP, up to 10 MB). The render won't always reproduce every detail, but the image helps keep the subject consistent."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "attrs": {
+                "class": "faq-row"
+              },
+              "children": [
+                {
+                  "tag": "summary",
+                  "attrs": {
+                    "class": "faq-trigger"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "What do I actually receive?"
+                      ]
+                    },
+                    {
+                      "tag": "b",
+                      "attrs": {
+                        "class": "faq-plus",
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "attrs": {
+                    "class": "faq-content"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "A 9:16 vertical MP4 with the length you chose in the creator (5 to 30 seconds) — silent, watermark-free and ready to review. Watch and download it from your migosai My Videos history."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "attrs": {
+                "class": "faq-row"
+              },
+              "children": [
+                {
+                  "tag": "summary",
+                  "attrs": {
+                    "class": "faq-trigger"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "Can I choose how long the video is?"
+                      ]
+                    },
+                    {
+                      "tag": "b",
+                      "attrs": {
+                        "class": "faq-plus",
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "attrs": {
+                    "class": "faq-content"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "Yes. Drag the length slider to choose 5 to 30 seconds. The generator shows the shared-credit cost before you start. You can choose a different length for your next generation."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "attrs": {
+                "class": "faq-row"
+              },
+              "children": [
+                {
+                  "tag": "summary",
+                  "attrs": {
+                    "class": "faq-trigger"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "How much does it cost?"
+                      ]
+                    },
+                    {
+                      "tag": "b",
+                      "attrs": {
+                        "class": "faq-plus",
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "attrs": {
+                    "class": "faq-content"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "Use your shared migosai credits. The generator shows the credit cost for your selected length before you start. Sign in with your migosai account, and check progress and finished clips in My Videos. Failed generations return credits through the existing migosai workflow."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "attrs": {
+                "class": "faq-row"
+              },
+              "children": [
+                {
+                  "tag": "summary",
+                  "attrs": {
+                    "class": "faq-trigger"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "Can each credit use a different prompt?"
+                      ]
+                    },
+                    {
+                      "tag": "b",
+                      "attrs": {
+                        "class": "faq-plus",
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "attrs": {
+                    "class": "faq-content"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "Yes. Write a fresh prompt for each generation, with or without one reference photo. Each generation uses the credit cost shown in the creator from your shared migosai balance."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "attrs": {
+                "class": "faq-row"
+              },
+              "children": [
+                {
+                  "tag": "summary",
+                  "attrs": {
+                    "class": "faq-trigger"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "Do unused credits expire?"
+                      ]
+                    },
+                    {
+                      "tag": "b",
+                      "attrs": {
+                        "class": "faq-plus",
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "attrs": {
+                    "class": "faq-content"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "Credit validity follows your existing migosai plan and pricing terms. Your balance belongs to your migosai account and is shared across its video tools."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "attrs": {
+                "class": "faq-row"
+              },
+              "children": [
+                {
+                  "tag": "summary",
+                  "attrs": {
+                    "class": "faq-trigger"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "What happens if a generation fails?"
+                      ]
+                    },
+                    {
+                      "tag": "b",
+                      "attrs": {
+                        "class": "faq-plus",
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "attrs": {
+                    "class": "faq-content"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "Failed generations return credits through the existing migosai workflow. Check the error in My Videos and try again with the same prompt or a new scene."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "attrs": {
+                "class": "faq-row"
+              },
+              "children": [
+                {
+                  "tag": "summary",
+                  "attrs": {
+                    "class": "faq-trigger"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "How long does a video take?"
+                      ]
+                    },
+                    {
+                      "tag": "b",
+                      "attrs": {
+                        "class": "faq-plus",
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "attrs": {
+                    "class": "faq-content"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "Rendering time depends on your chosen length and the provider's queue. Check the status and your finished clip in My Videos."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "attrs": {
+                "class": "faq-row"
+              },
+              "children": [
+                {
+                  "tag": "summary",
+                  "attrs": {
+                    "class": "faq-trigger"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "Can I use the video commercially?"
+                      ]
+                    },
+                    {
+                      "tag": "b",
+                      "attrs": {
+                        "class": "faq-plus",
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "attrs": {
+                    "class": "faq-content"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "You may use the result commercially if you hold the rights to every input and follow the rules of the platform where you post it. Because output is AI-generated, review it before publishing and disclose AI generation where a platform or law requires it."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "class": "how-it-works section-width",
+            "id": "how-it-works"
+          },
+          "children": [
+            {
+              "tag": "div",
+              "attrs": {
+                "class": "fc-section-heading split"
+              },
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "HOW IT WORKS: FROM PROMPT TO FLIGHT"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Use your existing migosai account and credits. Three steps from an idea to a downloadable MP4."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "attrs": {
+                "class": "how-grid"
+              },
+              "children": [
+                {
+                  "tag": "article",
+                  "attrs": {},
+                  "children": [
+                    {
+                      "tag": "b",
+                      "attrs": {},
+                      "children": [
+                        "01"
+                      ]
+                    },
+                    {
+                      "tag": "h3",
+                      "attrs": {},
+                      "children": [
+                        "WRITE THE FLIGHT"
+                      ]
+                    },
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "Describe the place, the car, the camera move and the mood. The prompt is yours to write — text alone is enough."
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "attrs": {},
+                  "children": [
+                    {
+                      "tag": "b",
+                      "attrs": {},
+                      "children": [
+                        "02"
+                      ]
+                    },
+                    {
+                      "tag": "h3",
+                      "attrs": {},
+                      "children": [
+                        "ADD A PHOTO OR SKIP IT"
+                      ]
+                    },
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "One optional reference image can anchor a specific car or person. Skip it and the scene is built entirely from your words."
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "attrs": {},
+                  "children": [
+                    {
+                      "tag": "b",
+                      "attrs": {},
+                      "children": [
+                        "03"
+                      ]
+                    },
+                    {
+                      "tag": "h3",
+                      "attrs": {},
+                      "children": [
+                        "CREATE, THEN CHECK MY VIDEOS"
+                      ]
+                    },
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "Sign in and use your shared migosai credits. Check progress and download your finished clip from My Videos."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "attrs": {
+                "class": "how-strip"
+              },
+              "children": [
+                {
+                  "tag": "span",
+                  "attrs": {},
+                  "children": [
+                    "PROMPT"
+                  ]
+                },
+                {
+                  "tag": "i",
+                  "attrs": {
+                    "aria-hidden": "true"
+                  },
+                  "children": [
+                    "→"
+                  ]
+                },
+                {
+                  "tag": "span",
+                  "attrs": {},
+                  "children": [
+                    "OPTIONAL PHOTO"
+                  ]
+                },
+                {
+                  "tag": "i",
+                  "attrs": {
+                    "aria-hidden": "true"
+                  },
+                  "children": [
+                    "→"
+                  ]
+                },
+                {
+                  "tag": "span",
+                  "attrs": {},
+                  "children": [
+                    "5–30s VIDEO"
+                  ]
+                },
+                {
+                  "tag": "i",
+                  "attrs": {
+                    "aria-hidden": "true"
+                  },
+                  "children": [
+                    "→"
+                  ]
+                },
+                {
+                  "tag": "span",
+                  "attrs": {},
+                  "children": [
+                    "MY VIDEOS"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "class": "blog-section section-width",
+            "id": "blog",
+            "aria-labelledby": "blog-title"
+          },
+          "children": [
+            {
+              "tag": "div",
+              "attrs": {
+                "class": "fc-section-heading split"
+              },
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {
+                    "id": "blog-title"
+                  },
+                  "children": [
+                    "FLYING CAR AI BLOG"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Understand the trend, then learn how to turn your own idea into a flying-car scene."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "attrs": {
+                "class": "blog-grid"
+              },
+              "children": [
+                {
+                  "tag": "a",
+                  "attrs": {
+                    "class": "blog-card",
+                    "href": "/flying-car-ai-video-generator/how-to-make-a-tesla-roadster-flying-car-video"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "attrs": {
+                        "class": "fc-eyebrow"
+                      },
+                      "children": [
+                        "STEP-BY-STEP GUIDE"
+                      ]
+                    },
+                    {
+                      "tag": "h3",
+                      "attrs": {},
+                      "children": [
+                        "How to make a Tesla Roadster flying car video with AI"
+                      ]
+                    },
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "Plan your scene, use an optional photo, choose a length and prepare your vertical clip for sharing."
+                      ]
+                    },
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "Read the tutorial →"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "a",
+                  "attrs": {
+                    "class": "blog-card",
+                    "href": "/flying-car-ai-video-generator/tesla-flying-car-ai-video-trend"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "attrs": {
+                        "class": "fc-eyebrow"
+                      },
+                      "children": [
+                        "TREND EXPLAINED"
+                      ]
+                    },
+                    {
+                      "tag": "h3",
+                      "attrs": {},
+                      "children": [
+                        "Tesla flying car AI video trend: Roadster memes explained"
+                      ]
+                    },
+                    {
+                      "tag": "p",
+                      "attrs": {},
+                      "children": [
+                        "Explore flying-car stories, traffic escapes and the difference between fictional AI clips and real footage."
+                      ]
+                    },
+                    {
+                      "tag": "span",
+                      "attrs": {},
+                      "children": [
+                        "Explore the trend →"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "class": "final-cta section-width"
+          },
+          "children": [
+            {
+              "tag": "p",
+              "attrs": {
+                "class": "fc-eyebrow"
+              },
+              "children": [
+                "YOUR SCENE IS WAITING"
+              ]
+            },
+            {
+              "tag": "h2",
+              "attrs": {},
+              "children": [
+                "WHAT DOES YOUR CAR DO WHEN THE ROAD ENDS?"
+              ]
+            },
+            {
+              "tag": "p",
+              "attrs": {},
+              "children": [
+                "Write it, add a photo if you have one, and watch it take off. Use the credits already shared by your migosai tools."
+              ]
+            },
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/flying-car-ai-video-generator#create",
+                "data-slot": "button",
+                "data-variant": "amber",
+                "data-size": "default",
+                "class": "group/button inline-flex shrink-0 items-center justify-center rounded-lg border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 border-0 bg-(--sunset) text-(--night) shadow-[0_5px_#a8661a] hover:bg-(--ember) active:translate-y-[4px] active:shadow-[0_1px_#a8661a] h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 big"
+              },
+              "children": [
+                "Create my flying car video"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "how-to-make-a-tesla-roadster-flying-car-video": {
+    "title": "How to Make a Tesla Roadster Flying Car Video with AI",
+    "description": "Learn how to make a Tesla Roadster flying car AI video: write your scene, add an optional photo, choose a length, and prepare a vertical clip for sharing.",
+    "content": {
+      "tag": "div",
+      "attrs": {
+        "class": "article-page section-width flyingcar-main"
+      },
+      "children": [
+        {
+          "tag": "p",
+          "attrs": {
+            "class": "fc-eyebrow"
+          },
+          "children": [
+            "GUIDE"
+          ]
+        },
+        {
+          "tag": "h1",
+          "attrs": {},
+          "children": [
+            "How to make a Tesla Roadster flying car video with AI"
+          ]
+        },
+        {
+          "tag": "p",
+          "attrs": {
+            "class": "article-updated"
+          },
+          "children": [
+            "By Flying Car AI · Updated October 17, 2026"
+          ]
+        },
+        {
+          "tag": "p",
+          "attrs": {
+            "class": "article-intro"
+          },
+          "children": [
+            "To make a Tesla Roadster flying car AI video, describe the car and one flight action, add a reference photo if you want one, choose a clip length, and review the result before sharing. This guide explains how to plan a traffic-jam escape or a “Day 1 owning a Tesla Roadster” scene for TikTok, Reels and Shorts. Every example here is fictional AI-generated footage."
+          ]
+        },
+        {
+          "tag": "figure",
+          "attrs": {
+            "class": "article-figure"
+          },
+          "children": [
+            {
+              "tag": "img",
+              "attrs": {
+                "src": "/flyingcar/real/overpass-launch.jpg",
+                "alt": "AI-generated flying car over an overpass at sunset, a fictional render rather than Tesla footage",
+                "width": "720",
+                "height": "1280",
+                "loading": "lazy"
+              },
+              "children": []
+            },
+            {
+              "tag": "figcaption",
+              "attrs": {},
+              "children": [
+                "A fictional AI render, not Tesla footage. ",
+                {
+                  "tag": "a",
+                  "attrs": {
+                    "href": "/flying-car-ai-video-generator#examples"
+                  },
+                  "children": [
+                    "More example clips"
+                  ]
+                },
+                "."
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "attrs": {
+            "class": "article-body"
+          },
+          "children": [
+            {
+              "tag": "p",
+              "attrs": {},
+              "children": [
+                "Looking for the context behind these clips? Read our ",
+                {
+                  "tag": "a",
+                  "attrs": {
+                    "href": "/flying-car-ai-video-generator/tesla-flying-car-ai-video-trend"
+                  },
+                  "children": [
+                    "Tesla flying car AI video trend guide"
+                  ]
+                },
+                "."
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {
+                "aria-labelledby": "quick-start"
+              },
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {
+                    "id": "quick-start"
+                  },
+                  "children": [
+                    "How to make a flying Tesla Roadster AI video: step by step"
+                  ]
+                },
+                {
+                  "tag": "ol",
+                  "attrs": {},
+                  "children": [
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "tag": "strong",
+                          "attrs": {},
+                          "children": [
+                            "Write your own scene."
+                          ]
+                        },
+                        " Open ",
+                        {
+                          "tag": "a",
+                          "attrs": {
+                            "href": "/flying-car-ai-video-generator#create"
+                          },
+                          "children": [
+                            "the flying car AI video creator"
+                          ]
+                        },
+                        " and describe the car, one action, the setting, lighting and camera movement. The prompt begins empty; no preset is required."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "tag": "strong",
+                          "attrs": {},
+                          "children": [
+                            "Add a photo if needed."
+                          ]
+                        },
+                        " Use one image you own or have permission to use when a particular vehicle matters. You can also work entirely from text."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "tag": "strong",
+                          "attrs": {},
+                          "children": [
+                            "Choose the length."
+                          ]
+                        },
+                        " Pick 5–30 seconds. Start with one short, clear action rather than packing multiple stunts into a single shot. See ",
+                        {
+                          "tag": "a",
+                          "attrs": {
+                            "href": "/flying-car-ai-video-generator#pricing"
+                          },
+                          "children": [
+                            "migosai credit pricing"
+                          ]
+                        },
+                        " before generating."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "tag": "strong",
+                          "attrs": {},
+                          "children": [
+                            "Review the generated scene."
+                          ]
+                        },
+                        " Inspect the car shape, motion and framing before downloading. A reference photo does not guarantee an exact likeness."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "tag": "strong",
+                          "attrs": {},
+                          "children": [
+                            "Prepare the vertical clip for sharing."
+                          ]
+                        },
+                        " Keep the 9:16 frame, add any audio or captions in your editor, and identify the footage as AI-generated when publishing."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "The format decides the shot"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "The delivered file is a 9:16 vertical MP4 between 5 and 30 seconds long, rendered at 480p and shipped without audio or a watermark. Those four constraints should shape the scene before you write a word of prompt, because each one removes a technique you might otherwise rely on."
+                  ]
+                },
+                {
+                  "tag": "ul",
+                  "attrs": {},
+                  "children": [
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "tag": "strong",
+                          "attrs": {},
+                          "children": [
+                            "Vertical framing."
+                          ]
+                        },
+                        " A wide traffic shot loses its context when cropped to 9:16. Vertical motion — a lift, a dive, a climb — reads better because the frame has room to travel. Put the horizon high or low rather than through the middle, and keep one subject in frame."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "tag": "strong",
+                          "attrs": {},
+                          "children": [
+                            "480p detail."
+                          ]
+                        },
+                        " Badges, panel gaps, number plates and fine trim do not survive at this resolution. Build the shot around silhouette, colour and light instead of small details you expect the model to preserve."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "tag": "strong",
+                          "attrs": {},
+                          "children": [
+                            "Five to thirty seconds."
+                          ]
+                        },
+                        " Five to eight seconds behaves like a loop: one action, one camera move. Ten to fifteen seconds holds a single beat with a start and an end. Twenty to thirty seconds needs two or three beats, and every extra second is another chance for the model to drift."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "tag": "strong",
+                          "attrs": {},
+                          "children": [
+                            "No audio track."
+                          ]
+                        },
+                        " Timing has to be carried by the image. Music or voice-over is added later in an editor, so do not write a prompt that depends on a sound cue to land."
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "A useful way to think about the prompt is a shot specification for a camera operator who has never seen the location: it has to describe what is in frame and how the frame moves, not just the mood of the scene."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "Fiction, fact, and the “flying Roadster” claim"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "A flying car render is a fabricated image however photoreal it looks. It is not a Tesla announcement, a press asset, a demonstration or evidence that a consumer flying Roadster exists. Flying Car AI is independent and not affiliated with Tesla, Inc.; the car name describes the subject, it does not claim a relationship."
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "That distinction has practical consequences. Synthetic footage falls under platform policy on AI media, and presenting a fictional clip as a real product launch can mislead viewers about what was demonstrated. If you publish commentary about real Tesla news, keep the factual post and the AI render separate, or label the render before the first frame rather than in a comment."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "Three premises that survive vertical video"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "The subject is implausible, so the scene has to give the viewer something to accept it against. These structures hold up because each one sets a visual conflict the model can render in one continuous shot."
+                  ]
+                },
+                {
+                  "tag": "h3",
+                  "attrs": {},
+                  "children": [
+                    "Traffic jam escape"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "The conflict is static versus vertical. Put the camera at bumper height among stopped cars so the Roadster’s lift is measured against something familiar. Give the movement a clear start in the lane and a clear end above the roofline. The premise fails when the frame contains too many vehicles: at 480p the background becomes a mass of shapes and the lift loses its scale. Fewer cars, stronger side light and a fixed low camera solve that."
+                  ]
+                },
+                {
+                  "tag": "h3",
+                  "attrs": {},
+                  "children": [
+                    "“Day 1 owning a Tesla Roadster”"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "This is a narrative premise rather than a stunt, so give it a simple arc. One continuous movement is easier to describe and review than several requested cuts: the car pulls out of a driveway and lifts as it clears the street. Keep the location quiet; a domestic setting is easier to read in nine seconds than a landmark. Do not ask for a key turn, a door opening and a lift in the same clip; the model will merge them."
+                  ]
+                },
+                {
+                  "tag": "h3",
+                  "attrs": {},
+                  "children": [
+                    "Low-angle flying-Tesla sightline"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "The camera looks up and the car crosses the sky. This is the most legible version at low resolution because the subject is a silhouette against a simple background. Its failure mode is scale: if the car becomes a dot, the shot reads as a distant drone. Specify a low angle, a close pass and a direction of travel, and keep the sky simple enough that the silhouette holds."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "Writing the prompt as a shot specification"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Write a prompt a reader can picture without guessing: one main vehicle, a clear action and a camera position. Conflicting movements and crowded scenes can make the result harder to control. These are starting points for iteration, rather than guarantees about how a model will interpret your words."
+                  ]
+                },
+                {
+                  "tag": "ol",
+                  "attrs": {},
+                  "children": [
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "tag": "strong",
+                          "attrs": {},
+                          "children": [
+                            "Subject and geometry:"
+                          ]
+                        },
+                        " the vehicle’s shape and colour, and how it sits in frame."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "tag": "strong",
+                          "attrs": {},
+                          "children": [
+                            "Action:"
+                          ]
+                        },
+                        " one movement with a start and an end, described in space."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "tag": "strong",
+                          "attrs": {},
+                          "children": [
+                            "Environment:"
+                          ]
+                        },
+                        " the street, overpass or skyline, and what sits near the car."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "tag": "strong",
+                          "attrs": {},
+                          "children": [
+                            "Camera:"
+                          ]
+                        },
+                        " angle, height, distance, and whether it is static, tracking or handheld."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "tag": "strong",
+                          "attrs": {},
+                          "children": [
+                            "Light:"
+                          ]
+                        },
+                        " time of day and light direction, which decides how readable the car is."
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Spatial language is the difference between a usable take and an average one. “The car rises out of the lane and clears the roof of the car in front” gives the model a relationship to render; “a flying car in traffic” gives it a theme. Keep the field to one to three sentences; the input limit is 12 to 600 characters. Negations are weak constraints, so instead of listing things you do not want, describe an environment with no surface for them to appear on."
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Include “Tesla Roadster” if that is the subject you want, then describe the shape, colour and framing. Naming a model alone does not specify the scene or guarantee accurate badges, proportions or details."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "Reference photos: the trade-off"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "One reference image changes what the model has to invent. It anchors shape, colour and some trim, which helps when the car is the point of the shot. The cost is composition: the image can pull its own background, angle and lighting into the render, and a heavily cropped photo gives the model less to work with than no photo at all."
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Use an image you own or have permission to use. A well-lit three-quarter view on a plain background gives a clearer reference than a dark or heavily cropped photo. Several cars in one image can make the intended subject ambiguous. If a specific vehicle is not essential, text-only lets you describe the setting and camera without introducing a reference background. Results vary in both modes."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "Length, cost, and what you are buying"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Length is the main product decision. More frames mean more compute and more time in which the scene can change. Start with a length that supports one clear action, and review the credit cost shown by the creator. Existing migosai credit packs are listed in",
+                    " ",
+                    {
+                      "tag": "a",
+                      "attrs": {
+                        "href": "/flying-car-ai-video-generator#pricing"
+                      },
+                      "children": [
+                        "the pricing section"
+                      ]
+                    },
+                    "."
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "For feed-style publishing, five to eight seconds is usually enough; the loop repeats and the first frame does most of the work. Ten to fifteen seconds suits one story beat. Twenty to thirty seconds is the right choice only when the scene genuinely has two or three beats, because every additional beat increases the chance that the car changes shape mid-shot."
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Choose the length for each generation. Its credit cost is shown before you start, and the balance is shared with your other migosai tools."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "Diagnosing a bad render instead of rerolling blindly"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Most failed takes fail for a reason you can name, and each reason maps to one prompt change. Change one variable at a time so the next result tells you something."
+                  ]
+                },
+                {
+                  "tag": "ul",
+                  "attrs": {},
+                  "children": [
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "tag": "strong",
+                          "attrs": {},
+                          "children": [
+                            "Car too small or too large:"
+                          ]
+                        },
+                        " the framing distance is missing. Specify how much of the frame the car fills and where the camera sits."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "tag": "strong",
+                          "attrs": {},
+                          "children": [
+                            "Motion unreadable:"
+                          ]
+                        },
+                        " direction and camera relationship are missing. Say which way the car moves relative to the camera."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "tag": "strong",
+                          "attrs": {},
+                          "children": [
+                            "Wheels, reflections or panel gaps melting:"
+                          ]
+                        },
+                        " the background or motion is too complex. Simplify the scene, reduce speed, reduce the number of vehicles."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "tag": "strong",
+                          "attrs": {},
+                          "children": [
+                            "Text or logos appearing:"
+                          ]
+                        },
+                        " the scene implies a surface for them. Remove signage, livery and plates from the environment."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        {
+                          "tag": "strong",
+                          "attrs": {},
+                          "children": [
+                            "Shape drifting across the clip:"
+                          ]
+                        },
+                        " too many actions or too long a duration. Cut to one action or a shorter length."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "Publishing checklist"
+                  ]
+                },
+                {
+                  "tag": "ul",
+                  "attrs": {},
+                  "children": [
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        "Keep the 9:16 frame intact; a landscape re-upload crops the subject out of the shot."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        "Label the clip as AI-generated where the platform offers it, and say so in the caption."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        "Add audio in the editor: platform-licensed music, a voice-over or sound design. The delivered file is silent by design."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        "Add captions outside the render rather than asking the model to put text in frame."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        "Keep factual commentary about Tesla separate from the fictional clip, and do not imply an endorsement."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        "Hold the rights to every input image, including people and locations, and do not submit minors."
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "The ",
+                    {
+                      "tag": "a",
+                      "attrs": {
+                        "href": "/terms-of-service"
+                      },
+                      "children": [
+                        "terms of service"
+                      ]
+                    },
+                    " and ",
+                    {
+                      "tag": "a",
+                      "attrs": {
+                        "href": "/privacy-policy"
+                      },
+                      "children": [
+                        "privacy policy"
+                      ]
+                    },
+                    " cover rights, credits and data handling in more detail."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {
+                "class": "article-faq"
+              },
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "Frequently asked questions"
+                  ]
+                },
+                {
+                  "tag": "details",
+                  "attrs": {
+                    "class": "faq-row"
+                  },
+                  "children": [
+                    {
+                      "tag": "summary",
+                      "attrs": {
+                        "class": "faq-trigger"
+                      },
+                      "children": [
+                        {
+                          "tag": "span",
+                          "attrs": {},
+                          "children": [
+                            "Are the flying Tesla Roadster videos on this site real?"
+                          ]
+                        },
+                        {
+                          "tag": "b",
+                          "attrs": {
+                            "class": "faq-plus",
+                            "aria-hidden": "true"
+                          },
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "attrs": {
+                        "class": "faq-content"
+                      },
+                      "children": [
+                        {
+                          "tag": "p",
+                          "attrs": {},
+                          "children": [
+                            "The renders on this site are fictional AI-generated scenes built from text prompts and optional reference photos. They are not Tesla announcements, press assets, demonstration footage or evidence of a consumer product. Flying Car AI is independent and not affiliated with Tesla, Inc."
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "details",
+                  "attrs": {
+                    "class": "faq-row"
+                  },
+                  "children": [
+                    {
+                      "tag": "summary",
+                      "attrs": {
+                        "class": "faq-trigger"
+                      },
+                      "children": [
+                        {
+                          "tag": "span",
+                          "attrs": {},
+                          "children": [
+                            "What format is the video?"
+                          ]
+                        },
+                        {
+                          "tag": "b",
+                          "attrs": {
+                            "class": "faq-plus",
+                            "aria-hidden": "true"
+                          },
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "attrs": {
+                        "class": "faq-content"
+                      },
+                      "children": [
+                        {
+                          "tag": "p",
+                          "attrs": {},
+                          "children": [
+                            "A 9:16 vertical MP4, 480p, 5 to 30 seconds depending on the length you choose, silent, with no watermark. Music, voice-over and captions are added later in an editor."
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "details",
+                  "attrs": {
+                    "class": "faq-row"
+                  },
+                  "children": [
+                    {
+                      "tag": "summary",
+                      "attrs": {
+                        "class": "faq-trigger"
+                      },
+                      "children": [
+                        {
+                          "tag": "span",
+                          "attrs": {},
+                          "children": [
+                            "How long does rendering take?"
+                          ]
+                        },
+                        {
+                          "tag": "b",
+                          "attrs": {
+                            "class": "faq-plus",
+                            "aria-hidden": "true"
+                          },
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "attrs": {
+                        "class": "faq-content"
+                      },
+                      "children": [
+                        {
+                          "tag": "p",
+                          "attrs": {},
+                          "children": [
+                            "Rendering time varies with the chosen length and the provider's queue. There is no guaranteed completion time; check My Videos for the current status."
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "details",
+                  "attrs": {
+                    "class": "faq-row"
+                  },
+                  "children": [
+                    {
+                      "tag": "summary",
+                      "attrs": {
+                        "class": "faq-trigger"
+                      },
+                      "children": [
+                        {
+                          "tag": "span",
+                          "attrs": {},
+                          "children": [
+                            "Do I need a photo to make a flying car video?"
+                          ]
+                        },
+                        {
+                          "tag": "b",
+                          "attrs": {
+                            "class": "faq-plus",
+                            "aria-hidden": "true"
+                          },
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "attrs": {
+                        "class": "faq-content"
+                      },
+                      "children": [
+                        {
+                          "tag": "p",
+                          "attrs": {},
+                          "children": [
+                            "No. Text-only is fully supported. One reference image can help keep a specific car or person consistent, but it can also pull its own background and framing into the render, and it must be an image you own or have permission to use."
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "details",
+                  "attrs": {
+                    "class": "faq-row"
+                  },
+                  "children": [
+                    {
+                      "tag": "summary",
+                      "attrs": {
+                        "class": "faq-trigger"
+                      },
+                      "children": [
+                        {
+                          "tag": "span",
+                          "attrs": {},
+                          "children": [
+                            "How does the pricing work?"
+                          ]
+                        },
+                        {
+                          "tag": "b",
+                          "attrs": {
+                            "class": "faq-plus",
+                            "aria-hidden": "true"
+                          },
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "attrs": {
+                        "class": "faq-content"
+                      },
+                      "children": [
+                        {
+                          "tag": "p",
+                          "attrs": {},
+                          "children": [
+                            "Use your shared migosai credits. The generator shows the credit cost for your selected length before you start. Sign in with your migosai account, and check progress and finished clips in My Videos. Failed generations return credits through the existing migosai workflow."
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "details",
+                  "attrs": {
+                    "class": "faq-row"
+                  },
+                  "children": [
+                    {
+                      "tag": "summary",
+                      "attrs": {
+                        "class": "faq-trigger"
+                      },
+                      "children": [
+                        {
+                          "tag": "span",
+                          "attrs": {},
+                          "children": [
+                            "Can I use the video commercially?"
+                          ]
+                        },
+                        {
+                          "tag": "b",
+                          "attrs": {
+                            "class": "faq-plus",
+                            "aria-hidden": "true"
+                          },
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "attrs": {
+                        "class": "faq-content"
+                      },
+                      "children": [
+                        {
+                          "tag": "p",
+                          "attrs": {},
+                          "children": [
+                            "Only if you hold the rights to every input and comply with the rules of the platform and the law where you publish. Disclose that the clip is AI-generated where required, and do not present it as real footage or as a Tesla statement."
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "a",
+          "attrs": {
+            "href": "/flying-car-ai-video-generator#create",
+            "data-slot": "button",
+            "data-variant": "amber",
+            "data-size": "default",
+            "class": "group/button inline-flex shrink-0 items-center justify-center rounded-lg border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 border-0 bg-(--sunset) text-(--night) shadow-[0_5px_#a8661a] hover:bg-(--ember) active:translate-y-[4px] active:shadow-[0_1px_#a8661a] h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 article-cta !rounded-[12px]"
+          },
+          "children": [
+            "Explore the flying car video creator"
+          ]
+        }
+      ]
+    }
+  },
+  "tesla-flying-car-ai-video-trend": {
+    "title": "Tesla Flying Car AI Video Trend: Roadster Memes Explained",
+    "description": "Explore the Tesla flying car AI video trend, from Roadster flips to traffic escapes. Plan your own vertical clip with text or an optional photo.",
+    "content": {
+      "tag": "div",
+      "attrs": {
+        "class": "article-page section-width flyingcar-main"
+      },
+      "children": [
+        {
+          "tag": "p",
+          "attrs": {
+            "class": "fc-eyebrow"
+          },
+          "children": [
+            "FLYING CAR AI · TREND GUIDE"
+          ]
+        },
+        {
+          "tag": "h1",
+          "attrs": {},
+          "children": [
+            "Tesla flying car AI video trend: Roadster memes explained"
+          ]
+        },
+        {
+          "tag": "p",
+          "attrs": {
+            "class": "article-updated"
+          },
+          "children": [
+            "By Flying Car AI · Published October 17, 2026"
+          ]
+        },
+        {
+          "tag": "p",
+          "attrs": {
+            "class": "article-intro"
+          },
+          "children": [
+            "The Tesla flying car AI video trend turns an everyday driving situation into an impossible escape. A sports car rises above a traffic jam, rolls through the air or takes a commute somewhere unexpected. The appeal is easy to understand: a familiar frustration gets an outrageous visual answer. Here is how to approach that idea as an original short video, with your own scene and a clear AI label."
+          ]
+        },
+        {
+          "tag": "figure",
+          "attrs": {
+            "class": "article-figure"
+          },
+          "children": [
+            {
+              "tag": "img",
+              "attrs": {
+                "src": "/flyingcar/real/overpass-launch.jpg",
+                "alt": "Fictional AI-generated flying car lifting above a sunset overpass",
+                "width": "720",
+                "height": "1280"
+              },
+              "children": []
+            },
+            {
+              "tag": "figcaption",
+              "attrs": {},
+              "children": [
+                "An AI-generated scene from Flying Car AI. This is not Tesla demonstration footage."
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "attrs": {
+            "class": "article-body"
+          },
+          "children": [
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "What is the flying Tesla Roadster meme?"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Flying-car remixes use the Roadster as a starting point for fictional driving stories. A traffic escape, an aerial roll and an intentionally unsuccessful landing are recognizable variations. The reference site ",
+                    {
+                      "tag": "a",
+                      "attrs": {
+                        "href": "https://flyingcar.fun/"
+                      },
+                      "children": [
+                        "FlyingCar.fun"
+                      ]
+                    },
+                    " groups examples around those stunt themes. This article uses that broad topic as context; the creative workflow below is specific to Flying Car AI."
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "A useful distinction is the difference between a subject and a story. “Flying Tesla” names the subject. A story also needs a situation, a change and a final image. If the viewer cannot tell what changed, extra smoke, camera movement or city detail will not make the action easier to follow."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "Real Roadster footage and AI video are different things"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "A vehicle demonstration and a fictional car flying across a skyline should not be treated as the same kind of evidence. To check a real-world claim, find the original recording, its publisher and the context around the shot. A caption, familiar badge or photorealistic finish does not establish authenticity."
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "All flying-car examples on this website are AI-generated. They do not document Tesla vehicle capabilities. Flying Car AI is independent and is not affiliated with, endorsed by or sponsored by Tesla, Inc. or any vehicle manufacturer. When sharing your own render, make the fictional nature clear to viewers."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "Build a flying-car story around one clear change"
+                  ]
+                },
+                {
+                  "tag": "h3",
+                  "attrs": {},
+                  "children": [
+                    "Start with a recognizable obstacle"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Give the viewer something to understand before the car moves. Stopped vehicles, a narrow road or the edge of an overpass can establish scale. Keep the main car visible and leave enough empty space above it for the movement. A busy frame can make a dramatic lift difficult to read on a small phone screen."
+                  ]
+                },
+                {
+                  "tag": "h3",
+                  "attrs": {},
+                  "children": [
+                    "Choose an ending before adding effects"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Decide where the car should be in the final frame. Does it clear the obstacle, hover in place or leave the camera behind? That destination gives the action a direction. Treat smoke, reflections and lighting as supporting details instead of asking every element in the scene to change at once."
+                  ]
+                },
+                {
+                  "tag": "h3",
+                  "attrs": {},
+                  "children": [
+                    "Make the viewpoint part of the joke"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "A passenger view feels personal; a distant street camera makes the event feel observed. Pick the viewpoint that tells your story and keep it consistent. If you add a first-day ownership caption, write it around your own situation rather than copying another creator's line. Add captions in an editor so you can check spelling, timing and readability separately from the generated image."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "Can you make a flying car AI video without a photo?"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Yes. In Flying Car AI, you write your own scene prompt and can leave the photo upload empty. Describe the vehicle, the movement, the setting and the camera. There is no preset picker or required selfie. If a particular car matters, one optional reference image can provide visual guidance."
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Use a photo you own or have permission to use. A clear view of one vehicle makes the intended subject easier to identify than a crowded parking lot. A reference is guidance, not a promise of an exact match: inspect the body shape, wheels and reflections in the result. For practical input advice, read our",
+                    {
+                      "tag": "a",
+                      "attrs": {
+                        "href": "/flying-car-ai-video-generator/how-to-make-a-tesla-roadster-flying-car-video"
+                      },
+                      "children": [
+                        " step-by-step flying Roadster video guide"
+                      ]
+                    },
+                    "."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "Plan for TikTok, Instagram Reels and YouTube Shorts"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Flying Car AI uses 9:16 vertical MP4 output with a customer-chosen length of 5–30 seconds. The file is silent and watermark-free. Keep important motion near the center of the composition so interface controls and your later captions do not cover the moment that explains the scene."
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Start with the shortest length that can show your idea clearly. More seconds give you more time to tell a story, but also more footage to inspect for visual changes. Watch the clip once without a caption: if the action is unclear, simplify the composition before relying on text to explain it."
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Add music or voice-over separately if needed, using audio you are allowed to publish. Check the destination platform's current AI disclosure requirements. Vertical formatting makes a file convenient to share; it does not guarantee reach, recommendations or a particular number of views."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "Before you create your own flying Tesla video"
+                  ]
+                },
+                {
+                  "tag": "ul",
+                  "attrs": {},
+                  "children": [
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        "Choose one main vehicle, one action and a camera position."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        "Write the scene yourself; add a single reference photo only if it helps."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        "Review the ",
+                        {
+                          "tag": "a",
+                          "attrs": {
+                            "href": "/flying-car-ai-video-generator#examples"
+                          },
+                          "children": [
+                            "AI video examples"
+                          ]
+                        },
+                        " for framing, rather than expecting an identical result."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        "Check ",
+                        {
+                          "tag": "a",
+                          "attrs": {
+                            "href": "/flying-car-ai-video-generator#pricing"
+                          },
+                          "children": [
+                            "migosai credit pricing"
+                          ]
+                        },
+                        " before generating."
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "attrs": {},
+                      "children": [
+                        "Review your render and label it as AI-generated when sharing."
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "The strongest starting point is an idea that can be explained in one sentence. Give that idea a clear visual beginning and ending, then refine the shot. You can explore the",
+                    {
+                      "tag": "a",
+                      "attrs": {
+                        "href": "/flying-car-ai-video-generator#create"
+                      },
+                      "children": [
+                        " flying car AI video creator"
+                      ]
+                    },
+                    " or follow the",
+                    {
+                      "tag": "a",
+                      "attrs": {
+                        "href": "/flying-car-ai-video-generator/how-to-make-a-tesla-roadster-flying-car-video"
+                      },
+                      "children": [
+                        " full creation tutorial"
+                      ]
+                    },
+                    " for a closer look at the process."
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

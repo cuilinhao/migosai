@@ -9,5 +9,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = stripLocale(usePathname());
   const isStandalonePage = pathname === "/sign-in" || pathname === "/sign-up" || pathname.startsWith("/app/");
   const hasOzilFooter = (pathname === "/ozil-goal-generator" || pathname.startsWith("/ozil-goal-generator/")) && !/^\/ozil-goal-generator\/blog(?:\/|$)/.test(pathname);
-  return isStandalonePage ? <>{children}</> : <><SiteHeader /><main>{children}</main>{!hasOzilFooter && <SiteFooter />}</>;
+  const hasFlyingCarFooter = pathname === "/flying-car-ai-video-generator" || pathname.startsWith("/flying-car-ai-video-generator/");
+  return isStandalonePage ? <>{children}</> : <><SiteHeader /><main>{children}</main>{!hasOzilFooter && !hasFlyingCarFooter && <SiteFooter />}</>;
 }

@@ -1,0 +1,478 @@
+{
+  "privacy": {
+    "title": "Privacy Policy — Flying Car AI",
+    "description": "What Flying Car AI collects, which processors touch your files, how long we keep them, and how to ask us to delete them.",
+    "sourceContent": {
+      "tag": "main",
+      "attrs": {
+        "class": "article-page section-width"
+      },
+      "children": [
+        {
+          "tag": "p",
+          "attrs": {
+            "class": "eyebrow"
+          },
+          "children": [
+            "LEGAL"
+          ]
+        },
+        {
+          "tag": "h1",
+          "attrs": {},
+          "children": [
+            "PRIVACY POLICY"
+          ]
+        },
+        {
+          "tag": "p",
+          "attrs": {
+            "class": "article-updated"
+          },
+          "children": [
+            "Last updated: October 17, 2026"
+          ]
+        },
+        {
+          "tag": "p",
+          "attrs": {
+            "class": "article-intro"
+          },
+          "children": [
+            "Plain-language answers about what this site collects, who processes it, and how to have it removed."
+          ]
+        },
+        {
+          "tag": "div",
+          "attrs": {
+            "class": "article-body"
+          },
+          "children": [
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "WHAT WE COLLECT"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "The scene prompt you write, an optional reference image you upload, the video generated from them, the email address you enter at Stripe Checkout, and the payment confirmation Stripe sends us. We also set a signed, anonymous visitor cookie used only for rate limiting and abuse prevention. We do not run accounts, and we never receive or store your card number."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "WHO PROCESSES YOUR FILES"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "The prompt and any reference image are sent to Kie.ai, which runs the Seedance video model on our behalf. Uploaded images and finished videos are stored with fal.ai's storage service so the model and the result page can reach them. Payments are processed by Stripe. Transactional email is sent through Resend. The site, database and API run on Cloudflare. Each provider processes only the data needed for its part of the service."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "HOW YOUR DATA IS USED"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Prompts, images and videos exist to produce and deliver your order. Your email is used for the video-ready message, receipts and support replies. We never sell your data, use it for advertising, or use your uploads to train AI models. We use Plausible, a privacy-friendly analytics tool, to understand which pages are useful."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "RETENTION AND DELETION"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "We keep prompts, reference images and finished videos while your order is active so your private result link continues to work. We do not delete files automatically after a fixed period. You can ask us to delete your uploads and videos at any time by emailing support@unforgettablecarai.video from the address used at checkout, or by including your private order link. We handle deletion requests manually and confirm when it is done. Stripe and Resend retain billing and delivery records under their own policies."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "YOUR CHOICES"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "You can use the service without uploading a photo. You can request access to, correction of, or deletion of the personal data we hold. You can ask us to stop sending non-essential email. Because there are no accounts, your private order or result link is the key to your data — keep it safe, and contact us if you lose it."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "CHILDREN"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "The service is for adults. Do not upload images of minors, and do not use the service if you are under 18."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "CONTACT"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Questions about privacy: support@unforgettablecarai.video. We aim to reply within two business days."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "a",
+          "attrs": {
+            "href": "/#create",
+            "data-slot": "button",
+            "data-variant": "amber",
+            "data-size": "default",
+            "class": "group/button inline-flex shrink-0 items-center justify-center rounded-lg border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 border-0 bg-(--sunset) text-(--night) shadow-[0_5px_#a8661a] hover:bg-(--ember) active:translate-y-[4px] active:shadow-[0_1px_#a8661a] h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 article-cta !rounded-[12px]"
+          },
+          "children": [
+            "Create a flying car video · from $4.99"
+          ]
+        }
+      ]
+    },
+    "displayPolicy": "Evidence only. Use the existing migosai legal pages."
+  },
+  "terms": {
+    "title": "Terms of Service — Flying Car AI",
+    "description": "The rules for using Flying Car AI: image rights, AI output, credits, refunds and your responsibilities when publishing.",
+    "sourceContent": {
+      "tag": "main",
+      "attrs": {
+        "class": "article-page section-width"
+      },
+      "children": [
+        {
+          "tag": "p",
+          "attrs": {
+            "class": "eyebrow"
+          },
+          "children": [
+            "LEGAL"
+          ]
+        },
+        {
+          "tag": "h1",
+          "attrs": {},
+          "children": [
+            "TERMS OF SERVICE"
+          ]
+        },
+        {
+          "tag": "p",
+          "attrs": {
+            "class": "article-updated"
+          },
+          "children": [
+            "Last updated: October 17, 2026"
+          ]
+        },
+        {
+          "tag": "p",
+          "attrs": {
+            "class": "article-intro"
+          },
+          "children": [
+            "The short version: use only content you have the right to use, expect AI output to vary, and do not publish anything harmful."
+          ]
+        },
+        {
+          "tag": "div",
+          "attrs": {
+            "class": "article-body"
+          },
+          "children": [
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "THE SERVICE"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Flying Car AI is an independent, no-account tool that generates short AI videos from a written prompt and an optional reference image. Output is a 9:16 vertical MP4 that can be 5 to 30 seconds long — you choose the length in the creator — and it is silent. It is not affiliated with, endorsed by or sponsored by Tesla, Inc. or any vehicle manufacturer. References to vehicle models are descriptive only."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "WHO MAY USE IT"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "You must be at least 18 years old and legally able to enter a contract. By using the service you agree to these terms and to the privacy policy."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "YOUR PROMPTS AND IMAGES"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "You must own every prompt and image you submit, or hold clear permission from the rights holder and from any person shown. Do not submit images of minors, explicit content, intimate imagery, impersonation, deceptive deepfakes, public figures without authorization, or content that infringes a trademark, copyright or privacy right. We may refuse or remove content that appears to violate these rules."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "AI OUTPUT"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Video models interpret rather than obey. Faces, vehicles, proportions, motion and text may differ from what you imagined, and no particular likeness or brand accuracy is guaranteed. We do not promise a specific generation time. Review every output before publishing and disclose AI generation where a platform or law requires it."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "PAYMENT AND CREDITS"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "Packs are one-time purchases processed by Stripe. Prices are anchored at a 10-second single video for $9.99 and scale with the length you choose: a single video is $4.99 at 5 seconds and $29.99 at 30 seconds, and packs scale the same way (3 videos $9.99–$59.99, 10 videos $29.99–$179.99; all prices in US dollars). There is no subscription and no automatic renewal. Credits are attached to your private order link, not to an account. Every credit may use a different prompt. Unused credits do not expire. The first video starts automatically after payment; additional videos are started from the result page with the button that spends a credit. The length you choose in the creator is saved on your order and reused for additional videos from the same pack."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "FAILED GENERATIONS AND REFUNDS"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "If a generation fails on our side, the credit is returned to your pack automatically and you may try again. A returned credit is not a cash refund. If you believe you were charged incorrectly, contact support@unforgettablecarai.video and we will investigate. Nothing in these terms limits statutory rights that cannot be excluded."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "YOUR OUTPUT AND RESPONSIBILITY"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "You may use the finished video commercially if you hold all underlying rights and comply with the rules of the platform where you publish it. You are responsible for the prompt and images you submit and for how the output is presented. Do not present an AI-generated scene as real footage."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "SERVICE AVAILABILITY"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "The service depends on third-party model and storage providers. Outages, queue delays, moderation failures and provider changes can occur. We work to complete or refund every paid generation, but we do not guarantee uninterrupted availability or a specific creative result."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "LIABILITY"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "To the extent permitted by law, our total liability for a claim relating to the service is limited to the amount you paid for the affected pack. We are not liable for indirect or consequential losses, or for how you or a third party use a generated video. Nothing here excludes liability that cannot legally be excluded."
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "h2",
+                  "attrs": {},
+                  "children": [
+                    "CHANGES AND CONTACT"
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "We may update these terms; the date above shows when they last changed. Continued use after a change means you accept the updated terms. Questions: support@unforgettablecarai.video."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "a",
+          "attrs": {
+            "href": "/#create",
+            "data-slot": "button",
+            "data-variant": "amber",
+            "data-size": "default",
+            "class": "group/button inline-flex shrink-0 items-center justify-center rounded-lg border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 border-0 bg-(--sunset) text-(--night) shadow-[0_5px_#a8661a] hover:bg-(--ember) active:translate-y-[4px] active:shadow-[0_1px_#a8661a] h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 article-cta !rounded-[12px]"
+          },
+          "children": [
+            "Create a flying car video · from $4.99"
+          ]
+        }
+      ]
+    },
+    "displayPolicy": "Evidence only. Use the existing migosai legal pages."
+  }
+}

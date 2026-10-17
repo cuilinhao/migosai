@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
-import { ArrowRight, ChevronDown, Goal, Music2 } from "lucide-react";
+import { ArrowRight, CarFront, ChevronDown, Goal, Music2 } from "lucide-react";
 import Link from "./i18n/localized-link";
 import { useTranslations } from "./i18n/locale-provider";
 import "./generator-menu.css";
 
-// Ozil leads: it is the newest generator, so first-time visitors should meet it in the header.
+// The newest generator leads the rotating desktop pill and mobile spotlight.
 const generators = [
+  { href: "/flying-car-ai-video-generator", label: "Flying Car AI Generator", short: "Flying Car AI", blurb: "Turn your scene or photo into a flying car video", thumb: "/flyingcar/real/overpass-launch.jpg", Icon: CarFront, isNew: true },
   { href: "/ozil-goal-generator", label: "Ozil Goal Generator", short: "Ozil Goal", blurb: "Turn one photo into the viral Ozil goal video", thumb: "/ozil-goal/samples/ai-shot1.jpg", Icon: Goal, isNew: true },
   { href: "/ai-rap-song-generator", label: "AI Rap Song Generator", short: "AI Rap Song", blurb: "Make a full rap song from a prompt or your lyrics", thumb: "/posters/lobbyduo/seedance-2-corgi-rap.jpg", Icon: Music2, isNew: false },
 ];

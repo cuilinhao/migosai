@@ -6,9 +6,10 @@ import { signedMediaUrl,storeProviderMedia } from './media';
 import { videoPrompt } from '../prompts/video';
 import { createModerationMediaUrl } from './moderation-media';
 import { createVideoModeration, getVideoModeration, SeeApiError } from './seeapi';
-import { createKieVideo, createKieOzilGoalVideo, getKieVideo } from './kie';
+import { createKieVideo, createKieOzilGoalVideo, createKieFlyingCarVideo, getKieVideo } from './kie';
 import { createFalOzilGoalVideo, getFalVideo } from './fal';
 import type { OzilGoalPayload } from '../ozil-goal';
+import type { FlyingCarPayload } from '../flyingcar';
 import { getVideoSettings } from '../video-options';
 import { getVideoModelUnavailableReason } from '../video-availability';
 type Avatar={key:string;side:'left'|'right';taskId?:string;url?:string};
@@ -125,9 +126,9 @@ export async function advanceJob(env:Env,id:string):Promise<void>{const db=datab
   if(job.kind==='video'&&job.stage.startsWith('moderation_')){await advanceModeration(env,job,fence);return;}
   // Pin the provider on reservation so a rollout never queries or resubmits an
   // existing APIMart task through Kie. Historical payloads remain APIMart jobs.
-  const payload=JSON.parse(job.payload) as (CreateVideoRequest&{provider?:'kie';template?:undefined})|OzilGoalPayload;
+  const payload=JSON.parse(job.payload) as (CreateVideoRequest&{provider?:'kie';template?:undefined})|OzilGoalPayload|FlyingCarPayload;
   const provider=job.kind==='video'&&payload.provider==='fal'?'fal':job.kind==='video'&&payload.provider==='kie'?'kie':'apimart';
-  if(payload.provider==='kie'&&(job.stage==='new'||job.stage==='ready')){
+  if(payload.provider==='kie'&&payload.template!=='flyingcar'&&(job.stage==='new'||job.stage==='ready')){
    const unavailableReason=getVideoModelUnavailableReason(payload.model);
    if(unavailableReason)throw new ProviderError(unavailableReason);
   }
@@ -140,7 +141,13 @@ export async function advanceJob(env:Env,id:string):Promise<void>{const db=datab
    const taskId=payload.provider==='fal'?await createFalOzilGoalVideo(env,portrait):await createKieOzilGoalVideo(env,portrait);
    await patch(db,id,fence,{stage:'polling',provider_id:taskId,status:'processing'});return;
   }
-  if(provider==='kie'&&payload.template!=='ozil-goal'&&(job.stage==='new'||job.stage==='ready')){
+  if(job.kind==='video'&&payload.template==='flyingcar'&&(job.stage==='new'||job.stage==='ready')){
+   const imageUrl=payload.photo?await signedMediaUrl(env,payload.photo):undefined;
+   await patch(db,id,fence,{stage:'submitting_generation',status:'processing',progress:45});
+   const taskId=await createKieFlyingCarVideo(env,payload,imageUrl);
+   await patch(db,id,fence,{stage:'polling',provider_id:taskId,status:'processing'});return;
+  }
+  if(provider==='kie'&&!payload.template&&(job.stage==='new'||job.stage==='ready')){
    const references=await Promise.all([payload.leftImage,payload.rightImage].map(key=>signedMediaUrl(env,key)));
    let videoUrls:string[]|undefined,audioUrls:string[]|undefined;
    // Only explicit new settings opt into template media. Never change an old reservation.
@@ -157,14 +164,14 @@ export async function advanceJob(env:Env,id:string):Promise<void>{const db=datab
    const taskId=await createKieVideo(env,payload,references,{videoUrls,audioUrls});
    await patch(db,id,fence,{stage:'polling',provider_id:taskId,status:'processing'});return;
   }
-  if(provider==='apimart'&&job.kind==='video'&&payload.template!=='ozil-goal'&&(job.stage==='new'||job.stage==='reviewing')){
+  if(provider==='apimart'&&job.kind==='video'&&!payload.template&&(job.stage==='new'||job.stage==='reviewing')){
    const avatars:Avatar[]=job.assets?JSON.parse(job.assets):[{key:payload.leftImage,side:'left'},{key:payload.rightImage,side:'right'}];
    const index=avatars.findIndex(a=>!a.url);const avatar=avatars[index];
    if(avatar&&!avatar.taskId){const source=await signedMediaUrl(env,avatar.key);await patch(db,id,fence,{stage:'submitting_avatar',status:'reviewing',assets:JSON.stringify(avatars)});const data=await providerRequest(env,'/v1/seedance2/private-avatar',{group:{name:`${id}-${avatar.side}`},asset_type:'Image',assets:[{url:source,name:`${id}-${avatar.side}`}]});if(typeof data?.id!=='string')throw new ProviderError('Image review submission could not be confirmed.',true);avatar.taskId=data.id;await patch(db,id,fence,{stage:'reviewing',assets:JSON.stringify(avatars),progress:10+index*15});return;}
    if(avatar){const data=await providerRequest(env,`/v1/tasks/${encodeURIComponent(avatar.taskId!)}`);const status=normalizeProviderStatus(data?.status);if(status==='failed'||status==='cancelled'){await refundGeneration(db,id,status,'Image review failed. Your credits have been returned.',fence);return;}if(status!=='completed')return;avatar.url=usableAsset(data.result);await patch(db,id,fence,{assets:JSON.stringify(avatars),progress:25+index*15});if(avatars.some(a=>!a.url))return;}
    await patch(db,id,fence,{stage:'ready',assets:JSON.stringify(avatars)});return;
   }
-  if(payload.template!=='ozil-goal'&&(job.stage==='ready'||job.kind==='music'&&job.stage==='new')){
+  if(!payload.template&&(job.stage==='ready'||job.kind==='music'&&job.stage==='new')){
    const avatars:Avatar[]=JSON.parse(job.assets??'[]');const body=job.kind==='video'?{model:'seedance-2.0-fast',image_urls:avatars.map(a=>a.url),prompt:videoPrompt(payload),duration:payload.duration,resolution:payload.resolution,size:payload.aspect,generate_audio:true,nsfw_check:true}:musicPayload(JSON.parse(job.payload) as CreateSongRequest);
    await patch(db,id,fence,{stage:'submitting_generation',status:'processing',progress:45});const data=await providerRequest(env,job.kind==='video'?'/v1/videos/generations':'/v1/music/generations',body);if(typeof data?.[0]?.task_id!=='string')throw new ProviderError('Generation submission could not be confirmed.',true);await patch(db,id,fence,{stage:'polling',provider_id:data[0].task_id,status:'processing'});return;
   }

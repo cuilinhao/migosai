@@ -1,0 +1,89 @@
+/* Keep the reference page below migosai's fixed account/navigation header. */
+.flyingcar-page { padding-top: 80px; min-height: 100dvh; isolation: isolate; color-scheme: light; }
+.flyingcar-page .fc-site-header { position: relative; inset: auto; z-index: 10; }
+.flyingcar-page [id] { scroll-margin-top: 96px; }
+.flyingcar-page details > summary { list-style: none; cursor: pointer; }
+.flyingcar-page details > summary::-webkit-details-marker { display: none; }
+.flyingcar-page details:not([open]) > :not(summary) { display: none; }
+.flyingcar-page a:focus-visible, .flyingcar-page summary:focus-visible { outline: 2px solid var(--sunset); outline-offset: 4px; }
+.flyingcar-page video { max-width: 100%; }
+@media (max-width: 900px) { .flyingcar-page { padding-top: 64px; } .flyingcar-page [id] { scroll-margin-top: 80px; } }
+
+/* Keep the source layout and typography, but inherit migosai's shared palette.
+   The repeated class wins over the imported reference's local theme/reset. */
+.flyingcar-page.flyingcar-page {
+  --background: inherit;
+  --foreground: inherit;
+  --card: inherit;
+  --primary: inherit;
+  --primary-foreground: inherit;
+  --muted: inherit;
+  --accent: inherit;
+  --accent-foreground: inherit;
+  --destructive: inherit;
+  --border: inherit;
+  --input: inherit;
+  --night: var(--background);
+  --dusk: var(--card);
+  --plum: var(--paper-deep);
+  --sunset: var(--primary-strong);
+  --ember: var(--accent);
+  --cream: var(--foreground);
+  --line: var(--border);
+  --red: var(--destructive);
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --secondary: var(--paper-deep);
+  --secondary-foreground: var(--foreground);
+  --muted-foreground: var(--muted);
+  --ring: var(--primary-strong);
+  background: var(--background);
+  color: var(--foreground);
+}
+.flyingcar-page.flyingcar-page ::selection { background: var(--accent); color: var(--foreground); }
+.flyingcar-page.flyingcar-page .fc-site-header { background: var(--background); border-bottom-color: var(--border); }
+.flyingcar-page.flyingcar-page :is(.hero-lede, .what-you-get ul, .photo-guidance p, .stage-summary strong, .pack-blurb, .article-intro, .footer-disclaimer strong) { color: var(--foreground); }
+.flyingcar-page.flyingcar-page :is(.header-inner nav, .hero-chips span, .stage-bar, .prompt-label, .prompt-meta, .stage-summary span, .duration-value small, .duration-scale, .trust-line, .dialog-length, .dialog-note, .example-top span, .how-strip, .footer-links>div, .footer-disclaimer, .fc-footer-bottom, .article-updated, .article-body p, .article-body li, .article-figure figcaption) { color: var(--muted); }
+.flyingcar-page.flyingcar-page :is(.hero-chips span, .three-picks article, .audience-grid article, .fc-pricing-grid article, .blog-card, .how-grid article) { background: var(--card); }
+.flyingcar-page.flyingcar-page :is(.value-num, .how-grid article>b) { color: var(--primary-strong); }
+.flyingcar-page.flyingcar-page .fc-pricing-grid article.featured { background: var(--accent); border-color: var(--primary); }
+.flyingcar-page.flyingcar-page .best { background: var(--primary-strong); color: var(--primary-foreground); }
+.flyingcar-page.flyingcar-page .faq-plus { border-color: var(--input); background: var(--card); }
+.flyingcar-page.flyingcar-page .faq-trigger:hover { color: var(--primary-strong); }
+.flyingcar-page.flyingcar-page .final-cta { background: var(--paper-deep); }
+.flyingcar-page.flyingcar-page footer { background: var(--paper-deep); border-top-color: var(--border); }
+
+/* Source CTAs include utility classes, so theme both those and our form buttons. */
+.flyingcar-page.flyingcar-page :is(.big, .header-cta, .article-cta, .amber-button) {
+  background: var(--brand-gradient);
+  color: var(--foreground);
+  box-shadow: 0 5px 0 var(--accent-foreground);
+}
+.flyingcar-page.flyingcar-page :is(.big, .header-cta, .article-cta, .amber-button):hover:not(:disabled) { background: var(--primary-strong); color: var(--primary-foreground); }
+.flyingcar-page.flyingcar-page :is(.big, .header-cta, .article-cta, .amber-button):active:not(:disabled) { box-shadow: 0 1px 0 var(--accent-foreground); }
+.flyingcar-page.flyingcar-page .header-cta { box-shadow: none; }
+
+.flyingcar-page.flyingcar-page .what-you-get { background: var(--paper-deep); }
+.flyingcar-page.flyingcar-page .prompt-field textarea { background: var(--background); border-color: var(--input); }
+.flyingcar-page.flyingcar-page .prompt-field textarea::placeholder { color: var(--muted); }
+.flyingcar-page.flyingcar-page .prompt-field textarea:focus { border-color: var(--primary-strong); box-shadow: 0 0 0 3px var(--accent); }
+.flyingcar-page.flyingcar-page .prompt-meta b.good { color: var(--success); }
+.flyingcar-page.flyingcar-page :is(.prompt-meta b.over, .form-hint-error, .dialog-error) { color: var(--destructive); }
+.flyingcar-page.flyingcar-page .upload-box { border-color: var(--input); background: var(--background); }
+.flyingcar-page.flyingcar-page .upload-box:hover { border-color: var(--primary-strong); }
+.flyingcar-page.flyingcar-page .upload-box b { background: var(--accent); color: var(--accent-foreground); box-shadow: none; }
+.flyingcar-page.flyingcar-page .consent { color: var(--accent-foreground); }
+.flyingcar-page.flyingcar-page .upload-progress { background: var(--surface-inverse); color: var(--primary-foreground); }
+.flyingcar-page.flyingcar-page .upload-actions { background: linear-gradient(transparent, var(--surface-inverse)); }
+.flyingcar-page.flyingcar-page .upload-actions button { background: var(--card); color: var(--foreground); }
+.flyingcar-page.flyingcar-page .upload-actions button:hover { background: var(--accent); color: var(--accent-foreground); }
+.flyingcar-page.flyingcar-page :is(.rec i, .stage-bar i) { background: var(--destructive); }
+
+.flyingcar-page.flyingcar-page .dialog-backdrop { background: color-mix(in srgb, var(--surface-inverse) 65%, transparent); }
+.flyingcar-page.flyingcar-page .dialog { border-color: var(--border); box-shadow: 0 30px 90px color-mix(in srgb, var(--foreground) 25%, transparent); }
+.flyingcar-page.flyingcar-page .dialog-prompt { background: var(--paper-deep); color: var(--foreground); }
+.flyingcar-page.flyingcar-page .dialog-error { border-color: color-mix(in srgb, var(--destructive) 45%, var(--border)); background: color-mix(in srgb, var(--destructive) 5%, var(--card)); }
+.flyingcar-page.flyingcar-page :is(.video-frame, .video-frame video, video) { background: var(--surface-inverse); }
+.flyingcar-page.flyingcar-page .video-frame { box-shadow: 0 0 0 1px var(--border), 0 26px 60px -30px color-mix(in srgb, var(--foreground) 35%, transparent); }
+.flyingcar-page.flyingcar-page .example-grid .video-frame { box-shadow: 0 0 0 1px var(--border); }
