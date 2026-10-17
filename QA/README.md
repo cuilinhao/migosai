@@ -2,6 +2,12 @@
 
 自动化测试源码保留在 `tests/` 和 `components/**/*.test.*`。原始浏览器截图、生产账户与订单记录、供应商响应和生成的测试报告留在被忽略的本地归档，本目录只维护可复现的验证说明。
 
+## 2026-10-17 FlyingCar 内页与项目配色上线
+
+23:51（Asia/Shanghai）版本 `9ddc9b25-3e66-41df-85f7-cf6267f3c334` 发布至 100% 流量，源码 `f7a3301` 已推送 GitHub main。1,098 项测试、类型检查、Cloudflare 构建、独立审查与正式站 39 项 HTTP 检查通过，全部运行时绑定及 10 项 Secrets 保留。
+
+线上四档 Starter / Creator / Pro / Business 均成功打开正式 Stripe 收银台，金额分别 USD 9.90 / 29.90 / 49.90 / 99.90，积分分别 300 / 1,200 / 2,200 / 5,000；银行卡表单、四次取消返回及余额不变均通过。精确订单只读核对为 stripe/live、pending、Checkout 已记录、payment 账本零条。部分 Stripe Link 验证码面板提示尝试次数过多，选择 Pay without Link 后银行卡入口正常。未输入卡信息或实际付款；完整边界见 [上线与支付入口验收](../docs/flyingcar-release.md)。
+
 ## 2026-10-16 Stripe 收银台地址兼容修复
 
 11:34（Asia/Shanghai）版本 `0c4cb833-f936-438a-bd9d-5a1daa322f9d` 已发布到 100% 流量。线上购买此前提示 `The payment service returned an invalid checkout address.`，但 Stripe Dashboard 中对应 Checkout 创建请求实际返回 HTTP 200：Stripe 会返回 `/f/pay/` 或 `/g/pay/`，原代码只接受 `/c/pay/{sessionId}`，在记录 Checkout ID 前误拒有效地址。
