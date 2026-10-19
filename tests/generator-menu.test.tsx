@@ -18,10 +18,11 @@ describe("generator navigation", () => {
     expect(html).toContain('<span class="sr-only">Flying Car AI Generator / Ozil Goal Generator / AI Rap Song Generator</span>');
   });
 
-  it("names the current generator on its own pages", () => {
+  it("keeps the current generator selected while the desktop pill starts its rotation", () => {
     const html = render(<GeneratorMenu pathname="/ai-rap-song-generator"/>);
     expect(html).toContain("generator-menu-trigger active");
-    expect(html).toMatch(/generator-menu-slide is-shown"><svg[^]*?<span>AI Rap Song Generator<\/span>/);
+    expect(html.match(/generator-menu-slide is-shown"><svg[^]*?<\/svg><span>([^<]+)<\/span>/)?.[1]).toBe("Flying Car AI Generator");
+    expect(html).toContain('<span class="sr-only">Flying Car AI Generator / Ozil Goal Generator / AI Rap Song Generator</span>');
     expect(html).toContain('aria-current="page" href="/ai-rap-song-generator"');
   });
 

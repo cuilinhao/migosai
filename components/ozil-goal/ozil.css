@@ -49,7 +49,8 @@
 .ozil-page.og :is(.bg-red-300\/10,.bg-red-300\/15){background:color-mix(in srgb,var(--destructive) 8%,var(--card))}
 .ozil-page.og .bg-red-300{background:var(--destructive)}
 .ozil-page .og-credit-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.ozil-page .og-credit-card{display:flex;flex-direction:column;min-width:0;padding:28px;border:1px solid var(--og-line-strong);border-radius:20px;background:var(--og-panel)}
+.ozil-page .og-credit-card{display:flex;flex-direction:column;min-width:0;padding:28px;border:1px solid var(--og-line-strong);border-radius:20px;background:var(--og-panel);cursor:pointer;transition:border-color .15s,background-color .15s}
+.ozil-page .og-credit-card:hover{border-color:var(--og-flash)}
 .ozil-page .og-credit-featured{border-color:var(--og-flash);background:var(--og-flash-soft)}
 .ozil-page .og-credit-description{margin-top:12px;color:var(--og-muted);font-size:14px;min-height:66px}
 .ozil-page .og-credit-value{margin:20px 0;font-size:42px;line-height:1;color:var(--og-text)}

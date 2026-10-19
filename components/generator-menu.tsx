@@ -12,7 +12,7 @@ const generators = [
   { href: "/ozil-goal-generator", label: "Ozil Goal Generator", short: "Ozil Goal", blurb: "Turn one photo into the viral Ozil goal video", thumb: "/ozil-goal/samples/ai-shot1.jpg", Icon: Goal, isNew: true },
   { href: "/ai-rap-song-generator", label: "AI Rap Song Generator", short: "AI Rap Song", blurb: "Make a full rap song from a prompt or your lyrics", thumb: "/posters/lobbyduo/seedance-2-corgi-rap.jpg", Icon: Music2, isNew: false },
 ];
-const ROTATE_MS = 3200;
+const ROTATE_MS = 2000;
 const isUnder = (pathname: string, href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
 function useReducedMotion() {
@@ -42,10 +42,10 @@ export function GeneratorMenu({ pathname, mobile = false, onNavigate }: { pathna
   const panelId = useId();
   const currentIndex = generators.findIndex(({ href }) => isUnder(pathname, href));
   const active = currentIndex >= 0;
-  // On a generator's own pages the trigger names that generator; elsewhere the desktop pill rotates through all of them.
-  const rotating = !active && !mobile && !open && !hovered && !focused && !reducedMotion;
-  const shown = active ? currentIndex : mobile ? 0 : ticker.shown;
-  const leaving = active || mobile ? -1 : ticker.previous;
+  // The desktop pill rotates on every page; the mobile row names the current generator.
+  const rotating = !mobile && !open && !hovered && !focused && !reducedMotion;
+  const shown = mobile ? (active ? currentIndex : 0) : ticker.shown;
+  const leaving = mobile ? -1 : ticker.previous;
   const links = () => Array.from(root.current?.querySelectorAll<HTMLAnchorElement>("[data-generator-link]") ?? []);
 
   useEffect(() => {
@@ -102,7 +102,7 @@ export function GeneratorMenu({ pathname, mobile = false, onNavigate }: { pathna
           <Icon size={mobile ? 17 : 15} strokeWidth={1.9}/><span>{t(label)}</span>{isNew && <NewBadge/>}
         </span>)}
       </span>
-      <span className="sr-only">{active ? t(generators[currentIndex].label) : generators.map(({ label }) => t(label)).join(" / ")}</span>
+      <span className="sr-only">{mobile && active ? t(generators[currentIndex].label) : generators.map(({ label }) => t(label)).join(" / ")}</span>
       <ChevronDown className="generator-menu-chevron" size={14} aria-hidden="true"/>
     </button>
     <div id={panelId} className="generator-menu-panel" hidden={!open}>
