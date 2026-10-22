@@ -6,6 +6,22 @@
 @media(prefers-reduced-motion:reduce){.portal-shell *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 .portal-sidebar .locale-switcher select,.portal-drawer .locale-switcher select{appearance:none;background:#181818;color:#aaa;border:0;padding:3px 4px}.portal-sidebar .locale-switcher option,.portal-drawer .locale-switcher option{background:#181818;color:#eee}.portal-drawer .locale-switcher{background:#181818;color:#aaa;border-color:#333}.portal-drawer{color-scheme:dark}
 
+/* Homepage video density follows the reference's multi-row effects and masonry showcase. */
+.portal-home .portal-effects-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.portal-home .portal-effect-media{aspect-ratio:16/9}
+.portal-home .portal-effect-tag{display:none}
+.portal-section-more{display:flex;justify-content:center;margin-top:24px}
+.portal-section-more>a{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:#7953db;color:#fff;border-radius:24px;font-size:13px;font-weight:600;transition:background .2s}
+.portal-section-more>a:hover{background:#9068ec}
+.portal-creations-grid.is-showcase{display:block;columns:2;column-gap:16px}
+.portal-creations-grid.is-showcase .portal-creation-card{display:inline-block;vertical-align:top;width:100%;break-inside:avoid;margin-bottom:16px;aspect-ratio:4/3}
+.portal-creations-grid.is-showcase .portal-creation-card.portrait{aspect-ratio:9/16}
+.portal-effect-card:focus-visible .portal-effect-action,.portal-creation-card:focus-visible .portal-creation-play{opacity:1}
+.portal-effect-card:focus-visible h3{opacity:0}
+@media(min-width:1024px){.portal-home .portal-effects-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.portal-creations-grid.is-showcase{columns:3}}
+@media(min-width:1536px){.portal-home .portal-effects-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.portal-creations-grid.is-showcase{columns:4}}
+@media(max-width:600px){.portal-home .portal-effects-grid{gap:12px}.portal-creations-grid.is-showcase{column-gap:12px}.portal-creations-grid.is-showcase .portal-creation-card{margin-bottom:12px}}
+
 /* The video creation route uses PicLumen's full-height studio layout. */
 .portal-video-workspace .portal-content{margin-left:232px;padding:0 16px 0 0;overflow:visible}.portal-video-workspace .portal-account-bar{position:absolute;right:16px;top:16px;height:40px;z-index:5}.portal-video-workspace .portal-signin{height:40px;border:0;border-radius:24px;background:#f5f5f5;color:#222;font-size:14px;padding:0 18px}.portal-video-bottom{display:none}
 @media(min-width:1024px) and (max-width:1199px){.portal-video-workspace .portal-content{margin-left:204px}}

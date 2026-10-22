@@ -1,4 +1,6 @@
-import { ownExamples, seedanceExamples } from "./own-examples";
+import { getEffectCreationHref } from "./effect-templates";
+import { videoEffects } from "./effects";
+import { ownExamples, seedanceExamples, type OwnExample } from "./own-examples";
 
 export const portalTools = [
   { title: "AI Image Generator", description: "Your ideas, brought to life in stunning detail.", href: "/ai-image-generator", icon: "image", tag: "Nano Banana 2" },
@@ -18,7 +20,76 @@ export const portalEffects = [
   { title: "Rap Duo", tag: "Popular", image: "/posters/lobbyduo/seedance-2-fast-pug-raccoon.jpg", video: "/videos/lobbyduo/seedance-2-fast-pug-raccoon.mp4", href: "/hotel-lobby-ai-video-generator" },
 ];
 
-export const portalCreations = [...ownExamples, ...seedanceExamples];
+const getFeaturedEffect = (id: string) => {
+  const effect = videoEffects.find(item => item.id === id);
+  if (!effect) throw new Error(`Missing featured video effect: ${id}`);
+  return effect;
+};
+
+export const homeEffects = [
+  "001-hotel-lobby-rap-duo",
+  "027-neon-dance-video",
+  "014-burning-bridges-ai",
+  "013-smalltown-boy-ai-dance",
+  "004-hit-the-road-dude-ai-video",
+  "008-enzo-fernandez-celebration",
+  "009-rumpelstiltskin-ai-dance",
+  "040-zombie-bride",
+  "041-pet-trick-or-treat",
+].map(id => {
+  const effect = getFeaturedEffect(id);
+  return {
+    title: effect.title,
+    tag: id === "001-hotel-lobby-rap-duo" ? "Popular" : "Trending",
+    image: effect.poster,
+    video: effect.video,
+    href: getEffectCreationHref(effect),
+  };
+});
+
+export type PortalCreation = OwnExample & {
+  href: string;
+  category: "Dance" | "Pets" | "Cinematic";
+};
+
+export const portalCreations: PortalCreation[] = [...ownExamples, ...seedanceExamples].map(example => ({
+  ...example,
+  href: "/hotel-lobby-ai-video-generator#generator",
+  category: "Pets",
+}));
+
+const featuredCreations: { id: string; category: PortalCreation["category"]; portrait?: boolean }[] = [
+  { id: "002-flying-roadster", category: "Cinematic", portrait: true },
+  { id: "031-ai-tokyo-drift-video", category: "Cinematic" },
+  { id: "003-ai-money-flex", category: "Cinematic", portrait: true },
+  { id: "019-pet-dance", category: "Pets" },
+  { id: "023-squish-pout", category: "Cinematic" },
+  { id: "024-skyburst-portrait", category: "Cinematic" },
+  { id: "025-warrior-weveal", category: "Cinematic" },
+  { id: "007-ai-talk-dirty-dance", category: "Dance" },
+  { id: "018-michael-jackson-dance", category: "Dance", portrait: true },
+  { id: "058-street-jazz", category: "Dance" },
+  { id: "046-pet-peekaboo", category: "Pets" },
+  { id: "021-giant-on-viaduct", category: "Cinematic" },
+  { id: "035-pulled-into-halloween-blind-box", category: "Cinematic" },
+];
+
+export const homeCreations: PortalCreation[] = [
+  ...portalCreations.map(example => ({ ...example, portrait: true })),
+  ...featuredCreations.map(({ id, category, portrait }) => {
+    const effect = getFeaturedEffect(id);
+    return {
+      id,
+      src: effect.video,
+      poster: effect.poster,
+      model: "Video effect",
+      stage: effect.title,
+      href: getEffectCreationHref(effect),
+      category,
+      ...(portrait ? { portrait: true } : {}),
+    };
+  }),
+];
 export const portalArticles = [
   { title: "What is the Hotel Lobby AI trend?", description: "Meet the trend. Make it your own.", image: "/posters/lobbyduo/wan-3-retriever-rabbit.jpg", href: "/blog/what-is-hotel-lobby-ai-video" },
   { title: "How to make a flying car video", description: "From a single photo to takeoff.", image: "/flyingcar/real/downtown-flyby.jpg", href: "/flying-car-ai-video-generator/how-to-make-a-tesla-roadster-flying-car-video" },
