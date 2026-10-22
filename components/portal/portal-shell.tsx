@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { AudioLines, BookOpen, ChevronDown, Clapperboard, Compass, FolderOpen, Gem, Home, ImageIcon, LogOut, Menu, Sparkles, Sun, Trophy, WandSparkles, X } from "lucide-react";
 import * as Dialog from "@radix-ui/react-dialog";
@@ -33,23 +33,26 @@ export function PortalBrand() { return <span className="portal-brand"><Sun size=
 export function PortalShell({ children }: { children: ReactNode }) {
   const t = useTranslations();
   const pathname = stripLocale(usePathname());
+  const videoWorkspace = pathname === "/ai-video-generator";
   const { user, credits, loading, openSignIn, logout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const [notice, setNotice] = useState("");
+  const mobileMore = useRef<HTMLButtonElement>(null);
   useEffect(() => { setMobileOpen(false); setAccountOpen(false); }, [pathname]);
   const navigation = <>
-    <Link href="/" className="portal-brand-link" onClick={() => setMobileOpen(false)}><PortalBrand/></Link>
+    <Link href="/" aria-label={`MigosAI ${t("Home")}`} className="portal-brand-link" onClick={() => setMobileOpen(false)}><PortalBrand/></Link>
     <nav className="portal-nav" aria-label={t("Main navigation")}>
-      {groups.map(group => <div className="portal-nav-group" key={group.label}>{group.label && <small>{t(group.label)}</small>}{group.items.map(({ label, href, Icon }) => <Link key={href} href={href} aria-current={navigationIsActive(pathname, href) ? "page" : undefined} className={navigationIsActive(pathname, href) ? "active" : ""} onClick={() => setMobileOpen(false)}><Icon size={18}/><span>{t(label)}</span>{label === "Image" && <i className="portal-new">NEW</i>}</Link>)}</div>)}
-      <div className="portal-nav-group"><button className="portal-coming" aria-disabled="true" onClick={() => setNotice(t("Quests are coming soon."))}><Trophy size={18}/><span>{t("Quests")}<small>{t("Coming soon")}</small></span></button></div>
+      {groups.map(group => <div className="portal-nav-group" key={group.label}>{group.label && <small>{t(group.label)}</small>}{group.items.map(({ label, href, Icon }) => <Link key={href} href={href} aria-label={t(label)} aria-current={navigationIsActive(pathname, href) ? "page" : undefined} className={navigationIsActive(pathname, href) ? "active" : ""} onClick={() => setMobileOpen(false)}><Icon size={18}/><span>{t(label)}</span>{label === "Image" && <i className="portal-new">NEW</i>}</Link>)}</div>)}
+      <div className="portal-nav-group"><button className="portal-coming" aria-label={`${t("Quests")} · ${t("Coming soon")}`} aria-disabled="true" onClick={() => setNotice(t("Quests are coming soon."))}><Trophy size={18}/><span>{t("Quests")}<small>{t("Coming soon")}</small></span></button></div>
     </nav>
-    <div className="portal-sidebar-bottom"><Link href="/pricing" aria-current={pathname === "/pricing" ? "page" : undefined} className="portal-upgrade"><Gem size={17}/>{t("Pricing")}</Link><LanguageSwitcher compact/></div>
+    <div className="portal-sidebar-bottom"><Link href="/pricing" aria-label={t("Pricing")} aria-current={pathname === "/pricing" ? "page" : undefined} className="portal-upgrade"><Gem size={17}/>{t("Pricing")}</Link><LanguageSwitcher compact/></div>
   </>;
-  return <div className="portal-shell">
+  return <div className={`portal-shell${videoWorkspace ? " portal-video-workspace" : ""}`}>
     <aside className="portal-sidebar">{navigation}</aside>
-    <header className="portal-mobile-header"><Dialog.Root open={mobileOpen} onOpenChange={setMobileOpen}><Dialog.Trigger className="portal-icon-button" aria-label={t("Open menu")}><Menu/></Dialog.Trigger><Dialog.Portal><Dialog.Overlay className="portal-drawer-shade"/><Dialog.Content className="portal-drawer"><Dialog.Title className="sr-only">{t("Main navigation")}</Dialog.Title><Dialog.Description className="sr-only">{t("Explore MigosAI tools and creations.")}</Dialog.Description><Dialog.Close className="portal-drawer-close" aria-label={t("Close menu")}><X/></Dialog.Close>{navigation}</Dialog.Content></Dialog.Portal></Dialog.Root><Link href="/"><PortalBrand/></Link></header>
-    <div className="portal-content"><div className="portal-account-bar">{user ? <><Link className="portal-credit" href="/app/my-credits"><Gem size={14}/>{t("{count} credits", { count: credits })}</Link><div className="portal-account"><button onClick={() => setAccountOpen(!accountOpen)} aria-expanded={accountOpen}><span className="portal-avatar">{user.name.slice(0,1).toUpperCase()}</span><ChevronDown size={14}/></button>{accountOpen && <div className="portal-account-menu"><Link href="/app/assets">{t("My assets")}</Link><Link href="/app/my-orders">{t("My Orders")}</Link><button onClick={async () => { try { await logout(); setAccountOpen(false); } catch { setNotice(t("Could not sign out. Please try again.")); } }}><LogOut size={14}/>{t("Sign Out")}</button></div>}</div></> : <button className="portal-signin" onClick={openSignIn} disabled={loading}>{t(loading ? "Loading…" : "Sign In")}</button>}</div><main>{children}</main><PortalFooter/></div>
+    <header className="portal-mobile-header"><Dialog.Root open={mobileOpen} onOpenChange={setMobileOpen}><Dialog.Trigger className="portal-icon-button" aria-label={t("Open menu")}><Menu/></Dialog.Trigger><Dialog.Portal><Dialog.Overlay className="portal-drawer-shade"/><Dialog.Content className="portal-drawer" onCloseAutoFocus={event => { if (videoWorkspace && mobileMore.current?.getClientRects().length) { event.preventDefault(); mobileMore.current.focus(); } }}><Dialog.Title className="sr-only">{t("Main navigation")}</Dialog.Title><Dialog.Description className="sr-only">{t("Explore MigosAI tools and creations.")}</Dialog.Description><Dialog.Close className="portal-drawer-close" aria-label={t("Close menu")}><X/></Dialog.Close>{navigation}</Dialog.Content></Dialog.Portal></Dialog.Root><Link href="/"><PortalBrand/></Link></header>
+    <div className="portal-content"><div className="portal-account-bar">{user ? <><Link className="portal-credit" href="/app/my-credits"><Gem size={14}/>{t("{count} credits", { count: credits })}</Link><div className="portal-account"><button onClick={() => setAccountOpen(!accountOpen)} aria-expanded={accountOpen}><span className="portal-avatar">{user.name.slice(0,1).toUpperCase()}</span><ChevronDown size={14}/></button>{accountOpen && <div className="portal-account-menu"><Link href="/app/assets">{t("My assets")}</Link><Link href="/app/my-orders">{t("My Orders")}</Link><button onClick={async () => { try { await logout(); setAccountOpen(false); } catch { setNotice(t("Could not sign out. Please try again.")); } }}><LogOut size={14}/>{t("Sign Out")}</button></div>}</div></> : <button className="portal-signin" onClick={openSignIn} disabled={loading}>{t(loading ? "Loading…" : "Sign In")}</button>}</div><main>{children}</main>{!videoWorkspace && <PortalFooter/>}</div>
+    {videoWorkspace && <nav className="portal-video-bottom" aria-label={t("Main navigation")}><Link href="/"><Home size={20}/><span>{t("Home")}</span></Link><Link href="/explore"><Compass size={20}/><span>{t("Feed")}</span></Link><button className="portal-video-create" aria-label={t("Create video")} onClick={() => document.getElementById("video-workspace-prompt")?.focus()}><Sparkles size={23}/></button><Link href="/pricing"><Gem size={20}/><span>{t("Pricing")}</span></Link><button ref={mobileMore} onClick={() => setMobileOpen(true)}><Menu size={20}/><span>{t("More")}</span></button></nav>}
     {notice && <div className="portal-toast" role="status">{notice}<button aria-label={t("Close")} onClick={() => setNotice("")}><X size={16}/></button></div>}
   </div>;
 }
