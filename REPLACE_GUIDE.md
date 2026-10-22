@@ -18,6 +18,14 @@
 
 生产 `APP_URL` 必须使用可公开访问的 HTTPS 源地址，供服务商读取参考素材。媒体 CDN 仅加入服务商实际返回且核实过的精确主机名。Waffo 沙箱和生产使用各自的密钥，`WAFFO_MODE` 必须与目标环境一致。
 
+### 本地 Google 登录
+
+`http://127.0.0.1:3000` 支持 Google 登录。Google Web OAuth 客户端需同时授权 JavaScript 来源 `http://127.0.0.1:3000` 和回调 `http://127.0.0.1:3000/api/auth/callback/google`；保留线上 HTTPS 地址。`localhost` 与 `127.0.0.1` 是不同来源，使用哪个地址就配置对应来源及回调。
+
+将 `.env.example` 复制为被 Git 忽略的 `.dev.vars`，填入本地 `APP_URL`、`GOOGLE_CLIENT_ID`、`GOOGLE_CLIENT_SECRET`，并限制文件权限为 `0600`。Wrangler 从 `--config` 指定文件所在目录读取 `.dev.vars`：使用 `.local-evidence/piclumen-recraft/wrangler-preview.json` 预览时，应将同目录 `.dev.vars` 链接到项目根目录配置（相对链接目标为 `../../.dev.vars`）。修改凭据后重启预览，或触发 Wrangler 配置重载。
+
+验证时从 `/pricing` 完成 Google 授权回跳，并刷新页面确认登录态保留。密钥仅保存在本地忽略文件或生产 Workers Secrets，不写入源码、截图、日志或公开文档。2026-10-22 已在上述本地地址完成真实 Google 登录及刷新验证。
+
 ## 数据库与发布
 
 1. 安装锁定依赖并运行 `npm test`、`npm run typecheck`、`npm run cf:build`。
@@ -26,6 +34,10 @@
 4. 在确认的源码版本运行 `npm run deploy`，记录提交和发布版本。以 [QA 说明](QA/README.md) 核查线上页面、认证、媒体访问及关键交互。
 
 保留已有任务、积分账本及历史付款记录。不要把忽略目录中的凭据、数据库转储、原始日志或真实账户截图放入发布源码。
+
+发布依赖使用 Next.js 16.4.2、OpenNext Cloudflare 1.20.13 和 Wrangler 4.151.3，构建脚本显式使用 Webpack。Next.js 16.4 新增 `preview-props.json`，旧 OpenNext 1.20.7 在 Workers 中加载动态页面会失败；构建成功后仍需运行实际 Worker 预览核验。
+
+图片生成与资产库分别需要迁移 `0007_image_generations.sql` 和 `0008_asset_library.sql`。迁移前记录 D1 Time Travel 恢复书签，迁移后核对任务、用户余额及积分账本总数，并运行外键检查。图片任务启用后，回滚代码也须保留对 `kind=image` 的处理能力，不能直接回滚到仅支持视频、音乐的旧 Worker；保留这两项迁移。
 
 ## 邮箱登录与 Google One Tap
 
