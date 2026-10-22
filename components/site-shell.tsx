@@ -10,5 +10,5 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = stripLocale(usePathname());
   const standalone = pathname === "/landing" || pathname === "/sign-in" || pathname === "/sign-up" || pathname === "/app" || pathname.startsWith("/app/");
   if (standalone) return <>{children}</>;
-  return <PortalShell>{portalPages.has(pathname) ? children : <div className="portal-inner-page">{children}</div>}</PortalShell>;
+  return <PortalShell>{(portalPages.has(pathname) || pathname.startsWith("/effects/")) ? children : <div className="portal-inner-page">{children}</div>}</PortalShell>;
 }

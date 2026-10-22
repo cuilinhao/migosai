@@ -52,16 +52,24 @@ type Props = { params: Promise<{ locale: string; path?: string[] }> };
 async function resolvePage(params: Props["params"]) {
   const { locale, path = [] } = await params;
   const pathname = `/${path.join("/")}`;
-  if (isLocale(locale) && /^\/ozil-goal-generator\/blog(?:\/|$)/.test(pathname)) permanentRedirect(pathname);
-  if (!isLocale(locale) || !Object.hasOwn(routes, pathname)) notFound();
-  return { page: await routes[pathname as keyof typeof routes](), pathname };
+  if (!isLocale(locale)) notFound();
+  if (/^\/ozil-goal-generator\/blog(?:\/|$)/.test(pathname)) permanentRedirect(pathname);
+  const effect = pathname.match(/^\/effects\/([^/]+)$/);
+  if (effect) return { kind: "effect" as const, page: await import("@/app/effects/[slug]/page"), pathname, params: Promise.resolve({ slug: effect[1] }) };
+  if (!Object.hasOwn(routes, pathname)) notFound();
+  return { kind: "static" as const, page: await routes[pathname as keyof typeof routes](), pathname };
 }
 export async function generateMetadata({ params }: Props) {
-  const { page } = await resolvePage(params);
-  return page.generateMetadata();
+  const resolved = await resolvePage(params);
+  return resolved.kind === "effect" ? resolved.page.generateMetadata({ params: resolved.params }) : resolved.page.generateMetadata();
 }
 export default async function LocalizedPage({ params }: Props) {
-  const { page, pathname } = await resolvePage(params);
+  const resolved = await resolvePage(params);
+  if (resolved.kind === "effect") {
+    const Page = resolved.page.default;
+    return <Page params={resolved.params}/>;
+  }
+  const { page, pathname } = resolved;
   const Page = page.default;
   return pathname.startsWith("/app/") ? <AccountLayout><Page/></AccountLayout> : <Page/>;
 }

@@ -33,7 +33,7 @@ export function PortalBrand() { return <span className="portal-brand"><Sun size=
 export function PortalShell({ children }: { children: ReactNode }) {
   const t = useTranslations();
   const pathname = stripLocale(usePathname());
-  const videoWorkspace = pathname === "/ai-video-generator";
+  const videoWorkspace = pathname === "/ai-video-generator" || pathname.startsWith("/effects/");
   const effectsCatalog = pathname === "/effects";
   const assetsWorkspace = pathname === "/app/assets";
   const { user, credits, loading, openSignIn, logout } = useAuth();

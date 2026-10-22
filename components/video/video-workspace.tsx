@@ -2,19 +2,21 @@
 
 import { useEffect, useRef, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import { AudioLines, ChevronDown, ChevronRight, ClipboardPaste, Clock3, Download, Heart, ImageIcon, ImagePlus, LoaderCircle, MoreVertical, Pause, Play, RefreshCw, SlidersHorizontal, Sparkles, Video, X, Zap } from "lucide-react";
+import { AudioLines, ChevronDown, ChevronLeft, ChevronRight, ClipboardPaste, Clock3, Download, Heart, ImageIcon, ImagePlus, LoaderCircle, MoreVertical, Pause, Play, RefreshCw, SlidersHorizontal, Sparkles, Video, X, Zap } from "lucide-react";
 import Link from "@/components/i18n/localized-link";
 import { useGenerationTranslations } from "@/components/generator/use-generation";
 import { FLYING_CAR_PROMPT_MAX } from "@/components/flyingcar/submission";
 import { videoInspiration } from "@/content/video-inspiration";
+import type { EffectTemplate } from "@/content/effect-templates";
+import { EffectTemplatePreview } from "@/components/effects/effect-template-preview";
 import { useVideoWorkspace } from "./use-video-workspace";
 import styles from "./video-workspace.module.css";
 
 type Inspiration = (typeof videoInspiration)[number];
 
-export function VideoWorkspace() {
+export function VideoWorkspace({ template }: { template?: EffectTemplate } = {}) {
   const t = useGenerationTranslations();
-  const creator = useVideoWorkspace();
+  const creator = useVideoWorkspace({ initialPrompt: template?.prompt, resumeHistory: !template });
   const [modelsOpen, setModelsOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [modelGroup, setModelGroup] = useState("recommended");
@@ -76,14 +78,19 @@ export function VideoWorkspace() {
     {advanced && <div className={styles.advancedContent}><div><span>{t("Resolution")}</span><b>480P</b></div><div><span>{t("Generate Audio")}</span><span className={styles.toggle} role="switch" aria-checked="false" aria-disabled="true" aria-label={t("Generate Audio")}/></div><p>{t("This model currently supports 9:16, 480p and silent video.")}</p></div>}
   </div>;
 
-  return <div className={styles.workspace}>
-    <h1 className="sr-only">{t("AI Video Generator")}</h1>
+  return <div className={`${styles.workspace}${template ? ` ${styles.templateWorkspace}` : ""}`}>
+    {!template && <h1 className="sr-only">{t("AI Video Generator")}</h1>}
     <section className={styles.panel} aria-label={t("Generation settings")} aria-busy={locked}>
       <div className={styles.fields}>
+        {template && <header className={styles.templateHeading}>
+          <Link href="/effects"><ChevronLeft size={14}/>{t("Back to effects")}</Link>
+          <h1>{template.effect.title}</h1>
+          <p>{t("Add your photo, adjust the prepared prompt, and generate your version.")}</p>
+        </header>}
         <div className={styles.desktopOnly}>{modelField}</div>
-        <div className={styles.desktopOnly}>{referenceField("video-reference")}</div>
+        <div className={template ? styles.templateReference : styles.desktopOnly}>{referenceField("video-reference")}</div>
         <div className={styles.promptField}>
-          <label className={`${styles.label} ${styles.promptLabel}`} htmlFor="video-workspace-prompt">{t("Prompt")}</label>
+          <div className={template ? styles.templatePromptLabel : undefined}><label className={`${styles.label} ${styles.promptLabel}`} htmlFor="video-workspace-prompt">{t("Prompt")}</label>{template && <button type="button" disabled={locked} onClick={() => creator.setPrompt(template.prompt)}>{t("Reset prompt")}</button>}</div>
           <div className={styles.promptBox}>
             <textarea ref={prompt} id="video-workspace-prompt" value={creator.prompt} disabled={locked} maxLength={FLYING_CAR_PROMPT_MAX} onChange={event => { creator.setPrompt(event.target.value); creator.setError(""); }} placeholder={t("Describe the piece you want to create...")} aria-describedby="video-prompt-count"/>
             <span className={styles.counter} id="video-prompt-count">{creator.prompt.length}/{FLYING_CAR_PROMPT_MAX}</span>
@@ -110,7 +117,7 @@ export function VideoWorkspace() {
       {(busy || generation) ? <div className={styles.result}>
         {generation?.status === "completed" && generation.videoUrl ? <><h2>{t("Your video is ready")}</h2><video src={generation.videoUrl} controls playsInline preload="metadata" aria-label={t("Your video is ready")}/><a className={styles.resultDownload} href={generation.videoUrl} download><Download size={17}/>{t("Download video")}</a></> : busy || active ? <><div className={styles.progressIcon}><Sparkles size={30}/></div><h2>{t(busy ? creator.stage : generation?.statusMessage ?? "Generating your video…")}</h2><div className={styles.progress} role="progressbar" aria-label={t("Video generation progress")} aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress}><span style={{width:`${progress}%`}}/></div>{generation && <p>{t("Your task is saved in My Videos.")}</p>}</> : <><h2>{t("Generation could not be completed.")}</h2><p role="alert">{t(generation?.error ?? generation?.statusMessage ?? "Generation could not be completed.")}</p></>}
         {pollError && <p role="status">{t(pollError)}</p>}<Link href="/app/my-videos">{t("Open My Videos")}<ChevronRight size={14}/></Link>
-      </div> : <div className={styles.inspiration}>
+      </div> : template ? <EffectTemplatePreview effect={template.effect}/> : <div className={styles.inspiration}>
         <h2>{t("Get Inspired Here")}</h2>
         <div className={styles.gallery}>{inspirations.map(item => <InspirationCard key={item.src} item={item} paused={paused} onOpen={trigger => { previewTrigger.current = trigger; setPreview(item); }}/>)}</div>
         <div className={styles.galleryActions}><button type="button" className={styles.refresh} onClick={() => setOffset(value => (value + 1) % videoInspiration.length)}><RefreshCw size={19}/>{t("Refresh")}</button><Link href="/explore">{t("View All")}</Link><button type="button" className={styles.pause} aria-label={t(paused ? "Play previews" : "Pause previews")} onClick={() => setPaused(!paused)}>{paused ? <Play size={14}/> : <Pause size={14}/>}</button></div>

@@ -68,10 +68,11 @@ const deferred = <T>() => {
   return { promise, resolve, reject };
 };
 let workspace: ReturnType<typeof useVideoWorkspace>;
+let workspaceOptions: { initialPrompt?: string; resumeHistory?: boolean } | undefined;
 let fetchMock: ReturnType<typeof vi.fn<typeof fetch>>;
 const render = (effects = true) => {
   host.cursor = 0; host.dirty = false;
-  workspace = useVideoWorkspace();
+  workspace = useVideoWorkspace(workspaceOptions);
   if (effects) host.flushEffects();
   return workspace;
 };
@@ -89,6 +90,7 @@ const editPrompt = (value = prompt) => { workspace.setPrompt(value); flush(); };
 
 beforeEach(() => {
   host.reset(); vi.clearAllMocks();
+  workspaceOptions = undefined;
   mocks.auth.user = ownerA; mocks.auth.credits = 500; mocks.auth.loading = false;
   mocks.prepare.mockImplementation(async (photo: File) => photo);
   mocks.upload.mockResolvedValue({ key: 'users/owner-a/uploads/photo' });
@@ -101,6 +103,60 @@ beforeEach(() => {
 afterEach(() => { host.dispose(); vi.useRealTimers(); vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
 describe('video workspace', () => {
+  it('starts with the selected template prompt and keeps edits across ordinary rerenders', () => {
+    workspaceOptions = { initialPrompt: prompt, resumeHistory: false };
+    flush();
+    expect(workspace.prompt).toBe(prompt);
+    editPrompt('A silver roadster flies above a snowy mountain range.');
+    workspaceOptions = { initialPrompt: prompt, resumeHistory: false };
+    flush();
+    expect(workspace.prompt).toBe('A silver roadster flies above a snowy mountain range.');
+  });
+
+  it('preserves an anonymous template draft at sign-in, then restores the public template on account changes and sign-out', () => {
+    workspaceOptions = { initialPrompt: prompt, resumeHistory: false };
+    mocks.auth.user = null; flush();
+    editPrompt('My private car on a quiet mountain road.');
+    workspace.changePhoto(file); flush(); workspace.setConsent(true); flush();
+    mocks.auth.user = ownerA; flush();
+    expect(workspace.prompt).toBe('My private car on a quiet mountain road.');
+    expect(workspace.photo?.file).toBe(file);
+    expect(workspace.consent).toBe(true);
+    mocks.auth.user = ownerB; render(false);
+    expect(workspace.prompt).toBe(prompt);
+    expect(workspace.photo).toBeNull();
+    expect(workspace.consent).toBe(false);
+    flush();
+    expect(URL.revokeObjectURL).toHaveBeenCalledWith('blob:scene-photo');
+    editPrompt('Another private scene for the second account.');
+    mocks.auth.user = null; render(false);
+    expect(workspace.prompt).toBe(prompt);
+    expect(workspace.photo).toBeNull();
+    flush();
+    expect(workspace.prompt).toBe(prompt);
+  });
+
+  it('does not fetch or resume unrelated history for a template but submits its prompt and polls the new task', async () => {
+    vi.useFakeTimers();
+    workspaceOptions = { initialPrompt: prompt, resumeHistory: false };
+    fetchMock.mockImplementation(async url => {
+      if (url === '/api/generations') return response({ generations: [{ ...queued, id: 'unrelated-video', kind: 'video', template: 'flyingcar' }] });
+      if (url === '/api/flyingcar/generations') return response(queued);
+      return response({ ...queued, status: 'completed', progress: 100, videoUrl: '/api/media/template-result' });
+    });
+    flush(); await settle();
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(workspace.generation).toBeNull();
+    expect(workspace.locked).toBe(false);
+    await workspace.submit(); flush();
+    expect(JSON.parse(String(createRequests()[0][1]?.body))).toEqual({ prompt, duration: 10 });
+    expect(workspace.generation?.id).toBe('new-job');
+    await vi.advanceTimersByTimeAsync(2500); flush();
+    expect(workspace.generation?.videoUrl).toBe('/api/media/template-result');
+    expect(workspace.locked).toBe(false);
+    expect(fetchMock.mock.calls.some(([url]) => url === '/api/generations')).toBe(false);
+  });
+
   it('opens sign-in for anonymous submission and keeps that draft, but hides it immediately on a later account switch', async () => {
     mocks.auth.user = null;
     flush(); editPrompt(); workspace.changePhoto(file); flush(); workspace.setConsent(true); flush();

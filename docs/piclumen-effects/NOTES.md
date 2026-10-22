@@ -64,3 +64,17 @@ SSR和API使用 `images.piclumen.com`，实际浏览器展示资源使用 `publi
 复刻评分（5分制，人工依据截图和实际交互评估）：结构5、视觉4、交互4、响应式5、品牌替换5、视频展示功能5。视觉差异主要是MigosAI导航与移动端站点页头；交互范围是展示和播放，未复刻原站模板生成业务。
 
 本次没有执行付费视频生成，没有公开部署。全部媒体已本地保存，站点运行时播放不依赖原站媒体域名。
+
+
+## 2026-10-22 制作入口与效果内页
+
+根据用户进一步确认，预览中的制作按钮必须指向当前视频的具体制作内页，不能统一打开空白通用工作台。
+
+- Rap Duo → `/hotel-lobby-ai-video-generator#generator`；Flying Roadster → `/flying-car-ai-video-generator#create`；Ozil Goal AI → `/ozil-goal-generator#generator`。复用现有专用上传、模板、模型与生成流程。
+- 其余74个效果 → `/effects/[id]`，每页显示当前效果标题、对应示例、参考照片入口与已填写的专属提示词。提示词可编辑或重置，沿用现有Seedance 2.5生成、计费和状态轮询。
+- `content/effect-templates.ts` 保存77条制作映射和提示词。新提示词是MigosAI按效果内容编写的起始方案，不是PicLumen私有预设。示例作为参考，页面说明以照片和实际提示词生成结果。
+- 英文及现有五种翻译路径支持直接访问；未知ID返回404，原生三个效果的独立URL跳转到各自本地化专用页。效果制作页使用统一暗色工作台，Effects导航选中。
+- 新效果页不自动恢复无关的旧生成任务；切换效果重新加载对应公共提示词。匿名编辑登录保留，切换账号清除私人编辑与引用照片。
+- 浏览器实测：Rap Duo进入双人照片专用生成器；Money Flex进入对应预览和386字符提示词的内页；照片选择及提示词重置成功；返回目录改选Tokyo Drift后，标题、预览、342字符提示词均切换且旧照片不残留。390px视口无横向溢出；繁体中文内页直接加载成功，浏览器无错误。
+- 验证：类型检查、OpenNext构建通过；排除另一项进行中的landing测试后，92个测试文件、1537项通过。未执行付费生成。
+- 浏览器截图保存于忽略目录 `.local-evidence/piclumen-assets/`：`effect-rap-duo-inner.png`、`effect-money-flex-inner.png`、`effect-money-flex-inner-zh.png`、`effect-tokyo-drift-mobile.png`。

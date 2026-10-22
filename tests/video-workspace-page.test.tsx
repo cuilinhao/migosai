@@ -7,9 +7,23 @@ import { AuthProvider } from "@/components/auth-provider";
 import { getMessages, locales, localizeHref } from "@/lib/i18n";
 import { getFlyingCarCost } from "@/lib/flyingcar";
 import { videoInspiration } from "@/content/video-inspiration";
+import { videoEffects } from "@/content/effects";
 vi.mock("next/navigation", () => ({ usePathname: () => "/ai-video-generator" }));
 
 describe("video creation workspace", () => {
+  it.each(locales)("opens the selected effect with its editable prompt and preview in %s", locale => {
+    const effect = videoEffects[2];
+    const prompt = "Preserve the reference subject's appearance. Fan a stack of prop banknotes in a close-up shot.";
+    const html = renderToStaticMarkup(<LocaleProvider locale={locale} messages={getMessages(locale)}><AuthProvider><VideoWorkspace template={{effect, prompt}}/></AuthProvider></LocaleProvider>);
+    expect(html).toContain(`<h1>${effect.title}</h1>`);
+    expect(html).toContain(`src="${effect.video}"`);
+    expect(html).toContain(`poster="${effect.poster}"`);
+    expect(html).toContain('appearance. Fan a stack of prop banknotes in a close-up shot.</textarea>');
+    expect(html).toContain(`href="${localizeHref("/effects", locale)}"`);
+    expect(html).not.toContain(videoInspiration[0].src);
+    expect(html).not.toContain(effect.sourcePage);
+  });
+
   it.each(locales)("renders the dedicated workspace and existing generation limits in %s", locale => {
     const html = renderToStaticMarkup(<LocaleProvider locale={locale} messages={getMessages(locale)}><AuthProvider><PortalShell><VideoWorkspace/></PortalShell></AuthProvider></LocaleProvider>);
     expect(html).toContain("portal-video-workspace");

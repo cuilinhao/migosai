@@ -14,6 +14,7 @@ import type { GenerationResponse } from '@/lib/contracts';
 import { FLYING_CAR_CONFIG, getFlyingCarCost } from '@/lib/flyingcar';
 
 export type VideoWorkspacePhoto = { file: File; url: string; id: string };
+export type VideoWorkspaceOptions = { initialPrompt?: string; resumeHistory?: boolean };
 type Owner = string | null;
 type Draft = { owner: Owner; prompt: string; duration: number; photo: VideoWorkspacePhoto | null; consent: boolean };
 type WorkspaceState = {
@@ -22,19 +23,19 @@ type WorkspaceState = {
 };
 const terminal = new Set(['completed', 'failed', 'cancelled']);
 const supportedPhotos = new Set(['image/jpeg', 'image/png', 'image/webp']);
-const emptyDraft = (owner: Owner): Draft => ({ owner, prompt: '', duration: FLYING_CAR_CONFIG.defaultDuration, photo: null, consent: false });
+const emptyDraft = (owner: Owner, prompt = ''): Draft => ({ owner, prompt, duration: FLYING_CAR_CONFIG.defaultDuration, photo: null, consent: false });
 const emptyWorkspace = (owner: Owner): WorkspaceState => ({ owner, busy: false, stage: '', error: '', pollError: '', generation: null, uploadProgress: null });
 
 /** The existing Seedance 2.5 workflow, independent of the FlyingCar presentation. */
-export function useVideoWorkspace() {
+export function useVideoWorkspace({ initialPrompt = '', resumeHistory = true }: VideoWorkspaceOptions = {}) {
   const { user, credits, loading: authLoading, openSignIn, refresh } = useAuth();
   const owner = user?.id ?? null;
   const ownerRef = useRef(owner);
   ownerRef.current = owner;
-  const [savedDraft, setDraft] = useState<Draft>(() => emptyDraft(owner));
+  const [savedDraft, setDraft] = useState<Draft>(() => emptyDraft(owner, initialPrompt));
   const [savedState, setState] = useState<WorkspaceState>(() => emptyWorkspace(owner));
   // Hide private inputs and results immediately, before the account-change effect runs.
-  const draft = savedDraft.owner && savedDraft.owner !== owner ? emptyDraft(owner) : savedDraft;
+  const draft = savedDraft.owner && savedDraft.owner !== owner ? emptyDraft(owner, initialPrompt) : savedDraft;
   const state = savedState.owner === owner ? savedState : emptyWorkspace(owner);
   const { prompt, duration, photo, consent } = draft;
   const { busy, stage, error, generation, pollError, uploadProgress } = state;
@@ -62,7 +63,7 @@ export function useVideoWorkspace() {
   ));
   const editDraft = (patch: Partial<Draft>) => {
     if (isLocked() || ownerRef.current !== owner) return;
-    setDraft(current => ({ ...(current.owner && current.owner !== owner ? emptyDraft(owner) : current), owner, ...patch }));
+    setDraft(current => ({ ...(current.owner && current.owner !== owner ? emptyDraft(owner, initialPrompt) : current), owner, ...patch }));
     updateState(owner, { error: '' });
   };
 
@@ -73,10 +74,10 @@ export function useVideoWorkspace() {
     idempotency.current = null; uploaded.current = null; submittedJob.current = null; currentJob.current = null;
     setState(emptyWorkspace(owner));
     // Anonymous work survives sign-in; an account's private draft never transfers to another owner.
-    setDraft(current => current.owner && current.owner !== owner ? emptyDraft(owner) : { ...current, owner });
+    setDraft(current => current.owner && current.owner !== owner ? emptyDraft(owner, initialPrompt) : { ...current, owner });
   }, [owner]);
   useEffect(() => {
-    if (!owner || authLoading) return;
+    if (!resumeHistory || !owner || authLoading) return;
     let current = true;
     const controller = new AbortController();
     void (async () => {
@@ -88,7 +89,7 @@ export function useVideoWorkspace() {
       } catch { /* A history lookup failure must not prevent a new generation. */ }
     })();
     return () => { current = false; controller.abort(); };
-  }, [owner, authLoading]);
+  }, [owner, authLoading, resumeHistory]);
   useEffect(() => {
     if (!generation || terminal.has(generation.status)) return;
     const generationId = generation.id;
