@@ -26,7 +26,15 @@ describe("complete effects gallery", () => {
     expect(html).toContain(translate(locale, "Effects"));
     expect(html.match(/<button /g)).toHaveLength(77);
     expect(html.match(/loading="lazy"/g)).toHaveLength(77);
-    expect(html).not.toContain("<video");
+    const previews = html.match(/<video\b[^>]*>/g) ?? [];
+    expect(previews).toHaveLength(77);
+    for (const preview of previews) {
+      expect(preview).toContain('muted=""');
+      expect(preview).toContain('loop=""');
+      expect(preview).toContain('playsInline=""');
+      expect(preview).toContain('preload="none"');
+      expect(preview).not.toMatch(/\bsrc=/);
+    }
     const posterPositions = videoEffects.map(item => html.indexOf(`src="${item.poster}"`));
     expect(posterPositions.every((position, index) => position >= 0 && (index === 0 || position > posterPositions[index - 1]))).toBe(true);
     expect(html).not.toContain("Try effect");

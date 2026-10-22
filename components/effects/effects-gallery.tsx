@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ChevronLeft, ChevronRight, LoaderCircle, Play, RefreshCw, Sparkles, X } from "lucide-react";
 import Link from "@/components/i18n/localized-link";
 import { useTranslations } from "@/components/i18n/locale-provider";
+import { ViewportVideo } from "@/components/portal/viewport-video";
 import { adjacentEffectIndex, videoEffects, type VideoEffect } from "@/content/effects";
 import { getEffectCreationHref } from "@/content/effect-templates";
 import styles from "./effects-gallery.module.css";
@@ -12,18 +13,8 @@ import styles from "./effects-gallery.module.css";
 export function EffectsGallery() {
   const t = useTranslations();
   const [selected, setSelected] = useState<number | null>(null);
-  const [activePreview, setActivePreview] = useState<string | null>(null);
-  const [reducedMotion, setReducedMotion] = useState(true);
   const trigger = useRef<HTMLButtonElement | null>(null);
   const selectedEffect = selected === null ? null : videoEffects[selected];
-
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReducedMotion(query.matches);
-    update();
-    query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
-  }, []);
 
   const move = (direction: -1 | 1) => setSelected(current => current === null ? null : adjacentEffectIndex(current, direction, videoEffects.length));
 
@@ -33,10 +24,8 @@ export function EffectsGallery() {
       {videoEffects.map((item, index) => <EffectCard
         key={item.id}
         effect={item}
-        active={activePreview === item.id && !reducedMotion && selected === null}
-        onActivate={() => setActivePreview(item.id)}
-        onDeactivate={() => setActivePreview(current => current === item.id ? null : current)}
-        onOpen={button => { trigger.current = button; setActivePreview(null); setSelected(index); }}
+        paused={selected !== null}
+        onOpen={button => { trigger.current = button; setSelected(index); }}
       />)}
     </div>
     <Dialog.Root open={selected !== null} onOpenChange={open => { if (!open) setSelected(null); }}>
@@ -69,22 +58,17 @@ export function EffectsGallery() {
   </section>;
 }
 
-function EffectCard({ effect, active, onActivate, onDeactivate, onOpen }: {
+function EffectCard({ effect, paused, onOpen }: {
   effect: VideoEffect;
-  active: boolean;
-  onActivate: () => void;
-  onDeactivate: () => void;
+  paused: boolean;
   onOpen: (button: HTMLButtonElement) => void;
 }) {
   const t = useTranslations();
-  const [previewFailed, setPreviewFailed] = useState(false);
   return <button type="button" className={styles.card} aria-label={`${t("Play video")}: ${effect.title}`}
-    onPointerEnter={event => { if (event.pointerType !== "touch") onActivate(); }} onPointerLeave={onDeactivate}
-    onFocus={onActivate} onBlur={onDeactivate}
     onClick={event => onOpen(event.currentTarget)}>
     <span className={styles.media}>
       <img src={effect.poster} alt="" loading="lazy" decoding="async"/>
-      {active && !previewFailed && <video src={effect.video} poster={effect.poster} autoPlay muted loop playsInline preload="metadata" onError={() => setPreviewFailed(true)} aria-hidden="true"/>}
+      <ViewportVideo src={effect.video} poster={effect.poster} paused={paused}/>
       {effect.isNew && <span className={styles.newBadge}><Sparkles size={11} fill="currentColor"/>NEW</span>}
       <span className={styles.play}><Play size={20} fill="currentColor"/></span>
     </span>
