@@ -13,7 +13,7 @@ export type PublicPage = {
 
 // Add only live public routes. Set lastModified only for a recorded content revision.
 export const publicPages: PublicPage[] = [
-  { path: "/", label: "Home", priority: 1, changeFrequency: "monthly" },
+  { path: "/", label: "Home", priority: 1, changeFrequency: "monthly", lastModified: "2026-10-22" },
   { path: "/landing", label: "About MigosAI", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-10-22" },
   { path: "/tools", label: "AI Tools", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-10-22" },
   { path: "/effects", label: "Hot Video Effects", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-10-22" },

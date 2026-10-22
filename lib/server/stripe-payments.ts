@@ -5,6 +5,7 @@ import { isLocale, localizeHref } from '../i18n/routing';
 import { appOrigin, database, type Env } from './env';
 import { ApiError } from './errors';
 import { stripeClient, stripeMode, stripeWebhookSecret } from './stripe';
+import { applySubscriptionEvent } from './subscriptions';
 
 function priceForPack(env: Env, packId: string): string {
   const price = env[`STRIPE_PRICE_${packId.toUpperCase()}` as keyof Env];
@@ -39,7 +40,8 @@ export async function createStripeCheckout(env: Env, user: User, packId: unknown
   const mode = stripeMode(env);
   const priceId = priceForPack(env, pack.id);
   const origin = appOrigin(env);
-  if (!origin.startsWith('https://')) throw new ApiError(503, 'Payment checkout requires a public HTTPS application URL.');
+  // appOrigin permits HTTP only for loopback hosts; allow those returns in test mode.
+  if (mode === 'live' && !origin.startsWith('https://')) throw new ApiError(503, 'Payment checkout requires a public HTTPS application URL.');
   let price;
   try { price = await client.prices.retrieve(priceId); }
   catch { throw new ApiError(502, 'Payment configuration could not be confirmed. Please try again later.'); }
@@ -196,6 +198,7 @@ export async function applyStripeEvent(env: Env, event: Stripe.Event): Promise<v
     event.livemode !== (mode === 'live') || event.account || !event.data?.object) {
     throw new ApiError(400, 'Invalid payment event.');
   }
+  if (await applySubscriptionEvent(env, event)) return;
   if (reviewTypes.has(event.type)) { await recordStripeReview(env, event); return; }
   if (event.type !== 'checkout.session.completed' && event.type !== 'checkout.session.async_payment_succeeded') return;
   const session = event.data.object as Stripe.Checkout.Session;

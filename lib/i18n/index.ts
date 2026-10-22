@@ -1,3 +1,5 @@
+import { subscriptionAccountMessages } from "./messages/subscription-account";
+import { pricingMessages } from "./messages/pricing";
 import { assetsMessages } from "./messages/assets";
 import { videoWorkspaceMessages } from "./messages/video-workspace";
 import { effectsMessages } from "./messages/effects";
@@ -24,6 +26,6 @@ const rootMessages: Record<Exclude<Locale, "en">, Messages> = {
   es: { "Hotel Lobby AI Video Generator | LobbyDuo": "Generador de vídeos con IA Hotel Lobby | LobbyDuo", "Create Hotel Lobby–style AI duo videos from two photos with LobbyDuo.": "Crea vídeos de dúos al estilo Hotel Lobby a partir de dos fotos con LobbyDuo." },
 };
 export function getMessages(locale: Locale): Messages {
-  return locale === "en" ? {} : { ...rootMessages[locale], ...pageMessages[locale], ...sharedMessages[locale], ...interactiveMessages[locale], ...videoExampleMessages[locale], ...videoCustomizationMessages[locale], ...authMessages[locale], ...homeHeroMessages[locale], ...imageMessages[locale], ...portalMessages[locale], ...landingMessages[locale], ...publicContentMessages[locale], ...videoWorkspaceMessages[locale], ...effectsMessages[locale], ...assetsMessages[locale] };
+  return locale === "en" ? {} : { ...rootMessages[locale], ...pageMessages[locale], ...sharedMessages[locale], ...interactiveMessages[locale], ...videoExampleMessages[locale], ...videoCustomizationMessages[locale], ...authMessages[locale], ...homeHeroMessages[locale], ...imageMessages[locale], ...portalMessages[locale], ...landingMessages[locale], ...publicContentMessages[locale], ...videoWorkspaceMessages[locale], ...effectsMessages[locale], ...assetsMessages[locale], ...pricingMessages[locale], ...subscriptionAccountMessages[locale] };
 }
 export function translate(locale: Locale, source: string, values?: Values) { return createTranslator(getMessages(locale))(source, values); }

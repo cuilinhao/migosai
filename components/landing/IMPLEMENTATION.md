@@ -1,20 +1,29 @@
 # MigosAI /landing 实现记录
 
-- 根据 Recraft 真实 Framer HTML（本地读取约 1 MB）及根代理保存的参考截图复刻视觉结构；未加载原站脚本、商用字体或服务。
-- 八个主体 section：三页主视觉轮播、现有模型与工具标识带、图片能力大图、横向摄影画廊、粉色拼贴、真实视频工具、音乐能力、最终 CTA；另有完整导航与四列页脚。
-- 保持黑色背景与 64px 导航、紫色公告、lime 按钮、蓝色模特主图、超粗标题及大图间隔。字体仅使用已安装的 Anton / Archivo Black，非商用字体复本。
-- 内容仅对应已接入的 Nano Banana 2、Hotel Lobby、Flying Car、Özil Goal、AI Rap Song。图片价格为 1K/5、2K/8、4K/12 站内点数，不虚构客户、评价、vector 功能或 API 产品。
-- 主轮播支持上一页、下一页、三个圆点、左右键和 aria-live 状态。摄影画廊有真实横向滚动按钮、键盘可聚焦区域及移动端滑动；减少动态效果偏好受支持。
-- 手机导航支持展开/收起、Escape 关闭后归还焦点、点击外部关闭、选中链接后关闭。跳过导航链接和可见焦点轮廓均保留。
-- 106 条翻译词条覆盖五个非英文语言；101 个页面使用的文案/图片说明全部有对应翻译。metadata 使用 localizeMetadata；中央语言注册、路由、外壳由根代理整合。
-- 原图来源和本地学习使用边界见根代理维护的 `docs/website-clone/NOTES.md` 和资源清单；产品页面不显示开发验收说明。
+本次接续未完成的 Ideogram 落地页复刻。参考为 `docs/ideogram-clone/RECON/original.html`、`original.css` 与 `screenshots/original-desktop.png`、`original-full.png`，使用已有 `landing-content.ts` 数据与 `public/landing/ideogram/` 本地资源。静态营销页按视觉复刻实现，未引入原站运行脚本或外部服务。
 
-## 验证
+## 页面与交互
 
-- `npx vitest run components/landing/landing-page.test.tsx`：6 项通过，真实 React 渲染验证功能目的地、点数、八区结构、轮播控件及五语翻译。
-- 联合迁移测试：`npx vitest run components/landing/landing-page.test.tsx tests/hotel-lobby-migration.test.tsx`，19 项通过。
-- 最终完整 `npm test`：75 个文件、1245 项全部通过；`npm run typecheck` 通过；`git diff --check` 无错误。
-- 词条与本地资源核验：106 条记录每条均有完整五语译文；101 个页面使用词条无遗漏；全部引用的 reference 文件存在。
-- Chrome 实际 390 宽首屏无横向溢出，导航展开与 Escape 收起、Next 按钮、第三圆点、ArrowRight 循环回首屏均验证成功；768 宽两栏布局已观察。原始默认桌面宽度首屏也已对照参考图。
-- 根代理随后停止开发服务器以运行生产构建；完整 1440/768/390 最终截图和后续懒加载图片验收由根代理在统一生产预览中完成。已恢复浏览器 viewport 默认值，没有新起/停止服务。
-- 没有提交、部署、真实生成或付费请求。
+- `/landing` 保留既有入口与 `RecraftLanding` 导出名；根路径门户、计费支付和 package 均未修改。
+- 保留原截图的全幅图片首屏、叠加导航、左下衬线标题和右下视频入口；后续为白底三栏产品、居中特色模型、紫色功能区、深色视频区、作品瀑布流、FAQ 和浅紫渐变页脚。
+- 原先花卉主图内置 Ideogram 花字，故轮播仅选用现有无该原品牌字样的赛车、白跑车和城堡图片。
+- 原站内容替换为 MigosAI、Nano Banana 2、Hotel Lobby、Flying Car、Özil Goal、AI Rap Song；所有按钮通往已有功能、工具、作品、价格或法律页面，无虚构 API、客户标识或评价。
+- 轮播每六秒自动切换，支持前后、暂停/恢复和轮播区域左右键；页面隐藏、菜单/弹窗打开、减少动态效果偏好或轮播中有键盘焦点时停止自动切换。
+- 移动菜单支持展开/收起、外部点击、Escape 关闭和归还焦点。
+- 视频预览使用现有真实视频与 Radix Dialog，含播放控件、Escape/遮罩关闭；作品预览支持前后按钮与左右键切图，关闭归还对应入口焦点。媒体在弹窗关闭时卸载。
+- FAQ 使用原生 details/summary，支持键盘操作；导航 FAQ 锚点有效。
+- 使用已有五语字典和语言切换器；新增文案表和 FAQ 的翻译覆盖由回归测试验证。Geist 字体从本地加载，随资源保留 OFL 文件。
+
+## 本次验证
+
+- 实现前：`npx vitest run components/landing/landing-page.test.tsx` 确认 6 项中 1 项失败，原因是新测试要求的 FAQ/视频/暂停功能尚未接入。
+- 实现后：`npx vitest run components/landing/landing-page.test.tsx tests/portal-navigation.test.tsx`，26 项通过；涵盖功能链接、真实资源存在与接入、12 个作品预览入口、6 个 FAQ、五语文案和门户回归。
+- `npm run typecheck` 通过。
+- Chrome 在独立 3011 开发服务验证：轮播 Next 切到 2/3，暂停按钮状态改变；视频弹窗显示真实播放器与创作入口；作品下一张切至第二张与 2/12；FAQ 展示完整点数说明。
+- 390×844 实机浏览器视口验证：菜单可展开、Escape 收起，页面 `clientWidth` 与 `scrollWidth` 同为 390，无横向溢出；截图检查首屏文字、视频入口和控制按钮布局。
+- 截图证据：`docs/ideogram-clone/RECON/screenshots/clone-desktop.jpg`、`clone-mobile-390.jpg`、`clone-full.jpg`。
+- 未运行生产构建、未提交、未部署；生产构建及集成验证由发布主任务执行。
+
+## 对照范围
+
+保留参考站的布局节奏与颜色层次，内容按已存在的 MigosAI 产品数据替换。没有宣称像素级一致；原参考全页截图包含懒加载留白，本实现使用已保存作品图片填充。原站资产来源记录在现有 `asset-manifest.json`；本文件不新增素材使用许可声明。

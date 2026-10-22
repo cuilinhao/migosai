@@ -1,0 +1,43 @@
+import type { TranslatedLocale } from "../routing";
+
+type Row = readonly [string, string, string, string, string, string];
+const rows: readonly Row[] = [
+  ["Purchase type", "購買類型", "구매 유형", "購入タイプ", "Type d’achat", "Tipo de compra"],
+  ["Subscription", "訂閱方案", "구독", "サブスクリプション", "Abonnement", "Suscripción"],
+  ["Credit packs", "一次性點數包", "크레딧 패키지", "クレジットパック", "Packs de crédits", "Paquetes de créditos"],
+  ["Monthly", "月付", "월간", "月払い", "Mensuel", "Mensual"],
+  ["Yearly", "年付", "연간", "年払い", "Annuel", "Anual"],
+  ["Save up to 25%", "最高省 25%", "최대 25% 할인", "最大25%お得", "Jusqu’à 25 % d’économie", "Ahorra hasta un 25 %"],
+  ["{percent}% OFF", "省 {percent}%", "{percent}% 할인", "{percent}%オフ", "{percent} % de réduction", "{percent} % de descuento"],
+  ["/mo", "/月", "/월", "/月", "/mois", "/mes"],
+  ["{amount} billed yearly", "每年收費 {amount}", "연간 {amount} 결제", "年額{amount}のお支払い", "{amount} facturés par an", "{amount} facturados al año"],
+  ["Billed monthly", "按月收費", "매월 결제", "毎月のお支払い", "Facturation mensuelle", "Facturación mensual"],
+  ["Subscribe to {plan}", "訂閱{plan}", "{plan} 구독", "{plan}を申し込む", "S’abonner à {plan}", "Suscribirse a {plan}"],
+  ["Subscribe", "訂閱", "구독하기", "申し込む", "S’abonner", "Suscribirse"],
+  ["Lite", "輕量方案", "라이트", "ライト", "Essentiel", "Básico"],
+  ["Standard", "標準方案", "스탠다드", "スタンダード", "Standard", "Estándar"],
+  ["Elite", "菁英方案", "엘리트", "エリート", "Élite", "Élite"],
+  ["Elite monthly credits", "菁英方案每月點數", "엘리트 월간 크레딧", "エリートの月間クレジット", "Crédits mensuels Élite", "Créditos mensuales Élite"],
+  ["{credits} credits per month", "每月 {credits} 點", "매월 {credits} 크레딧", "毎月{credits}クレジット", "{credits} crédits par mois", "{credits} créditos al mes"],
+  ["Up to {images} images at 1K", "最多可生成 {images} 張 1K 圖片", "1K 이미지 최대 {images}장", "1K画像を最大{images}枚生成", "Jusqu’à {images} images en 1K", "Hasta {images} imágenes en 1K"],
+  ["New credits every month", "每月發放點數", "매월 새로운 크레딧 지급", "毎月クレジットを付与", "De nouveaux crédits chaque mois", "Nuevos créditos cada mes"],
+  ["Unused subscription credits expire monthly", "未使用的訂閱點數每月到期", "미사용 구독 크레딧은 매월 만료", "未使用のサブスクリプションクレジットは毎月失効", "Les crédits d’abonnement inutilisés expirent chaque mois", "Los créditos de suscripción no utilizados caducan cada mes"],
+  ["Use across image, video and music tools", "圖片、影片與音樂工具通用", "이미지, 동영상, 음악 도구에서 공용으로 사용", "画像・動画・音楽ツールで共通利用", "Utilisables pour les outils d’image, de vidéo et de musique", "Úsalos en las herramientas de imagen, vídeo y música"],
+  ["Download and organize your creations", "下載並整理你的作品", "작품 다운로드 및 정리", "作品をダウンロードして整理", "Téléchargez et organisez vos créations", "Descarga y organiza tus creaciones"],
+  ["Cancel renewal anytime. Access continues through your paid term.", "可隨時取消續費，仍可使用至已付費期間結束。", "언제든 자동 갱신을 취소할 수 있습니다. 결제한 기간이 끝날 때까지 이용할 수 있습니다.", "自動更新はいつでも解約できます。お支払い済みの期間の終了まで利用できます。", "Annulez le renouvellement à tout moment. L’accès reste disponible jusqu’à la fin de la période payée.", "Cancela la renovación cuando quieras. El acceso continúa hasta el final del periodo pagado."],
+  ["Subscriptions renew automatically. Annual plans are billed once per year and credits are issued monthly, not all at once.", "訂閱會自動續費。年付方案每年收費一次，點數每月發放，不會一次發放全年點數。", "구독은 자동으로 갱신됩니다. 연간 요금제는 1년에 한 번 결제되며, 크레딧은 한꺼번에 지급되지 않고 매월 지급됩니다.", "サブスクリプションは自動更新されます。年払いプランは年に1回請求され、クレジットはまとめてではなく毎月付与されます。", "Les abonnements sont renouvelés automatiquement. Les offres annuelles sont facturées une fois par an et les crédits sont attribués chaque mois, pas tous en une fois.", "Las suscripciones se renuevan automáticamente. Los planes anuales se cobran una vez al año y los créditos se entregan cada mes, no todos de una vez."],
+  ["Subscription credits are used first and expire each month. Your one-time credit balance is kept separately.", "訂閱點數優先使用並每月到期。一次性購買的點數餘額會獨立保留。", "구독 크레딧은 먼저 사용되며 매월 만료됩니다. 일회성 구매 크레딧 잔액은 별도로 보관됩니다.", "サブスクリプションのクレジットは先に消費され、毎月失効します。買い切りクレジットの残高は別に保持されます。", "Les crédits d’abonnement sont utilisés en premier et expirent chaque mois. Votre solde de crédits à achat unique est conservé séparément.", "Los créditos de suscripción se utilizan primero y caducan cada mes. Tu saldo de créditos de pago único se conserva por separado."],
+  ["One-time purchase", "單次付款", "일회성 구매", "1回限りの購入", "Achat unique", "Compra de pago único"],
+  ["No automatic renewal", "不會自動續費", "자동 갱신 없음", "自動更新なし", "Sans renouvellement automatique", "Sin renovación automática"],
+  ["Kept separately from subscription credits", "與訂閱點數分開保留", "구독 크레딧과 별도로 보관", "サブスクリプションクレジットとは別に保持", "Conservés séparément des crédits d’abonnement", "Se conservan por separado de los créditos de suscripción"],
+  ["Credit packs are one-time purchases. You can buy a pack with or without an active subscription.", "點數包採單次付款，無論是否有有效訂閱，都可以購買。", "크레딧 패키지는 일회성 구매입니다. 활성 구독이 없어도 패키지를 구매할 수 있습니다.", "クレジットパックは1回限りの購入です。有効なサブスクリプションの有無にかかわらず購入できます。", "Les packs de crédits sont des achats uniques. Vous pouvez en acheter avec ou sans abonnement actif.", "Los paquetes de créditos son compras de pago único. Puedes comprar un paquete con o sin una suscripción activa."],
+  ["Secure checkout by Stripe", "透過 Stripe 安全結帳", "Stripe 보안 결제", "Stripeによる安全な決済", "Paiement sécurisé par Stripe", "Pago seguro con Stripe"],
+  ["USD prices. Any applicable taxes are shown at checkout.", "價格以美元計價，適用稅費會於結帳時顯示。", "가격은 미국 달러 기준입니다. 적용되는 세금은 결제 시 표시됩니다.", "価格は米ドル表示です。適用される税金は決済時に表示されます。", "Prix en dollars américains. Les taxes applicables sont affichées lors du paiement.", "Precios en dólares estadounidenses. Los impuestos aplicables se muestran al pagar."],
+  ["Nano Banana 2: 1K uses 5 credits, 2K uses 8, and 4K uses 12. Video and music costs depend on your generation settings.", "Nano Banana 2：1K 使用 5 點、2K 使用 8 點、4K 使用 12 點。影片與音樂的費用依生成設定而定。", "Nano Banana 2: 1K는 5 크레딧, 2K는 8 크레딧, 4K는 12 크레딧을 사용합니다. 동영상과 음악 비용은 생성 설정에 따라 달라집니다.", "Nano Banana 2：1Kは5クレジット、2Kは8クレジット、4Kは12クレジットを使用します。動画と音楽のコストは生成設定によって異なります。", "Nano Banana 2 : 1K utilise 5 crédits, 2K en utilise 8 et 4K en utilise 12. Le coût des vidéos et de la musique dépend de vos paramètres de génération.", "Nano Banana 2: 1K utiliza 5 créditos, 2K utiliza 8 y 4K utiliza 12. El coste del vídeo y la música depende de los ajustes de generación."],
+  ["Power up your creation", "讓創作更進一步", "창작의 가능성을 넓혀보세요", "創作の可能性を広げよう", "Donnez plus de moyens à votre créativité", "Potencia tu creatividad"],
+  ["Choose a subscription for your monthly creative routine, or top up with a one-time credit pack. Create images, videos and music with MigosAI.", "選擇訂閱方案，滿足每月的創作需求，或購買一次性點數包補充點數。使用 MigosAI 創作圖片、影片與音樂。", "매월 꾸준히 창작하려면 구독을 선택하거나, 일회성 크레딧 패키지로 충전하세요. MigosAI로 이미지, 동영상, 음악을 만들어 보세요.", "毎月の創作にサブスクリプションを選ぶか、買い切りクレジットパックで必要な分を追加できます。MigosAIで画像・動画・音楽を作成しましょう。", "Choisissez un abonnement pour vos créations régulières ou rechargez votre solde avec un pack de crédits à achat unique. Créez des images, des vidéos et de la musique avec MigosAI.", "Elige una suscripción para crear cada mes o recarga con un paquete de créditos de pago único. Crea imágenes, vídeos y música con MigosAI."],
+  ["Compare MigosAI monthly and yearly subscriptions or one-time credit packs for AI images, videos and music.", "比較 MigosAI 月付、年付訂閱與一次性點數包，創作 AI 圖片、影片與音樂。", "AI 이미지, 동영상, 음악 제작을 위한 MigosAI 월간·연간 구독과 일회성 크레딧 패키지를 비교하세요.", "AI画像・動画・音楽向けのMigosAI月払い・年払いサブスクリプションと買い切りクレジットパックを比較できます。", "Comparez les abonnements mensuels et annuels MigosAI et les packs de crédits à achat unique pour les images, vidéos et musiques générées par IA.", "Compara las suscripciones mensuales y anuales de MigosAI y los paquetes de créditos de pago único para crear imágenes, vídeos y música con IA."],
+];
+
+const locales = ["zh-TW", "ko", "ja", "fr", "es"] as const;
+export const pricingMessages = Object.fromEntries(locales.map((locale, index) => [locale, Object.fromEntries(rows.map(row => [row[0], row[index + 1]]))])) as Record<TranslatedLocale, Record<string, string>>;

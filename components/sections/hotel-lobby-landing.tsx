@@ -34,7 +34,7 @@ export async function HotelLobbyLanding({ guide, showcaseDetails }: { guide?: Re
     <FeaturesSection/>
     {guide}
     <FaqSection id="duo-faq" items={homeFaqItems}/>
-    <section id="pricing" className="marketing-section home-pricing"><div className="section-container"><SectionHeading title="LobbyDuo Pricing and Credit Plans" description="One-time credit packs in US dollars. No subscription, and completely unused packs can be refunded within 14 days."/><PricingCards/></div></section>
+    <section id="pricing" className="marketing-section home-pricing"><div className="section-container"><SectionHeading title="LobbyDuo Pricing and Credit Plans" description="One-time credit packs and subscription plans in US dollars. Completely unused one-time packs may qualify for a refund within 14 days."/><PricingCards initialPurchaseType="packs"/></div></section>
     <section id="cta" className="marketing-section home-cta"><div className="section-container"><SectionHeading title="Ready to make your Hotel Lobby AI video?" description="Start with two photos you have the right to use. Registration does not include free credits. Purchase a credit pack before generating."/><Link className="pill-gradient-button" href={`${HOTEL_LOBBY_PATH}#generator`}>Create Hotel Lobby AI Video</Link></div></section>
   </>, t);
 }

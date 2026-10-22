@@ -75,7 +75,7 @@ beforeAll(async () => {
 afterAll(async () => { await worker?.dispose(); });
 beforeEach(async () => {
   metadata = null; requests = []; upstreamStatus = 200;
-  await db.batch(['DELETE FROM webhook_events', 'DELETE FROM credit_ledger', 'DELETE FROM generations', 'DELETE FROM orders', 'UPDATE users SET credits=100'].map(sql => db.prepare(sql)));
+  await db.batch(['DELETE FROM webhook_events', 'DELETE FROM credit_ledger', 'DELETE FROM generation_subscription_allocations', 'DELETE FROM generation_credit_allocations', 'DELETE FROM generations', 'DELETE FROM orders', 'UPDATE users SET credits=100'].map(sql => db.prepare(sql)));
 });
 async function checkout() { return worker.dispatchFetch(origin + '/checkout'); }
 async function webhook(id = 'evt_worker123', timestamp = Math.floor(Date.now() / 1000)) {

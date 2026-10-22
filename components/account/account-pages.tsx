@@ -6,12 +6,15 @@ import { Coins, Video } from "lucide-react";
 import { useLocale } from "@/components/i18n/locale-provider";
 import { useGenerationTranslations } from "@/components/generator/use-generation";
 import { useAuth } from "@/components/auth-provider";
-import { creditPacks } from "@/content/pricing";
+import { creditPacks, subscriptionPlans } from "@/content/pricing";
 import type { GenerationResponse } from "@/lib/contracts";
 import { accountView, type AccountSnapshot } from "./account-view";
+import { CreditBalances, SubscriptionDetails, type AccountSubscription } from "./subscription-management";
+import { requestBillingPortal } from "./subscription-portal";
+import subscriptionStyles from "./subscription-management.module.css";
 
 type Generation = GenerationResponse & { kind: "video" | "music"; cost: number; createdAt: string };
-type Order = { id: string; packId: string; amountCents: number; currency: string; credits: number; status: string; createdAt: string };
+type Order = { purchaseType?:"credits"|"subscription"; id: string; packId: string; amountCents: number; currency: string; credits: number; status: string; createdAt: string };
 type CreditTransaction = { id: string; amount: number; kind: string; referenceId: string | null; createdAt: string };
 
 function useAccountData<T>(path: string, select: (data: Record<string, unknown>) => T, pollWhile?: (data: T) => boolean) {
@@ -81,23 +84,56 @@ export function MyVideos() {
   </div>;
 }
 
+function SubscriptionManagementForOwner() {
+  const t = useGenerationTranslations();
+  const {data, loading, error, signedIn, retry} = useAccountData<AccountSubscription | null>("/api/subscription", body => body.subscription && typeof body.subscription === "object" ? body.subscription as AccountSubscription : null);
+  const [busy,setBusy] = useState(false);
+  const [portalUrl,setPortalUrl] = useState<string|null>(null);
+  const [portalError,setPortalError] = useState("");
+  const active = useRef(true);
+  useEffect(() => { active.current=true; return () => {active.current=false;}; }, []);
+  async function manage() {
+    setBusy(true);setPortalUrl(null);setPortalError("");
+    try {
+      const url=await requestBillingPortal();
+      if(!active.current)return;
+      setPortalUrl(url);
+      try { window.open(url,"_blank","noopener,noreferrer"); } catch { /* Keep the validated direct link visible. */ }
+    } catch(cause) {
+      if(active.current)setPortalError(cause instanceof Error?cause.message:"Could not open subscription management. Please try again.");
+    } finally { if(active.current)setBusy(false); }
+  }
+  return <section id="subscription" className={subscriptionStyles.card}><h2>{t("Your subscription")}</h2>
+    <AccountMessage loading={loading} error={error} signedIn={signedIn} onRetry={retry}/>
+    {signedIn&&!loading&&!error&&<SubscriptionDetails subscription={data} busy={busy} onManage={()=>void manage()}/>}
+    {portalError&&<p role="alert" className={subscriptionStyles.error}>{t(portalError)}</p>}
+    {portalUrl&&<div role="status" className={subscriptionStyles.portalLink}><p>{t("If a new tab did not open, use the secure link below to manage your subscription.")}</p><a href={portalUrl} target="_blank" rel="noopener noreferrer">{t("Continue to Stripe billing (opens in a new tab)")}</a></div>}
+  </section>;
+}
+function SubscriptionManagement() {
+  const {user}=useAuth();
+  return <SubscriptionManagementForOwner key={user?.id??"signed-out"}/>;
+}
+
 export function MyOrders() {
   const t = useGenerationTranslations();
   const locale = useLocale();
   const { data, loading, error, signedIn, retry } = useAccountData<Order[]>("/api/orders", (body) => Array.isArray(body.orders) ? body.orders as Order[] : []);
-  return <div className="account-page"><div className="account-page-heading account-page-heading-lined"><h1>{t('My Orders')}</h1><p>{t('Orders for LobbyDuo generation credits.')}</p></div>
+  return <div className="account-page"><div className="account-page-heading account-page-heading-lined"><h1>{t('My Orders')}</h1><p>{t('Your credit purchases and subscription billing.')}</p></div>
+    <SubscriptionManagement/>
     <AccountMessage loading={loading} error={error} signedIn={signedIn} onRetry={retry}/>
-    {signedIn && !loading && !error && <div className="account-table-scroll"><table className="account-table orders-table"><thead><tr><th>{t('Order No')}</th><th>{t('Product Name')}</th><th>{t('Amount')}</th><th>{t('Status')}</th><th>{t('Paid At')}</th></tr></thead><tbody>{data?.length ? data.map((order) => <tr key={order.id}><td className="account-code">{order.id}</td><td>{t("{pack} Credits", { pack: t(creditPacks.find((pack) => pack.id === order.packId)?.name ?? order.packId) })}</td><td>{new Intl.NumberFormat(locale, { style: "currency", currency: order.currency || "USD" }).format(order.amountCents/100)}</td><td>{t(order.status)}</td><td>{dateTime(order.createdAt, locale)}</td></tr>) : <tr><td colSpan={5} className="account-table-empty">{t('No orders found')}</td></tr>}</tbody></table></div>}
+    {signedIn && !loading && !error && <div className="account-table-scroll"><table className="account-table orders-table"><thead><tr><th>{t('Order No')}</th><th>{t('Product Name')}</th><th>{t('Amount')}</th><th>{t('Status')}</th><th>{t('Paid At')}</th></tr></thead><tbody>{data?.length ? data.map((order) => <tr key={order.id}><td className="account-code">{order.id}</td><td>{order.purchaseType === "subscription" ? t("{plan} subscription", { plan: t(subscriptionPlans.find(plan=>plan.id===order.packId)?.name??order.packId) }) : t("{pack} Credits", { pack: t(creditPacks.find((pack) => pack.id === order.packId)?.name ?? order.packId) })}</td><td>{new Intl.NumberFormat(locale, { style: "currency", currency: order.currency || "USD" }).format(order.amountCents/100)}</td><td>{t(order.status)}</td><td>{dateTime(order.createdAt, locale)}</td></tr>) : <tr><td colSpan={5} className="account-table-empty">{t('No orders found')}</td></tr>}</tbody></table></div>}
   </div>;
 }
 
 export function MyCredits() {
   const t = useGenerationTranslations();
   const locale = useLocale();
-  const { data, loading, error, signedIn, retry } = useAccountData<{balance:number;ledger:CreditTransaction[]}>("/api/credits", (body) => ({ balance: Number(body.balance ?? 0), ledger: Array.isArray(body.ledger) ? body.ledger as CreditTransaction[] : [] }));
+  const { data, loading, error, signedIn, retry } = useAccountData<{balance:number;permanentCredits:number|null;subscriptionCredits:number|null;subscriptionCreditsExpireAt:string|null;ledger:CreditTransaction[]}>("/api/credits", (body) => ({ balance: Number(body.balance ?? 0), permanentCredits:typeof body.permanentCredits==="number"?body.permanentCredits:null, subscriptionCredits:typeof body.subscriptionCredits==="number"?body.subscriptionCredits:null, subscriptionCreditsExpireAt:typeof body.subscriptionCreditsExpireAt==="string"?body.subscriptionCreditsExpireAt:null, ledger: Array.isArray(body.ledger) ? body.ledger as CreditTransaction[] : [] }));
   const { credits } = useAuth();
   return <div className="account-page"><div className="account-page-heading account-page-heading-lined"><h1>{t('My Credits')}</h1><p>{t("Remaining credits: {credits}", { credits: (data?.balance ?? credits).toLocaleString(locale) })}</p><Link className="account-buy-credits" href="/pricing"><Coins size={16}/> {t("Buy Credits")}</Link></div>
     <AccountMessage loading={loading} error={error} signedIn={signedIn} onRetry={retry}/>
+    {signedIn&&!loading&&!error&&data&&data.permanentCredits!==null&&data.subscriptionCredits!==null&&<CreditBalances permanentCredits={data.permanentCredits} subscriptionCredits={data.subscriptionCredits} subscriptionCreditsExpireAt={data.subscriptionCreditsExpireAt}/>}
     {signedIn && !loading && !error && <div className="account-table-scroll"><table className="account-table credits-table"><thead><tr><th>{t('Trans No')}</th><th>{t('Trans Type')}</th><th>{t('Credits')}</th><th>{t('Updated At')}</th></tr></thead><tbody>{data?.ledger.length ? data.ledger.map((item) => <tr key={item.id}><td className="account-code">{item.id}</td><td>{t(item.kind)}</td><td className={item.amount >= 0 ? "positive-credits" : "negative-credits"}>{new Intl.NumberFormat(locale, { signDisplay: "always" }).format(item.amount)}</td><td>{dateTime(item.createdAt, locale)}</td></tr>) : <tr><td colSpan={4} className="account-table-empty">{t('No credit transactions yet')}</td></tr>}</tbody></table></div>}
   </div>;
 }

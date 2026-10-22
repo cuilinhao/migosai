@@ -7,8 +7,9 @@ import { LegalPage } from "@/components/sections/legal-page";
 export async function generateMetadata() { return localizeMetadata({ title: "Refund Policy" }); }
 
 const sections = [
-  { id: "one-time-purchases", title: "One-time Credit Purchases", body: <p>LobbyDuo sells one-time credit packs through Stripe. There are no subscriptions or automatic renewals. This policy applies to credit-pack purchases and supplements our Terms of Service.</p> },
+  { id: "one-time-purchases", title: "Credit Packs and Subscriptions", body: <p>This policy covers one-time credit packs and subscription payments through Stripe and supplements our Terms of Service.</p> },
   { id: "unused-packs", title: "Unused Credit Packs", body: <p>You may request a refund within 14 days of purchase if none of the credits from that pack have been used. We check the order and credit ledger to confirm eligibility. Approved refunds remove the corresponding credits from your account.</p> },
+  { id: "subscription-payments", title: "Subscription Payments", body: <><p>For subscription payment questions, duplicate charges, or refund requests, contact support for a review of your payment and service records. Your statutory rights are unaffected.</p><p>Cancel renewal from My Orders. Cancellation takes effect at the end of the paid billing period; access continues until then.</p></> },
   { id: "payment-and-service-issues", title: "Payment and Service Issues", body: <p>Contact us about duplicate charges, paid credits that did not arrive, or a prolonged service outage that prevents use of purchased credits. We will investigate the payment and service records and arrange an appropriate correction or refund where warranted.</p> },
   { id: "failed-generations", title: "Failed Generations", body: <p>Credits deducted for a generation that is confirmed as failed are returned to your balance. This is a credit restoration, not a cash refund. If credits are missing or a task remains unresolved, send support the generation ID so we can investigate.</p> },
   { id: "used-credits", title: "Used Credits and AI Results", body: <p>Credits consumed by a successful generation are generally not refundable. AI results can vary, so dissatisfaction with a completed result does not by itself qualify for a refund. This does not remove any remedies required by applicable consumer law.</p> },
@@ -18,5 +19,5 @@ const sections = [
 
 export default async function RefundPolicyPage() {
   const t = await getTranslations();
-  return localizePageContent(<LegalPage title="Refund Policy" subtitle="Payments, unused credits, and failed generations" sections={sections}/>, t);
+  return localizePageContent(<LegalPage updatedAt="2026-10-22" title="Refund Policy" subtitle="Payments, unused credits, and failed generations" sections={sections}/>, t);
 }

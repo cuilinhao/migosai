@@ -281,9 +281,32 @@ describe('Stripe checkout readiness and failures', () => {
     await expect(createCheckout({ ...env(db), PAYMENT_PROVIDER: provider }, user, 'starter')).rejects.toMatchObject({ status: 503 });
     expect(sqlite.prepare('SELECT count(*) AS n FROM orders').get()).toEqual({ n: 0 });
   });
-  it('rejects HTTP return origins before contacting Stripe', async () => {
+  it.each([
+    ['test', 'http://localhost:3000'],
+    ['test', 'http://127.0.0.1:3000'],
+    ['test', 'https://example.test'],
+    ['live', 'https://example.test'],
+  ] as const)('creates %s checkout with return origin %s', async (mode, origin) => {
+    const { db, sqlite } = database();
+    const id = `cs_${mode}_checkout123`;
+    const api = checkoutApi({ livemode: mode === 'live' }, { id, livemode: mode === 'live' });
+    const result = await createCheckout({ ...env(db), STRIPE_MODE: mode, STRIPE_SECRET_KEY: `sk_${mode}_fixtureOnly123`, APP_URL: origin }, user, 'starter');
+    expect(result).toEqual({ checkoutUrl, orderId: expect.any(String) });
+    expect(api.sent().get('success_url')).toBe(`${origin}/pricing?checkout=completed&orderId=${result.orderId}`);
+    expect(api.sent().get('cancel_url')).toBe(`${origin}/pricing?checkout=cancelled&orderId=${result.orderId}`);
+    expect(sqlite.prepare('SELECT checkout_id,provider_mode,status FROM orders').get()).toEqual({ checkout_id: id, provider_mode: mode, status: 'pending' });
+    expect(sqlite.prepare('SELECT credits FROM users WHERE id=?').get('u')).toEqual({ credits: 100 });
+  });
+  it.each([
+    ['live', 'http://localhost:3000'],
+    ['live', 'http://127.0.0.1:3000'],
+    ['test', 'http://example.test'],
+    ['live', 'http://example.test'],
+    ['test', 'http://localhost.example.test:3000'],
+    ['test', 'http://127.0.0.2:3000'],
+  ] as const)('rejects %s checkout with HTTP return origin %s before contacting Stripe', async (mode, origin) => {
     const { db, sqlite } = database(); const api = checkoutApi();
-    await expect(createCheckout({ ...env(db), APP_URL: 'http://localhost:3000' }, user, 'starter')).rejects.toMatchObject({ status: 503 });
+    await expect(createCheckout({ ...env(db), STRIPE_MODE: mode, STRIPE_SECRET_KEY: `sk_${mode}_fixtureOnly123`, APP_URL: origin }, user, 'starter')).rejects.toMatchObject({ status: 503 });
     expect(sqlite.prepare('SELECT count(*) AS n FROM orders').get()).toEqual({ n: 0 });
     expect(api.fetcher).not.toHaveBeenCalled();
   });

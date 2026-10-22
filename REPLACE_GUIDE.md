@@ -13,19 +13,31 @@
 | `SEEAPI_API_KEY` | 视频发布前的内容审核 |
 | `WAFFO_*` | 商户、店铺、四档商品、环境及商户 RSA 私钥 |
 | `PAYMENT_PROVIDER` | 新订单支付商；正式切换时设为 `stripe`，历史回调独立保留 |
-| `STRIPE_MODE`、`STRIPE_PRICE_*` | `test` / `live` 模式与四档一次性 USD Price ID |
+| `STRIPE_MODE`、`STRIPE_PRICE_*` | `test` / `live` 模式、四档一次性及十四个周期 USD Price ID |
 | `STRIPE_SECRET_KEY`、`STRIPE_WEBHOOK_SECRET` | 服务端 API 凭据和本站 Stripe Webhook 签名密钥，使用 Workers Secrets |
 
 生产 `APP_URL` 必须使用可公开访问的 HTTPS 源地址，供服务商读取参考素材。媒体 CDN 仅加入服务商实际返回且核实过的精确主机名。Waffo 沙箱和生产使用各自的密钥，`WAFFO_MODE` 必须与目标环境一致。
 
+### 本地 Google 登录
+
+`http://127.0.0.1:3000` 支持 Google 登录。Google Web OAuth 客户端需同时授权 JavaScript 来源 `http://127.0.0.1:3000` 和回调 `http://127.0.0.1:3000/api/auth/callback/google`；保留线上 HTTPS 地址。`localhost` 与 `127.0.0.1` 是不同来源，使用哪个地址就配置对应来源及回调。
+
+将 `.env.example` 复制为被 Git 忽略的 `.dev.vars`，填入本地 `APP_URL`、`GOOGLE_CLIENT_ID`、`GOOGLE_CLIENT_SECRET`，并限制文件权限为 `0600`。Wrangler 从 `--config` 指定文件所在目录读取 `.dev.vars`：使用 `.local-evidence/piclumen-recraft/wrangler-preview.json` 预览时，应将同目录 `.dev.vars` 链接到项目根目录配置（相对链接目标为 `../../.dev.vars`）。修改凭据后重启预览，或触发 Wrangler 配置重载。
+
+验证时从 `/pricing` 完成 Google 授权回跳，并刷新页面确认登录态保留。密钥仅保存在本地忽略文件或生产 Workers Secrets，不写入源码、截图、日志或公开文档。2026-10-22 已在上述本地地址完成真实 Google 登录及刷新验证。
+
 ## 数据库与发布
 
-1. 安装锁定依赖并运行 `npm test`、`npm run typecheck`、`npm run cf:build`。
+1. 使用 Node.js 22 及以上、`npm ci` 安装锁定依赖（Next.js 16.4.2、OpenNext 1.20.13、Wrangler 4.151.3）。开发和构建使用 Webpack。运行 `npm test`、`npm run typecheck`、`npm run cf:build`。
 2. 检查 `wrangler.jsonc` 的账户、D1、R2、路由和环境是否属于本次目标；生产配置含站点专用资源 ID，复制工程时需替换。
-3. 新环境执行本地迁移 `npm run db:local`。生产发布前检查远端待执行迁移及备份，再用 `npm run db:remote` 应用缺少的迁移。声音与动作功能依赖 `0005_reference_uploads.sql`；邮箱注册及 One Tap 依赖 `0006_email_and_one_tap_auth.sql`。
+3. 新环境执行本地迁移 `npm run db:local`。生产发布前检查远端待执行迁移及备份，再用 `npm run db:remote` 应用缺少的迁移。声音与动作功能依赖 `0005_reference_uploads.sql`；邮箱注册及 One Tap 依赖 `0006_email_and_one_tap_auth.sql`。图片、素材库和订阅分别依赖 0007、0008、0009；迁移前记录 D1 恢复书签和用户／订单／积分聚合值。
 4. 在确认的源码版本运行 `npm run deploy`，记录提交和发布版本。以 [QA 说明](QA/README.md) 核查线上页面、认证、媒体访问及关键交互。
 
 保留已有任务、积分账本及历史付款记录。不要把忽略目录中的凭据、数据库转储、原始日志或真实账户截图放入发布源码。
+
+发布依赖使用 Next.js 16.4.2、OpenNext Cloudflare 1.20.13 和 Wrangler 4.151.3，构建脚本显式使用 Webpack。Next.js 16.4 新增 `preview-props.json`，旧 OpenNext 1.20.7 在 Workers 中加载动态页面会失败；构建成功后仍需运行实际 Worker 预览核验。
+
+图片生成与资产库分别需要迁移 `0007_image_generations.sql` 和 `0008_asset_library.sql`。迁移前记录 D1 Time Travel 恢复书签，迁移后核对任务、用户余额及积分账本总数，并运行外键检查。图片任务启用后，回滚代码也须保留对 `kind=image` 的处理能力，不能直接回滚到仅支持视频、音乐的旧 Worker；保留这两项迁移。
 
 ## 邮箱登录与 Google One Tap
 
@@ -49,7 +61,9 @@ One Tap 使用现有 `GOOGLE_CLIENT_ID`。发布前，在该 Google Web OAuth �
 
 ## Stripe 配置与收款验收
 
-新订单使用 Stripe 托管 Checkout，继续销售四档一次性积分包，不创建订阅：Starter 为 USD 9.90 / 300 积分，Creator 为 USD 29.90 / 1200 积分，Pro 为 USD 49.90 / 2200 积分，Business 为 USD 99.90 / 5000 积分。`STRIPE_PRICE_STARTER`、`STRIPE_PRICE_CREATOR`、`STRIPE_PRICE_PRO`、`STRIPE_PRICE_BUSINESS` 必须指向对应模式下的固定一次性价格。
+2026-10-22 新增周期订阅的配置、积分规则和验收方式见 [订阅发布说明](docs/subscriptions-release.md)。下文 2026-10-03 段落为历史验收记录，不能当作本次订阅部署结果。
+
+新订单使用 Stripe 托管 Checkout，支持一次性积分包和月付／年付订阅。一次性积分包保留：Starter 为 USD 9.90 / 300 积分，Creator 为 USD 29.90 / 1200 积分，Pro 为 USD 49.90 / 2200 积分，Business 为 USD 99.90 / 5000 积分。`STRIPE_PRICE_STARTER`、`STRIPE_PRICE_CREATOR`、`STRIPE_PRICE_PRO`、`STRIPE_PRICE_BUSINESS` 必须指向对应模式下的固定一次性价格。
 
 2026-10-03 用户已自行提交 LobbyDuo 独立 Stripe 正式账户 `acct_1UMOG79IlL4CIeBl` 的入驻资料；Dashboard 设置指南显示“激活 Payments”已完成。最新账户状态页已核实：已激活任务为空，账户代表的身份证明任务在已完成页显示于 2026-10-03 完成；Payments 与 Payouts 均为活跃，原 HK$78,471 即将暂停提示已消失，仅 Cartes Bancaires 支付仍显示暂停。身份任务完成及账户功能活跃不等于真实收款或生产到账已经验收。Stripe 自动建立的独立测试沙盒为 `acct_1UMOGF9oKY54JoaI`，显示名为 LobbyDuo 沙盒（LobbyDuo）；沙盒的测试密钥和 Product/Price 属于该 sandbox 账户，不能作为正式账户的 live 配置使用。此前复用 Shortsmonkey 账户的方案已取消，其 Product/Price 不得用于 LobbyDuo；本指南已移除旧映射，避免误用。
 

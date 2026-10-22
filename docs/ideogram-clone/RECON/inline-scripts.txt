@@ -1,0 +1,162 @@
+{"@context":"https://schema.org","@type":"Organization","name":"Ideogram","url":"https://ideogram.ai","logo":"https://ideogram.ai/favicon.svg?v=new-brand-20261020","sameAs":["https://twitter.com/ideogram_ai","https://www.linkedin.com/company/ideogram-ai","https://www.youtube.com/@ideogram_ai","https://www.instagram.com/ideogram.ai/","https://www.reddit.com/r/ideogramai/"]}
+
+      if (window.webkit?.messageHandlers?.ideogramBridgeHandler?.postMessage) {
+        window.location.replace("/login");
+      }
+
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is Ideogram?","acceptedAnswer":{"@type":"Answer","text":"Ideogram is a generative media platform. You can use purpose-built creative apps, work with leading image and video models, or build your own workflow through one API."}},{"@type":"Question","name":"What can I create with Ideogram's apps?","acceptedAnswer":{"@type":"Answer","text":"Ideogram apps handle focused production tasks such as removing backgrounds and objects and resizing creative for different formats. Explore all available apps."}},{"@type":"Question","name":"Which image and video models are available?","acceptedAnswer":{"@type":"Answer","text":"The catalog brings Ideogram models together with models from leading research labs. Availability grows as new models are added to the platform."}},{"@type":"Question","name":"How does the unified API work?","acceptedAnswer":{"@type":"Answer","text":"One endpoint handles authentication, usage, and billing across supported image and video models. You can switch models by changing the model string in your request."}},{"@type":"Question","name":"Can businesses and creative teams use Ideogram?","acceptedAnswer":{"@type":"Answer","text":"Yes. Business and Enterprise plans support collaborative workflows, private generation, security requirements, custom models, and production support. Learn about Ideogram Enterprise."}},{"@type":"Question","name":"Is Ideogram 4.0 an open model?","acceptedAnswer":{"@type":"Answer","text":"Yes. Ideogram 4.0 weights are available for local use and customization under the applicable license. You can also access the same model through Ideogram's platform."}}]}
+const l=document.querySelector("[data-brand-header-scroll-reactive]"),n=document.querySelector("[data-brand-mobile-menu]"),b=document.querySelector("[data-brand-mobile-open]"),g=document.querySelector("[data-brand-mobile-close]");if(l){const e=document.querySelector("[data-brand-header-scroll-threshold]"),t=()=>{const s=e?e.getBoundingClientRect().bottom<=l.offsetHeight:window.scrollY>8;l.classList.toggle("is-scrolled",s)};t(),window.addEventListener("scroll",t,{passive:!0}),window.addEventListener("resize",t)}const o=e=>{!n||!b||(n.classList.toggle("is-open",e),n.setAttribute("aria-hidden",String(!e)),b.setAttribute("aria-expanded",String(e)),document.body.classList.toggle("brand-shell-menu-open",e),e&&g?.focus())};b?.addEventListener("click",()=>o(!0));g?.addEventListener("click",()=>o(!1));n?.addEventListener("click",e=>{e.target===n&&o(!1)});document.querySelectorAll("[data-brand-mobile-group-toggle]").forEach(e=>{e.addEventListener("click",()=>{const t=e.closest(".brand-shell-mobile-feature-group")?.querySelector("[data-brand-mobile-group]");if(!t)return;const s=t.hasAttribute("hidden");t.toggleAttribute("hidden",!s),e.setAttribute("aria-expanded",String(s))})});const d=Array.from(document.querySelectorAll("[data-brand-popover]")),a=document.querySelector(".brand-shell-nav");let r,u;const h=e=>{const t=e.dataset.poster;t&&!e.hasAttribute("poster")&&(e.poster=t)};if(a){const e=()=>d.forEach(t=>{const s=t.querySelector("[data-brand-popover-video]");s&&h(s)});a.addEventListener("pointerenter",e,{once:!0}),a.addEventListener("focusin",e,{once:!0})}const m=e=>{const t=e.querySelector("[data-brand-popover-video]");if(!t)return;h(t);const s=t.dataset.src;!t.hasAttribute("src")&&s&&(t.src=s,t.load()),t.play().catch(()=>{})},i=e=>{e.querySelector("[data-brand-popover-video]")?.pause()},f=e=>{d.forEach(t=>{t!==e&&(t.classList.remove("is-open"),t.querySelector("[data-brand-popover-trigger]")?.setAttribute("aria-expanded","false"),t.classList.contains("is-hover-open")||i(t))})};d.forEach(e=>{const t=e.querySelector("[data-brand-popover-trigger]");e.addEventListener("pointerenter",()=>{u!==void 0&&window.clearTimeout(u);const s=r!==void 0&&r!==e;s&&a?.classList.add("is-switching-popovers"),r&&r!==e&&i(r),r?.classList.remove("is-hover-open"),r=e,e.classList.add("is-hover-open"),m(e),s&&window.requestAnimationFrame(()=>a?.classList.remove("is-switching-popovers"))}),e.addEventListener("pointerleave",()=>{u=window.setTimeout(()=>{e.classList.remove("is-hover-open"),r===e&&(r=void 0),e.classList.contains("is-open")||i(e)},140)}),t?.addEventListener("click",s=>{if(s.detail>0){e.classList.remove("is-open"),t.setAttribute("aria-expanded","false"),t.blur(),e.classList.contains("is-hover-open")||i(e);return}const c=!e.classList.contains("is-open");f(e),e.classList.toggle("is-open",c),t.setAttribute("aria-expanded",String(c)),c?m(e):i(e)})});document.addEventListener("click",e=>{const t=e.target;!(t instanceof Node)||d.some(s=>s.contains(t))||f()});document.addEventListener("keydown",e=>{e.key==="Escape"&&(f(),o(!1))});
+
+            (() => {
+              const carousel = document.querySelector("[data-home-masthead-carousel]");
+              if (!(carousel instanceof HTMLElement)) return;
+
+              const slides = Array.from(carousel.querySelectorAll("[data-home-masthead-slide]"));
+              if (slides.length < 2) return;
+
+              const initialIndex = 0;
+              carousel.dataset.homeMastheadInitial = String(initialIndex);
+
+              slides.forEach((slide, index) => {
+                const isActive = index === initialIndex;
+                slide.classList.toggle("is-active", isActive);
+                slide.setAttribute("aria-hidden", String(!isActive));
+              });
+
+              const initialImage = slides[initialIndex]?.querySelector("img");
+              if (initialImage instanceof HTMLImageElement) {
+                initialImage.loading = "eager";
+                initialImage.fetchPriority = "high";
+              }
+            })();
+
+
+  document.querySelectorAll("[data-api-code-preview]").forEach(function (root) {
+    var scenarios = [];
+    try {
+      scenarios = JSON.parse(root.getAttribute("data-scenarios") || "[]");
+    } catch {
+      return;
+    }
+    if (!scenarios.length) return;
+
+    var endpointEl = root.querySelector("[data-api-endpoint]");
+    var jsonEl = root.querySelector("[data-api-json]");
+    if (!endpointEl || !jsonEl) return;
+
+    var reduced =
+      window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var current = 0;
+    var stopped = false;
+    var loopPromise = null;
+    var reducedInterval = null;
+
+    var ERASE_MS = 28;
+    var TYPE_MS = 38;
+    var HOLD_MS = 3200;
+
+    function sleep(ms) {
+      return new Promise(function (resolve) {
+        window.setTimeout(resolve, ms);
+      });
+    }
+
+    function setScenario(index) {
+      var scenario = scenarios[index];
+      endpointEl.textContent = scenario.endpoint;
+      jsonEl.textContent = scenario.json;
+      current = index;
+    }
+
+    function eraseText(text) {
+      return new Promise(function (resolve) {
+        var value = text;
+        function step() {
+          if (stopped || value.length === 0) {
+            endpointEl.textContent = value;
+            resolve(value);
+            return;
+          }
+          value = value.slice(0, -1);
+          endpointEl.textContent = value;
+          window.setTimeout(step, ERASE_MS);
+        }
+        step();
+      });
+    }
+
+    function typeText(text) {
+      return new Promise(function (resolve) {
+        var index = 0;
+        function step() {
+          if (stopped) {
+            resolve();
+            return;
+          }
+          index += 1;
+          endpointEl.textContent = text.slice(0, index);
+          if (index >= text.length) {
+            resolve();
+            return;
+          }
+          window.setTimeout(step, TYPE_MS);
+        }
+        step();
+      });
+    }
+
+    async function runCycle() {
+      while (!stopped) {
+        await sleep(HOLD_MS);
+        if (stopped) break;
+
+        var next = (current + 1) % scenarios.length;
+        await eraseText(scenarios[current].endpoint);
+        if (stopped) break;
+
+        jsonEl.textContent = scenarios[next].json;
+        await typeText(scenarios[next].endpoint);
+        if (stopped) break;
+
+        current = next;
+      }
+    }
+
+    function startReduced() {
+      setScenario(0);
+      if (reducedInterval) return;
+      reducedInterval = window.setInterval(function () {
+        setScenario((current + 1) % scenarios.length);
+      }, HOLD_MS);
+    }
+
+    function stopReduced() {
+      if (!reducedInterval) return;
+      window.clearInterval(reducedInterval);
+      reducedInterval = null;
+    }
+
+    function start() {
+      if (reduced) {
+        startReduced();
+        return;
+      }
+      if (loopPromise) return;
+      stopped = false;
+      loopPromise = runCycle().finally(function () {
+        loopPromise = null;
+      });
+    }
+
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) {
+        stopped = true;
+        stopReduced();
+      } else {
+        stopped = false;
+        start();
+      }
+    });
+
+    start();
+  });

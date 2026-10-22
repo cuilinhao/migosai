@@ -87,11 +87,13 @@ describe('current public product brand without losing existing translations', ()
     expect(html).not.toContain('not documented results from this generator');
     expect(html).toContain('MigosAI-generated examples and third-party reference clips');
   });
-  it('explains shared credits without changing the established pack prices', async () => {
+  it('explains shared credits and exposes both purchase types', async () => {
     request.locale = 'en';
     const html = renderToStaticMarkup(<AuthProvider>{await resolveAsync(await PricingPage())}</AuthProvider>);
-    expect(html).toContain('Credits are shared across MigosAI image, video and music tools.');
-    for (const price of ['$9.90', '$29.90', '$49.90', '$99.90']) expect(html).toContain(price);
+    expect(html).toContain('Use across image, video and music tools');
+    expect(html.match(/role="tab"/g)).toHaveLength(2);
+    expect(html).toContain('Credit packs');
+    expect(html).toContain('Subscriptions renew automatically.');
   });
   it.each([
     ['ko', '사용 가능한 로그인 방법'], ['ja', '利用可能なログイン方法'], ['fr', 'méthode de connexion disponible'],

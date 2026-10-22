@@ -22,5 +22,5 @@ export const homeFaqItems = [
   { question: "Can one person play both parts?", answer: "Yes. Upload two different photos of the same person, one per slot. Changing the outfit or expression between the photos makes the duet easier to follow." },
   { question: "How long does it take to generate a Hotel Lobby AI video?", answer: "It depends on the model and on current demand. Progress appears after you submit, and you can close the page; the finished video shows up in your video history once it passes review." },
   { question: "Is the Hotel Lobby AI video template free?", answer: "Registration does not include free credits. Purchase a credit pack before generating. The required credit amount is displayed before generation so you can check the cost before proceeding." },
-  { question: "How does LobbyDuo pricing work?", answer: "LobbyDuo sells one-time credit packs paid through Stripe, with no subscription. Credits are deducted when you create a video or song, and completely unused packs can be refunded within 14 days of purchase." },
+  { question: "How does LobbyDuo pricing work?", answer: "MigosAI offers one-time credit packs and subscription plans through Stripe. Subscription credits are issued and expire monthly; one-time credits stay in your permanent balance. Completely unused one-time packs may qualify for a refund within 14 days." },
 ];

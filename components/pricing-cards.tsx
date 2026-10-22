@@ -1,61 +1,131 @@
 "use client";
 
-import { useState } from "react";
-import { Check } from "lucide-react";
-import { creditPacks, type PackId } from "@/content/pricing";
+import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
+import { Check, Diamond, ShieldCheck, Zap } from "lucide-react";
+import { creditPacks, subscriptionPlans, type PackId, type SubscriptionPlanId, type BillingInterval } from "@/content/pricing";
 import { useAuth } from "./auth-provider";
 import { useLocale, useTranslations } from "@/components/i18n/locale-provider";
 import { trustedCheckoutUrl } from "./ui/checkout-url";
-import { getVideoCost } from "@/lib/video-options";
-import { OZIL_GOAL_CONFIG, OZIL_GOAL_COST } from "@/lib/ozil-goal";
+import styles from "./pricing-cards.module.css";
 
-const estimateVideoCredits = getVideoCost(5, "480p", "wan-3.0");
-const starterCredits = creditPacks.find((pack) => pack.id === "starter")!.credits;
-const defaultPackId: PackId = creditPacks.find((pack) => pack.recommended)?.id ?? creditPacks[0].id;
+type Purchase = { packId: PackId } | { purchaseType: "subscription"; planId: SubscriptionPlanId; billingInterval: BillingInterval };
+type PurchaseTab = "subscription" | "packs";
+const elitePlans = subscriptionPlans.filter(plan => plan.id.startsWith("elite-"));
 
-export function PricingCards() {
+export function PricingCards({ initialPurchaseType = "subscription" }: { initialPurchaseType?: PurchaseTab } = {}) {
   const t = useTranslations();
   const locale = useLocale();
   const { user, openSignIn } = useAuth();
-  const [selected, setSelected] = useState<PackId>(defaultPackId);
-  const [busy, setBusy] = useState<PackId | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
+  const id = useId();
+  const [tab, setTab] = useState<PurchaseTab>(initialPurchaseType);
+  const [interval, setInterval] = useState<BillingInterval>("month");
+  const [eliteId, setEliteId] = useState<SubscriptionPlanId>("elite-15000");
+  const [busy, setBusy] = useState<string | null>(null);
+  const [error, setError] = useState<{ userId: string; message: string } | null>(null);
+  const [checkout, setCheckout] = useState<{ userId: string; url: string } | null>(null);
+  const inFlight = useRef(false);
+  const currentUserId = useRef(user?.id);
+  const mounted = useRef(true);
+  currentUserId.current = user?.id;
+  useEffect(() => {
+    mounted.current = true;
+    return () => { mounted.current = false; };
+  }, []);
+  const money = (cents: number) => new Intl.NumberFormat(locale, { style: "currency", currency: "USD" }).format(cents / 100);
+  const plans = subscriptionPlans.filter(plan => !plan.id.startsWith("elite-") || plan.id === eliteId);
 
-  async function buy(packId: PackId) {
-    setError(null);
-    setCheckoutUrl(null);
+  function clearNotice() { setError(null); setCheckout(null); }
+  function changeTab(next: PurchaseTab) { if (!inFlight.current) { clearNotice(); setTab(next); } }
+  function changeInterval(next: BillingInterval) { if (!inFlight.current) { clearNotice(); setInterval(next); } }
+  function tabKeyDown(event: KeyboardEvent<HTMLButtonElement>, next: PurchaseTab) {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key) || inFlight.current) return;
+    event.preventDefault();
+    const target = event.key === "Home" ? "subscription" : event.key === "End" ? "packs" : next;
+    changeTab(target);
+    document.getElementById(`${id}-${target}-tab`)?.focus();
+  }
+
+  async function buy(purchase: Purchase) {
+    if (inFlight.current) return;
+    clearNotice();
     if (!user) { openSignIn(); return; }
-    setBusy(packId);
+    const userId = user.id;
+    const key = "packId" in purchase ? `pack-${purchase.packId}` : `plan-${purchase.planId}`;
+    inFlight.current = true;
+    setBusy(key);
     try {
-      const response = await fetch("/api/checkout", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ packId, locale }) });
+      const response = await fetch("/api/checkout", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...purchase, locale }) });
       const data: { checkoutUrl?: string; error?: string } = await response.json();
+      if (!mounted.current || currentUserId.current !== userId) return;
       if (!response.ok || !data.checkoutUrl) throw new Error(data.error || "Checkout is unavailable right now. Please try again later.");
       const url = trustedCheckoutUrl(data.checkoutUrl);
-      if (!url) {
-        throw new Error("The payment service returned an invalid checkout address. Please try again later.");
-      }
-      setCheckoutUrl(url);
-      // Some browsers block async popups; noopener can also return null after
-      // opening successfully. Always keep a direct link to the same checkout.
-      try { window.open(url, "_blank", "noopener,noreferrer"); } catch { /* The direct link remains available. */ }
+      if (!url) throw new Error("The payment service returned an invalid checkout address. Please try again later.");
+      setCheckout({ userId, url });
+      // Keep a direct link even if the browser blocks the asynchronous popup.
+      try { window.open(url, "_blank", "noopener,noreferrer"); } catch { /* The link below remains available. */ }
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "Checkout is unavailable right now. Please try again later.");
+      if (mounted.current && currentUserId.current === userId) setError({ userId, message: cause instanceof Error ? cause.message : "Checkout is unavailable right now. Please try again later." });
     } finally {
-      setBusy(null);
+      inFlight.current = false;
+      if (mounted.current) setBusy(null);
     }
   }
 
-  return <div>
-    <div className="pricing-grid">{creditPacks.map((pack) => <article className={`pricing-card ${selected === pack.id ? "selected" : ""}`} key={pack.id} onClick={() => setSelected(pack.id)} onFocus={() => setSelected(pack.id)}>
-      <div className="pricing-card-top"><h3>{t(pack.name)}</h3>{pack.recommended && <span className="recommended-badge">{t("Recommended")}</span>}</div>
-      <div className="price">${pack.price.toFixed(2)}</div><p className="unit-price">{t("${price} / credit", { price: pack.unitPrice })}</p>
-      <div className="credit-summary"><strong>{t("{credits} credits", { credits: pack.credits.toLocaleString(locale) })}</strong><span>{t("About {videos} Wan 3.0 template videos (5 seconds, 480p)", { videos: Math.floor(pack.credits / estimateVideoCredits) })}</span></div>
-      <ul className="pack-inclusions"><li><b><Check size={14} aria-hidden="true"/><span className="sr-only">{t("Included")}</span></b> {t("{credits} credits", { credits: pack.credits.toLocaleString(locale) })}</li><li><b><Check size={14} aria-hidden="true"/><span className="sr-only">{t("Included")}</span></b> {t("AI Rap Song Generator")}</li><li><b><Check size={14} aria-hidden="true"/><span className="sr-only">{t("Included")}</span></b> {t("No added watermark")}</li><li><b><Check size={14} aria-hidden="true"/><span className="sr-only">{t("Included")}</span></b> {t(pack.description)}</li></ul>
-      <button className="buy-button" disabled={busy !== null} onClick={() => void buy(pack.id)}>{busy === pack.id ? t("Opening checkout…") : t("Buy {pack}", { pack: t(pack.name) })}</button>
-    </article>)}</div>
-    <p className="pricing-payment-note">{t("Estimates use {credits} credits per Wan template video. Other models, settings, and reference durations change the cost.", { credits: estimateVideoCredits })}<br/>{t("Each Ozil goal video costs {credits} credits ({duration} seconds, {aspect}, {resolution}, with sound), so the {starterCredits}-credit Starter pack covers one Ozil video.", { credits: OZIL_GOAL_COST, duration: OZIL_GOAL_CONFIG.duration, aspect: OZIL_GOAL_CONFIG.aspect, resolution: OZIL_GOAL_CONFIG.resolution, starterCredits })}<br/>{t("Secure checkout by Stripe. One-time purchase. No subscription.")}</p>
-    {checkoutUrl && <div className="mi-checkout-return" role="status"><strong>{t("Checkout ready")}</strong><p>{t("If a new tab did not open, use the secure link below to continue your purchase.")}</p><a href={checkoutUrl} target="_blank" rel="noopener noreferrer">{t("Continue to Stripe checkout (opens in a new tab)")}</a></div>}
-    {error && <p className="pricing-error" role="alert">{t(error)}</p>}
+  const benefits = ["Use across image, video and music tools", "No added watermark", "Download and organize your creations"];
+
+  return <div className={styles.pricing}>
+    <div className={styles.controls}>
+      <div className={styles.tabs} role="tablist" aria-label={t("Purchase type")}>
+        <button type="button" id={`${id}-subscription-tab`} role="tab" aria-selected={tab === "subscription"} aria-controls={`${id}-subscription-panel`} tabIndex={tab === "subscription" ? 0 : -1} disabled={busy !== null} onKeyDown={event => tabKeyDown(event, "packs")} onClick={() => changeTab("subscription")}><Diamond size={17} aria-hidden="true"/>{t("Subscription")}</button>
+        <button type="button" id={`${id}-packs-tab`} role="tab" aria-selected={tab === "packs"} aria-controls={`${id}-packs-panel`} tabIndex={tab === "packs" ? 0 : -1} disabled={busy !== null} onKeyDown={event => tabKeyDown(event, "subscription")} onClick={() => changeTab("packs")}><Zap size={17} aria-hidden="true"/>{t("Credit packs")}</button>
+      </div>
+      {tab === "subscription" && <div className={styles.billing} role="group" aria-label={t("Billing interval")}>
+        <button type="button" aria-pressed={interval === "month"} disabled={busy !== null} onClick={() => changeInterval("month")}>{t("Monthly")}</button>
+        <button type="button" aria-pressed={interval === "year"} disabled={busy !== null} onClick={() => changeInterval("year")}>{t("Yearly")}</button>
+        <span>{t("Save up to 25%")}</span>
+      </div>}
+    </div>
+
+    <div id={`${id}-subscription-panel`} role="tabpanel" aria-labelledby={`${id}-subscription-tab`} hidden={tab !== "subscription"} tabIndex={0}>
+      {tab === "subscription" && <>
+        <div className={styles.grid}>{plans.map(plan => {
+          const elite = plan.id.startsWith("elite-");
+          const monthlyCents = interval === "year" ? plan.yearlyPriceCents / 12 : plan.monthlyPriceCents;
+          return <article key={elite ? "elite" : plan.id} className={`${styles.card} ${plan.id === "pro" ? styles.featured : ""}`}>
+            {interval === "year" && <span className={styles.discount}>{t("{percent}% OFF", { percent: Math.round((1 - plan.yearlyPriceCents / (12 * plan.monthlyPriceCents)) * 100) })}</span>}
+            <h3 className={styles.planTitle}><Diamond size={23} aria-hidden="true"/>{t(plan.name)}</h3>
+            <div className={styles.price}>{interval === "year" && <del>{money(plan.monthlyPriceCents)}</del>}<strong>{money(monthlyCents)}</strong><span>{t("/mo")}</span></div>
+            <p className={styles.billingNote}>{interval === "year" ? t("{amount} billed yearly", { amount: money(plan.yearlyPriceCents) }) : t("Billed monthly")}</p>
+            <button type="button" className={styles.subscribe} aria-label={t("Subscribe to {plan}", { plan: t(plan.name) })} disabled={busy !== null} onClick={() => buy({ purchaseType: "subscription", planId: plan.id, billingInterval: interval })}>{busy === `plan-${plan.id}` ? t("Opening checkout…") : t("Subscribe")}</button>
+            {elite && <div className={styles.eliteOptions} role="group" aria-label={t("Elite monthly credits")}>{elitePlans.map(tier => <button type="button" key={tier.id} aria-pressed={eliteId === tier.id} disabled={busy !== null} onClick={() => { clearNotice(); setEliteId(tier.id); }}>{tier.credits / 1000}K</button>)}</div>}
+            <div className={styles.creditBox}><Zap size={19} aria-hidden="true"/><div><strong>{t("{credits} credits per month", { credits: plan.credits.toLocaleString(locale) })}</strong><span>{t("Up to {images} images at 1K", { images: Math.floor(plan.credits / 5).toLocaleString(locale) })}</span></div></div>
+            <ul className={styles.benefits}>{["New credits every month", "Unused subscription credits expire monthly", ...benefits].map(benefit => <li key={benefit}><Check size={16} aria-hidden="true"/>{t(benefit)}</li>)}</ul>
+            <p className={styles.cardFooter}>{t("Cancel renewal anytime. Access continues through your paid term.")}</p>
+          </article>;
+        })}</div>
+        <p className={styles.explanation}>{t("Subscriptions renew automatically. Annual plans are billed once per year and credits are issued monthly, not all at once.")}<br/>{t("Subscription credits are used first and expire each month. Your one-time credit balance is kept separately.")}</p>
+      </>}
+    </div>
+
+    <div id={`${id}-packs-panel`} role="tabpanel" aria-labelledby={`${id}-packs-tab`} hidden={tab !== "packs"} tabIndex={0}>
+      {tab === "packs" && <>
+        <div className={styles.grid}>{creditPacks.map(pack => <article className={`${styles.card} ${pack.recommended ? styles.featured : ""}`} key={pack.id}>
+          {pack.recommended && <span className={styles.discount}>{t("Recommended")}</span>}
+          <h3 className={styles.planTitle}><Zap size={23} aria-hidden="true"/>{t(pack.name)}</h3>
+          <div className={styles.price}><strong>{money(pack.amountCents)}</strong></div>
+          <p className={styles.billingNote}>{t("One-time purchase")}</p>
+          <button type="button" className={styles.subscribe} disabled={busy !== null} onClick={() => buy({ packId: pack.id })}>{busy === `pack-${pack.id}` ? t("Opening checkout…") : t("Buy {pack}", { pack: t(pack.name) })}</button>
+          <div className={styles.creditBox}><Zap size={19} aria-hidden="true"/><div><strong>{t("{credits} credits", { credits: pack.credits.toLocaleString(locale) })}</strong><span>{t("${price} / credit", { price: pack.unitPrice })}</span></div></div>
+          <ul className={styles.benefits}>{["No automatic renewal", "Kept separately from subscription credits", ...benefits].map(benefit => <li key={benefit}><Check size={16} aria-hidden="true"/>{t(benefit)}</li>)}</ul>
+          <p className={styles.cardFooter}>{t(pack.description)}</p>
+        </article>)}</div>
+        <p className={styles.explanation}>{t("Credit packs are one-time purchases. You can buy a pack with or without an active subscription.")}</p>
+      </>}
+    </div>
+
+    <div className={styles.secure}><ShieldCheck size={17} aria-hidden="true"/>{t("Secure checkout by Stripe")}</div>
+    <p className={styles.costNote}>{t("USD prices. Any applicable taxes are shown at checkout.")}<br/>{t("Nano Banana 2: 1K uses 5 credits, 2K uses 8, and 4K uses 12. Video and music costs depend on your generation settings.")}</p>
+    {checkout?.userId === user?.id && checkout && <div className="mi-checkout-return" role="status"><strong>{t("Checkout ready")}</strong><p>{t("If a new tab did not open, use the secure link below to continue your purchase.")}</p><a href={checkout.url} target="_blank" rel="noopener noreferrer">{t("Continue to Stripe checkout (opens in a new tab)")}</a></div>}
+    {error?.userId === user?.id && error && <p className="pricing-error" role="alert">{t(error.message)}</p>}
   </div>;
 }

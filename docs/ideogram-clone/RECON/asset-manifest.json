@@ -1,0 +1,699 @@
+{
+  "source": "https://ideogram.ai/",
+  "sourceHtml": "docs/ideogram-clone/RECON/original.html",
+  "retrievedDate": "2026-10-22",
+  "notes": [
+    "Assets parsed from the saved original HTML; original hash filenames retained.",
+    "Only public images were downloaded; no videos, tracking code, customer logos, or proprietary fonts.",
+    "Original site assets are reference materials; commercial redistribution rights were not established."
+  ],
+  "heroInventory": [
+    {
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/602175621e2595ed.webp",
+      "variants": [
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/00be8015e3628293.webp",
+          "width": 240
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/54467b9ad8c1aab1.webp",
+          "width": 320
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/ddc19c5908ab250a.webp",
+          "width": 640
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/476490fe0fcbbd67.webp",
+          "width": 1024
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/a1663ee3ae07ef60.webp",
+          "width": 1440
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/521fc6d114395bb5.webp",
+          "width": 1920
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/602175621e2595ed.webp",
+          "width": 2496
+        }
+      ]
+    },
+    {
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/0f879a0253e88e54.webp",
+      "variants": [
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/095c281b8e58570a.webp",
+          "width": 240
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/4a49ba23a6fa0d7e.webp",
+          "width": 320
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/e1dddf045551fd97.webp",
+          "width": 640
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/0ed5e1ede10914b3.webp",
+          "width": 1024
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/f073d6e94d200503.webp",
+          "width": 1440
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/9b5bd384882ac03d.webp",
+          "width": 1920
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/0f879a0253e88e54.webp",
+          "width": 2880
+        }
+      ]
+    },
+    {
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/0b19792309ddb26c.webp",
+      "variants": [
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/90fbb67213f33927.webp",
+          "width": 240
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/88d9da9211409ba5.webp",
+          "width": 320
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/29069ef1b12a9774.webp",
+          "width": 640
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/44c65c496f574c54.webp",
+          "width": 1024
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/3a85dc350bcd95aa.webp",
+          "width": 1440
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/4820372c13574bd2.webp",
+          "width": 1920
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/0b19792309ddb26c.webp",
+          "width": 2880
+        }
+      ]
+    },
+    {
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/154c65fa15e54808.webp",
+      "variants": [
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/3bab4e9a376edcc7.webp",
+          "width": 240
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/60b5fc70996e2d98.webp",
+          "width": 320
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/9506eb950f549097.webp",
+          "width": 640
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/41a20ed56ff7461c.webp",
+          "width": 1024
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/3cb4d91ddcc91513.webp",
+          "width": 1440
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/cb1ecff23674527a.webp",
+          "width": 1920
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/154c65fa15e54808.webp",
+          "width": 2880
+        }
+      ]
+    },
+    {
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/eafa1eecec9835f5.webp",
+      "variants": [
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/f8748dbf58d05261.webp",
+          "width": 240
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/595102b267d288d0.webp",
+          "width": 320
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/bb39ba2c3d3425a4.webp",
+          "width": 640
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/9e3926bb593d1ec2.webp",
+          "width": 1024
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/b8cb129730caf826.webp",
+          "width": 1440
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/23246ebc9b4bf465.webp",
+          "width": 1920
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/eafa1eecec9835f5.webp",
+          "width": 2880
+        }
+      ]
+    },
+    {
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/1935eb4b6ea14bfc.webp",
+      "variants": [
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/a5f81b81d92d6123.webp",
+          "width": 240
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/5e8cc6a57a929a1d.webp",
+          "width": 320
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/7ce3814f7fa0ab7d.webp",
+          "width": 640
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/1544a632028caced.webp",
+          "width": 1024
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/0613a42448b5708b.webp",
+          "width": 1440
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/959236c8863d91bd.webp",
+          "width": 1920
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/1935eb4b6ea14bfc.webp",
+          "width": 2880
+        }
+      ]
+    },
+    {
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/cd2c9377e732776f.webp",
+      "variants": [
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/60ef15ed432a3cb2.webp",
+          "width": 240
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/c57774f1e0fea911.webp",
+          "width": 320
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/dd8349016a90ad40.webp",
+          "width": 640
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/f9bb074b91513cd5.webp",
+          "width": 1024
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/b4ca6b8c30a6480f.webp",
+          "width": 1440
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/28338c26dae71251.webp",
+          "width": 1920
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/cd2c9377e732776f.webp",
+          "width": 2880
+        }
+      ]
+    },
+    {
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/8b6d62ea94e60960.webp",
+      "variants": [
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/8061ca477dbde4cc.webp",
+          "width": 240
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/b830feefb87bb371.webp",
+          "width": 320
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/47554b2e6914e537.webp",
+          "width": 640
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/33b39deb2659bc59.webp",
+          "width": 1024
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/a6cbadbba27e0655.webp",
+          "width": 1440
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/487002c1962dd93e.webp",
+          "width": 1920
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/8b6d62ea94e60960.webp",
+          "width": 2880
+        }
+      ]
+    },
+    {
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/064c880711d860b3.webp",
+      "variants": [
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/775f8e4b9b01042c.webp",
+          "width": 240
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/d82e5f0c09e2e9e2.webp",
+          "width": 320
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/0ca87a54f4c74ae0.webp",
+          "width": 640
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/e34e46927e0a13a8.webp",
+          "width": 1024
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/6bbebde14c29af05.webp",
+          "width": 1440
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/6425124398b48e3f.webp",
+          "width": 1920
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/064c880711d860b3.webp",
+          "width": 2880
+        }
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/fbec57a434cbcf39.webp",
+      "local": "public/landing/ideogram/fbec57a434cbcf39.webp",
+      "usage": "navigation",
+      "alt": "Red fox in an astronaut helmet on a glowing alien landscape",
+      "sourceWidth": 496,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/fbec57a434cbcf39.webp",
+      "originalHtmlWidth": "496",
+      "originalHtmlHeight": "620",
+      "status": "downloaded",
+      "bytes": 81670,
+      "width": 496,
+      "height": 620,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/521fc6d114395bb5.webp",
+      "local": "public/landing/ideogram/521fc6d114395bb5.webp",
+      "usage": "hero",
+      "alt": "",
+      "sourceWidth": 1920,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/602175621e2595ed.webp",
+      "originalHtmlWidth": "2880",
+      "originalHtmlHeight": "1840",
+      "status": "downloaded",
+      "bytes": 361736,
+      "width": 1920,
+      "height": 1280,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/9b5bd384882ac03d.webp",
+      "local": "public/landing/ideogram/9b5bd384882ac03d.webp",
+      "usage": "hero",
+      "alt": "",
+      "sourceWidth": 1920,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/0f879a0253e88e54.webp",
+      "originalHtmlWidth": "2880",
+      "originalHtmlHeight": "1840",
+      "status": "downloaded",
+      "bytes": 223740,
+      "width": 1920,
+      "height": 1227,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/4820372c13574bd2.webp",
+      "local": "public/landing/ideogram/4820372c13574bd2.webp",
+      "usage": "hero",
+      "alt": "",
+      "sourceWidth": 1920,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/0b19792309ddb26c.webp",
+      "originalHtmlWidth": "2880",
+      "originalHtmlHeight": "1840",
+      "status": "downloaded",
+      "bytes": 381908,
+      "width": 1920,
+      "height": 1227,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/video-posters/8532132f45c656d7-poster.jpg",
+      "local": "public/landing/ideogram/8532132f45c656d7-poster.jpg",
+      "usage": "video-poster",
+      "alt": "",
+      "sourceWidth": null,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/video-posters/8532132f45c656d7-poster.jpg",
+      "originalHtmlWidth": null,
+      "originalHtmlHeight": null,
+      "status": "downloaded",
+      "bytes": 56064,
+      "width": 1280,
+      "height": 720,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/e35228fe208c2949.webp",
+      "local": "public/landing/ideogram/e35228fe208c2949.webp",
+      "usage": "platform",
+      "alt": "",
+      "sourceWidth": 832,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/e35228fe208c2949.webp",
+      "originalHtmlWidth": "832",
+      "originalHtmlHeight": "560",
+      "status": "downloaded",
+      "bytes": 226758,
+      "width": 832,
+      "height": 560,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/2ea5692beb5ceede.webp",
+      "local": "public/landing/ideogram/2ea5692beb5ceede.webp",
+      "usage": "platform",
+      "alt": "",
+      "sourceWidth": 832,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/2ea5692beb5ceede.webp",
+      "originalHtmlWidth": "832",
+      "originalHtmlHeight": "560",
+      "status": "downloaded",
+      "bytes": 216580,
+      "width": 832,
+      "height": 560,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/6fceb79f77af4b40.webp",
+      "local": "public/landing/ideogram/6fceb79f77af4b40.webp",
+      "usage": "platform",
+      "alt": "",
+      "sourceWidth": 832,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/6fceb79f77af4b40.webp",
+      "originalHtmlWidth": "832",
+      "originalHtmlHeight": "560",
+      "status": "downloaded",
+      "bytes": 189142,
+      "width": 832,
+      "height": 560,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/9151cb1efc3311c6.webp",
+      "local": "public/landing/ideogram/9151cb1efc3311c6.webp",
+      "usage": "team",
+      "alt": "",
+      "sourceWidth": 640,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/8bc81d72b0a18907.webp",
+      "originalHtmlWidth": "1122",
+      "originalHtmlHeight": "1402",
+      "status": "downloaded",
+      "bytes": 44212,
+      "width": 640,
+      "height": 800,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/f098eced8de16160.webp",
+      "local": "public/landing/ideogram/f098eced8de16160.webp",
+      "usage": "team",
+      "alt": "",
+      "sourceWidth": 640,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/c9d37763a360bbad.webp",
+      "originalHtmlWidth": "1254",
+      "originalHtmlHeight": "1254",
+      "status": "downloaded",
+      "bytes": 36482,
+      "width": 640,
+      "height": 640,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/687e0fe8be1e175e.webp",
+      "local": "public/landing/ideogram/687e0fe8be1e175e.webp",
+      "usage": "team",
+      "alt": "",
+      "sourceWidth": 2496,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/687e0fe8be1e175e.webp",
+      "originalHtmlWidth": "2496",
+      "originalHtmlHeight": "1664",
+      "status": "downloaded",
+      "bytes": 337026,
+      "attempts": [
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/2c411f75e1bfe773.webp",
+          "status": "failed",
+          "error": "curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to storage.googleapis.com:443 \n"
+        },
+        {
+          "url": "https://storage.googleapis.com/ideogram-static/website/images/687e0fe8be1e175e.webp",
+          "status": "downloaded",
+          "error": ""
+        }
+      ],
+      "width": 2496,
+      "height": 1664,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/0f7ab4586d44fc4d.webp",
+      "local": "public/landing/ideogram/0f7ab4586d44fc4d.webp",
+      "usage": "gallery",
+      "alt": "Brightly colored anime-style seaside scene",
+      "sourceWidth": 640,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/7abef3ceb2a1fc62.webp",
+      "originalHtmlWidth": "360",
+      "originalHtmlHeight": "317",
+      "status": "downloaded",
+      "bytes": 75876,
+      "width": 640,
+      "height": 640,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/b98a286d9773b9aa.webp",
+      "local": "public/landing/ideogram/b98a286d9773b9aa.webp",
+      "usage": "gallery",
+      "alt": "Cosmic Architect illustrated book cover",
+      "sourceWidth": 640,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/4b7140208d8e10da.webp",
+      "originalHtmlWidth": "360",
+      "originalHtmlHeight": "507",
+      "status": "downloaded",
+      "bytes": 105948,
+      "width": 640,
+      "height": 1024,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/0a7639003d4a8c90.webp",
+      "local": "public/landing/ideogram/0a7639003d4a8c90.webp",
+      "usage": "gallery",
+      "alt": "Illustration of a teacher using a classroom television",
+      "sourceWidth": 640,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/212ffc08610eb32d.webp",
+      "originalHtmlWidth": "360",
+      "originalHtmlHeight": "628",
+      "status": "downloaded",
+      "bytes": 68468,
+      "width": 640,
+      "height": 1280,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/24a0d869f4bf451d.webp",
+      "local": "public/landing/ideogram/24a0d869f4bf451d.webp",
+      "usage": "gallery",
+      "alt": "Fantasy castle on a dramatic mountain",
+      "sourceWidth": 640,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/0d2c5598f4ca085b.webp",
+      "originalHtmlWidth": "360",
+      "originalHtmlHeight": "476",
+      "status": "downloaded",
+      "bytes": 55666,
+      "width": 640,
+      "height": 960,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/7329c307eff5c70b.webp",
+      "local": "public/landing/ideogram/7329c307eff5c70b.webp",
+      "usage": "gallery",
+      "alt": "Haunted Little Rock vintage travel poster in black and white",
+      "sourceWidth": 640,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/93c875d52723dd01.webp",
+      "originalHtmlWidth": "360",
+      "originalHtmlHeight": "471",
+      "status": "downloaded",
+      "bytes": 157248,
+      "width": 640,
+      "height": 960,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/3ef4883d9ebf9f7c.webp",
+      "local": "public/landing/ideogram/3ef4883d9ebf9f7c.webp",
+      "usage": "gallery",
+      "alt": "Stylized character in a military-inspired outfit",
+      "sourceWidth": 640,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/8ff6391c2085026d.webp",
+      "originalHtmlWidth": "360",
+      "originalHtmlHeight": "392",
+      "status": "downloaded",
+      "bytes": 34434,
+      "width": 640,
+      "height": 800,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/b26062bbf57c95cf.webp",
+      "local": "public/landing/ideogram/b26062bbf57c95cf.webp",
+      "usage": "gallery",
+      "alt": "As Slow As Possible illustrated poster",
+      "sourceWidth": 640,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/fdcd642677869bdd.webp",
+      "originalHtmlWidth": "360",
+      "originalHtmlHeight": "317",
+      "status": "downloaded",
+      "bytes": 75536,
+      "width": 640,
+      "height": 640,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/146a55782d00f5d6.webp",
+      "local": "public/landing/ideogram/146a55782d00f5d6.webp",
+      "usage": "gallery",
+      "alt": "Portrait with an ornate butterfly mask",
+      "sourceWidth": 640,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/6e51062b5d85b17b.webp",
+      "originalHtmlWidth": "360",
+      "originalHtmlHeight": "507",
+      "status": "downloaded",
+      "bytes": 60898,
+      "width": 640,
+      "height": 1024,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/2ebf68aa4c8df16b.webp",
+      "local": "public/landing/ideogram/2ebf68aa4c8df16b.webp",
+      "usage": "gallery",
+      "alt": "Fashion portrait of a girl with long black pigtails",
+      "sourceWidth": 640,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/f657fdeb0193405e.webp",
+      "originalHtmlWidth": "360",
+      "originalHtmlHeight": "560",
+      "status": "downloaded",
+      "bytes": 97178,
+      "width": 640,
+      "height": 1141,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/095079f48e23af8b.webp",
+      "local": "public/landing/ideogram/095079f48e23af8b.webp",
+      "usage": "gallery",
+      "alt": "A person approaching a mysterious floating sphere",
+      "sourceWidth": 640,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/f40d8604760cbdcf.webp",
+      "originalHtmlWidth": "360",
+      "originalHtmlHeight": "564",
+      "status": "downloaded",
+      "bytes": 82840,
+      "width": 640,
+      "height": 1138,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/985fa0053b0274bd.webp",
+      "local": "public/landing/ideogram/985fa0053b0274bd.webp",
+      "usage": "gallery",
+      "alt": "Cosmic monster sticker holding a spray paint can",
+      "sourceWidth": 640,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/2f83821ab82727be.webp",
+      "originalHtmlWidth": "360",
+      "originalHtmlHeight": "314",
+      "status": "downloaded",
+      "bytes": 74920,
+      "width": 640,
+      "height": 640,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/2bbe6db1df8cfddc.webp",
+      "local": "public/landing/ideogram/2bbe6db1df8cfddc.webp",
+      "usage": "gallery",
+      "alt": "Sci-fi cityscape with a multiverse gate",
+      "sourceWidth": 640,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/57a90f9a4e7b6ea5.webp",
+      "originalHtmlWidth": "360",
+      "originalHtmlHeight": "560",
+      "status": "downloaded",
+      "bytes": 97522,
+      "width": 640,
+      "height": 1141,
+      "verifiedImage": true
+    },
+    {
+      "url": "https://storage.googleapis.com/ideogram-static/website/images/36decf8c7c34f224.webp",
+      "local": "public/landing/ideogram/36decf8c7c34f224.webp",
+      "usage": "gallery-mobile",
+      "alt": "Detailed close-up of a colorful lizard",
+      "sourceWidth": 640,
+      "originalUrl": "https://storage.googleapis.com/ideogram-static/website/images/54c5a044463719ad.webp",
+      "originalHtmlWidth": "314",
+      "originalHtmlHeight": "396",
+      "status": "downloaded",
+      "bytes": 71248,
+      "width": 640,
+      "height": 800,
+      "verifiedImage": true
+    }
+  ],
+  "fonts": [
+    {
+      "name": "Geist Sans Latin",
+      "local": "public/landing/ideogram/geist-latin.woff2",
+      "sourceLocal": "node_modules/next/dist/next-devtools/server/font/geist-latin.woff2",
+      "sourcePackage": "next@15.5.27",
+      "officialProject": "https://github.com/vercel/geist-font",
+      "license": "SIL Open Font License 1.1",
+      "licenseSource": "https://raw.githubusercontent.com/vercel/geist-font/main/OFL.txt",
+      "licenseLocal": "public/landing/ideogram/GEIST-OFL.txt",
+      "bytes": 28356,
+      "sha256": "1b5ebfb3a01a97343ac96873e6d59a8cb285c66012b6a1ac509cb2765e995ba8",
+      "status": "copied from installed package; byte-identical verification passed",
+      "retrievedDate": "2026-10-22"
+    }
+  ]
+}
