@@ -3,10 +3,10 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it, vi } from "vitest";
 import { PortalShell } from "../components/portal/portal-shell";
-import { PortalHome } from "../components/portal/portal-home";
+import { PortalCollection, PortalHome } from "../components/portal/portal-home";
 import { LocaleProvider } from "../components/i18n/locale-provider";
 import { AuthProvider } from "../components/auth-provider";
-import { getMessages, locales, localizeHref } from "../lib/i18n";
+import { getMessages, locales, localizeHref, translate } from "../lib/i18n";
 import { publicPages } from "../content/public-pages";
 import { homeCreations, homeEffects, portalCreations, portalEffects } from "../content/portal";
 import { videoEffects } from "../content/effects";
@@ -25,6 +25,22 @@ describe("MigosAI portal entry points", () => {
     expect(html.match(/class="portal-effect-card"/g)).toHaveLength(9);
     expect(html.match(/class="portal-creation-card /g)).toHaveLength(18);
     for (const item of homeEffects) expect(html).toContain(`href="${localizeHref(item.href, locale)}"`);
+  });
+  it.each(locales)("keeps Explore videos lazy and gives each card its localized creation link in %s", locale => {
+    const html = renderToStaticMarkup(<LocaleProvider locale={locale} messages={getMessages(locale)}><PortalCollection kind="explore"/></LocaleProvider>);
+    expect(html.match(/<article class="portal-creation-card /g)).toHaveLength(18);
+    expect(html.match(/class="portal-creation-create"/g)).toHaveLength(18);
+    expect(html).toContain('class="portal-creations-grid is-showcase"');
+    for (const item of homeCreations) expect(html).toContain(`href="${localizeHref(item.href, locale)}"`);
+    for (const category of ["Dance", "Pets", "Cinematic"]) expect(html).toContain(translate(locale, category));
+    const videos = html.match(/<video\b[^>]*>/g) ?? [];
+    expect(videos).toHaveLength(18);
+    for (const video of videos) {
+      expect(video).toContain('muted=""');
+      expect(video).toContain('loop=""');
+      expect(video).toContain('preload="none"');
+      expect(video).not.toMatch(/\bsrc=/);
+    }
   });
   it("curates distinct local videos with the matching creation routes", () => {
     const sources = [...homeEffects.map(item => item.video), ...homeCreations.map(item => item.src)];

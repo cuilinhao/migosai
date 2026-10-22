@@ -16,7 +16,14 @@
 .portal-creations-grid.is-showcase{display:block;columns:2;column-gap:16px}
 .portal-creations-grid.is-showcase .portal-creation-card{display:inline-block;vertical-align:top;width:100%;break-inside:avoid;margin-bottom:16px;aspect-ratio:4/3}
 .portal-creations-grid.is-showcase .portal-creation-card.portrait{aspect-ratio:9/16}
-.portal-effect-card:focus-visible .portal-effect-action,.portal-creation-card:focus-visible .portal-creation-play{opacity:1}
+.portal-creation-preview{position:absolute;inset:0;display:block;width:100%;height:100%;padding:0;border:0;background:none;color:inherit;text-align:left;cursor:pointer}
+.portal-creation-preview>img,.portal-creation-preview>video{display:block;width:100%;height:100%;object-fit:cover;transition:transform .35s}
+.portal-creation-preview:hover>img,.portal-creation-preview:hover>video{transform:scale(1.04)}
+.portal-creation-card:after{pointer-events:none}
+.portal-creation-card:focus-within{outline:2px solid #bb8df4;outline-offset:3px}
+.portal-creation-create{position:absolute;z-index:3;top:10px;right:10px;display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:32px;padding:7px 12px;border-radius:20px;background:#ffffffed;color:#161616;font-size:11px;line-height:16px;font-weight:600;box-shadow:0 2px 8px #0002}
+.portal-creation-create:hover,.portal-creation-create:focus-visible{background:#bb8df4;color:#171020}
+.portal-effect-card:focus-visible .portal-effect-action,.portal-creation-card:focus-within .portal-creation-play{opacity:1}
 .portal-effect-card:focus-visible h3{opacity:0}
 @media(min-width:1024px){.portal-home .portal-effects-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.portal-creations-grid.is-showcase{columns:3}}
 @media(min-width:1536px){.portal-home .portal-effects-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.portal-creations-grid.is-showcase{columns:4}}

@@ -27,7 +27,7 @@ export function PortalHome() {
     </section>
     <section className="portal-section"><SectionHeading title="Hot Video Effects" description="Turn a photo into a moment worth sharing."/><EffectsGrid items={homeEffects} autoplay/><div className="portal-section-more"><Link href="/effects">{t("View all")}<ArrowRight size={16}/></Link></div></section>
     <section className="portal-section"><SectionHeading title="AI Tools" description="A creative toolkit for every idea." href="/tools"/><ToolsGrid/></section>
-    <section className="portal-section"><SectionHeading title="Explore Creations" description="Video ideas to explore. Find an effect and make it your own." href="/effects"/><CreationsGallery items={homeCreations} filterBy="category" autoplay/></section>
+    <section className="portal-section"><SectionHeading title="Explore Creations" description="Video ideas to explore. Find an effect and make it your own." href="/explore"/><CreationsGallery items={homeCreations} filterBy="category" autoplay/></section>
     <section className="portal-section"><SectionHeading title="Inspiration Hub" description="Ideas, guides and a place to get started." href="/blog"/><div className="portal-hub-grid">{portalArticles.map(item => <Link href={item.href} className="portal-hub-card" key={item.href}><img loading="lazy" src={item.image} alt=""/><span>{t("GUIDE")}</span><h3>{t(item.title)}</h3><p>{t(item.description)}</p><ArrowRight size={19}/></Link>)}</div></section>
     <section className="portal-section portal-faq"><SectionHeading title="Frequently Asked Questions"/>{portalFaqs.map(item => <details key={item.question}><summary>{t(item.question)}<Plus size={18}/></summary><p>{t(item.answer)}</p></details>)}</section>
   </div>;
@@ -64,12 +64,15 @@ export function CreationsGallery({ autoplay = false, items = portalCreations, fi
   return <>
     <div className="portal-filters" role="group" aria-label={t("Filter creations")}>{filters.map(value => <button key={value} aria-pressed={filter === value} onClick={() => setFilter(value)}>{t(value)}</button>)}</div>
     <div className={`portal-creations-grid${filterBy === "category" ? " is-showcase" : ""}`}>
-      {filtered.map((item, index) => <button className={`portal-creation-card ${item.portrait ? "portrait" : ""}`} key={item.id} onClick={() => setSelected(item)} aria-label={`${t("Play video")}: ${t(item.stage)} — ${t(item.model)}`}>
-        {autoplay ? <ViewportVideo src={item.src} poster={item.poster} paused={selected !== null}/> : <img src={item.poster} alt={`${t(item.stage)} — ${t(item.model)}`} loading="lazy"/>}
-        <span className="portal-creation-play"><Play size={20} fill="currentColor"/></span>
-        <span className="portal-creation-info"><b>{t(item.stage)}</b><small>{t(item.model)}</small></span>
-        <span className="portal-creation-index">{String(index + 1).padStart(2, "0")}</span>
-      </button>)}
+      {filtered.map((item, index) => <article className={`portal-creation-card ${item.portrait ? "portrait" : ""}`} key={item.id}>
+        <button type="button" className="portal-creation-preview" onClick={() => setSelected(item)} aria-label={`${t("Play video")}: ${t(item.stage)} — ${t(item.model)}`}>
+          {autoplay ? <ViewportVideo src={item.src} poster={item.poster} paused={selected !== null}/> : <img src={item.poster} alt={`${t(item.stage)} — ${t(item.model)}`} loading="lazy"/>}
+          <span className="portal-creation-play"><Play size={20} fill="currentColor"/></span>
+          <span className="portal-creation-info"><b>{t(item.stage)}</b><small>{t(item.model)}</small></span>
+          <span className="portal-creation-index">{String(index + 1).padStart(2, "0")}</span>
+        </button>
+        <Link className="portal-creation-create" href={item.href} aria-label={`${t("Create video")}: ${t(item.stage)}`}><Sparkles size={13}/>{t("Create")}</Link>
+      </article>)}
     </div>
     <Dialog.Root open={selected !== null} onOpenChange={open => { if (!open) setSelected(null); }}><Dialog.Portal><Dialog.Overlay className="portal-preview-overlay"/><Dialog.Content className="portal-preview-dialog">
       <Dialog.Title>{selected ? t(selected.stage) : t("Creation")}</Dialog.Title>
@@ -84,6 +87,6 @@ export function CreationsGallery({ autoplay = false, items = portalCreations, fi
 export function PortalCollection({ kind }: { kind: "tools" | "effects" | "video" | "explore" }) {
   const t = useTranslations();
   const titles = { tools: "AI Tools", effects: "Hot Video Effects", video: "AI Video Generator", explore: "Explore Creations" };
-  const descriptions = { tools: "A creative toolkit for every idea.", effects: "Turn a photo into a moment worth sharing.", video: "Start with a photo. Create a story.", explore: "Made with MigosAI. A little inspiration for your next creation." };
-  return <div className="portal-collection"><header><span className="portal-eyebrow">MigosAI</span><h1>{t(titles[kind])}</h1><p>{t(descriptions[kind])}</p></header>{kind === "tools" ? <ToolsGrid/> : kind === "explore" ? <CreationsGallery/> : <EffectsGrid/>}{kind === "video" && <Link className="portal-collection-cta" href="/hotel-lobby-ai-video-generator">{t("Open video generator")}<ArrowRight size={18}/></Link>}</div>;
+  const descriptions = { tools: "A creative toolkit for every idea.", effects: "Turn a photo into a moment worth sharing.", video: "Start with a photo. Create a story.", explore: "Video ideas to explore. Find an effect and make it your own." };
+  return <div className="portal-collection"><header><span className="portal-eyebrow">MigosAI</span><h1>{t(titles[kind])}</h1><p>{t(descriptions[kind])}</p></header>{kind === "tools" ? <ToolsGrid/> : kind === "explore" ? <CreationsGallery items={homeCreations} filterBy="category" autoplay/> : <EffectsGrid/>}{kind === "video" && <Link className="portal-collection-cta" href="/hotel-lobby-ai-video-generator">{t("Open video generator")}<ArrowRight size={18}/></Link>}</div>;
 }
