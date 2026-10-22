@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import { ArrowUpRight, ChevronLeft, ChevronRight, LoaderCircle, Play, RefreshCw, Sparkles, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, LoaderCircle, Play, RefreshCw, Sparkles, X } from "lucide-react";
+import Link from "@/components/i18n/localized-link";
 import { useTranslations } from "@/components/i18n/locale-provider";
 import { adjacentEffectIndex, videoEffects, type VideoEffect } from "@/content/effects";
 import styles from "./effects-gallery.module.css";
@@ -54,7 +55,7 @@ export function EffectsGallery() {
           </div>
           {selectedEffect && <EffectPlayer key={selectedEffect.id} effect={selectedEffect}/>}
           <div className={styles.dialogFooter}>
-            <a href={selectedEffect?.sourcePage} target="_blank" rel="noreferrer">{t("View original")}<ArrowUpRight size={14}/></a>
+            <Link href="/ai-video-generator">{t("Create video")}<ChevronRight size={16}/></Link>
             <div className={styles.navigation}>
               <button type="button" onClick={() => move(-1)} aria-label={t("Previous video")}><ChevronLeft size={20}/></button>
               <span aria-live="polite">{t("{current} of {total}", { current: (selected ?? 0) + 1, total: videoEffects.length })}</span>
