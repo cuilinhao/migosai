@@ -93,7 +93,6 @@ describe('standalone routes keep their own layout',()=>{
     {path:'/sign-up',page:SignUpPage,footerCount:0},
     {path:'/app/my-orders',page:()=>AccountLayout({children:<OrdersPage/>}),footerCount:0},
     {path:'/app/my-credits',page:()=>AccountLayout({children:<CreditsPage/>}),footerCount:0},
-    {path:'/app/assets',page:()=>AccountLayout({children:<AssetsPage/>}),footerCount:0},
   ];
   for(const {path,page,footerCount}of standalone)it.each(locales)(`${path} does not receive a second portal shell in %s`,async locale=>{
     const html=await renderRoute(path,page,locale);
@@ -102,6 +101,19 @@ describe('standalone routes keep their own layout',()=>{
     expect(html).not.toContain('class="portal-shell"');
     expect(html).not.toContain('class="portal-footer"');
     expect(html).not.toContain('class="portal-nav"');
+    expect(html).toContain('MigosAI');
+  });
+});
+
+describe('assets workspace uses the shared portal once',()=>{
+  it.each(locales)('keeps the active Assets navigation without the account shell or footer in %s',async locale=>{
+    const html=await renderRoute('/app/assets',()=>AccountLayout({children:<AssetsPage/>}),locale);
+    expect(html.match(/class="portal-shell portal-assets-workspace"/g)??[]).toHaveLength(1);
+    expect(html.match(/class="portal-nav"/g)??[]).toHaveLength(1);
+    expect(html.match(/<main(?:\s|>)/g)??[]).toHaveLength(1);
+    expect(activeSidebarLinks(html)).toEqual([localizeHref('/app/assets',locale)]);
+    expect(html).not.toContain('dashboard-nav');
+    expect(html).not.toContain('<footer');
     expect(html).toContain('MigosAI');
   });
 });

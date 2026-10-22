@@ -19,3 +19,9 @@ html:has(.portal-video-workspace){scrollbar-width:none}html:has(.portal-video-wo
 @media(max-width:1199px){.portal-effects-catalog .portal-content{padding-inline:20px}}
 @media(max-width:900px){.portal-effects-catalog .portal-content{padding-inline:16px}}
 @media(max-width:600px){.portal-effects-catalog .portal-content{padding-inline:12px}.portal-effects-catalog .portal-account-bar{height:64px;padding-top:16px}.portal-effects-catalog .portal-signin{height:32px;font-size:12px}}
+
+/* Assets shares the main navigation; its collection panel starts beside it. */
+.portal-assets-workspace:has(.portal-credit){--assets-account-reserve:176px}
+.portal-assets-workspace .portal-content{padding:0;margin-left:232px;overflow:hidden;height:100dvh}.portal-assets-workspace .portal-content main{height:100%;min-width:0}.portal-assets-workspace .portal-account-bar{position:absolute;z-index:25;right:16px;top:16px;height:40px;gap:10px}.portal-assets-workspace .portal-signin{height:40px;border:0;border-radius:24px;background:#f5f5f5;color:#121212;padding:0 20px}.portal-assets-workspace .portal-account-menu{top:44px}.portal-assets-workspace .portal-credit{font-size:12px}.portal-assets-workspace .portal-mobile-header{display:none}
+@media(max-width:900px) and (min-width:768px){.portal-assets-workspace .portal-content{margin-left:192px}}
+@media(max-width:767px){.portal-assets-workspace .portal-sidebar{display:none}.portal-assets-workspace .portal-mobile-header{display:flex;position:relative;top:auto;left:auto;height:64px;padding:0 12px}.portal-assets-workspace .portal-content{margin-left:0;padding:0;height:calc(100dvh - 64px)}.portal-assets-workspace .portal-account-bar{top:12px;right:12px;height:36px}.portal-assets-workspace .portal-signin{height:36px;padding:0 14px;font-size:12px}.portal-assets-workspace .portal-credit{display:none}}

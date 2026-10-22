@@ -8,6 +8,7 @@ import { useTranslations, useLocale } from "@/components/i18n/locale-provider";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 import { localizeHref, stripLocale } from "@/lib/i18n/routing";
 import { useAuth } from "@/components/auth-provider";
+import { PortalShell } from "@/components/portal/portal-shell";
 import styles from "./dashboard-shell.module.css";
 
 const routes = [
@@ -20,6 +21,11 @@ const routes = [
 ];
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
+  const pathname = stripLocale(usePathname());
+  return pathname === "/app/assets" ? <PortalShell>{children}</PortalShell> : <AccountDashboardShell>{children}</AccountDashboardShell>;
+}
+
+function AccountDashboardShell({ children }: { children: React.ReactNode }) {
   const t = useTranslations();
   const locale = useLocale();
   const pathname = usePathname();
