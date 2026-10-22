@@ -89,7 +89,7 @@ export function HomeHero() {
         <p className="home-hero-badge"><span aria-hidden="true" />{t("Your photos. Your rap duo.")}</p>
         <h1 id="home-hero-title">{t("Make Your Own Hotel Lobby Video with AI")}</h1>
         <p className="home-hero-description">{t("LobbyDuo is an AI rap duo video generator for the Hotel Lobby trend.")}</p>
-        <Link className="home-hero-action" href="/#generator"><span aria-hidden="true">🎵</span><span>{t("Use your own song? Start here")}</span><span aria-hidden="true">→</span></Link>
+        <Link className="home-hero-action" href="/hotel-lobby-ai-video-generator#generator"><span aria-hidden="true">🎵</span><span>{t("Use your own song? Start here")}</span><span aria-hidden="true">→</span></Link>
       </div>
       <div className="home-hero-reel">
         <div className="home-hero-scroll">

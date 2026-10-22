@@ -1,5 +1,5 @@
 import { ApiError } from './errors';
-export type Job={id:string;user_id:string;idempotency_key:string;kind:'video'|'music';payload:string;cost:number;status:string;stage:string;provider_id:string|null;assets:string|null;result_keys:string|null;error:string|null;progress:number;provider_cost:number|null;lease_until:number;lease_owner:string|null;next_poll:number;created_at:number;moderation_state:string|null;moderation_verdict:string|null;moderation_key:string|null;moderation_etag:string|null};
+export type Job={id:string;user_id:string;idempotency_key:string;kind:'video'|'music'|'image';payload:string;cost:number;status:string;stage:string;provider_id:string|null;assets:string|null;result_keys:string|null;error:string|null;progress:number;provider_cost:number|null;lease_until:number;lease_owner:string|null;next_poll:number;created_at:number;moderation_state:string|null;moderation_verdict:string|null;moderation_key:string|null;moderation_etag:string|null};
 function matchesReservation(job:Job,kind:string,serialized:string):boolean{
  if(job.kind!==kind)return false;
  if(job.payload===serialized)return true;

@@ -3,7 +3,7 @@
 import Link from "@/components/i18n/localized-link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { CreditCard, History, House, List, LogOut, Menu, Video, X } from "lucide-react";
+import { CreditCard, FolderOpen, ImageIcon, History, House, List, LogOut, Menu, Video, X } from "lucide-react";
 import { useTranslations, useLocale } from "@/components/i18n/locale-provider";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 import { localizeHref, stripLocale } from "@/lib/i18n/routing";
@@ -11,6 +11,8 @@ import { useAuth } from "@/components/auth-provider";
 
 const routes = [
   { href: "/app/video-generator", label: "Generate Video", Icon: Video },
+  { href: "/ai-image-generator", label: "AI Image Generator", Icon: ImageIcon },
+  { href: "/app/assets", label: "My assets", Icon: FolderOpen },
   { href: "/app/my-videos", label: "My Videos", Icon: History },
   { href: "/app/my-orders", label: "My Orders", Icon: List },
   { href: "/app/my-credits", label: "My Credits", Icon: CreditCard },
@@ -29,7 +31,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     <button className="dashboard-mobile-toggle" aria-label={t(mobileOpen ? "Close account menu" : "Open account menu")} aria-expanded={mobileOpen} onClick={() => setMobileOpen(!mobileOpen)}>{mobileOpen ? <X size={19}/> : <Menu size={19}/>}</button>
     {mobileOpen && <button className="dashboard-mobile-shade" aria-label={t("Close account menu")} onClick={() => setMobileOpen(false)}/>}
     <aside className={`dashboard-sidebar ${mobileOpen ? "open" : ""}`}>
-      <Link className="dashboard-brand" href="/app/video-generator" onClick={() => setMobileOpen(false)}><span className="brand-logo" aria-hidden="true">L</span><span>LobbyDuo</span></Link>
+      <Link className="dashboard-brand" href="/app/video-generator" onClick={() => setMobileOpen(false)}><span className="brand-logo" aria-hidden="true">M</span><span>MigosAI</span></Link>
       <nav className="dashboard-nav" aria-label={t("Account navigation")}>{routes.map(({ href, label, Icon }) => <Link key={href} href={href} onClick={() => setMobileOpen(false)} className={stripLocale(pathname) === href ? "active" : ""}><Icon size={16}/><span>{t(label)}</span></Link>)}</nav>
       <div className="dashboard-sidebar-bottom">
         <LanguageSwitcher />

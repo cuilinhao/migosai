@@ -16,6 +16,9 @@
     "db:remote": "wrangler d1 migrations apply migosai --remote"
   },
   "dependencies": {
+    "@fontsource/anton": "^5.3.0",
+    "@fontsource/archivo-black": "^5.3.0",
+    "@fontsource/dm-sans": "^5.3.0",
     "@fontsource/plus-jakarta-sans": "^5.2.6",
     "@opennextjs/cloudflare": "1.20.7",
     "@radix-ui/react-dialog": "^1.1.15",

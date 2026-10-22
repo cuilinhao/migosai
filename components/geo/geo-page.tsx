@@ -34,11 +34,11 @@ export async function JsonLd({ data }: { data: unknown }) {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localize(data)).replace(/</g, "\\u003c") }} />;
 }
 
-export async function GeoHeader({ title, intro, label = "HOTEL LOBBY · 2026 GUIDE", children }: { title: string; intro: string; label?: string; children?: ReactNode }) {
+export async function GeoHeader({ title, intro, headingAs: Heading = "h1", label = "HOTEL LOBBY · 2026 GUIDE", children }: { title: string; intro: string; headingAs?: "h1" | "h2"; label?: string; children?: ReactNode }) {
   const t = await getTranslations();
   return localizePageContent(<header className="geo-header section-container">
     <nav aria-label="Breadcrumb" className="geo-breadcrumb"><Link href="/">Home</Link><span aria-hidden="true">/</span><Link href={HOTEL_LOBBY_PATH}>Hotel Lobby AI</Link></nav>
-    <p className="eyebrow">{label}</p><h1>{title}</h1><p className="geo-intro">{intro}</p>{children}
+    <p className="eyebrow">{label}</p><Heading>{title}</Heading><p className="geo-intro">{intro}</p>{children}
   </header>, t);
 }
 

@@ -11,8 +11,8 @@ import { useAuth } from "./auth-provider";
 import { GeneratorMenu, GeneratorSpotlight } from "./generator-menu";
 
 const links = [
-  { label: "How It Works", href: "/#how-it-works", icon: ListChecks },
-  { label: "FAQ", href: "/#faq", icon: CircleHelp },
+  { label: "How It Works", href: "/hotel-lobby-ai-video-generator#how-it-works", icon: ListChecks },
+  { label: "FAQ", href: "/hotel-lobby-ai-video-generator#faq", icon: CircleHelp },
   { label: "Pricing", href: "/pricing", icon: Zap },
   { label: "Showcase", href: "/showcases", icon: Clapperboard },
   { label: "AI Rap Song Generator", href: "/ai-rap-song-generator", icon: Music2 },

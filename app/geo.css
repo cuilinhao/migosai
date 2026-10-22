@@ -1,7 +1,8 @@
 .geo-page{padding:112px 0 48px}
+.geo-page.hotel-lobby-page{padding-top:0}
 .geo-header{padding-bottom:24px;max-width:1216px}
 .geo-breadcrumb{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:12px;margin-bottom:24px}
-.geo-header h1{font-size:clamp(34px,4.6vw,62px);font-weight:700;line-height:1.12;letter-spacing:-.04em;color:var(--foreground);max-width:1000px;margin:14px 0 20px}
+.geo-header :is(h1,h2){font-size:clamp(34px,4.6vw,62px);font-weight:700;line-height:1.12;letter-spacing:-.04em;color:var(--foreground);max-width:1000px;margin:14px 0 20px}
 .geo-header .eyebrow{margin:0}
 .geo-intro{font-size:19px;line-height:1.65;color:var(--muted);max-width:850px;margin:0 0 16px}
 .geo-page p,.geo-page li{color:var(--muted);line-height:1.75}
@@ -51,4 +52,4 @@
 .site-footer .footer-top{grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1.35fr) minmax(0,.8fr);gap:38px}
 .site-footer .footer-col a{overflow-wrap:anywhere}
 @media(max-width:900px){.geo-page{padding-top:90px}.geo-link-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.site-footer .footer-top{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}.site-footer .footer-brand-block{grid-column:1/-1}}
-@media(max-width:600px){.geo-page{padding-top:86px}.geo-intro{font-size:16px}.geo-header h1{font-size:34px}.geo-breadcrumb{margin-bottom:20px}.geo-page .geo-generator{padding:10px 0 36px}.geo-section{padding-top:32px;padding-bottom:24px}.geo-section p,.geo-section li{font-size:14px}.geo-link-grid,.geo-screenshots{grid-template-columns:1fr}.geo-table th,.geo-table td{padding:13px 15px}.geo-cta{padding:38px 16px}.geo-cta .pill-gradient-button{font-size:12px}.geo-showcase-link{font-size:11px}.site-footer .footer-top{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 16px}.site-footer .footer-col{align-items:flex-start}.site-footer .footer-col a{text-align:left}.geo-inline-link{font-size:12px}}
+@media(max-width:600px){.geo-page{padding-top:86px}.geo-intro{font-size:16px}.geo-header :is(h1,h2){font-size:34px}.geo-breadcrumb{margin-bottom:20px}.geo-page .geo-generator{padding:10px 0 36px}.geo-section{padding-top:32px;padding-bottom:24px}.geo-section p,.geo-section li{font-size:14px}.geo-link-grid,.geo-screenshots{grid-template-columns:1fr}.geo-table th,.geo-table td{padding:13px 15px}.geo-cta{padding:38px 16px}.geo-cta .pill-gradient-button{font-size:12px}.geo-showcase-link{font-size:11px}.site-footer .footer-top{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 16px}.site-footer .footer-col{align-items:flex-start}.site-footer .footer-col a{text-align:left}.geo-inline-link{font-size:12px}}

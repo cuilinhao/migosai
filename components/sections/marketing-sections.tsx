@@ -35,9 +35,9 @@ export function FeaturesSection({ title = "What You Get with This Hotel Lobby AI
   </div></section>;
 }
 
-export function FaqSection({ eyebrow = "FAQ", title = "Hotel Lobby AI Video FAQs", description = "Common questions about photos, music, credits, refunds and how the generator works.", items }: { eyebrow?: string; title?: string; description?: string; items: FaqItem[] }) {
+export function FaqSection({ id = "faq", eyebrow = "FAQ", title = "Hotel Lobby AI Video FAQs", description = "Common questions about photos, music, credits, refunds and how the generator works.", items }: { id?: string; eyebrow?: string; title?: string; description?: string; items: FaqItem[] }) {
   const t = useTranslations();
-  return <section id="faq" className="marketing-section faq-section"><div className="section-container">
+  return <section id={id} className="marketing-section faq-section"><div className="section-container">
     <SectionHeading eyebrow={eyebrow} title={title} description={description}/>
     <div className="faq-grid">{items.map((item, index) => <article className="faq-item" key={item.question}><span className="faq-number">{index + 1}</span><div><h3>{t(item.question)}</h3><p>{t(item.answer)}</p></div></article>)}</div>
   </div></section>;

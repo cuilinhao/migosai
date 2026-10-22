@@ -1,0 +1,71 @@
+{
+  "purpose": "Local reference reconstruction; original media licenses are not granted by public accessibility. Replace or obtain rights before public deployment.",
+  "sources": [
+    {
+      "id": "f18a4b7793111e32",
+      "url": "https://framerusercontent.com/images/t9ycgCptEVrIP6enBcVPe8DEY4.webp?width=1920&height=1097",
+      "localPath": "/landing/reference/f18a4b7793111e32.webp",
+      "contentType": "image/webp"
+    },
+    {
+      "id": "1d20d4416701db4d",
+      "url": "https://framerusercontent.com/images/9PMQyTzrPU4w9ptEdWP4lGzb4.webp?width=1920&height=1097",
+      "localPath": "/landing/reference/1d20d4416701db4d.avif",
+      "contentType": "image/avif"
+    },
+    {
+      "id": "934b8e32c2d4bf3b",
+      "url": "https://framerusercontent.com/images/pA7tsY5cbTkPU3tdezziq4nRP8.webp?width=1920&height=1098",
+      "localPath": "/landing/reference/934b8e32c2d4bf3b.webp",
+      "contentType": "image/webp"
+    },
+    {
+      "id": "64ae39ce81e6bf62",
+      "url": "https://framerusercontent.com/images/BxpMB7GCmlZQooIpUrhBUJ5qmZk.jpg?width=2048&height=1170",
+      "localPath": "/landing/reference/64ae39ce81e6bf62.avif",
+      "contentType": "image/avif"
+    },
+    {
+      "id": "2f7a0b4082d5e436",
+      "url": "https://framerusercontent.com/images/Q6SM6a01gHjt6Ve2vnMYRQCvdFw.jpg?width=2048&height=1170",
+      "localPath": "/landing/reference/2f7a0b4082d5e436.avif",
+      "contentType": "image/avif"
+    },
+    {
+      "id": "d7eb0e5d4207720b",
+      "url": "https://framerusercontent.com/images/rIwRZsMbdtwqHzpXwJ48Xz7YCk.webp?scale-down-to=2048&width=2688&height=1536",
+      "localPath": "/landing/reference/d7eb0e5d4207720b.webp",
+      "contentType": "image/webp"
+    },
+    {
+      "id": "061ae2158390ed68",
+      "url": "https://framerusercontent.com/images/FtngxZqKCI5ZB6C4hfpOrBeJUb4.jpg?width=2048&height=1170",
+      "localPath": "/landing/reference/061ae2158390ed68.avif",
+      "contentType": "image/avif"
+    },
+    {
+      "id": "a028b8c05b36ee9f",
+      "url": "https://framerusercontent.com/images/M7g6qpwXCxkRnC1Nn69jDI5bKqU.jpg?width=2048&height=1170",
+      "localPath": "/landing/reference/a028b8c05b36ee9f.avif",
+      "contentType": "image/avif"
+    },
+    {
+      "id": "649e5188b6b1dc99",
+      "url": "https://framerusercontent.com/images/Y0A6CRHbmuW5XSManvU6A6qps4.webp?width=2688&height=1536",
+      "localPath": "/landing/reference/649e5188b6b1dc99.webp",
+      "contentType": "image/webp"
+    },
+    {
+      "id": "f925d2260e314d17",
+      "url": "https://framerusercontent.com/images/eny3iXwV8Q6xedx1iP3ZQclXVKQ.webp?width=3125&height=1756",
+      "localPath": "/landing/reference/f925d2260e314d17.webp",
+      "contentType": "image/webp"
+    },
+    {
+      "id": "piclumen-hero",
+      "url": "https://statics.piclumen.com/app-1792572575008/_nuxt/home-v3-hero.CpqJKiSP.webp",
+      "localPath": "/portal/hero.webp",
+      "contentType": "image/webp"
+    }
+  ]
+}

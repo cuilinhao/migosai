@@ -44,7 +44,7 @@ export function AuthPanel({ mode, onModeChange, authConfigured, emailAuthConfigu
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const title = t(isUp ? "Create your account" : "Welcome back");
-  const description = t(isUp ? "Two photos. Endless possibilities." : "Your next great video starts here.");
+  const description = t(isUp ? "One idea. Endless possibilities." : "Your next creation starts here.");
 
   const changeMode = (next: AuthMode) => {
     if (busy || next === mode) return;
@@ -74,7 +74,7 @@ export function AuthPanel({ mode, onModeChange, authConfigured, emailAuthConfigu
   };
 
   return <>
-    <div className="mi-auth-wordmark"><span className="mi-auth-symbol" aria-hidden="true"><i /><i /></span>LobbyDuo</div>
+    <div className="mi-auth-wordmark"><span className="mi-auth-symbol" aria-hidden="true"><i /><i /></span>MigosAI</div>
     <div className="mi-auth-heading">
       {dialog ? <Dialog.Title className="mi-auth-title">{title}</Dialog.Title> : <h1 className="mi-auth-title">{title}</h1>}
       {dialog ? <Dialog.Description className="mi-auth-subtitle">{description}</Dialog.Description> : <p className="mi-auth-subtitle">{description}</p>}
@@ -94,7 +94,7 @@ export function AuthPanel({ mode, onModeChange, authConfigured, emailAuthConfigu
       {(error || notice) && <p className="mi-auth-error" role="alert">{t(error || notice)}</p>}
       <button className="mi-auth-submit" type="submit" disabled={busy || loading}>{busy ? <><LoaderCircle className="mi-auth-spinner" size={18} aria-hidden="true" />{t(isUp ? "Creating account…" : "Signing in…")}</> : <>{t(isUp ? "Create account" : "Sign in")}<ArrowRight size={17} aria-hidden="true" /></>}</button>
     </form>
-    <p className="mi-auth-switch">{t(isUp ? "Already have an account?" : "New to LobbyDuo?")} <button type="button" disabled={busy} onClick={() => changeMode(isUp ? "sign-in" : "sign-up")}>{t(isUp ? "Sign In" : "Sign Up")}<ArrowRight size={13} aria-hidden="true" /></button></p>
+    <p className="mi-auth-switch">{t(isUp ? "Already have an account?" : "New to MigosAI?")} <button type="button" disabled={busy} onClick={() => changeMode(isUp ? "sign-in" : "sign-up")}>{t(isUp ? "Sign In" : "Sign Up")}<ArrowRight size={13} aria-hidden="true" /></button></p>
     <p className="mi-auth-legal">{t("By continuing, you agree to our")}<br /><Link href="/terms-of-service">{t("Terms of Service")}</Link> {t("and")} <Link href="/privacy-policy">{t("Privacy Policy")}</Link>.</p>
   </>;
 }

@@ -1,0 +1,11 @@
+-- Rebuild only generations to widen its kind CHECK. There are no inbound
+-- foreign keys to this table. Keep foreign-key enforcement enabled, and create
+-- the charge trigger only after copying rows so historical jobs are not debited.
+CREATE TABLE generations_image_upgrade ( id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id), idempotency_key TEXT NOT NULL, kind TEXT NOT NULL CHECK(kind IN('video','music','image')), payload TEXT NOT NULL, cost INTEGER NOT NULL CHECK(cost>0), status TEXT NOT NULL DEFAULT 'queued', stage TEXT NOT NULL DEFAULT 'new', provider_id TEXT, assets TEXT, result_keys TEXT, error TEXT, progress INTEGER NOT NULL DEFAULT 0, provider_cost REAL, lease_until INTEGER NOT NULL DEFAULT 0, next_poll INTEGER NOT NULL DEFAULT 0, created_at INTEGER NOT NULL DEFAULT(unixepoch()), lease_owner TEXT, moderation_state TEXT, moderation_verdict TEXT, moderation_key TEXT, moderation_etag TEXT, moderation_cleanup_pending INTEGER NOT NULL DEFAULT 0, UNIQUE(user_id,idempotency_key) );
+INSERT INTO generations_image_upgrade ( id,user_id,idempotency_key,kind,payload,cost,status,stage,provider_id,assets, result_keys,error,progress,provider_cost,lease_until,next_poll,created_at, lease_owner,moderation_state,moderation_verdict,moderation_key,moderation_etag, moderation_cleanup_pending ) SELECT id,user_id,idempotency_key,kind,payload,cost,status,stage,provider_id,assets, result_keys,error,progress,provider_cost,lease_until,next_poll,created_at, lease_owner,moderation_state,moderation_verdict,moderation_key,moderation_etag, moderation_cleanup_pending FROM generations;
+DROP TABLE generations;
+ALTER TABLE generations_image_upgrade RENAME TO generations;
+CREATE INDEX generations_due ON generations(next_poll,lease_until);
+CREATE INDEX moderation_cleanup ON generations(moderation_cleanup_pending,status);
+CREATE TRIGGER generation_charge AFTER INSERT ON generations BEGIN INSERT INTO credit_ledger(id,user_id,amount,kind,reference_id) VALUES(NEW.id||':debit',NEW.user_id,-NEW.cost,'generation',NEW.id); END;
+CREATE TRIGGER generation_terminal_immutable BEFORE UPDATE OF status ON generations WHEN OLD.status IN ('completed','failed','cancelled') AND NEW.status != OLD.status BEGIN SELECT RAISE(ABORT,'generation_terminal_immutable'); END;

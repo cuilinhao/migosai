@@ -1,8 +1,7 @@
 import { getTranslations, localizeMetadata } from "@/lib/i18n/server";
 import { localizePageContent } from "@/components/sections/localized-page-content";
 import Link from "@/components/i18n/localized-link";
-import { DuoVideoGenerator } from "@/components/generator/duo-video-generator";
-import { ShowcaseGrid } from "@/components/showcase-grid";
+import { HotelLobbyLanding } from "@/components/sections/hotel-lobby-landing";
 import { FaqSection } from "@/components/sections/marketing-sections";
 import { GeoHeader, GeoSection, GeoTable, GeoRelatedLinks, GeoCta, JsonLd, geoMetadata } from "@/components/geo/geo-page";
 import { hotelLobbyTitle, hotelLobbyDescription, hotelLobbySteps, hotelLobbyFaqs, hotelLobbySchema } from "@/content/hotel-lobby";
@@ -12,13 +11,13 @@ export async function generateMetadata() { return localizeMetadata(geoMetadata(h
 
 export default async function HotelLobbyPage() {
   const t = await getTranslations();
-  return localizePageContent(<div className="geo-page">
+  return localizePageContent(<div className="geo-page hotel-lobby-page">
     <JsonLd data={hotelLobbySchema(`${SITE_URL}${HOTEL_LOBBY_PATH}`)} />
-    <GeoHeader title="Hotel Lobby AI Video Generator" intro="Turn two photos into a Hotel Lobby style duo video — no prompt or editing required.">
+    <HotelLobbyLanding guide={<>
+    <GeoHeader headingAs="h2" title="Hotel Lobby AI Video Generator" intro="Turn two photos into a Hotel Lobby style duo video — no prompt or editing required.">
       <p className="geo-note">Sign in and purchase a credit pack to generate videos. Registration does not include free credits. Check the displayed cost before generating. <Link href="/pricing">See pricing</Link>.</p>
     </GeoHeader>
-    <section id="generator" className="generator-section geo-generator" aria-label="Create a Hotel Lobby AI video"><DuoVideoGenerator /></section>
-    <GeoSection id="how-it-works" title="How It Works">
+    <GeoSection id="template-instructions" title="How It Works">
       <div className="workflow-grid">{hotelLobbySteps.map((step, i) => <article className="workflow-card" key={step.title}><span className="step-number">0{i + 1}</span><h3>{step.title}</h3><p>{step.description}</p></article>)}</div>
     </GeoSection>
     <GeoSection id="trend" title="What is the Hotel Lobby AI video trend?">
@@ -46,11 +45,11 @@ export default async function HotelLobbyPage() {
       <p>Some competitors also have dedicated Hotel Lobby tools: <a href="https://www.media.io/ai/explore/zone/hotel-lobby-ai-video-trend">Media.io</a> describes a photo-to-template workflow; <a href="https://www.lightxeditor.com/ai-video/image-to-video/hotel-lobby-ai-video/">LightX</a> offers a Hotel Lobby effect; <a href="https://renoise.ai/features/hotel-lobby-ai">Renoise</a> provides a Hotel Lobby generation page. Compare their input requirements, credits and export conditions before choosing.</p>
     </GeoSection>
     <FaqSection title="Hotel Lobby AI Video Generator FAQ" description="Direct answers about photos, credits, templates and generation." items={hotelLobbyFaqs} />
-    <GeoSection id="showcase" title="Hotel Lobby video reference gallery">
+    </>} showcaseDetails={<>
+      <h3>Hotel Lobby video reference gallery</h3>
       <p>These clips were generated with this tool. Results vary with your photos, model and settings.</p>
-      <ShowcaseGrid portrait />
       <p className="geo-note">Suggested starting settings for your own clip: two clear portraits, 9:16, 5 seconds, 480p (50 credits). <Link href="/showcases">See more examples</Link>.</p>
-    </GeoSection>
+    </>} />
     <GeoCta local />
     <GeoRelatedLinks current={HOTEL_LOBBY_PATH} />
   </div>, t);

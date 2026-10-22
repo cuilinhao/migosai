@@ -15,7 +15,7 @@ export type UploadedPhoto = { key: string };
 export type GenerationStatus = "queued" | "reviewing" | "processing" | "completed" | "failed" | "cancelled";
 export type GenerationResponse = {
   id: string; status: GenerationStatus; progress: number;
-  videoUrl?: string; audioUrls?: string[]; error?: string;
+  videoUrl?: string; audioUrls?: string[]; imageUrls?: string[]; error?: string;
   statusMessage?: string;
 };
 export type CreateVideoRequest = {
@@ -29,4 +29,10 @@ export type CreateSongRequest = {
   model: "v6" | "v6-wild" | "v6-mini";
   custom: boolean; instrumental: boolean; prompt?: string;
   title?: string; style?: string; lyrics?: string;
+};
+export type ImageResolution = '1K' | '2K' | '4K';
+export type ImageOutputFormat = 'jpg' | 'png';
+export type CreateImageRequest = {
+  prompt: string; images: string[]; aspect: string;
+  resolution: ImageResolution; outputFormat: ImageOutputFormat;
 };

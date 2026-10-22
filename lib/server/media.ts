@@ -6,13 +6,14 @@ export async function verifyMediaSignature(env:Env,key:string,url:URL){const exp
 const MAX_MEDIA_BYTES=64*1024*1024;
 const PART_BYTES=5*1024*1024;
 /** Retains one 5 MiB multipart buffer plus the current network chunk, regardless of total size. */
-export async function storeProviderMedia(env:Env,url:string,key:string,kind:'video'|'music',provider:'apimart'|'kie'|'fal'='apimart'){
+export async function storeProviderMedia(env:Env,url:string,key:string,kind:'video'|'music'|'image',provider:'apimart'|'kie'|'fal'='apimart'){
  if(!validMediaUrl(url,(provider==='fal'?env.FAL_MEDIA_HOSTS:provider==='kie'?env.KIE_MEDIA_HOSTS:env.APIMART_MEDIA_HOSTS)??''))throw new ApiError(502,'The provider returned an unapproved media host. Support must review this result.');
  const signal=AbortSignal.timeout(60000);
  const response=await fetch(url,{redirect:'manual',signal});
  if(!response.ok){await response.body?.cancel().catch(()=>{});throw new ApiError(502,'Could not download the generated media.');}
  const mime=response.headers.get('content-type')?.split(';')[0]??'';
- if(kind==='video'?!['video/mp4','video/quicktime'].includes(mime):!['audio/mpeg','audio/mp4','audio/wav','audio/x-wav','audio/ogg'].includes(mime)){
+ const supported=kind==='image'?['image/png','image/jpeg']:kind==='video'?['video/mp4','video/quicktime']:['audio/mpeg','audio/mp4','audio/wav','audio/x-wav','audio/ogg'];
+ if(!supported.includes(mime)){
   await response.body?.cancel();throw new ApiError(502,'The provider returned an unsupported media type.');
  }
  const declared=response.headers.get('content-length');

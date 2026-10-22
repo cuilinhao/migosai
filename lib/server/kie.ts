@@ -1,4 +1,4 @@
-import type { CreateVideoRequest, VideoModel } from '../contracts';
+import type { CreateImageRequest, CreateVideoRequest, VideoModel } from '../contracts';
 import type { FlyingCarPayload } from '../flyingcar';
 import { videoPrompt } from '../prompts/video';
 import { ozilGoalPrompt } from '../prompts/ozil-goal';
@@ -36,7 +36,7 @@ function empty(value: unknown): boolean {
   return value === undefined || value === null || value === '';
 }
 function invalidResponse(): never {
-  throw new ProviderError('The video provider response could not be verified. Support must review this generation before it can be retried.', true);
+  throw new ProviderError('The generation provider response could not be verified. Support must review this generation before it can be retried.', true);
 }
 function mediaUrl(value: unknown): value is string {
   if (typeof value !== 'string' || value.trim() !== value) return false;
@@ -49,7 +49,7 @@ function mediaUrl(value: unknown): value is string {
 // Provider errors may be persisted or shown to users. Never include raw bodies,
 // messages, original causes, credentials, or signed media URLs in these errors.
 async function request(env: Env, path: string, payload?: unknown): Promise<RecordValue> {
-  if (!env.KIE_API_KEY?.trim()) throw new ApiError(503, 'Video generation is not configured.');
+  if (!env.KIE_API_KEY?.trim()) throw new ApiError(503, 'Generation is not configured.');
   const submission = payload !== undefined;
   let response: Response;
   try {
@@ -61,28 +61,61 @@ async function request(env: Env, path: string, payload?: unknown): Promise<Recor
       signal: AbortSignal.timeout(20_000),
     });
   } catch {
-    throw new ProviderError('The video provider request could not be confirmed.', submission, !submission);
+    throw new ProviderError('The generation provider request could not be confirmed.', submission, !submission);
   }
   if (!response.ok) {
     try { await response.body?.cancel(); } catch { /* Preserve the request classification. */ }
     const redirect = response.status >= 300 && response.status < 400;
     const uncertain = submission && (redirect || response.status === 408 || response.status >= 500);
     const transientQuery = !submission && (redirect || response.status === 408 || response.status === 429 || response.status >= 500);
-    throw new ProviderError('The video provider request was not accepted.', uncertain, transientQuery);
+    throw new ProviderError('The generation provider request was not accepted.', uncertain, transientQuery);
   }
   let body: unknown;
   try { body = await response.json(); } catch {
-    throw new ProviderError('The video provider returned an unreadable response.', submission, !submission);
+    throw new ProviderError('The generation provider returned an unreadable response.', submission, !submission);
   }
   if (!record(body) || !Number.isInteger(body.code)) invalidResponse();
   if (body.code !== 200) {
     const code = body.code as number;
     const transientQuery = !submission && (code === 408 || code === 429 || code === 455
       || (code >= 500 && !BUSINESS_REJECTIONS.has(code)));
-    throw new ProviderError('The video provider could not accept this request.', submission && !BUSINESS_REJECTIONS.has(code), transientQuery);
+    throw new ProviderError('The generation provider could not accept this request.', submission && !BUSINESS_REJECTIONS.has(code), transientQuery);
   }
   if (!record(body.data)) invalidResponse();
   return body.data;
+}
+
+/** Nano Banana 2 produces one image per task; routing is never client-owned. */
+export async function createKieImage(env: Env, payload: CreateImageRequest, imageUrls: string[]): Promise<string> {
+  const data = await request(env, '/createTask', {
+    model: 'nano-banana-2',
+    input: { prompt: payload.prompt, image_input: imageUrls, aspect_ratio: payload.aspect, resolution: payload.resolution, output_format: payload.outputFormat },
+  });
+  if (!validTaskId(data.taskId)) invalidResponse();
+  return data.taskId;
+}
+
+export type KieImageResult = { status: 'pending' | 'processing' | 'completed' | 'failed'; result?: { images: string[] }; error?: { code: string; message: string } };
+export async function getKieImage(env: Env, taskId: string): Promise<KieImageResult> {
+  if (!validTaskId(taskId)) throw new ProviderError('The image task identifier is invalid.');
+  const data = await request(env, `/recordInfo?taskId=${encodeURIComponent(taskId)}`);
+  if (data.taskId !== taskId || (data.model !== undefined && data.model !== 'nano-banana-2')) invalidResponse();
+  if (data.state === 'success') {
+    if (!empty(data.failCode) || !empty(data.failMsg) || typeof data.resultJson !== 'string') invalidResponse();
+    let result: unknown;
+    try { result = JSON.parse(data.resultJson); } catch { invalidResponse(); }
+    if (!record(result) || !Array.isArray(result.resultUrls) || result.resultUrls.length !== 1 || !result.resultUrls.every(mediaUrl)) invalidResponse();
+    return { status: 'completed', result: { images: result.resultUrls } };
+  }
+  if (!empty(data.resultJson)) invalidResponse();
+  if (data.state === 'fail') {
+    if ((!empty(data.failCode) && typeof data.failCode !== 'string') || (!empty(data.failMsg) && typeof data.failMsg !== 'string')) invalidResponse();
+    return { status: 'failed', error: { code: 'task_failed', message: 'The image generation could not be completed.' } };
+  }
+  if (!empty(data.failCode) || !empty(data.failMsg)) invalidResponse();
+  if (data.state === 'waiting' || data.state === 'queuing') return { status: 'pending' };
+  if (data.state === 'generating') return { status: 'processing' };
+  invalidResponse();
 }
 
 export async function createKieVideo(env: Env, payload: CreateVideoRequest, imageUrls: string[], references: KieVideoReferences = {}): Promise<string> {

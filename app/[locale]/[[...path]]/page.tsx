@@ -5,6 +5,13 @@ import AccountLayout from "@/app/app/layout";
 // Reuse the existing pages while giving translated URLs real App Router routes.
 const routes = {
   "/": () => import("@/app/page"),
+  "/landing": () => import("@/app/landing/page"),
+  "/tools": () => import("@/app/tools/page"),
+  "/effects": () => import("@/app/effects/page"),
+  "/ai-image-generator": () => import("@/app/ai-image-generator/page"),
+  "/ai-video-generator": () => import("@/app/ai-video-generator/page"),
+  "/explore": () => import("@/app/explore/page"),
+  "/app/assets": () => import("@/app/app/assets/page"),
   "/pricing": () => import("@/app/pricing/page"),
   "/showcases": () => import("@/app/showcases/page"),
   "/ai-rap-song-generator": () => import("@/app/ai-rap-song-generator/page"),

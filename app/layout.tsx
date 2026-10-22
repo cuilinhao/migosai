@@ -6,6 +6,12 @@ import "@fontsource/plus-jakarta-sans/400.css";
 import "@fontsource/plus-jakarta-sans/500.css";
 import "@fontsource/plus-jakarta-sans/600.css";
 import "@fontsource/plus-jakarta-sans/700.css";
+import "@fontsource/dm-sans/400.css";
+import "@fontsource/dm-sans/500.css";
+import "@fontsource/dm-sans/600.css";
+import "@fontsource/dm-sans/700.css";
+import "@fontsource/anton/400.css";
+import "@fontsource/archivo-black/400.css";
 import "./globals.css";
 import "./interactive.css";
 import "./auth.css";
@@ -15,8 +21,8 @@ import { GoogleAnalytics } from "@/components/google-analytics";
 
 const baseMetadata: Metadata = {
   metadataBase: new URL("https://migosai.design"),
-  title: { default: "Hotel Lobby AI Video Generator | LobbyDuo", template: "%s | LobbyDuo" },
-  description: "Create Hotel Lobby–style AI duo videos from two photos with LobbyDuo.",
+  title: { default: "MigosAI — AI Images, Videos & Music", template: "%s | MigosAI" },
+  description: "Create AI images, videos and music with MigosAI.",
 };
 
 export async function generateMetadata(): Promise<Metadata> { return localizeMetadata(baseMetadata); }

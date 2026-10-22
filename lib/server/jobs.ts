@@ -6,7 +6,8 @@ import { signedMediaUrl,storeProviderMedia } from './media';
 import { videoPrompt } from '../prompts/video';
 import { createModerationMediaUrl } from './moderation-media';
 import { createVideoModeration, getVideoModeration, SeeApiError } from './seeapi';
-import { createKieVideo, createKieOzilGoalVideo, createKieFlyingCarVideo, getKieVideo } from './kie';
+import { createKieVideo, createKieOzilGoalVideo, createKieFlyingCarVideo, getKieVideo, createKieImage, getKieImage } from './kie';
+import type { ImagePayload } from './image-generations';
 import { createFalOzilGoalVideo, getFalVideo } from './fal';
 import type { OzilGoalPayload } from '../ozil-goal';
 import type { FlyingCarPayload } from '../flyingcar';
@@ -17,8 +18,8 @@ export function generationResponse(job:Job):GenerationResponse{
  const keys:string[]=JSON.parse(job.result_keys??'[]');
  const approved=job.kind==='video'&&job.moderation_verdict==='passed'&&keys.length===1&&keys[0]===job.moderation_key&&!!job.moderation_etag;
  const unreviewed=job.kind==='video'&&job.status==='completed'&&!approved;
- const statusMessage=job.moderation_verdict==='manual'?'Safety review needs attention. Your video remains unavailable.':job.stage.startsWith('moderation_')?'Checking video safety before delivery…':undefined;
- return {id:job.id,status:job.status as GenerationStatus,progress:job.progress,...(job.error||unreviewed?{error:job.error??'This video is unavailable until its safety review is completed.'}:{}),...(statusMessage?{statusMessage}:{}),...(job.status==='completed'?(job.kind==='music'?{audioUrls:keys.map(key=>`/api/media/${key}`)}:approved?{videoUrl:`/api/media/${keys[0]}`}:{ }):{})};
+ const statusMessage=job.moderation_verdict==='manual'?'Safety review needs attention. Your video remains unavailable.':job.stage==='manual_review'?'This request needs support review. It will not be retried automatically.':job.stage.startsWith('moderation_')?'Checking video safety before delivery…':undefined;
+ return {id:job.id,status:job.status as GenerationStatus,progress:job.progress,...(job.error||unreviewed?{error:job.error??'This video is unavailable until its safety review is completed.'}:{}),...(statusMessage?{statusMessage}:{}),...(job.status==='completed'?(job.kind==='music'?{audioUrls:keys.map(key=>`/api/media/${key}`)}:job.kind==='image'?{imageUrls:keys.map(key=>`/api/media/${key}`)}:approved?{videoUrl:`/api/media/${keys[0]}`}:{ }):{})};
 }
 class LostLease extends Error {}
 async function patch(db:D1Database,id:string,fence:JobFence,fields:Record<string,string|number|null>){
@@ -121,8 +122,40 @@ async function quarantineVideo(env:Env,job:Job,fence:JobFence,url:string,cost:nu
   throw error;
  }
 }
+async function advanceImage(env:Env,job:Job,fence:JobFence):Promise<void>{
+ const db=database(env),payload=JSON.parse(job.payload) as ImagePayload;
+ if(job.stage.startsWith('submitting')){
+  await patch(db,job.id,fence,{stage:'manual_review',error:'The provider submission could not be confirmed. Support is reviewing this request; it will not be resubmitted automatically.'});return;
+ }
+ providerConfigured(env,'kie');
+ if(job.stage==='new'||job.stage==='ready'){
+  const references=await Promise.all(payload.images.map(key=>signedMediaUrl(env,key)));
+  await patch(db,job.id,fence,{stage:'submitting_generation',status:'processing',progress:45});
+  const taskId=await createKieImage(env,payload,references);
+  await patch(db,job.id,fence,{stage:'polling',provider_id:taskId,error:null});return;
+ }
+ if(job.stage!=='polling')return;
+ const result=await getKieImage(env,job.provider_id!);
+ if(result.status==='failed'){
+  await refundGeneration(db,job.id,'failed','The provider could not complete your image. Your credits have been returned.',fence);return;
+ }
+ if(result.status!=='completed'){await patch(db,job.id,fence,{progress:65,error:null});return;}
+ const url=result.result?.images[0];
+ if(!url)throw new ProviderError('The provider returned an incomplete image. Support must review this generation.',true);
+ const key=`users/${job.user_id}/results/${job.id}/${crypto.randomUUID()}`;
+ try{
+  await storeProviderMedia(env,url,key,'image','kie');
+  await patch(db,job.id,fence,{status:'completed',stage:'terminal',result_keys:JSON.stringify([key]),progress:100,error:null});
+ }catch(error){
+  // A stale worker never overwrites the selected result. If acknowledgement of
+  // completion is uncertain, read the row before deleting an unselected object.
+  try{const current=await db.prepare('SELECT result_keys FROM generations WHERE id=?').bind(job.id).first<{result_keys:string|null}>();if(current&&!JSON.parse(current.result_keys??'[]').includes(key))await env.MEDIA!.delete(key);}catch{/* Unlinked objects remain private. */}
+  throw error;
+ }
+}
 export async function advanceJob(env:Env,id:string):Promise<void>{const db=database(env),owner=crypto.randomUUID();const acquired=await db.prepare("UPDATE generations SET lease_until=unixepoch()+240,lease_owner=? WHERE id=? AND lease_until<unixepoch() AND next_poll<=unixepoch() AND status NOT IN('completed','failed','cancelled') AND stage!='manual_review'").bind(owner,id).run();if(!acquired.meta.changes)return;const job=await db.prepare('SELECT * FROM generations WHERE id=?').bind(id).first<Job>();if(!job||job.lease_owner!==owner)return;const fence:JobFence={owner,stage:job.stage};
  try{
+  if(job.kind==='image'){await advanceImage(env,job,fence);return;}
   if(job.kind==='video'&&job.stage.startsWith('moderation_')){await advanceModeration(env,job,fence);return;}
   // Pin the provider on reservation so a rollout never queries or resubmits an
   // existing APIMart task through Kie. Historical payloads remain APIMart jobs.

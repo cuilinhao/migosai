@@ -14,6 +14,12 @@ export type PublicPage = {
 // Add only live public routes. Set lastModified only for a recorded content revision.
 export const publicPages: PublicPage[] = [
   { path: "/", label: "Home", priority: 1, changeFrequency: "monthly" },
+  { path: "/landing", label: "About MigosAI", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-10-22" },
+  { path: "/tools", label: "AI Tools", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-10-22" },
+  { path: "/effects", label: "Hot Video Effects", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-10-22" },
+  { path: "/ai-image-generator", label: "AI Image Generator", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-10-22" },
+  { path: "/ai-video-generator", label: "AI Video Generator", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-10-22" },
+  { path: "/explore", label: "Explore Creations", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-10-22" },
   { path: HOTEL_LOBBY_PATH, label: "Hotel Lobby AI Video Generator", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-10-02" },
   { path: "/hotel-lobby-ai-video-generator-free", label: "Credits & Limits", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-10-02" },
   { path: "/hotel-lobby-ai-template", label: "Hotel Lobby AI Template", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-10-02" },
