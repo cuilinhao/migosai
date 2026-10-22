@@ -9,7 +9,7 @@ export default async function PricingPage() {
   const t = await getTranslations();
   return localizePageContent(<section className="pricing-page"><div className="section-container">
     <h1>MigosAI <span className="gradient-text">Pricing and Credit Plans</span></h1>
-    <p className="pricing-page-intro">Pick a one-time credit pack that fits your workflow. Every pack includes Hotel Lobby AI duo video generation — no subscription and no watermark added by LobbyDuo.</p>
+    <p className="pricing-page-intro">Pick a one-time credit pack that fits your workflow. Credits are shared across MigosAI image, video and music tools. No subscription and no watermark added by MigosAI. Review the displayed generation cost before submitting.</p>
     <CheckoutReturnStatus/>
     <PricingCards/>
   </div></section>, t);

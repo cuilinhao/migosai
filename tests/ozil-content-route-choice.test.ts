@@ -9,7 +9,7 @@ describe('original CapCut route chooser decision tree', () => {
       const result = getRouteRecommendation({ app, opens, budget, effort }, 123);
       expect(result?.cta).toBe(expected[index++]);
       expect(result?.text).not.toMatch(/\$|5 to 8|pack/);
-      if (result?.cta === 'site') expect(result.text).toContain('123 shared migosai credits');
+      if (result?.cta === 'site') expect(result.text).toContain('123 shared MigosAI credits');
     }
     expect(index).toBe(16);
   });

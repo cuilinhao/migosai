@@ -13,7 +13,8 @@
 .ozil-page .og-generator-photo-label img{width:80px;height:100px;object-fit:cover;border-radius:8px;flex-shrink:0}
 .ozil-page .og-generator-plus{display:flex;align-items:center;justify-content:center;width:56px;height:56px;flex-shrink:0;border-radius:50%;color:var(--og-ink);background:var(--og-flash)}
 .ozil-page .og-generator-remove{position:absolute;z-index:1;top:8px;right:8px;padding:6px;border:1px solid var(--og-line-strong);border-radius:50%;background:var(--og-panel);color:var(--og-text);cursor:pointer}
-.ozil-page .og-generator-upload.has-photo .og-generator-photo-label{padding-right:36px}
+.ozil-page .og-generator-remove{display:grid;place-items:center;width:44px;height:44px}
+.ozil-page .og-generator-upload.has-photo .og-generator-photo-label{padding-right:58px}
 .ozil-page .og-generator-hint{margin:8px 0 0;font-size:12.5px;color:var(--og-muted);line-height:1.35}
 .ozil-page .og-generator a{text-decoration:underline;text-underline-offset:2px}
 .ozil-page .og-generator-actions{display:grid;gap:12px}

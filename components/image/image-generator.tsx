@@ -11,6 +11,7 @@ import { IMAGE_ASPECTS, IMAGE_FORMATS, IMAGE_MAX_REFERENCES, IMAGE_RESOLUTIONS, 
 import type { CreateImageRequest, GenerationResponse, ImageOutputFormat, ImageResolution } from '@/lib/contracts';
 import { ImageSubmission, ImageSubmissionRejected, validateImageDraft, validateImageFiles, resolveImageReferenceKeys, type ImageReceipt } from './submission';
 import { ImageResult, imageTaskNeedsReview } from './image-result';
+import { createImageDraft, imageDraftForOwner, imageDraftFromRequest, type ImageDraft, type OwnedImageDraft } from './image-draft';
 import styles from './image-generator.module.css';
 
 type Reference = { id: string; file?: File; url?: string; key?: string; progress: number };
@@ -19,19 +20,21 @@ const terminal = (value: GenerationResponse) => ['completed','failed','cancelled
 
 export function ImageGenerator() {
   const { user } = useAuth();
-  // An account transition unmounts every preview, upload and poll immediately.
-  return <ImageWorkspace key={user?.id ?? 'anonymous'} owner={user?.id ?? null}/>;
+  const owner=user?.id??null;
+  const [savedDraft,setSavedDraft]=useState<OwnedImageDraft>(()=>({owner,draft:createImageDraft()}));
+  const currentDraft=imageDraftForOwner(savedDraft,owner);
+  if(currentDraft!==savedDraft)setSavedDraft(currentDraft);
+  const updateDraft=useCallback((changes:Partial<ImageDraft>)=>setSavedDraft(previous=>previous.owner===owner?{owner,draft:{...previous.draft,...changes}}:previous),[owner]);
+  // Account changes still unmount every reference preview, upload, request and poll.
+  return <ImageWorkspace key={owner ?? 'anonymous'} owner={owner} draft={currentDraft.draft} updateDraft={updateDraft}/>;
 }
 
-function ImageWorkspace({ owner }: { owner: string | null }) {
+function ImageWorkspace({ owner,draft,updateDraft }: { owner: string | null;draft:ImageDraft;updateDraft:(changes:Partial<ImageDraft>)=>void }) {
   const t = useGenerationTranslations();
   const locale = useLocale();
   const { credits, loading: authLoading, openSignIn, refresh } = useAuth();
-  const [prompt, setPrompt] = useState('');
+  const {prompt,aspect,resolution,outputFormat}=draft;
   const [references, setReferences] = useState<Reference[]>([]);
-  const [aspect, setAspect] = useState('auto');
-  const [resolution, setResolution] = useState<ImageResolution>('1K');
-  const [outputFormat, setOutputFormat] = useState<ImageOutputFormat>('png');
   const [busy, setBusy] = useState(false);
   const [recovering, setRecovering] = useState(!!owner);
   const [stage, setStage] = useState('');
@@ -66,7 +69,7 @@ function ImageWorkspace({ owner }: { owner: string | null }) {
       setReceipt(saved);
       if (saved) {
         setReferences(saved.request.images.map((key,index)=>({id:`saved-${index}`,key,progress:100})));
-        setPrompt(saved.request.prompt); setAspect(saved.request.aspect); setResolution(saved.request.resolution); setOutputFormat(saved.request.outputFormat);
+        updateDraft(imageDraftFromRequest(saved.request));
       }
       if (saved?.generationId) {
         const result = await readApi<GenerationResponse>(await fetch(`/api/generations/${encodeURIComponent(saved.generationId)}`, { cache:'no-store', signal:abort.signal }));
@@ -82,7 +85,7 @@ function ImageWorkspace({ owner }: { owner: string | null }) {
     } catch (cause) {
       if (mounted.current && !abort.signal.aborted) { setRestoreFailed(true); setError(cause instanceof Error ? cause.message : 'Could not restore your image task.'); }
     } finally { if (mounted.current && version === restoreVersion.current) setRecovering(false); }
-  }, [owner, setGeneration]);
+  }, [owner, setGeneration, updateDraft]);
   useEffect(() => { void restore(); return () => { uploadAbort.current?.abort(); }; }, [restore]);
   useEffect(() => { if (generation && terminal(generation)) void refresh(); }, [generation?.status, refresh]);
 
@@ -162,16 +165,16 @@ function ImageWorkspace({ owner }: { owner: string | null }) {
       <form className={styles.form} onSubmit={event => void submit(event)}>
         <div className={styles.model}><span className={styles.modelIcon}>✦</span><div><b>Nano Banana 2</b><small>{t('Text to image · Image to image')}</small></div><span className={styles.modelBadge}>{t('Image')}</span></div>
         <label className={styles.label} htmlFor="image-prompt">{t('Prompt')}<span>{number(prompt.length)} / {number(20000)}</span></label>
-        <textarea id="image-prompt" value={prompt} maxLength={20000} disabled={locked} onChange={event=>setPrompt(event.target.value)} placeholder={t('Describe the scene, subject, lighting, and style you imagine…')} rows={6}/>
+        <textarea id="image-prompt" value={prompt} maxLength={20000} disabled={locked} onChange={event=>updateDraft({prompt:event.target.value})} placeholder={t('Describe the scene, subject, lighting, and style you imagine…')} rows={6}/>
         <div className={styles.label}><span>{t('Reference images')} <small>{t('Optional')}</small></span><span>{references.length}/{IMAGE_MAX_REFERENCES}</span></div>
         <input ref={input} className={styles.fileInput} type="file" accept="image/jpeg,image/png,image/webp" multiple disabled={locked} onChange={event=>{addFiles(Array.from(event.target.files ?? []));event.target.value='';}}/>
         <button type="button" className={styles.dropzone} disabled={locked || references.length >= 10} onClick={()=>{ if (!owner) openSignIn(); else input.current?.click(); }} onDragOver={event=>event.preventDefault()} onDrop={drop}><ImagePlus size={24}/><strong>{t('Upload reference images')}</strong><span>{t('JPG, PNG, WebP · 10 MB per image · Up to 10')}</span></button>
         {!!references.length && <div className={styles.references}>{references.map((reference,index)=><div className={styles.reference} key={reference.id}>{reference.url ? <img src={reference.url} alt={t('Reference image {number}',{number:index+1})}/> : <span className={styles.savedReference} role="img" aria-label={t('Saved reference {number}',{number:index+1})}><ImagePlus size={20}/><small>{index+1}</small></span>}<button type="button" aria-label={t('Remove reference {number}',{number:index+1})} disabled={locked} onClick={()=>remove(reference)}><X size={12}/></button>{busy && <div className={styles.referenceProgress} role="progressbar" aria-label={t('Reference image {number}',{number:index+1})} aria-valuenow={reference.progress} aria-valuemin={0} aria-valuemax={100}>{reference.progress === 100 ? <Check size={12}/> : `${reference.progress}%`}</div>}</div>)}</div>}
         {references.some(reference=>!reference.url) && <p className={styles.note}>{t('Saved references will be used again. Remove any you do not need.')}</p>}
-        <div className={styles.settings}><label>{t('Aspect ratio')}<select value={aspect} disabled={locked} onChange={event=>setAspect(event.target.value)}>{IMAGE_ASPECTS.map(value=><option key={value} value={value}>{value === 'auto' ? t('Auto') : value}</option>)}</select></label><label>{t('Resolution')}<select value={resolution} disabled={locked} onChange={event=>setResolution(event.target.value as ImageResolution)}>{IMAGE_RESOLUTIONS.map(value=><option key={value}>{value}</option>)}</select></label><label>{t('Format')}<select value={outputFormat} disabled={locked} onChange={event=>setOutputFormat(event.target.value as ImageOutputFormat)}>{IMAGE_FORMATS.map(value=><option key={value} value={value}>{value.toUpperCase()}</option>)}</select></label></div>
+        <div className={styles.settings}><label>{t('Aspect ratio')}<select value={aspect} disabled={locked} onChange={event=>updateDraft({aspect:event.target.value})}>{IMAGE_ASPECTS.map(value=><option key={value} value={value}>{value === 'auto' ? t('Auto') : value}</option>)}</select></label><label>{t('Resolution')}<select value={resolution} disabled={locked} onChange={event=>updateDraft({resolution:event.target.value as ImageResolution})}>{IMAGE_RESOLUTIONS.map(value=><option key={value}>{value}</option>)}</select></label><label>{t('Format')}<select value={outputFormat} disabled={locked} onChange={event=>updateDraft({outputFormat:event.target.value as ImageOutputFormat})}>{IMAGE_FORMATS.map(value=><option key={value} value={value}>{value.toUpperCase()}</option>)}</select></label></div>
         <div className={styles.cost}><span>{t('One image')} <b>{t('{credits} credits',{credits:cost})}</b></span><small>{owner ? t('Balance: {credits} credits',{credits:number(credits)}) : t('Sign in to generate images')}</small></div>
         {owner && credits < cost && !uncertain && <Link className={styles.topup} href="/pricing">{t('Get more credits')} <ArrowUpRight size={14}/></Link>}
-        <button className={styles.generate} type="submit" disabled={authLoading || busy || active || recovering || restoreFailed}>{needsReview ? <LockKeyhole size={17}/> : busy || active || recovering ? <LoaderCircle size={17} className={styles.spin}/> : <Sparkles size={17}/>}{t(needsReview ? 'Needs support review' : uncertain ? 'Resume saved request' : busy ? 'Starting your image…' : active ? 'Generating your image…' : 'Generate image')}<span>✦ {cost}</span></button>
+        <button className={styles.generate} type="submit" disabled={authLoading || busy || active || recovering || restoreFailed}>{needsReview ? <LockKeyhole size={17}/> : busy || active || recovering ? <LoaderCircle size={17} className={styles.spin}/> : <Sparkles size={17}/>}{t(needsReview ? 'Needs support review' : busy ? 'Starting your image…' : uncertain ? 'Resume saved request' : active ? 'Generating your image…' : 'Generate image')}<span>✦ {cost}</span></button>
         {uncertain && !busy && <p className={styles.note}>{t('Your request is saved. Resume it safely with the same credits and settings.')}</p>}
         <p className={styles.privacy}><LockKeyhole size={12}/>{t('Your images and references are private.')}</p>
         {error && <p className={styles.error} role="alert">{t(error)}</p>}

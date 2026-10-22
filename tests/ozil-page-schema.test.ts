@@ -51,8 +51,8 @@ describe('Ozil landing page structured data', () => {
     expect(howTo.step).toEqual(visibleSteps);
     expect(faq.url).toBe('https://migosai.design/ozil-goal-generator');
     expect(howTo.url).toBe(faq.url);
-    expect(faq.publisher.name).toBe('LobbyDuo');
-    expect(howTo.publisher.name).toBe('LobbyDuo');
+    expect(faq.publisher.name).toBe('MigosAI');
+    expect(howTo.publisher.name).toBe('MigosAI');
     expect(JSON.stringify(data)).not.toContain('{{OZIL_GOAL_COST}}');
     expect(JSON.stringify(faq)).toContain('300 credits');
   });

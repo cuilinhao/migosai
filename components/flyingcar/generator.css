@@ -23,6 +23,8 @@
 .flyingcar-page .fc-generation-result a{display:flex;align-items:center;gap:8px}
 .flyingcar-page .fc-review-backdrop{overflow:auto;z-index:60}
 .flyingcar-page .fc-review-dialog{max-height:calc(100dvh - 48px);overflow:auto;outline:none}
+.flyingcar-page .dialog-close{display:grid;place-items:center;width:44px;height:44px;line-height:1}
+.flyingcar-page .upload-actions button{min-height:44px}
 .flyingcar-page .fc-review-summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:22px 0;padding:16px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .flyingcar-page .fc-review-summary div{display:grid;gap:5px}
 .flyingcar-page .fc-review-summary span{font-size:10px;letter-spacing:1px;opacity:.65}

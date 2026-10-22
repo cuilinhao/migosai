@@ -40,10 +40,10 @@ describe("complete Hotel Lobby landing migration", () => {
     const html = await renderPage();
     expect(html).toContain("Make Your Own Hotel Lobby Video with AI");
     expect(html).toContain("/videos/home-hero/reel/site-grandma-and-grandson.mp4");
-    expect(html).toContain("LobbyDuo is built for that two-person setup.");
-    expect(html).toContain("Hotel Lobby AI Videos Made with LobbyDuo");
+    expect(html).toContain("MigosAI is built for that two-person setup.");
+    expect(html).toContain("Hotel Lobby AI Videos Made with MigosAI");
     expect(html).toContain("Hotel Lobby AI video examples");
-    expect(html).toContain("Third-party clip, not made with LobbyDuo");
+    expect(html).toContain("Third-party clip, not made with MigosAI");
     expect(html.match(/id="mi-left-photo"/g)).toHaveLength(1);
     expect(html.match(/id="mi-right-photo"/g)).toHaveLength(1);
     for (const { title, description } of [...workflowSteps, ...featureItems]) {
@@ -51,10 +51,10 @@ describe("complete Hotel Lobby landing migration", () => {
       expect(html).toContain(renderToStaticMarkup(<>{description}</>));
     }
     for (const { question, answer } of homeFaqItems) {
-      expect(html).toContain(renderToStaticMarkup(<>{question}</>));
-      expect(html).toContain(renderToStaticMarkup(<>{answer}</>));
+      expect(html).toContain(renderToStaticMarkup(<>{question.replaceAll('LobbyDuo', 'MigosAI')}</>));
+      expect(html).toContain(renderToStaticMarkup(<>{answer.replaceAll('LobbyDuo', 'MigosAI')}</>));
     }
-    expect(html).toContain("LobbyDuo Pricing and Credit Plans");
+    expect(html).toContain("MigosAI Pricing and Credit Plans");
     expect(html).toContain("Buy Starter");
     expect(html).toContain("Buy Creator");
     expect(html).toContain("Ready to make your Hotel Lobby AI video?");
@@ -70,7 +70,7 @@ describe("complete Hotel Lobby landing migration", () => {
   it.each(locales)("preserves independent SEO content, all existing translations and canonical in %s", async (locale) => {
     const html = await renderPage(locale);
     const messages = getMessages(locale);
-    const text = (source: string) => renderToStaticMarkup(<>{messages[source] ?? source}</>);
+    const text = (source: string) => renderToStaticMarkup(<>{(messages[source] ?? source).replaceAll('LobbyDuo', 'MigosAI').replaceAll('LOBBYDUO', 'MIGOSAI')}</>);
     expect(html).toContain(text("Make Your Own Hotel Lobby Video with AI"));
     for (const item of [...workflowSteps, ...featureItems, ...homeFaqItems]) {
       for (const source of Object.values(item)) expect(html).toContain(text(source));

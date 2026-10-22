@@ -25,7 +25,8 @@ const excludedTags = new Set(['script', 'iframe', 'object', 'embed', 'style', 'l
 function copy(value: string): string {
   return value.replaceAll('{{FLYING_CAR_MIN_COST}}', String(getFlyingCarCost(5)))
     .replaceAll('{{FLYING_CAR_DEFAULT_COST}}', String(getFlyingCarCost(10)))
-    .replaceAll('{{FLYING_CAR_MAX_COST}}', String(getFlyingCarCost(30)));
+    .replaceAll('{{FLYING_CAR_MAX_COST}}', String(getFlyingCarCost(30))).replaceAll('LobbyDuo', 'MigosAI')
+    .replace(/(?<![\w@./:-])migosai(?![\w./:@-])/g, 'MigosAI');
 }
 function elements(node: SourceNode, tag: string): SourceElement[] {
   if (typeof node === 'string' || !('tag' in node)) return [];
@@ -62,7 +63,7 @@ function renderNode(node: SourceNode, locale: Locale, key: string): ReactNode {
 function schema(slug: FlyingCarPageSlug, content: SourceNode, locale: Locale) {
   const path = FLYING_CAR_PATH + (slug === 'home' ? '' : `/${slug}`);
   const url = new URL(localizeHref(path, locale), SITE_URL).href;
-  const publisher = { '@type': 'Organization', name: 'LobbyDuo', url: SITE_URL };
+  const publisher = { '@type': 'Organization', name: 'MigosAI', url: SITE_URL };
   const faqs = elements(content, 'details');
   return {
     '@context': 'https://schema.org',

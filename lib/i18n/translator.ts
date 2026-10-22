@@ -6,6 +6,9 @@ export function createTranslator(messages: Messages = {}): Translator {
     // Preserve boundary whitespace around inline React elements.
     const key = source.trim();
     const translated = messages[source] ?? (messages[key] ? source.replace(key, messages[key]) : source);
-    return values ? translated.replace(/\{(\w+)\}/g, (match, name: string) => Object.hasOwn(values, name) ? String(values[name]) : match) : translated;
+    // Existing source keys and translated sentences remain stable across the
+    // product rename. Normalize product copy before inserting user values.
+    const displayCopy = translated.replaceAll('LobbyDuo', 'MigosAI').replaceAll('LOBBYDUO', 'MIGOSAI');
+    return values ? displayCopy.replace(/\{(\w+)\}/g, (match, name: string) => Object.hasOwn(values, name) ? String(values[name]) : match) : displayCopy;
   };
 }

@@ -99,3 +99,6 @@
 /* The portal owns navigation chrome; page headings use its shared typeface. */
 .flyingcar-page.flyingcar-page :is(h1,h2,h3,.fc-eyebrow,.value-num,.how-grid article>b){font-family:var(--font-sans)}
 .flyingcar-page.flyingcar-page :is(h1,h2,h3){font-weight:600;letter-spacing:-.035em}
+
+/* Imported button utilities have fixed 32px heights; allow a full touch target. */
+.flyingcar-page.flyingcar-page :is(.big,.article-cta){height:auto;min-height:44px}

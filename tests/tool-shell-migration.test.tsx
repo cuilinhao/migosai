@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import { AuthProvider } from "../components/auth-provider";
 import { FlyingCarPage, type FlyingCarPageSlug } from "../components/flyingcar/page-content";
-import { OzilGoalPage, type OzilPageSlug } from "../components/ozil-goal/page-content";
+import { OzilGoalPage, ozilMetadata, type OzilPageSlug } from "../components/ozil-goal/page-content";
 
 vi.mock("next/headers", () => ({ headers: async () => new Headers({ "x-migos-locale": "en" }) }));
 
@@ -19,6 +19,8 @@ describe("tool pages inside the shared portal shell", () => {
     expect(html.replace(/<[^>]*>/g, "")).toContain(title);
     expect(html).toContain("Tesla, Inc. or any vehicle manufacturer.");
     expect(html).toContain("All videos are AI-generated; results vary and should be reviewed before publishing.");
+    expect(html).not.toContain("LobbyDuo");
+    expect(html.replace(/<[^>]*>/g, " ")).not.toMatch(/(?<![\w@./:-])migosai(?![\w./:@-])/);
   });
 
   it.each([
@@ -39,5 +41,8 @@ describe("tool pages inside the shared portal shell", () => {
     expect(html).toContain("Videos are AI-generated and may use a consenting adult");
     expect(html).toContain("og-sticky fixed");
     expect(html).toContain('href="/ozil-goal-generator#generator"');
+    expect(html).not.toContain("LobbyDuo");
+    expect(html.replace(/<[^>]*>/g, " ")).not.toMatch(/(?<![\w@./:-])migosai(?![\w./:@-])/);
+    expect(ozilMetadata(slug).description).not.toMatch(/(?<![\w@./:-])migosai(?![\w./:@-])/);
   });
 });

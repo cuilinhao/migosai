@@ -36,7 +36,7 @@ export function OzilBlogPreview() {
 export function OzilBlogIndex() {
   const url = `${SITE_URL}${OZIL_BLOG_PATH}`;
   return <div className="geo-page blog-index ozil-blog">
-    <StructuredData data={{ "@context": "https://schema.org", "@type": "Blog", "@id": `${url}#blog`, url, name: "Ozil Goal Blog", inLanguage: ["en", "pt-BR", "es"], dateModified: OZIL_BLOG_UPDATED, publisher: { "@type": "Organization", name: "LobbyDuo", url: SITE_URL }, blogPost: ozilBlogPosts.map(post => ({ "@type": "BlogPosting", headline: post.title, url: `${SITE_URL}${post.path}`, inLanguage: post.language, datePublished: post.datePublished })) }} />
+    <StructuredData data={{ "@context": "https://schema.org", "@type": "Blog", "@id": `${url}#blog`, url, name: "Ozil Goal Blog", inLanguage: ["en", "pt-BR", "es"], dateModified: OZIL_BLOG_UPDATED, publisher: { "@type": "Organization", name: "MigosAI", url: SITE_URL }, blogPost: ozilBlogPosts.map(post => ({ "@type": "BlogPosting", headline: post.title, url: `${SITE_URL}${post.path}`, inLanguage: post.language, datePublished: post.datePublished })) }} />
     <header className="geo-header section-container ozil-blog-hero">
       <div>
         <nav className="geo-breadcrumb" aria-label="Breadcrumb"><Link href="/ozil-goal-generator">Ozil Goal</Link><span aria-hidden="true">/</span><span aria-current="page">Blog</span></nav>
@@ -62,7 +62,7 @@ export function OzilBlogArticle({ post }: { post: OzilBlogPost }) {
   const published = new Intl.DateTimeFormat(post.language, { dateStyle: "long", timeZone: "UTC" }).format(new Date(`${post.datePublished}T00:00:00Z`));
   const schema = {
     "@context": "https://schema.org", "@graph": [
-      { "@type": "BlogPosting", "@id": `${url}#article`, headline: post.title, description: ozilBlogText(post.description), url, mainEntityOfPage: url, datePublished: post.datePublished, dateModified: post.dateModified, inLanguage: post.language, image: `${SITE_URL}/ozil-goal/samples/ai-shot1.jpg`, author: { "@type": "Organization", name: "LobbyDuo editorial team", url: SITE_URL }, publisher: { "@type": "Organization", name: "LobbyDuo", url: SITE_URL }, isPartOf: { "@type": "Blog", "@id": `${SITE_URL}${OZIL_BLOG_PATH}#blog` }, citation: post.sources.map(source => new URL(source.url, SITE_URL).href) },
+      { "@type": "BlogPosting", "@id": `${url}#article`, headline: post.title, description: ozilBlogText(post.description), url, mainEntityOfPage: url, datePublished: post.datePublished, dateModified: post.dateModified, inLanguage: post.language, image: `${SITE_URL}/ozil-goal/samples/ai-shot1.jpg`, author: { "@type": "Organization", name: "MigosAI editorial team", url: SITE_URL }, publisher: { "@type": "Organization", name: "MigosAI", url: SITE_URL }, isPartOf: { "@type": "Blog", "@id": `${SITE_URL}${OZIL_BLOG_PATH}#blog` }, citation: post.sources.map(source => new URL(source.url, SITE_URL).href) },
       { "@type": "FAQPage", "@id": `${url}#faq`, inLanguage: post.language, mainEntity: post.faqs.map(faq => ({ "@type": "Question", name: plainText(faq.question), acceptedAnswer: { "@type": "Answer", text: plainText(ozilBlogText(faq.answer)) } })) },
       { "@type": "BreadcrumbList", itemListElement: [
         { "@type": "ListItem", position: 1, name: "Ozil Goal", item: `${SITE_URL}/ozil-goal-generator` },
@@ -83,7 +83,7 @@ export function OzilBlogArticle({ post }: { post: OzilBlogPost }) {
     <nav className="section-container ozil-blog-contents" aria-label={ui.contents}><strong>{ui.contents}</strong><ol>{post.sections.map(section => <li key={section.id}><a href={`#${section.id}`}>{section.title}</a></li>)}<li><a href="#faq">{ui.faq}</a></li></ol></nav>
     {post.sections.map(section => <section key={section.id} id={section.id} className="geo-section section-container"><h2>{section.title}</h2><div className="geo-prose blog-prose"><BlogBlocks blocks={section.blocks} t={ozilBlogText} /></div></section>)}
     <section id="faq" className="geo-section section-container blog-faq"><h2>{ui.faq}</h2><div className="faq-grid">{post.faqs.map((faq, index) => <div className="faq-item" key={faq.question}><span className="faq-number">{index + 1}</span><div><h3>{faq.question}</h3><p>{renderInline(ozilBlogText(faq.answer))}</p></div></div>)}</div></section>
-    <section id="sources" className="geo-section section-container"><h2>{ui.sources}</h2><ul className="blog-sources">{post.sources.map(source => <li key={source.url}><a href={source.url} rel="noopener">{source.label}</a></li>)}</ul></section>
+    <section id="sources" className="geo-section section-container"><h2>{ui.sources}</h2><ul className="blog-sources">{post.sources.map(source => <li key={source.url}><a href={source.url} rel="noopener">{ozilBlogText(source.label)}</a></li>)}</ul></section>
     <aside className="geo-related section-container"><h2>{ui.more}</h2><div className="geo-link-grid">{related.map(candidate => <Link key={candidate.slug} href={candidate.path}>{candidate.label} ↗</Link>)}</div><p><Link href={`${OZIL_BLOG_PATH}#${post.language}`}>{ui.all}</Link></p></aside>
     <div className="geo-cta section-container"><h2>{ui.cta}</h2><p>{ui.ctaText}</p><Link className="pill-gradient-button" href="/ozil-goal-generator#generator">{ui.button}</Link></div>
   </article>;

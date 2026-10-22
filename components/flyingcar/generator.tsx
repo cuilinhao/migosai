@@ -46,6 +46,7 @@ export function FlyingCarGenerator() {
   const submittedJob = useRef<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const promptRef = useRef<HTMLTextAreaElement>(null);
+  const reviewTrigger = useRef<HTMLButtonElement>(null);
   const generation = generationOwner === owner ? tracked : null;
   const activeJob = Boolean(generation && !terminal.has(generation.status));
   const locked = busy || activeJob;
@@ -155,7 +156,7 @@ export function FlyingCarGenerator() {
         <div className="three-picks">
           <article><b>01</b><p><strong>Describe the scene</strong><span>Write it in your own words. The more specific the better: place, time of day, camera move, mood.</span></p></article>
           <article><b>02</b><p><strong>Add one photo — optional</strong><span>A car, a person, a location. It guides the model; it is never required.</span></p></article>
-          <article><b>03</b><p><strong>Review the credits and create</strong><span>Sign in with your LobbyDuo account. Failed renders return the credits automatically.</span></p></article>
+          <article><b>03</b><p><strong>Review the credits and create</strong><span>Sign in with your MigosAI account. Failed renders return the credits automatically.</span></p></article>
         </div>
         <div className="what-you-get"><p className="fc-eyebrow">WHAT YOU GET</p><ul>
           <li>A 9:16 vertical MP4, {FLYING_CAR_CONFIG.minDuration}–{FLYING_CAR_CONFIG.maxSupportedDuration} seconds, 480p, silent, no watermark</li>
@@ -163,7 +164,7 @@ export function FlyingCarGenerator() {
           <li>Progress, results and downloads in your <Link href="/app/my-videos">My Videos</Link></li>
           <li>A new prompt for every video you create</li>
           <li>Failed generation? The credits come back automatically</li>
-          <li>One shared balance across LobbyDuo generators</li>
+          <li>One shared balance across MigosAI generators</li>
         </ul></div>
       </aside>
       <div className="creator-stage" aria-busy={locked}>
@@ -208,7 +209,7 @@ export function FlyingCarGenerator() {
         <div className="stage-summary"><div><span>INPUT</span><strong>{photo ? 'Prompt + photo' : 'Prompt only'}</strong></div><div><span>OUTPUT</span><strong>{duration}s · 9:16 · MP4</strong></div><div><span>DELIVERY</span><strong>My Videos</strong></div></div>
       </div>
     </div>
-    <button type="button" className="amber-button generate-button" onClick={review} disabled={locked || Boolean(durationError)}>
+    <button ref={reviewTrigger} type="button" aria-haspopup="dialog" aria-expanded={reviewOpen} className="amber-button generate-button" onClick={review} disabled={locked || Boolean(durationError)}>
       {(busy || activeJob) && <LoaderCircle size={20} className="fc-spinner" />}
       {busy ? t(stage) : activeJob ? `MAKING YOUR VIDEO · ${progress}%` : ready ? 'REVIEW MY VIDEO' : 'CHECK MY PROMPT'}<span>▸</span>
     </button>
@@ -224,7 +225,7 @@ export function FlyingCarGenerator() {
     {generation && ['failed', 'cancelled'].includes(generation.status) && <p className="form-hint-error" role="alert">{t(generation.error ?? generation.statusMessage ?? 'Generation could not be completed.')} <Link href="/app/my-videos">View generation record</Link></p>}
     <div ref={setPortalContainer} className="fc-dialog-anchor" />
     <Dialog.Root open={reviewOpen} onOpenChange={open => { if (!busy) setReviewOpen(open); }}>
-      <Dialog.Portal container={portalContainer}><Dialog.Overlay className="dialog-backdrop fc-review-backdrop"><Dialog.Content className="dialog fc-review-dialog" onEscapeKeyDown={event => { if (busy) event.preventDefault(); }} onInteractOutside={event => { if (busy) event.preventDefault(); }}>
+      <Dialog.Portal container={portalContainer}><Dialog.Overlay className="dialog-backdrop fc-review-backdrop"><Dialog.Content className="dialog fc-review-dialog" onCloseAutoFocus={event => { event.preventDefault(); reviewTrigger.current?.focus(); }} onEscapeKeyDown={event => { if (busy) event.preventDefault(); }} onInteractOutside={event => { if (busy) event.preventDefault(); }}>
         <Dialog.Close className="dialog-close" disabled={busy} aria-label="Close review">×</Dialog.Close>
         <p className="fc-eyebrow">SHARED ACCOUNT CREDITS</p><Dialog.Title asChild><h2>REVIEW YOUR VIDEO</h2></Dialog.Title>
         <Dialog.Description>Your prompt is ready. Review the length and credit cost before generating.</Dialog.Description>

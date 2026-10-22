@@ -6,6 +6,7 @@ import { FaqSection } from "@/components/sections/marketing-sections";
 import { GeoHeader, GeoSection, GeoTable, GeoRelatedLinks, GeoCta, JsonLd, geoMetadata } from "@/components/geo/geo-page";
 import { hotelLobbyTitle, hotelLobbyDescription, hotelLobbySteps, hotelLobbyFaqs, hotelLobbySchema } from "@/content/hotel-lobby";
 import { HOTEL_LOBBY_PATH, SITE_URL } from "@/content/public-pages";
+import { getVideoCost } from "@/lib/video-options";
 
 export async function generateMetadata() { return localizeMetadata(geoMetadata(hotelLobbyTitle, hotelLobbyDescription, HOTEL_LOBBY_PATH)); }
 
@@ -48,7 +49,7 @@ export default async function HotelLobbyPage() {
     </>} showcaseDetails={<>
       <h3>Hotel Lobby video reference gallery</h3>
       <p>These clips were generated with this tool. Results vary with your photos, model and settings.</p>
-      <p className="geo-note">Suggested starting settings for your own clip: two clear portraits, 9:16, 5 seconds, 480p (50 credits). <Link href="/showcases">See more examples</Link>.</p>
+      <p className="geo-note">{t("Suggested starting settings for your own Wan template: two clear portraits, 9:16, 5 seconds, 480p ({credits} credits).", { credits: getVideoCost(5, "480p", "wan-3.0") })} <Link href="/showcases">See more examples</Link>.</p>
     </>} />
     <GeoCta local />
     <GeoRelatedLinks current={HOTEL_LOBBY_PATH} />

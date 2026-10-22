@@ -85,3 +85,5 @@
 @media(max-width:639px){.ozil-page .og-examples-section{padding:48px 0}.ozil-page .og-examples-section .reference-examples-intro{margin-bottom:26px}.ozil-page .og-examples-section .reference-examples-description{margin-top:16px}.ozil-page .og-examples-grid .mi-video-card{border-radius:20px}}
 
 .ozil-page.og .og-display{font-family:var(--font-sans);font-style:normal;letter-spacing:-.025em;font-weight:700}
+.ozil-page .og-slot button{min-width:44px;min-height:44px}
+.ozil-page .og-sample-pause{width:44px;height:44px}

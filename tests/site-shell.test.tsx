@@ -13,6 +13,8 @@ import OzilGuide from '../app/ozil-goal-generator/ozil-goal-ai-prompt/page';
 import AudioPage from '../app/ai-rap-song-generator/page';
 import PricingPage from '../app/pricing/page';
 import BlogPage from '../app/blog/page';
+import OzilBlogPage from '../app/ozil-goal-generator/blog/page';
+import ShowcasesPage from '../app/showcases/page';
 import PrivacyPage from '../app/privacy-policy/page';
 import TermsPage from '../app/terms-of-service/page';
 import RefundPage from '../app/refund-policy/page';
@@ -60,6 +62,8 @@ const publicRoutes=[
   {path:'/ai-rap-song-generator',page:AudioPage,active:'/ai-rap-song-generator'},
   {path:'/pricing',page:PricingPage,active:'/pricing'},
   {path:'/blog',page:BlogPage,active:'/blog'},
+  {path:'/ozil-goal-generator/blog',page:OzilBlogPage,active:'/blog'},
+  {path:'/showcases',page:ShowcasesPage,active:'/explore'},
   {path:'/privacy-policy',page:PrivacyPage,active:null},
   {path:'/terms-of-service',page:TermsPage,active:null},
   {path:'/refund-policy',page:RefundPage,active:null},

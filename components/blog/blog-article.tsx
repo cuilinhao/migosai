@@ -92,7 +92,7 @@ export function blogArticlePage(slug: string) {
 
       <section className="geo-section section-container" id="sources">
         <h2>{t("Sources")}</h2>
-        <ul className="blog-sources">{post.sources.map((source) => <li key={source.url}><a href={source.url} rel="noopener">{source.label}</a></li>)}</ul>
+        <ul className="blog-sources">{post.sources.map((source) => <li key={source.url}><a href={source.url} rel="noopener">{t(source.label)}</a></li>)}</ul>
       </section>
 
       <aside className="geo-related section-container blog-more" aria-label={t("More from the LobbyDuo blog")}>

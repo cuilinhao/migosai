@@ -43,7 +43,7 @@ export default async function FreeHotelLobbyGuidePage() {
 
     <GeoSection id="signup" title="Can I use it without signing up?">
       <div className="geo-prose">
-        <p>You can read the guides and watch reference clips without an account. Uploading photos to the service and submitting a video require Google sign-in. The same Google sign-in flow creates a new account when needed.</p>
+        <p>You can read the guides and watch reference clips without an account. Uploading photos and submitting a video require sign-in. Choose an available sign-in method and create an account first if prompted.</p>
         <p>Selecting photos in the browser does not bypass that requirement. If you are signed out, the generation button opens sign-in. A claim such as “no signup required” would not describe this video workflow.</p>
       </div>
     </GeoSection>

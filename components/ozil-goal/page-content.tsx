@@ -20,7 +20,7 @@ type SourceNode = string | { slot: string } | { tag: string; attrs: Record<strin
 type SourceElement = Extract<SourceNode, { tag: string }>;
 const attributeNames: Record<string, string> = { class: 'className', tabindex: 'tabIndex', viewbox: 'viewBox', 'stroke-width': 'strokeWidth', 'stroke-linecap': 'strokeLinecap', 'stroke-linejoin': 'strokeLinejoin', autoplay: 'autoPlay', playsinline: 'playsInline', colspan: 'colSpan', rowspan: 'rowSpan', for: 'htmlFor' };
 const booleanAttributes = new Set(['autoplay', 'playsinline', 'muted', 'loop', 'controls', 'inert']);
-function text(value: string) { return value.replaceAll('{{OZIL_GOAL_COST}}', String(OZIL_GOAL_COST)); }
+function text(value: string) { return value.replaceAll('{{OZIL_GOAL_COST}}', String(OZIL_GOAL_COST)).replaceAll('LobbyDuo', 'MigosAI').replace(/(?<![\w@./:-])migosai(?![\w./:@-])/g, 'MigosAI'); }
 function elements(node: SourceNode, tag: string): SourceElement[] {
   if (typeof node === 'string' || !('tag' in node)) return [];
   return [...(node.tag === tag ? [node] : []), ...node.children.flatMap(child => elements(child, tag))];
@@ -32,7 +32,7 @@ function readableText(node: SourceNode): string {
 }
 function homeSchema(content: SourceNode, locale: Locale) {
   const url = new URL(localizeHref('/ozil-goal-generator', locale), SITE_URL).href;
-  const publisher = { '@type': 'Organization', name: 'LobbyDuo', url: SITE_URL };
+  const publisher = { '@type': 'Organization', name: 'MigosAI', url: SITE_URL };
   const instructions = elements(content, 'section').find(section =>
     elements(section, 'h2').some(heading => readableText(heading) === 'How to make the Ozil AI goal video'));
   const steps = instructions ? elements(instructions, 'ol')[0] : undefined;

@@ -13,7 +13,7 @@ export function ozilBlogMetadata(post?: OzilBlogPost): Metadata {
     title: { absolute: title }, description,
     alternates: { canonical: url, languages: Object.fromEntries(Object.entries(languages).map(([language, path]) => [language, `${SITE_URL}${path}`])) },
     openGraph: {
-      title, description, url, siteName: "LobbyDuo", type: post ? "article" : "website",
+      title, description, url, siteName: "MigosAI", type: post ? "article" : "website",
       locale: post?.language === "pt-BR" ? "pt_BR" : post?.language === "es" ? "es_ES" : "en_US",
       images: [{ url: "/ozil-goal/samples/ai-shot1.jpg", width: 496, height: 864, alt: "AI football scene from the Ozil Goal reference sample" }],
       ...(post ? { publishedTime: post.datePublished, modifiedTime: post.dateModified } : {}),

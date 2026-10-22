@@ -23,7 +23,7 @@ export async function localizeMetadata(metadata: Metadata): Promise<Metadata> {
     ...(metadata.description ? { description: t(metadata.description) } : {}),
     ...(privatePage ? { robots: { index: false, follow: false } } : {}),
     alternates: { ...metadata.alternates, canonical, languages: Object.fromEntries([...locales.map((language) => [language, new URL(localizeHref(pathname, language), SITE_URL).href]), ["x-default", new URL(pathname, SITE_URL).href]]) },
-    ...(metadata.openGraph ? { openGraph: { ...metadata.openGraph, url: canonical, locale: localeTags[locale].replace("-", "_"), alternateLocale: locales.filter(l => l !== locale).map(l => localeTags[l].replace("-", "_")), ...(typeof metadata.openGraph.title === "string" ? { title: t(metadata.openGraph.title) } : {}), ...(metadata.openGraph.description ? { description: t(metadata.openGraph.description) } : {}) } } : {}),
+    ...(metadata.openGraph ? { openGraph: { ...metadata.openGraph, url: canonical, locale: localeTags[locale].replace("-", "_"), alternateLocale: locales.filter(l => l !== locale).map(l => localeTags[l].replace("-", "_")), ...(metadata.openGraph.siteName ? { siteName: t(metadata.openGraph.siteName) } : {}), ...(typeof metadata.openGraph.title === "string" ? { title: t(metadata.openGraph.title) } : {}), ...(metadata.openGraph.description ? { description: t(metadata.openGraph.description) } : {}) } } : {}),
     ...(metadata.twitter ? { twitter: { ...metadata.twitter, ...(typeof metadata.twitter.title === "string" ? { title: t(metadata.twitter.title) } : {}), ...(metadata.twitter.description ? { description: t(metadata.twitter.description) } : {}) } } : {}),
   };
 }

@@ -25,7 +25,7 @@ export default async function HotelLobbyFilterPage() {
       title="Hotel Lobby AI Filter & Face Swap (2026)"
       intro="Looking for a Hotel Lobby AI filter on your phone? LobbyDuo generates a new duo video from two separate reference photos. Here is how that differs from a filter or face swap, and how to use the generator in a mobile browser."
     >
-      <p className="geo-note">Use the website directly. LobbyDuo has no separate native app to install. Google sign-in and sufficient credits are required to generate.</p>
+      <p className="geo-note">Use the website directly. MigosAI has no separate native app to install. Sign-in and sufficient credits are required to generate.</p>
     </GeoHeader>
 
     <GeoSection id="filter-vs-face-swap" title="Hotel Lobby filter, face swap or AI video generator?">
@@ -90,7 +90,7 @@ export default async function HotelLobbyFilterPage() {
     <GeoSection id="expectations" title="What to expect from the finished Hotel Lobby clip">
       <div className="geo-prose">
         <p>The built-in scene aims for a coordinated duo in an orange studio booth with a suspended microphone. Clear reference photos can make the intended subjects easier to interpret, but identity, movement and framing can vary between outputs. Review both performers throughout the finished video before sharing it.</p>
-        <p>Use the <Link href="/showcases">reference video gallery</Link> to understand the visual style. Those clips are reference material, not documented results from this generator, and their original input settings are not supplied. For the full feature overview and the working form, visit the <Link href={HOTEL_LOBBY_PATH}>Hotel Lobby AI Video Generator</Link>.</p>
+        <p>Use the <Link href="/showcases">reference video gallery</Link> to understand the visual style. It includes MigosAI-generated examples and third-party reference clips, with sources identified in their captions. For the full feature overview and the working form, visit the <Link href={HOTEL_LOBBY_PATH}>Hotel Lobby AI Video Generator</Link>.</p>
       </div>
     </GeoSection>
 
