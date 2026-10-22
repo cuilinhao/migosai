@@ -1,0 +1,90 @@
+/* Shared MigosAI surfaces, including dialogs rendered outside the portal shell. */
+.mi-primary-button,.mi-reference-choose,.mi-reference-apply,.pill-gradient-button,.buy-button,.pricing-card.selected .buy-button{color:var(--brand-on-accent);background:var(--brand-gradient);border-radius:999px}
+.mi-primary-button:hover,.mi-reference-choose:hover,.mi-reference-apply:hover,.pill-gradient-button:hover,.buy-button:hover{background:var(--brand-gradient);filter:brightness(1.08)}
+.portal-shell .mi-primary-button,.portal-shell .mi-reference-apply,.portal-shell .buy-button{color:var(--brand-on-accent)}
+.mi-video-preview{border:1px solid var(--border);border-radius:16px;box-shadow:none;background:var(--card)}
+.mi-panel{border-radius:16px}
+.mi-video-form h2{font-size:20px;line-height:28px}
+.mi-text-input,.mi-text-area,.mi-options-grid select,.mi-model-label select{border-radius:9px;background:var(--background);border-color:var(--input)}
+.mi-video-preview .mi-preview-media,.mi-preview-reference .mi-video-card{border-radius:12px}
+.mi-auth-brand{color:var(--foreground);letter-spacing:-.04em}
+.portal-inner-page{min-width:0;max-width:1440px;margin-inline:auto;padding-bottom:48px;font-size:15px}
+.portal-inner-page .section-container{width:min(100% - 48px,1120px)}
+.portal-inner-page .geo-page{padding-top:24px;padding-bottom:16px}
+.portal-inner-page .hotel-lobby-page{padding-top:0}
+.portal-inner-page .generator-section{width:100%;padding-inline:24px;scroll-margin-top:24px}
+.portal-inner-page .mi-generator-grid{width:100%;max-width:1120px;gap:20px}
+.portal-inner-page .marketing-section{padding-block:56px;background:transparent}
+.portal-inner-page .section-heading{margin-bottom:30px}
+.portal-inner-page .section-heading h2,.portal-inner-page .trend-grid h2,.portal-inner-page .mi-song-cta h2{font-size:clamp(26px,2.6vw,36px);line-height:1.18;font-weight:600;letter-spacing:-.03em}
+.portal-inner-page .section-description{font-size:15px;line-height:1.7}
+.portal-inner-page .trend-grid{gap:36px}
+.portal-inner-page .trend-copy p{padding:20px;border-radius:14px}
+.portal-inner-page .workflow-section{border-block:1px solid var(--border)}
+.portal-inner-page .workflow-card,.portal-inner-page .feature-card{border-radius:16px;padding:22px}
+.portal-inner-page .workflow-card{min-height:230px}
+.portal-inner-page .faq-grid{column-gap:32px;row-gap:28px}
+.portal-inner-page .geo-header{padding-top:0}
+.portal-inner-page .geo-header h1,.portal-inner-page .geo-header h2,.portal-inner-page .pricing-page h1{font-size:clamp(30px,3.4vw,44px);line-height:1.15;font-weight:600;letter-spacing:-.035em}
+.portal-inner-page .home-cta{border:1px solid var(--border);border-radius:20px;background:var(--stage-gradient)}
+.portal-inner-page .pricing-page{padding:32px 0 48px;min-height:0}
+.portal-inner-page .pricing-page-intro{font-size:16px;line-height:1.7;margin-bottom:40px}
+.portal-inner-page .pricing-card{border-radius:16px;padding:24px}
+.portal-inner-page .legal-page{padding:32px 0 48px}
+.portal-inner-page .legal-container{width:min(100% - 48px,850px)}
+.portal-inner-page .legal-heading h1{font-size:36px;line-height:1.2;letter-spacing:-.03em}
+.portal-inner-page .mi-song-hero{padding:32px 24px 0;border:1px solid var(--border);border-bottom:0;border-radius:20px 20px 0 0}
+.portal-inner-page .mi-song-hero h1{font-size:clamp(32px,3.4vw,44px);line-height:1.15;font-weight:600}
+.portal-inner-page .mi-song-hero>p{font-size:16px;color:var(--muted)}
+.portal-inner-page .mi-song-generator-section{padding:32px 24px;border:1px solid var(--border);border-top:0;border-radius:0 0 20px 20px}
+.portal-inner-page .mi-song-cta{padding-block:56px}
+.portal-inner-page .mi-showcases-page{padding-block:32px;width:100%}
+.portal-inner-page .mi-showcases-page h2{font-size:32px;font-weight:600}
+.portal-inner-page .geo-page a:is(.mi-primary-button,.home-hero-action){color:var(--brand-on-accent);text-decoration:none}
+.portal-inner-page .reference-examples-section{padding-block:56px}
+.portal-inner-page .reference-example-card{border-radius:16px}
+@media(max-width:1200px){
+ .portal-inner-page .pricing-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .portal-inner-page .mi-generator-grid{grid-template-columns:1fr;max-width:680px}
+ .portal-inner-page .trend-grid{grid-template-columns:1fr;gap:24px}
+ .portal-inner-page .workflow-grid,.portal-inner-page .feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:900px){
+ .portal-inner-page .section-container,.portal-inner-page .legal-container{width:100%}
+ .portal-inner-page .workflow-grid{grid-template-columns:1fr}
+ .portal-inner-page .workflow-card{min-height:0}
+ .portal-inner-page .faq-grid{grid-template-columns:1fr}
+ .portal-inner-page .marketing-section,.portal-inner-page .reference-examples-section{padding-block:40px}
+ .portal-inner-page .pricing-card{padding:20px}
+}
+@media(max-width:600px){
+ .portal-inner-page{font-size:14px;padding-bottom:32px}
+ .portal-inner-page .generator-section{padding-inline:12px}
+ .portal-inner-page .mi-panel{padding:18px}
+ .portal-inner-page .mi-upload-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .portal-inner-page .mi-upload-content strong{font-size:12px}
+ .portal-inner-page .mi-upload-content small{font-size:10px}
+ .portal-inner-page .mi-upload-icon{width:32px;height:32px;margin-bottom:6px}
+ .portal-inner-page .mi-upload-label{font-size:12px;flex-wrap:wrap}
+ .portal-inner-page .mi-scene-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .portal-inner-page .feature-grid,.portal-inner-page .pricing-grid{grid-template-columns:1fr}
+ .portal-inner-page .section-description{font-size:14px}
+ .portal-inner-page .pricing-page,.portal-inner-page .legal-page{padding-top:16px}
+ .portal-inner-page .legal-heading h1{font-size:30px}
+ .portal-inner-page .mi-song-hero{padding:28px 16px 0}
+ .portal-inner-page .mi-song-generator-section{padding:24px 12px}
+ .portal-inner-page .mi-song-hero>p{font-size:14px;line-height:22px}
+ .portal-inner-page .home-cta{padding-inline:16px}
+}
+.portal-shell .portal-inner-page .flyingcar-page h1,.portal-shell .portal-inner-page .ozil-page h1{font-family:"DM Sans",sans-serif;font-size:clamp(32px,3.3vw,46px);line-height:1.15;font-weight:600;font-style:normal;text-transform:none;letter-spacing:-.035em}
+.portal-shell .portal-inner-page .flyingcar-page h2,.portal-shell .portal-inner-page .ozil-page h2{font-family:"DM Sans",sans-serif;font-size:clamp(26px,2.5vw,36px);line-height:1.2;font-weight:600;font-style:normal;text-transform:none;letter-spacing:-.03em}
+.portal-inner-page .flyingcar-page .fc-form h2,.portal-inner-page .ozil-page .og-generator h2{font-size:22px}
+.pack-inclusions li{display:flex;align-items:flex-start;gap:8px}
+.pack-inclusions li>b{display:inline-flex;flex-shrink:0;margin-top:3px}
+/* The Flying Car review portal inherits its page theme; lift its containing layer while open. */
+.portal-content:has(.fc-review-backdrop){z-index:150;overflow:visible}
+@media(min-width:601px) and (max-width:900px){.portal-shell .portal-inner-page .og-sticky{left:192px}}
+@media(min-width:901px) and (max-width:1023px){.portal-shell .portal-inner-page .og-sticky{left:204px}}
+@media(max-width:1023px){.portal-content:has(.og-sticky) .portal-footer{padding-bottom:110px}}
+
+.portal-shell .portal-inner-page .flyingcar-page .fc-review-dialog h2{font-size:24px;line-height:1.25}

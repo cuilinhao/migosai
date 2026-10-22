@@ -1,10 +1,10 @@
 .generator-menu{position:relative}
-.generator-new-badge{display:inline-flex;align-items:center;flex-shrink:0;height:16px;padding:0 6px;border-radius:999px;background:var(--brand-gradient);color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.08em;line-height:1;box-shadow:0 2px 6px -2px rgba(217,86,11,.6)}
+.generator-new-badge{display:inline-flex;align-items:center;flex-shrink:0;height:16px;padding:0 6px;border-radius:999px;background:var(--brand-gradient);color:var(--brand-on-accent);font-size:9.5px;font-weight:800;letter-spacing:.08em;line-height:1;box-shadow:0 2px 6px -2px rgba(195,138,255,.6)}
 
 /* Desktop: a highlighted pill whose label rotates through the generators. */
-.generator-menu:not(.generator-menu-mobile) .generator-menu-trigger,.generator-spotlight{position:relative;overflow:hidden;align-items:center;border:1px solid #f4bf86;border-radius:999px;background:linear-gradient(180deg,#fff7ec,#fde6cb);color:var(--accent-foreground);font-weight:600;white-space:nowrap;box-shadow:inset 0 1px 0 #fffaf3,0 6px 16px -8px rgba(217,86,11,.55);transition:border-color .2s,box-shadow .2s}
+.generator-menu:not(.generator-menu-mobile) .generator-menu-trigger,.generator-spotlight{position:relative;overflow:hidden;align-items:center;border:1px solid var(--border);border-radius:999px;background:var(--accent);color:var(--accent-foreground);font-weight:600;white-space:nowrap;box-shadow:inset 0 1px 0 #ffffff0d,0 6px 16px -8px rgba(195,138,255,.55);transition:border-color .2s,box-shadow .2s}
 .generator-menu:not(.generator-menu-mobile) .generator-menu-trigger{display:flex;gap:7px;height:36px;padding:0 11px 0 12px;font-size:14px}
-.generator-menu:not(.generator-menu-mobile) .generator-menu-trigger:hover,.generator-menu:not(.generator-menu-mobile) .generator-menu-trigger[aria-expanded="true"],.generator-spotlight:hover{border-color:var(--primary);box-shadow:inset 0 1px 0 #fffaf3,0 8px 20px -8px rgba(217,86,11,.75)}
+.generator-menu:not(.generator-menu-mobile) .generator-menu-trigger:hover,.generator-menu:not(.generator-menu-mobile) .generator-menu-trigger[aria-expanded="true"],.generator-spotlight:hover{border-color:var(--primary);box-shadow:inset 0 1px 0 #ffffff0d,0 8px 20px -8px rgba(195,138,255,.75)}
 .generator-menu:not(.generator-menu-mobile) .generator-menu-trigger.active{border-color:var(--primary-strong)}
 .generator-menu:not(.generator-menu-mobile) .generator-menu-trigger:not(.active)::after,.generator-spotlight::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.6) 50%,transparent 60%);transform:translateX(-130%);animation:generator-shine 6.4s ease-in-out 1.2s infinite;pointer-events:none}
 .generator-menu-ticker{display:grid;overflow:hidden}
@@ -15,7 +15,7 @@
 .generator-menu-chevron{flex-shrink:0;transition:transform .15s}
 .generator-menu-trigger[aria-expanded="true"] .generator-menu-chevron{transform:rotate(180deg)}
 
-.generator-menu-panel{position:absolute;top:calc(100% + 10px);left:50%;z-index:60;width:360px;padding:6px;background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:0 18px 44px rgba(49,27,12,.18);transform:translateX(-50%)}
+.generator-menu-panel{position:absolute;top:calc(100% + 10px);left:50%;z-index:60;width:360px;padding:6px;background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:0 18px 44px rgba(0,0,0,.18);transform:translateX(-50%)}
 .generator-menu-panel[hidden]{display:none}
 .generator-menu .generator-menu-panel a{display:flex;align-items:center;gap:12px;padding:8px;border-radius:10px;color:var(--muted);font-size:14px;line-height:1.35;white-space:normal}
 .generator-menu .generator-menu-panel a:hover,.generator-menu .generator-menu-panel a.active{background:var(--paper-deep)}

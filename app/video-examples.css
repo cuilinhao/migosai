@@ -1,4 +1,4 @@
-.reference-examples-section{background:var(--background);color:var(--foreground);color-scheme:light;padding:80px 0 72px;scroll-margin-top:90px}
+.reference-examples-section{background:var(--background);color:var(--foreground);color-scheme:dark;padding:80px 0 72px;scroll-margin-top:90px}
 .reference-examples-intro{text-align:left;max-width:850px;margin-bottom:36px}
 .reference-examples-eyebrow{margin:0 0 14px;color:var(--primary-strong);font-size:12px;font-weight:700;letter-spacing:.17em;text-transform:uppercase}
 .reference-examples-intro h2{margin:0;color:var(--foreground);font-size:clamp(28px,3.2vw,44px);font-weight:700;letter-spacing:-.045em;line-height:1.15;text-wrap:balance}
@@ -9,7 +9,7 @@
 .reference-example .mi-video-card>video{object-fit:cover}
 .reference-example .mi-video-card:hover>video{transform:none}
 .reference-example .mi-video-card:focus-visible{outline:3px solid var(--primary);outline-offset:4px}
-.reference-example .mi-video-play{width:34px;height:34px;left:auto;top:auto;right:12px;bottom:12px;transform:none;background:#170f0ae6;color:var(--primary-foreground);opacity:0;transition:opacity .2s;box-shadow:none}
+.reference-example .mi-video-play{width:34px;height:34px;left:auto;top:auto;right:12px;bottom:12px;transform:none;background:#101010e6;color:var(--primary-foreground);opacity:0;transition:opacity .2s;box-shadow:none}
 .reference-example .mi-video-play svg{width:15px;height:15px}
 .reference-example .mi-video-card:hover .mi-video-play,.reference-example .mi-video-card:focus-visible .mi-video-play{opacity:1}
 .reference-example figcaption{padding:12px 2px 0}

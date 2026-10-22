@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
-import { ArrowDown, ArrowLeft, ArrowRight, ChevronDown, Menu, X } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowRight, ChevronDown, Menu, Sun, X } from "lucide-react";
 import Link from "@/components/i18n/localized-link";
 import { useTranslations } from "@/components/i18n/locale-provider";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
@@ -63,7 +63,7 @@ export function RecraftLanding() {
   return <div className={styles.page}>
     <a className={styles.skip} href="#landing-content">{t("Skip to content")}</a>
     <header className={styles.header}>
-      <Link href="/" className={styles.brand} aria-label="MigosAI"><span aria-hidden="true">m</span><b>MigosAI</b></Link>
+      <Link href="/" className={styles.brand} aria-label="MigosAI"><Sun size={28} strokeWidth={2.5} aria-hidden="true"/><b>MigosAI</b></Link>
       <nav className={styles.desktopNav} aria-label={t("Primary navigation")}>{nav()}</nav>
       <div className={styles.headerActions}><Link className={styles.signIn} href="/sign-in">{t("Sign in")}</Link><Link className={styles.limeButton} href="/ai-image-generator">{t("Try MigosAI")}</Link></div>
       <button ref={menuButton} type="button" className={styles.menuButton} aria-expanded={menuOpen} aria-controls="landing-mobile-menu" aria-label={t(menuOpen ? "Close menu" : "Open menu")} onClick={() => setMenuOpen(value => !value)}>{menuOpen ? <X/> : <Menu/>}</button>

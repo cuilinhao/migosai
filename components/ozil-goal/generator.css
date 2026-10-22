@@ -1,7 +1,7 @@
 .ozil-page .og-generator{display:grid;gap:24px;color:var(--og-text);font-family:var(--font-sans,Arial,sans-serif)}
 .ozil-page .og-generator fieldset{margin:0;padding:0;min-width:0;border:0}
 .ozil-page .og-generator legend{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:0;font-size:15px;font-weight:600}
-.ozil-page .og-generator-step{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-size:13px;font-weight:700;background:var(--og-flash);color:var(--og-ink)}
+.ozil-page .og-generator-step{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-size:13px;font-weight:700;background:var(--brand-gradient);color:var(--og-ink)}
 .ozil-page .og-generator-upload{position:relative;min-height:124px;border:2px dashed var(--og-line-strong);border-radius:16px;background:var(--og-panel-2);transition:border-color .2s,background .2s}
 .ozil-page .og-generator-upload:hover,.ozil-page .og-generator-upload.is-over{border-color:var(--og-flash)}
 .ozil-page .og-generator-upload:focus-within{outline:2px solid var(--og-flash);outline-offset:3px}

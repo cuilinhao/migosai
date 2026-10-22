@@ -1,5 +1,5 @@
-/* Keep the reference page below migosai's fixed account/navigation header. */
-.flyingcar-page { padding-top: 80px; min-height: 100dvh; isolation: isolate; color-scheme: light; }
+/* Local page content sits inside the shared portal shell. */
+.flyingcar-page { padding-top: 0; min-height: 100%; isolation: isolate; color-scheme: dark; }
 .flyingcar-page .fc-site-header { position: relative; inset: auto; z-index: 10; }
 .flyingcar-page [id] { scroll-margin-top: 96px; }
 .flyingcar-page details > summary { list-style: none; cursor: pointer; }
@@ -7,27 +7,35 @@
 .flyingcar-page details:not([open]) > :not(summary) { display: none; }
 .flyingcar-page a:focus-visible, .flyingcar-page summary:focus-visible { outline: 2px solid var(--sunset); outline-offset: 4px; }
 .flyingcar-page video { max-width: 100%; }
-@media (max-width: 900px) { .flyingcar-page { padding-top: 64px; } .flyingcar-page [id] { scroll-margin-top: 80px; } }
+@media (max-width: 900px) { .flyingcar-page { padding-top: 0; } .flyingcar-page [id] { scroll-margin-top: 80px; } }
 
-/* Keep the source layout and typography, but inherit migosai's shared palette.
+/* Keep the source layout with the shared portal palette and typography.
    The repeated class wins over the imported reference's local theme/reset. */
 .flyingcar-page.flyingcar-page {
-  --background: inherit;
-  --foreground: inherit;
-  --card: inherit;
-  --primary: inherit;
-  --primary-foreground: inherit;
-  --muted: inherit;
-  --accent: inherit;
-  --accent-foreground: inherit;
-  --destructive: inherit;
-  --border: inherit;
-  --input: inherit;
+  --background: #0b0b0b;
+  --foreground: #f5f5f5;
+  --card: #181818;
+  --primary: #c38aff;
+  --primary-foreground: #1b1022;
+  --muted: #a0a0a0;
+  --accent: #c38aff1f;
+  --accent-foreground: #d9adff;
+  --destructive: #ff6b6b;
+  --success: #65d998;
+  --border: #303030;
+  --input: #303030;
+  --primary-strong: #c38aff;
+  --paper-deep: #202020;
+  --surface-inverse: #0b0b0b;
+  --surface-inverse-muted: #a0a0a0;
+  --font-sans: "DM Sans",ui-sans-serif,system-ui,sans-serif;
+  --default-font-family: var(--font-sans);
+  font-family: var(--font-sans);
   --night: var(--background);
   --dusk: var(--card);
   --plum: var(--paper-deep);
   --sunset: var(--primary-strong);
-  --ember: var(--accent);
+  --ember: #d9adff;
   --cream: var(--foreground);
   --line: var(--border);
   --red: var(--destructive);
@@ -57,11 +65,11 @@
 /* Source CTAs include utility classes, so theme both those and our form buttons. */
 .flyingcar-page.flyingcar-page :is(.big, .header-cta, .article-cta, .amber-button) {
   background: var(--brand-gradient);
-  color: var(--foreground);
-  box-shadow: 0 5px 0 var(--accent-foreground);
+  color: var(--primary-foreground);
+  box-shadow: none;
 }
 .flyingcar-page.flyingcar-page :is(.big, .header-cta, .article-cta, .amber-button):hover:not(:disabled) { background: var(--primary-strong); color: var(--primary-foreground); }
-.flyingcar-page.flyingcar-page :is(.big, .header-cta, .article-cta, .amber-button):active:not(:disabled) { box-shadow: 0 1px 0 var(--accent-foreground); }
+.flyingcar-page.flyingcar-page :is(.big, .header-cta, .article-cta, .amber-button):active:not(:disabled) { box-shadow: none; }
 .flyingcar-page.flyingcar-page .header-cta { box-shadow: none; }
 
 .flyingcar-page.flyingcar-page .what-you-get { background: var(--paper-deep); }
@@ -74,16 +82,20 @@
 .flyingcar-page.flyingcar-page .upload-box:hover { border-color: var(--primary-strong); }
 .flyingcar-page.flyingcar-page .upload-box b { background: var(--accent); color: var(--accent-foreground); box-shadow: none; }
 .flyingcar-page.flyingcar-page .consent { color: var(--accent-foreground); }
-.flyingcar-page.flyingcar-page .upload-progress { background: var(--surface-inverse); color: var(--primary-foreground); }
+.flyingcar-page.flyingcar-page .upload-progress { background: var(--surface-inverse); color: var(--foreground); }
 .flyingcar-page.flyingcar-page .upload-actions { background: linear-gradient(transparent, var(--surface-inverse)); }
 .flyingcar-page.flyingcar-page .upload-actions button { background: var(--card); color: var(--foreground); }
 .flyingcar-page.flyingcar-page .upload-actions button:hover { background: var(--accent); color: var(--accent-foreground); }
 .flyingcar-page.flyingcar-page :is(.rec i, .stage-bar i) { background: var(--destructive); }
 
 .flyingcar-page.flyingcar-page .dialog-backdrop { background: color-mix(in srgb, var(--surface-inverse) 65%, transparent); }
-.flyingcar-page.flyingcar-page .dialog { border-color: var(--border); box-shadow: 0 30px 90px color-mix(in srgb, var(--foreground) 25%, transparent); }
+.flyingcar-page.flyingcar-page .dialog { border-color: var(--border); box-shadow: 0 30px 90px rgba(0,0,0,.45); }
 .flyingcar-page.flyingcar-page .dialog-prompt { background: var(--paper-deep); color: var(--foreground); }
 .flyingcar-page.flyingcar-page .dialog-error { border-color: color-mix(in srgb, var(--destructive) 45%, var(--border)); background: color-mix(in srgb, var(--destructive) 5%, var(--card)); }
 .flyingcar-page.flyingcar-page :is(.video-frame, .video-frame video, video) { background: var(--surface-inverse); }
-.flyingcar-page.flyingcar-page .video-frame { box-shadow: 0 0 0 1px var(--border), 0 26px 60px -30px color-mix(in srgb, var(--foreground) 35%, transparent); }
+.flyingcar-page.flyingcar-page .video-frame { box-shadow: 0 0 0 1px var(--border), 0 26px 60px -30px rgba(0,0,0,.45); }
 .flyingcar-page.flyingcar-page .example-grid .video-frame { box-shadow: 0 0 0 1px var(--border); }
+
+/* The portal owns navigation chrome; page headings use its shared typeface. */
+.flyingcar-page.flyingcar-page :is(h1,h2,h3,.fc-eyebrow,.value-num,.how-grid article>b){font-family:var(--font-sans)}
+.flyingcar-page.flyingcar-page :is(h1,h2,h3){font-weight:600;letter-spacing:-.035em}

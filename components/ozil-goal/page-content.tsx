@@ -59,19 +59,8 @@ function homeSchema(content: SourceNode, locale: Locale) {
     ],
   };
 }
-// The source footer is shared with six guides; only this landing page is rebranded.
-function homeFooterText(value: string) {
-  const labels: Record<string, string> = {
-    'Ozil Goal home': 'LobbyDuo Ozil Goal generator',
-    'Ozil ': 'Lobby',
-    'Goal': 'Duo',
-    ' Ozil Goal': ' LobbyDuo',
-    'Contact migosai support': 'Contact LobbyDuo support',
-  };
-  return text(labels[value] ?? value);
-}
-function renderNode(node: SourceNode, locale: Locale, key: string, formatText = text): ReactNode {
-  if (typeof node === 'string') return formatText(node);
+function renderNode(node: SourceNode, locale: Locale, key: string): ReactNode {
+  if (typeof node === 'string') return text(node);
   if ('slot' in node) {
     const slots: Record<string, ReactNode> = { generator: <OzilGoalGenerator />, prompt: <PromptBuilder />, 'template-check': <TemplateCheck />, 'photo-check': <PhotoCheck />, captions: <CaptionBoard />, timeline: <BeatTimeline />, sample: <SampleVideo />, 'guide-sample-video': <GuideSampleVideo />, credits: <OzilCredits />, 'route-chooser': <RouteChooser />, 'video-examples': <OzilGoalExamples /> };
     return <Fragment key={key}>{slots[node.slot]}</Fragment>;
@@ -81,17 +70,18 @@ function renderNode(node: SourceNode, locale: Locale, key: string, formatText = 
     if (name === 'style') { props.style = Object.fromEntries((value ?? '').split(';').filter(Boolean).map(part => { const colon = part.indexOf(':'); return [part.slice(0, colon).trim().replace(/-([a-z])/g, (_, letter: string) => letter.toUpperCase()), part.slice(colon + 1).trim()]; })) as CSSProperties; }
     else if (name === 'href') props.href = localizeHref(value ?? '', locale);
     else if (booleanAttributes.has(name)) props[attributeNames[name] ?? name] = true;
-    else props[attributeNames[name] ?? name] = value === null ? '' : formatText(value);
+    else props[attributeNames[name] ?? name] = value === null ? '' : text(value);
   }
-  const children = node.children.map((child, index) => renderNode(child, locale, `${key}.${index}`, formatText));
+  const children = node.children.map((child, index) => renderNode(child, locale, `${key}.${index}`));
   return children.length ? createElement(node.tag, props, children) : createElement(node.tag, props);
 }
 export async function OzilGoalPage({ slug = 'home' }: { slug?: OzilPageSlug }) {
   const locale = await getLocale();
   const content = pages[slug].content as SourceNode;
+  const disclosure = elements(pages.footer as SourceNode, 'p').find(node => readableText(node).startsWith('An independent tool.'));
   return <>
     {slug === 'home' && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema(content, locale)).replace(/</g, '\\u003c') }} />}
-    <OzilShell>{renderNode(content, locale, slug)}{slug === 'home' && <OzilBlogPreview />}{renderNode(pages.footer as SourceNode, locale, 'footer', slug === 'home' ? homeFooterText : text)}</OzilShell>
+    <OzilShell>{renderNode(content, locale, slug)}{slug === 'home' && <OzilBlogPreview />}{disclosure && <aside className="og-container pb-8" aria-label="About this tool">{renderNode(disclosure, locale, 'disclosure')}</aside>}</OzilShell>
   </>;
 }
 export function ozilMetadata(slug: OzilPageSlug) {

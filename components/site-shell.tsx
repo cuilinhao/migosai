@@ -2,16 +2,13 @@
 
 import { usePathname } from "next/navigation";
 import { stripLocale } from "@/lib/i18n/routing";
-import { SiteHeader } from "./site-header";
 import { PortalShell } from "./portal/portal-shell";
-import { SiteFooter } from "./site-footer";
+
+const portalPages = new Set(["/", "/tools", "/effects", "/ai-image-generator", "/ai-video-generator", "/explore"]);
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = stripLocale(usePathname());
-  if (["/", "/tools", "/effects", "/ai-image-generator", "/ai-video-generator", "/explore"].includes(pathname)) return <PortalShell>{children}</PortalShell>;
-  if (pathname === "/landing") return <>{children}</>;
-  const isStandalonePage = pathname === "/sign-in" || pathname === "/sign-up" || pathname.startsWith("/app/");
-  const hasOzilFooter = (pathname === "/ozil-goal-generator" || pathname.startsWith("/ozil-goal-generator/")) && !/^\/ozil-goal-generator\/blog(?:\/|$)/.test(pathname);
-  const hasFlyingCarFooter = pathname === "/flying-car-ai-video-generator" || pathname.startsWith("/flying-car-ai-video-generator/");
-  return isStandalonePage ? <>{children}</> : <><SiteHeader /><main>{children}</main>{!hasOzilFooter && !hasFlyingCarFooter && <SiteFooter />}</>;
+  const standalone = pathname === "/landing" || pathname === "/sign-in" || pathname === "/sign-up" || pathname === "/app" || pathname.startsWith("/app/");
+  if (standalone) return <>{children}</>;
+  return <PortalShell>{portalPages.has(pathname) ? children : <div className="portal-inner-page">{children}</div>}</PortalShell>;
 }

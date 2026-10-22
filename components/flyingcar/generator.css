@@ -1,6 +1,6 @@
-.flyingcar-page .amber-button{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;background:var(--brand-gradient);color:var(--foreground);font-weight:500;cursor:pointer;box-shadow:0 5px var(--accent-foreground);transition:background .15s,transform .15s,box-shadow .15s}
+.flyingcar-page .amber-button{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;background:var(--brand-gradient);color:var(--primary-foreground);font-weight:500;cursor:pointer;box-shadow:none;transition:background .15s,transform .15s,box-shadow .15s}
 .flyingcar-page .amber-button:hover:not(:disabled){background:var(--primary-strong);color:var(--primary-foreground)}
-.flyingcar-page .amber-button:active:not(:disabled){transform:translateY(4px);box-shadow:0 1px var(--accent-foreground)}
+.flyingcar-page .amber-button:active:not(:disabled){transform:translateY(1px);box-shadow:none}
 .flyingcar-page .amber-button:focus-visible,.flyingcar-page .outline-button:focus-visible{outline:2px solid var(--sunset);outline-offset:4px}
 .flyingcar-page .outline-button{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--input);background:var(--card);color:var(--foreground);font-weight:500;transition:background .15s}
 .flyingcar-page .outline-button:hover{background:var(--accent);border-color:var(--primary-strong)}

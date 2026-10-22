@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Check } from "lucide-react";
 import { creditPacks, type PackId } from "@/content/pricing";
 import { useAuth } from "./auth-provider";
 import { useLocale, useTranslations } from "@/components/i18n/locale-provider";
@@ -50,7 +51,7 @@ export function PricingCards() {
       <div className="pricing-card-top"><h3>{t(pack.name)}</h3>{pack.recommended && <span className="recommended-badge">{t("Recommended")}</span>}</div>
       <div className="price">${pack.price.toFixed(2)}</div><p className="unit-price">{t("${price} / credit", { price: pack.unitPrice })}</p>
       <div className="credit-summary"><strong>{t("{credits} credits", { credits: pack.credits.toLocaleString(locale) })}</strong><span>{t("About {videos} Wan 3.0 template videos (5 seconds, 480p)", { videos: Math.floor(pack.credits / estimateVideoCredits) })}</span></div>
-      <ul className="pack-inclusions"><li><b>{t("Included")}</b> {t("{credits} credits", { credits: pack.credits.toLocaleString(locale) })}</li><li><b>{t("Included")}</b> {t("AI Rap Song Generator")}</li><li><b>{t("Included")}</b> {t("No added watermark")}</li><li><b>{t("Included")}</b> {t(pack.description)}</li></ul>
+      <ul className="pack-inclusions"><li><b><Check size={14} aria-hidden="true"/><span className="sr-only">{t("Included")}</span></b> {t("{credits} credits", { credits: pack.credits.toLocaleString(locale) })}</li><li><b><Check size={14} aria-hidden="true"/><span className="sr-only">{t("Included")}</span></b> {t("AI Rap Song Generator")}</li><li><b><Check size={14} aria-hidden="true"/><span className="sr-only">{t("Included")}</span></b> {t("No added watermark")}</li><li><b><Check size={14} aria-hidden="true"/><span className="sr-only">{t("Included")}</span></b> {t(pack.description)}</li></ul>
       <button className="buy-button" disabled={busy !== null} onClick={() => void buy(pack.id)}>{busy === pack.id ? t("Opening checkout…") : t("Buy {pack}", { pack: t(pack.name) })}</button>
     </article>)}</div>
     <p className="pricing-payment-note">{t("Estimates use {credits} credits per Wan template video. Other models, settings, and reference durations change the cost.", { credits: estimateVideoCredits })}<br/>{t("Each Ozil goal video costs {credits} credits ({duration} seconds, {aspect}, {resolution}, with sound), so the {starterCredits}-credit Starter pack covers one Ozil video.", { credits: OZIL_GOAL_COST, duration: OZIL_GOAL_CONFIG.duration, aspect: OZIL_GOAL_CONFIG.aspect, resolution: OZIL_GOAL_CONFIG.resolution, starterCredits })}<br/>{t("Secure checkout by Stripe. One-time purchase. No subscription.")}</p>

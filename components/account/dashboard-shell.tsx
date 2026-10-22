@@ -3,11 +3,12 @@
 import Link from "@/components/i18n/localized-link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { CreditCard, FolderOpen, ImageIcon, History, House, List, LogOut, Menu, Video, X } from "lucide-react";
+import { CreditCard, FolderOpen, ImageIcon, History, House, List, LogOut, Menu, Sun, Video, X } from "lucide-react";
 import { useTranslations, useLocale } from "@/components/i18n/locale-provider";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 import { localizeHref, stripLocale } from "@/lib/i18n/routing";
 import { useAuth } from "@/components/auth-provider";
+import styles from "./dashboard-shell.module.css";
 
 const routes = [
   { href: "/app/video-generator", label: "Generate Video", Icon: Video },
@@ -27,11 +28,11 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const signOut = async () => { try { await logout(); router.push(localizeHref("/", locale)); } catch { /* The account remains visible if the request fails. */ } };
-  return <div className="dashboard-shell">
+  return <div className={`dashboard-shell ${styles.shell}`}>
     <button className="dashboard-mobile-toggle" aria-label={t(mobileOpen ? "Close account menu" : "Open account menu")} aria-expanded={mobileOpen} onClick={() => setMobileOpen(!mobileOpen)}>{mobileOpen ? <X size={19}/> : <Menu size={19}/>}</button>
     {mobileOpen && <button className="dashboard-mobile-shade" aria-label={t("Close account menu")} onClick={() => setMobileOpen(false)}/>}
     <aside className={`dashboard-sidebar ${mobileOpen ? "open" : ""}`}>
-      <Link className="dashboard-brand" href="/app/video-generator" onClick={() => setMobileOpen(false)}><span className="brand-logo" aria-hidden="true">M</span><span>MigosAI</span></Link>
+      <Link className="dashboard-brand" href="/app/video-generator" onClick={() => setMobileOpen(false)}><Sun size={28} strokeWidth={2.5} aria-hidden="true"/><span>MigosAI</span></Link>
       <nav className="dashboard-nav" aria-label={t("Account navigation")}>{routes.map(({ href, label, Icon }) => <Link key={href} href={href} onClick={() => setMobileOpen(false)} className={stripLocale(pathname) === href ? "active" : ""}><Icon size={16}/><span>{t(label)}</span></Link>)}</nav>
       <div className="dashboard-sidebar-bottom">
         <LanguageSwitcher />

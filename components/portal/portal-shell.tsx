@@ -19,6 +19,12 @@ const groups = [
   { label: "COMMUNITY", items: [{ label: "Explore", href: "/explore", Icon: Compass }, { label: "Hub", href: "/blog", Icon: BookOpen }] },
 ];
 
+function navigationIsActive(pathname: string, href: string) {
+  if (href === "/ai-video-generator") return pathname.startsWith("/hotel-lobby-ai-") || ["/ai-video-generator", "/hotel-lobby-ai-video-generator", "/flying-car-ai-video-generator", "/ozil-goal-generator"].some(route => pathname === route || pathname.startsWith(`${route}/`));
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export function PortalBrand() { return <span className="portal-brand"><Sun size={28} strokeWidth={2.5}/><span>MigosAI</span></span>; }
 
 export function PortalShell({ children }: { children: ReactNode }) {
@@ -32,10 +38,10 @@ export function PortalShell({ children }: { children: ReactNode }) {
   const navigation = <>
     <Link href="/" className="portal-brand-link" onClick={() => setMobileOpen(false)}><PortalBrand/></Link>
     <nav className="portal-nav" aria-label={t("Main navigation")}>
-      {groups.map(group => <div className="portal-nav-group" key={group.label}>{group.label && <small>{t(group.label)}</small>}{group.items.map(({ label, href, Icon }) => <Link key={href} href={href} aria-current={pathname === href ? "page" : undefined} className={pathname === href ? "active" : ""} onClick={() => setMobileOpen(false)}><Icon size={18}/><span>{t(label)}</span>{label === "Image" && <i className="portal-new">NEW</i>}</Link>)}</div>)}
+      {groups.map(group => <div className="portal-nav-group" key={group.label}>{group.label && <small>{t(group.label)}</small>}{group.items.map(({ label, href, Icon }) => <Link key={href} href={href} aria-current={navigationIsActive(pathname, href) ? "page" : undefined} className={navigationIsActive(pathname, href) ? "active" : ""} onClick={() => setMobileOpen(false)}><Icon size={18}/><span>{t(label)}</span>{label === "Image" && <i className="portal-new">NEW</i>}</Link>)}</div>)}
       <div className="portal-nav-group"><button className="portal-coming" aria-disabled="true" onClick={() => setNotice(t("Quests are coming soon."))}><Trophy size={18}/><span>{t("Quests")}<small>{t("Coming soon")}</small></span></button></div>
     </nav>
-    <div className="portal-sidebar-bottom"><Link href="/pricing" className="portal-upgrade"><Gem size={17}/>{t("Pricing")}</Link><LanguageSwitcher compact/></div>
+    <div className="portal-sidebar-bottom"><Link href="/pricing" aria-current={pathname === "/pricing" ? "page" : undefined} className="portal-upgrade"><Gem size={17}/>{t("Pricing")}</Link><LanguageSwitcher compact/></div>
   </>;
   return <div className="portal-shell">
     <aside className="portal-sidebar">{navigation}</aside>
@@ -47,5 +53,5 @@ export function PortalShell({ children }: { children: ReactNode }) {
 
 function PortalFooter() {
   const t = useTranslations();
-  return <footer className="portal-footer"><div><PortalBrand/><p>{t("A little inspiration. Endless possibilities.")}</p><span>© {new Date().getFullYear()} MigosAI</span></div><div><b>{t("Create")}</b><Link href="/ai-image-generator">{t("AI Image Generator")}</Link><Link href="/hotel-lobby-ai-video-generator">Hotel Lobby</Link><Link href="/ai-rap-song-generator">{t("AI Music")}</Link></div><div><b>{t("Discover")}</b><Link href="/landing">{t("About MigosAI")}</Link><Link href="/explore">{t("Explore")}</Link><Link href="/blog">{t("Inspiration Hub")}</Link><Link href="/pricing">{t("Pricing")}</Link></div><div><b>{t("Support")}</b><Link href="/contact">{t("Contact")}</Link><Link href="/privacy-policy">{t("Privacy Policy")}</Link><Link href="/terms-of-service">{t("Terms of Service")}</Link><Link href="/refund-policy">{t("Refund Policy")}</Link></div></footer>;
+  return <footer className="portal-footer"><div><PortalBrand/><p>{t("A little inspiration. Endless possibilities.")}</p><span>© {new Date().getFullYear()} MigosAI</span></div><div><b>{t("Create")}</b><Link href="/ai-image-generator">{t("AI Image Generator")}</Link><Link href="/hotel-lobby-ai-video-generator">Hotel Lobby</Link><Link href="/ai-rap-song-generator">{t("AI Music")}</Link></div><div><b>{t("Discover")}</b><Link href="/landing">{t("About MigosAI")}</Link><Link href="/explore">{t("Explore")}</Link><Link href="/blog">{t("Inspiration Hub")}</Link><Link href="/pricing">{t("Pricing")}</Link></div><div><b>{t("Support")}</b><Link href="/contact">{t("Contact")}</Link><Link href="/privacy-policy">{t("Privacy Policy")}</Link><Link href="/terms-of-service">{t("Terms of Service")}</Link><Link href="/refund-policy">{t("Refund Policy")}</Link><Link href="/acceptable-use-policy">{t("Acceptable Use Policy")}</Link></div></footer>;
 }

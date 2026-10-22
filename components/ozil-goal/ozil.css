@@ -1,16 +1,21 @@
-/* Inherit the site's palette instead of the reference stylesheet's local theme. */
+/* Use the shared dark portal palette inside the generator and guides. */
 .ozil-page.og{
-  --background:inherit;
-  --foreground:inherit;
-  --card:inherit;
-  --primary:inherit;
-  --primary-foreground:inherit;
-  --muted:inherit;
-  --accent:inherit;
-  --accent-foreground:inherit;
-  --border:inherit;
-  --input:inherit;
-  --destructive:inherit;
+  --background:#0b0b0b;
+  --foreground:#f5f5f5;
+  --card:#181818;
+  --primary:#c38aff;
+  --primary-foreground:#1b1022;
+  --muted:#a0a0a0;
+  --accent:#c38aff1f;
+  --accent-foreground:#d9adff;
+  --border:#303030;
+  --input:#303030;
+  --destructive:#ff6b6b;
+  --primary-strong:#c38aff;
+  --paper-deep:#202020;
+  --surface-inverse:#0b0b0b;
+  --surface-inverse-muted:#a0a0a0;
+  --stage-gradient:radial-gradient(60% 65% at 50% 0,#c38aff12,transparent 75%),#0b0b0b;
   --og-bg:var(--background);
   --og-bg-deep:var(--paper-deep);
   --og-panel:var(--card);
@@ -29,20 +34,20 @@
   --og-led:var(--primary-strong);
   --og-glare:var(--muted);
   --og-ink:var(--primary-foreground);
-  background:var(--og-bg);color:var(--og-text);min-height:100dvh;padding-top:80px;font-family:"Ozil Instrument Sans",ui-sans-serif,system-ui,sans-serif;line-height:1.5;isolation:isolate;color-scheme:light;--font-sans:"Ozil Instrument Sans",ui-sans-serif,system-ui,sans-serif;--default-font-family:var(--font-sans);--og-display-font:"Ozil Barlow Condensed","Arial Narrow",Impact,sans-serif
+  background:var(--og-bg);color:var(--og-text);min-height:100%;padding-top:0;font-family:"DM Sans",ui-sans-serif,system-ui,sans-serif;line-height:1.5;isolation:isolate;color-scheme:dark;--font-sans:"DM Sans",ui-sans-serif,system-ui,sans-serif;--default-font-family:var(--font-sans);--og-display-font:var(--font-sans)
 }
-.ozil-page.og .og-pitch{--og-flash:var(--foreground);--og-flash-text:var(--foreground);--og-muted:var(--foreground);--og-faint:var(--foreground);background:var(--stage-gradient)}
+.ozil-page.og .og-pitch{--og-flash:var(--primary-strong);--og-flash-text:var(--primary-strong);--og-muted:var(--muted);--og-faint:var(--muted);background:var(--stage-gradient)}
 .ozil-page.og .og-pitch:before{background:radial-gradient(46rem 24rem at 6% -6rem,color-mix(in srgb,var(--accent) 35%,transparent),transparent 68%),radial-gradient(46rem 24rem at 94% -6rem,color-mix(in srgb,var(--accent) 25%,transparent),transparent 68%)}
 .ozil-page.og .og-pitch:after{border-top-color:var(--background)}
-.ozil-page.og .og-rig i{background:var(--primary-foreground);box-shadow:0 0 12px 4px color-mix(in srgb,var(--accent) 60%,transparent)}
+.ozil-page.og .og-rig i{background:var(--primary-strong);box-shadow:0 0 12px 4px color-mix(in srgb,var(--accent) 60%,transparent)}
 .ozil-page.og .og-pitch .og-generator{--og-flash:var(--primary-strong);--og-muted:var(--muted);--og-faint:var(--muted)}
-.ozil-page.og .og-board{--og-flash:var(--primary);--og-led:var(--accent);--og-glare:var(--surface-inverse-muted);background:var(--surface-inverse);color:var(--primary-foreground)}
+.ozil-page.og .og-board{--og-flash:var(--primary);--og-led:var(--primary-strong);--og-glare:var(--surface-inverse-muted);background:var(--surface-inverse);color:var(--foreground)}
 .ozil-page.og .og-bug>:last-child{background:var(--card);color:var(--foreground)}
-.ozil-page.og .og-slot{background:var(--paper-deep);box-shadow:0 30px 60px -26px color-mix(in srgb,var(--foreground) 35%,transparent)}
-.ozil-page.og .og-cta{background:var(--brand-gradient);color:var(--foreground)}
-.ozil-page.og .og-pitch .og-cta{background:var(--foreground);color:var(--primary-foreground);box-shadow:0 5px 0 var(--accent-foreground)}
-.ozil-page.og .og-pitch .og-cta:hover:not(:disabled){box-shadow:0 7px 0 var(--accent-foreground)}
-.ozil-page.og .og-pitch .og-cta:active:not(:disabled){box-shadow:0 1px 0 var(--accent-foreground)}
+.ozil-page.og .og-slot{background:var(--paper-deep);box-shadow:0 30px 60px -26px rgba(0,0,0,.45)}
+.ozil-page.og .og-cta{background:var(--brand-gradient);color:var(--primary-foreground);box-shadow:none}
+.ozil-page.og .og-pitch .og-cta{background:var(--brand-gradient);color:var(--primary-foreground);box-shadow:none}
+.ozil-page.og .og-pitch .og-cta:hover:not(:disabled){box-shadow:none}
+.ozil-page.og .og-pitch .og-cta:active:not(:disabled){box-shadow:none}
 .ozil-page.og :is(.text-red-200,.text-red-300){color:var(--destructive)}
 .ozil-page.og .\!text-red-200{color:var(--destructive)!important}
 .ozil-page.og :is(.border-red-300,.border-red-300\/25){border-color:color-mix(in srgb,var(--destructive) 40%,var(--border))}
@@ -62,12 +67,12 @@
 @media(max-width:767px){.ozil-page .og-credit-cards{grid-template-columns:1fr}.ozil-page .og-credit-card{padding:24px}.ozil-page .og-credit-description{min-height:0}.ozil-page footer{padding-bottom:90px}}
 @media(prefers-reduced-motion:reduce){.ozil-page .og-reveal{animation:none;opacity:1;transform:none}.ozil-page .og-board__run{animation:none}}
 
-@media(max-width:900px){.ozil-page.og{padding-top:64px}}
+@media(max-width:900px){.ozil-page.og{padding-top:0}}
 
 .ozil-page .og-sample-pause{position:absolute;z-index:2;top:12px;right:12px;display:grid;place-items:center;width:36px;height:36px;border:0;border-radius:50%;color:white;background:#0008;backdrop-filter:blur(8px)}
 
 /* Keep the shared example-card styling above the reference page's reset. */
-.ozil-page .og-examples-section{padding:80px 0 72px;font-family:"Plus Jakarta Sans",sans-serif}
+.ozil-page .og-examples-section{padding:80px 0 72px;font-family:var(--font-sans)}
 .ozil-page .og-examples-section .reference-examples-intro{margin-bottom:36px}
 .ozil-page .og-examples-section .reference-examples-eyebrow{margin:0 0 14px}
 .ozil-page .og-examples-section .reference-examples-intro h2{font-size:clamp(28px,3.2vw,44px);font-weight:700}
@@ -78,3 +83,5 @@
 .ozil-page .og-examples-grid figcaption{padding:12px 2px 0}
 .ozil-page .og-examples-grid h3{margin:0 0 5px;font-size:16px;font-weight:700}
 @media(max-width:639px){.ozil-page .og-examples-section{padding:48px 0}.ozil-page .og-examples-section .reference-examples-intro{margin-bottom:26px}.ozil-page .og-examples-section .reference-examples-description{margin-top:16px}.ozil-page .og-examples-grid .mi-video-card{border-radius:20px}}
+
+.ozil-page.og .og-display{font-family:var(--font-sans);font-style:normal;letter-spacing:-.025em;font-weight:700}

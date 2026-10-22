@@ -69,12 +69,12 @@ describe('Ozil landing page structured data', () => {
     } finally { request.locale = 'en'; }
   });
 
-  it('does not add landing-page schemas or replace the shared footer on guide pages', async () => {
+  it('keeps guide content and independent-tool disclosure without adding page-level chrome', async () => {
     const html = await render('ozil-goal-trend');
     expect(html).not.toContain('application/ld+json');
-    const footer = html.match(/<footer\b[^>]*>([\s\S]*?)<\/footer>/)![1];
-    expect(visibleText(footer)).toContain('Contact migosai support');
-    expect(visibleText(footer)).toContain('© 2026 Ozil Goal');
+    expect(html).not.toMatch(/<footer\b/);
+    expect(visibleText(html)).toContain('Ozil goal trend');
+    expect(visibleText(html)).toContain('Not affiliated with any footballer, club, league, federation or broadcaster.');
   });
 
   it('keeps text containing a script end tag inside JSON-LD', async () => {

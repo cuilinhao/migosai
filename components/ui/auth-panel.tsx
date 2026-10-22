@@ -1,7 +1,7 @@
 "use client";
 
 import * as Dialog from "@radix-ui/react-dialog";
-import { ArrowRight, Eye, EyeOff, LoaderCircle, LockKeyhole, Mail } from "lucide-react";
+import { ArrowRight, Eye, EyeOff, LoaderCircle, LockKeyhole, Mail, Sun } from "lucide-react";
 import { useId, useState, type FormEvent } from "react";
 import Link from "@/components/i18n/localized-link";
 import { useTranslations } from "@/components/i18n/locale-provider";
@@ -74,7 +74,7 @@ export function AuthPanel({ mode, onModeChange, authConfigured, emailAuthConfigu
   };
 
   return <>
-    <div className="mi-auth-wordmark"><span className="mi-auth-symbol" aria-hidden="true"><i /><i /></span>MigosAI</div>
+    <div className="mi-auth-wordmark"><Sun size={28} strokeWidth={2.5} aria-hidden="true"/>MigosAI</div>
     <div className="mi-auth-heading">
       {dialog ? <Dialog.Title className="mi-auth-title">{title}</Dialog.Title> : <h1 className="mi-auth-title">{title}</h1>}
       {dialog ? <Dialog.Description className="mi-auth-subtitle">{description}</Dialog.Description> : <p className="mi-auth-subtitle">{description}</p>}

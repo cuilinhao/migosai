@@ -84,12 +84,12 @@ function schema(slug: FlyingCarPageSlug, content: SourceNode, locale: Locale) {
 export async function FlyingCarPage({ slug = 'home' }: { slug?: FlyingCarPageSlug }) {
   const locale = await getLocale();
   const content = pages[slug].content as SourceNode;
+  const disclosure = elements(pages.footer as SourceNode, 'div').find(node => node.attrs.class?.split(/\s+/).includes('footer-disclaimer'));
   return <>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema(slug, content, locale)).replace(/</g, '\\u003c') }} />
     <div className="flyingcar-page">
-      {renderNode(pages.header as unknown as SourceNode, locale, 'header')}
       {renderNode(content, locale, slug)}
-      {renderNode(pages.footer as unknown as SourceNode, locale, 'footer')}
+      {disclosure && <aside className="section-width" aria-label="About this tool">{renderNode(disclosure, locale, 'disclosure')}</aside>}
     </div>
   </>;
 }
