@@ -34,6 +34,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
   const t = useTranslations();
   const pathname = stripLocale(usePathname());
   const videoWorkspace = pathname === "/ai-video-generator";
+  const effectsCatalog = pathname === "/effects";
   const { user, credits, loading, openSignIn, logout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
@@ -48,7 +49,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
     </nav>
     <div className="portal-sidebar-bottom"><Link href="/pricing" aria-label={t("Pricing")} aria-current={pathname === "/pricing" ? "page" : undefined} className="portal-upgrade"><Gem size={17}/>{t("Pricing")}</Link><LanguageSwitcher compact/></div>
   </>;
-  return <div className={`portal-shell${videoWorkspace ? " portal-video-workspace" : ""}`}>
+  return <div className={`portal-shell${videoWorkspace ? " portal-video-workspace" : ""}${effectsCatalog ? " portal-effects-catalog" : ""}`}>
     <aside className="portal-sidebar">{navigation}</aside>
     <header className="portal-mobile-header"><Dialog.Root open={mobileOpen} onOpenChange={setMobileOpen}><Dialog.Trigger className="portal-icon-button" aria-label={t("Open menu")}><Menu/></Dialog.Trigger><Dialog.Portal><Dialog.Overlay className="portal-drawer-shade"/><Dialog.Content className="portal-drawer" onCloseAutoFocus={event => { if (videoWorkspace && mobileMore.current?.getClientRects().length) { event.preventDefault(); mobileMore.current.focus(); } }}><Dialog.Title className="sr-only">{t("Main navigation")}</Dialog.Title><Dialog.Description className="sr-only">{t("Explore MigosAI tools and creations.")}</Dialog.Description><Dialog.Close className="portal-drawer-close" aria-label={t("Close menu")}><X/></Dialog.Close>{navigation}</Dialog.Content></Dialog.Portal></Dialog.Root><Link href="/"><PortalBrand/></Link></header>
     <div className="portal-content"><div className="portal-account-bar">{user ? <><Link className="portal-credit" href="/app/my-credits"><Gem size={14}/>{t("{count} credits", { count: credits })}</Link><div className="portal-account"><button onClick={() => setAccountOpen(!accountOpen)} aria-expanded={accountOpen}><span className="portal-avatar">{user.name.slice(0,1).toUpperCase()}</span><ChevronDown size={14}/></button>{accountOpen && <div className="portal-account-menu"><Link href="/app/assets">{t("My assets")}</Link><Link href="/app/my-orders">{t("My Orders")}</Link><button onClick={async () => { try { await logout(); setAccountOpen(false); } catch { setNotice(t("Could not sign out. Please try again.")); } }}><LogOut size={14}/>{t("Sign Out")}</button></div>}</div></> : <button className="portal-signin" onClick={openSignIn} disabled={loading}>{t(loading ? "Loading…" : "Sign In")}</button>}</div><main>{children}</main>{!videoWorkspace && <PortalFooter/>}</div>

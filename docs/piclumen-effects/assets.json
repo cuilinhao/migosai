@@ -1,0 +1,3848 @@
+{
+  "sourcePage": "https://www.piclumen.com/video-effects/",
+  "capturedOn": "2026-10-22",
+  "effects": 77,
+  "rights": "Source attribution only; no ownership or republication license is asserted.",
+  "assets": [
+    {
+      "id": "001-hotel-lobby-rap-duo",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260928/20/610d34a0-9ca9-4169-8ba7-b9df3dbb5bc8.mp4",
+      "local": "public/effects/piclumen/001-hotel-lobby-rap-duo.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1374537,
+      "etag": "\"604bbd5698efb164ea8395b7188f5feb\"",
+      "bytes": 1374537,
+      "sha256": "53d0bd17ee057cce305da46b502a51a00f57ee4fdb0698e3fdfb22cd46201d8a",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 640,
+            "height": 360,
+            "nb_read_packets": "300"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "431"
+          }
+        ],
+        "format": {
+          "duration": "10.007800",
+          "size": "1374537"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "001-hotel-lobby-rap-duo",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260928/20/14ef41d2-b23c-4e2d-90b8-97c3a046d402.webp",
+      "local": "public/effects/piclumen/001-hotel-lobby-rap-duo.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 161540,
+      "etag": "\"19d3ff50ec2c06bbe81068a306450cde\"",
+      "bytes": 161540,
+      "sha256": "d4512d86ef7460713c074dee0632002e856540206b0a35e43302e18dcb35f768",
+      "reused": true
+    },
+    {
+      "id": "002-flying-roadster",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261022/10/dc118423-5985-4a5f-a7f1-cad5258157b7.mp4",
+      "local": "public/effects/piclumen/002-flying-roadster.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 4907875,
+      "etag": "\"99f892410bc259f8c6ea70a5da91f121\"",
+      "bytes": 4907875,
+      "sha256": "69f5c10c95d80452d048ec68d604f3510f1442afaaaba59c054c0be85c3b7820",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 480,
+            "height": 854,
+            "nb_read_packets": "240"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "347"
+          }
+        ],
+        "format": {
+          "duration": "8.033991",
+          "size": "4907875"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "002-flying-roadster",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/normal/20261022/10/63256850-8c28-4ac8-a7bf-41322fd0bcb6.jpg",
+      "local": "public/effects/piclumen/002-flying-roadster.jpg",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/jpeg",
+      "expectedBytes": 171803,
+      "etag": "\"8d95fabcfc2a8afc73717b6d870b4fe8\"",
+      "bytes": 171803,
+      "sha256": "eb15b9733a4c223a0bd4ae684e539ac193c3812bc6b5d7c7f199a0b843b62caa",
+      "reused": true
+    },
+    {
+      "id": "003-ai-money-flex",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261021/13/d8e422f1-9806-4b16-847f-6e154dca5fda.mp4",
+      "local": "public/effects/piclumen/003-ai-money-flex.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 3460925,
+      "etag": "\"3b818104c22864eaa7416077e6cf8d4a\"",
+      "bytes": 3460925,
+      "sha256": "ee725388ec68ab5e88079cab0af771cbf10d9cc05b8315c86c6beb3dd956533f",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 480,
+            "height": 854,
+            "nb_read_packets": "450"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "647"
+          }
+        ],
+        "format": {
+          "duration": "15.000000",
+          "size": "3460925"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "003-ai-money-flex",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20261021/13/140c5882-803b-4a7f-ad39-ff9302ef60c5.webp",
+      "local": "public/effects/piclumen/003-ai-money-flex.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 199194,
+      "etag": "\"fa99196701c42acebad418560e564dcb\"",
+      "bytes": 199194,
+      "sha256": "5be5575e0f5b3824832a06137c7cfe21b9f2e2149ea05d918108df4d79758d1d",
+      "reused": true
+    },
+    {
+      "id": "004-hit-the-road-dude-ai-video",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261020/12/0b09957d-98c8-4bd6-98c8-cc1be5efc80a.mp4",
+      "local": "public/effects/piclumen/004-hit-the-road-dude-ai-video.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 4811836,
+      "etag": "\"36b162e02312d59227877edaf07945c4\"",
+      "bytes": 4811836,
+      "sha256": "b1df405c2f3fde09ccb1a6d4f3f96b36743b353d1f7aabb544cddfb6c833f720",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 854,
+            "height": 480,
+            "nb_read_packets": "391"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "608"
+          }
+        ],
+        "format": {
+          "duration": "12.999870",
+          "size": "4811836"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "004-hit-the-road-dude-ai-video",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20261020/12/04619446-15ca-4895-8458-c36a079152f6.webp",
+      "local": "public/effects/piclumen/004-hit-the-road-dude-ai-video.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 77568,
+      "etag": "\"07e6c470eda47bd343866ee6d77da4fb\"",
+      "bytes": 77568,
+      "sha256": "8093a550e6fef22eb79bfaabafbdd1bfb1578e9156f7c41720a2a151ff7eada5",
+      "reused": true
+    },
+    {
+      "id": "005-ozil-goal-ai",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261020/11/b3fce4f1-486f-4ac7-996f-7a249f77945f.mp4",
+      "local": "public/effects/piclumen/005-ozil-goal-ai.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 4175487,
+      "etag": "\"5a03d00e5461e9bfae9b04c383d42b85\"",
+      "bytes": 4175487,
+      "sha256": "8377dbaaf8905539ba718ee99f22b8f7b5fde7d73f90d0f0634e92ab69b7a2c2",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 854,
+            "height": 480,
+            "nb_read_packets": "420"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "657"
+          }
+        ],
+        "format": {
+          "duration": "13.994000",
+          "size": "4175487"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "005-ozil-goal-ai",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20261020/11/4dd846d4-9b4e-4f5f-b45d-0377d6e60f76.webp",
+      "local": "public/effects/piclumen/005-ozil-goal-ai.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 130282,
+      "etag": "\"6054fa9328f850c3e994acfe6dcdb0b7\"",
+      "bytes": 130282,
+      "sha256": "c5fed02ef3e5e71cd7f4af1e47e34db8f8e579af2a521af253da735b6583db51",
+      "reused": true
+    },
+    {
+      "id": "006-i-wanna-love-you-ai-pet-video",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261020/11/8fd9bd3f-c218-43a5-b743-ff3db364c728.mp4",
+      "local": "public/effects/piclumen/006-i-wanna-love-you-ai-pet-video.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 4296481,
+      "etag": "\"ff6237d9661952869698d1ccd93deaab\"",
+      "bytes": 4296481,
+      "sha256": "4f48d6104d714ea3e1d44e5150a5437bc40e15537d4ad2a9432b0a7964320c9a",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 854,
+            "height": 480,
+            "nb_read_packets": "301"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "468"
+          }
+        ],
+        "format": {
+          "duration": "9.999870",
+          "size": "4296481"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "006-i-wanna-love-you-ai-pet-video",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20261020/10/32a4c93e-1b4f-42eb-9d9a-5983db8fe903.webp",
+      "local": "public/effects/piclumen/006-i-wanna-love-you-ai-pet-video.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 126632,
+      "etag": "\"ff44b10410e258a7fe5fa790adec7a6a\"",
+      "bytes": 126632,
+      "sha256": "343949d2d13bfddbd319ff0fad1b16b0be9b9462648471604acc6f3c0e82d6cc",
+      "reused": true
+    },
+    {
+      "id": "007-ai-talk-dirty-dance",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261019/11/0f95ef2a-c495-4dcd-9cc4-fd0fc11deedc.mp4",
+      "local": "public/effects/piclumen/007-ai-talk-dirty-dance.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 5056073,
+      "etag": "\"8304bb61e0e417f964183ce9f3039032\"",
+      "bytes": 5056073,
+      "sha256": "177dce21b191c4e971fd46ad1ca472ce3ea9e86e8ead99f16ef4df0d76f559e7",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "nb_read_packets": "451"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "702"
+          }
+        ],
+        "format": {
+          "duration": "14.999870",
+          "size": "5056073"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "007-ai-talk-dirty-dance",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20261019/11/4f8addbe-b987-4334-bcfd-d3b25a17bcac.webp",
+      "local": "public/effects/piclumen/007-ai-talk-dirty-dance.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 119862,
+      "etag": "\"7f35d4fa43a2082a4d5502bc1dc7ad46\"",
+      "bytes": 119862,
+      "sha256": "c5f0c332f48fdce1de8913a8846dd315c829b3d07841005da44763ff36baebef",
+      "reused": true
+    },
+    {
+      "id": "008-enzo-fernandez-celebration",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261016/13/be46dda6-de81-48b9-908f-e6ee0b301af0.mp4",
+      "local": "public/effects/piclumen/008-enzo-fernandez-celebration.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 4620206,
+      "etag": "\"3bfd26171e1a85fe1a4dccd1d324125b\"",
+      "bytes": 4620206,
+      "sha256": "dbf3726005c79e33b764f650a5f21b891b7cff27fc9281a1944b0d6cff3b1b4a",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 854,
+            "height": 480,
+            "nb_read_packets": "241"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "375"
+          }
+        ],
+        "format": {
+          "duration": "7.999935",
+          "size": "4620206"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "008-enzo-fernandez-celebration",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20261016/13/7e9fa129-2d71-48fd-bab5-e5d9c16415f4.webp",
+      "local": "public/effects/piclumen/008-enzo-fernandez-celebration.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 71466,
+      "etag": "\"34d790e1d8831f7b793fb42c5c45beab\"",
+      "bytes": 71466,
+      "sha256": "5742eacf2fd658bea8636b558b8abc10418b496359c0dcd9c938bdde324988c5",
+      "reused": true
+    },
+    {
+      "id": "009-rumpelstiltskin-ai-dance",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261021/10/d7fd8c7a-2e07-4b68-b86c-cb54fc2f726e.mp4",
+      "local": "public/effects/piclumen/009-rumpelstiltskin-ai-dance.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 4010549,
+      "etag": "\"dae56ea01007c4856baf78b30c3c7ca0\"",
+      "bytes": 4010549,
+      "sha256": "cf2c785d96251ceb9212cad7550cfd1246d8fc985a74ab302a898ecd426a0e5a",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 854,
+            "height": 480,
+            "nb_read_packets": "271"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "422"
+          }
+        ],
+        "format": {
+          "duration": "8.999935",
+          "size": "4010549"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "009-rumpelstiltskin-ai-dance",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20261021/13/80cda214-cd16-418b-9363-d434be0c87d3.webp",
+      "local": "public/effects/piclumen/009-rumpelstiltskin-ai-dance.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 123582,
+      "etag": "\"cdd5429d082f441a5d59d54cd0a83e56\"",
+      "bytes": 123582,
+      "sha256": "a6bd76097c77740707a766d5be6020145a1e73b193c88c089f65fd1db42e5720",
+      "reused": true
+    },
+    {
+      "id": "010-bulin-47-ai-rap-video",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261014/17/8bd295a1-3b4f-4ff5-b94b-0040a3593b2e.mp4",
+      "local": "public/effects/piclumen/010-bulin-47-ai-rap-video.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 3230109,
+      "etag": "\"468741a9c8876bf2ba97c07a69cbcedd\"",
+      "bytes": 3230109,
+      "sha256": "b50bd427a1f0965f3fc4d48e8327d178f61c060240a54b278fa5d6e1f09363ec",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 480,
+            "height": 854,
+            "nb_read_packets": "420"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "604"
+          }
+        ],
+        "format": {
+          "duration": "14.000998",
+          "size": "3230109"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "010-bulin-47-ai-rap-video",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20261014/17/60753a88-d24e-4002-a1f0-ec55fd3c3506.webp",
+      "local": "public/effects/piclumen/010-bulin-47-ai-rap-video.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 177478,
+      "etag": "\"b964104cc4711df578ae7db70982dccf\"",
+      "bytes": 177478,
+      "sha256": "ecec4301d7fc9bff837a46bf7908f36884e488b75874a7d05bfe62dc0ab46780",
+      "reused": true
+    },
+    {
+      "id": "011-ramalama-costume-walk",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261014/16/d80557d6-2c91-4636-8c49-e7ce934ff645.mp4",
+      "local": "public/effects/piclumen/011-ramalama-costume-walk.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 3006183,
+      "etag": "\"5399b844e2ba62b98a869a206bde5f62\"",
+      "bytes": 3006183,
+      "sha256": "34eac1434a9b29c78d5a1a405ffac91d5e849ba24b80df92168a2abd686f045c",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 480,
+            "height": 854,
+            "nb_read_packets": "390"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "561"
+          }
+        ],
+        "format": {
+          "duration": "13.002993",
+          "size": "3006183"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "011-ramalama-costume-walk",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20261014/16/889e33a5-1d98-4197-b89c-d5ede6a83b01.jpg",
+      "local": "public/effects/piclumen/011-ramalama-costume-walk.jpg",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/jpeg",
+      "expectedBytes": 59333,
+      "etag": "\"a6bb80e6529404b7cae20e60f53b347e\"",
+      "bytes": 59333,
+      "sha256": "97ffed2cc71697ccaded048e6608925ba6179307c34f020ea319f7561e94913b",
+      "reused": true
+    },
+    {
+      "id": "012-toc-toc-dance-ai-video-generator",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261013/13/c50e0315-71ec-4fe1-976a-321075fa2d96.mp4",
+      "local": "public/effects/piclumen/012-toc-toc-dance-ai-video-generator.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 4792946,
+      "etag": "\"3776b589b64f05d4edb2ef45a737aaf9\"",
+      "bytes": 4792946,
+      "sha256": "2811ee19eb825cf721cf78b280915b4e562dc85de22c7079e6da583650f669d0",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 720,
+            "height": 1280,
+            "nb_read_packets": "301"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "469"
+          }
+        ],
+        "format": {
+          "duration": "9.999870",
+          "size": "4792946"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "012-toc-toc-dance-ai-video-generator",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/normal/20261013/11/e591b8d0-688d-4653-af67-1de75a5c5082.webp",
+      "local": "public/effects/piclumen/012-toc-toc-dance-ai-video-generator.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 44652,
+      "etag": "\"981b50869e1287b8d5d9268792ae9d13\"",
+      "bytes": 44652,
+      "sha256": "7748a0cee9059f97814bb7c2f9f952f07593afee57315e7b6dc6747458835786",
+      "reused": true
+    },
+    {
+      "id": "013-smalltown-boy-ai-dance",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261012/17/a83fc438-3630-4e15-96ce-589eb043a2f2.mp4",
+      "local": "public/effects/piclumen/013-smalltown-boy-ai-dance.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1810751,
+      "etag": "\"953d05776e62f5dd2bdbd5cfe5091820\"",
+      "bytes": 1810751,
+      "sha256": "3e23debd5e6b3a02bef001cd8cfaea62ee149c32d33be34dc5f8edff9e673eae",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 640,
+            "height": 360,
+            "nb_read_packets": "390"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "560"
+          }
+        ],
+        "format": {
+          "duration": "13.003175",
+          "size": "1810751"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "013-smalltown-boy-ai-dance",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20261012/17/863bb1f7-f934-4ddc-af63-be98ddb54262.webp",
+      "local": "public/effects/piclumen/013-smalltown-boy-ai-dance.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 189300,
+      "etag": "\"4695765acfbae1783de6a00f883efb9d\"",
+      "bytes": 189300,
+      "sha256": "35bc88bd20d4a7540a36375d783b1f8f406ebf1e74c4c42e620b86ee9cdafde9",
+      "reused": true
+    },
+    {
+      "id": "014-burning-bridges-ai",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261012/14/120a4f2f-5ffe-4935-939b-fbb6cfbfbf06.mp4",
+      "local": "public/effects/piclumen/014-burning-bridges-ai.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1386030,
+      "etag": "\"75347c2fdba657fa839322f08eb7132e\"",
+      "bytes": 1386030,
+      "sha256": "ee4c9ec44550c62760c958448777e81d352467d04dbe0a119759f2b105ec1b60",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 640,
+            "height": 360,
+            "nb_read_packets": "450"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "646"
+          }
+        ],
+        "format": {
+          "duration": "15.000091",
+          "size": "1386030"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "014-burning-bridges-ai",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20261012/14/b3d6bfc3-f3ef-422c-a299-ebe7e38ead97.webp",
+      "local": "public/effects/piclumen/014-burning-bridges-ai.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 165420,
+      "etag": "\"d4db44c47cd3cc522bb24dc61212a873\"",
+      "bytes": 165420,
+      "sha256": "ad474bf7ca5b1686136ca9a6e35f2439c3346e7b98f795fa9f59bf79c428c939",
+      "reused": true
+    },
+    {
+      "id": "015-ai-ceiling-fan-transition",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261009/17/29e6973b-2974-4d4a-8e09-03e124669b08.mp4",
+      "local": "public/effects/piclumen/015-ai-ceiling-fan-transition.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1794913,
+      "etag": "\"3d7d4f76d5307730d8408260ee3ec060\"",
+      "bytes": 1794913,
+      "sha256": "69e2ecaba70f1842cccd3f41271e686bea2dbdcebcb80f7d21985af8f324a197",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1316,
+            "height": 740,
+            "nb_read_packets": "300"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "431"
+          }
+        ],
+        "format": {
+          "duration": "10.007800",
+          "size": "1794913"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "015-ai-ceiling-fan-transition",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20261009/17/83bdaf09-0bb6-417e-a198-5ccf0ece20f8.webp",
+      "local": "public/effects/piclumen/015-ai-ceiling-fan-transition.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 153258,
+      "etag": "\"ad862f6d98f0e7b95f96a04de12bcbd5\"",
+      "bytes": 153258,
+      "sha256": "d9ff26efa99e253f17b83d1bbf3723026f9de0207ebdef3cf336feb8386be616",
+      "reused": true
+    },
+    {
+      "id": "016-alors-on-danse-ai-videos",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261009/16/584d175b-cee0-4e03-9823-936c8b30f3ee.mp4",
+      "local": "public/effects/piclumen/016-alors-on-danse-ai-videos.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1536745,
+      "etag": "\"51059635dc585faecb51cf24f5d5b834\"",
+      "bytes": 1536745,
+      "sha256": "6f0cf52afc726a077026fb5c1cdd91aba97c2c5c6c60806f392d205a4f377da6",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 984,
+            "height": 554,
+            "nb_read_packets": "240"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "345"
+          }
+        ],
+        "format": {
+          "duration": "8.010884",
+          "size": "1536745"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "016-alors-on-danse-ai-videos",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20261009/16/088be7ca-ca1f-4acc-9806-3fc07479bb39.webp",
+      "local": "public/effects/piclumen/016-alors-on-danse-ai-videos.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 137400,
+      "etag": "\"d09b83a3b411e583fef20f93fdca01a4\"",
+      "bytes": 137400,
+      "sha256": "347d37fefed7660a5cfcfb722533b0132db6ece3cb46c85ee09dbd58e10b3f36",
+      "reused": true
+    },
+    {
+      "id": "017-zombie-love-story",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261009/16/b31bdac4-23e2-45af-9501-236c2debce8c.mp4",
+      "local": "public/effects/piclumen/017-zombie-love-story.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1498503,
+      "etag": "\"29ec82522d9f7ce8d1d5662927035cb3\"",
+      "bytes": 1498503,
+      "sha256": "0599fa362c535e68bd2718c8bbc1b1b148f07873750469aa6ab3e737cf30ed70",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 854,
+            "height": 480,
+            "nb_read_packets": "450"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "646"
+          }
+        ],
+        "format": {
+          "duration": "15.000091",
+          "size": "1498503"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "017-zombie-love-story",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20261009/16/c30add0b-49f7-43c6-b50a-08630c56b2bb.webp",
+      "local": "public/effects/piclumen/017-zombie-love-story.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 137122,
+      "etag": "\"2b5c4ea2d9ff57b645ed80d15aaa6e59\"",
+      "bytes": 137122,
+      "sha256": "3a692278deba1d8edf6320084ecfd6a969f46f6623318c8f5dc1dd61dc795ff4",
+      "reused": true
+    },
+    {
+      "id": "018-michael-jackson-dance",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261008/18/d6729ff5-f87c-4b3f-8307-4bae9f240f01.mp4",
+      "local": "public/effects/piclumen/018-michael-jackson-dance.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 4645162,
+      "etag": "\"b151815b34bc56a87e31819060df97fc\"",
+      "bytes": 4645162,
+      "sha256": "87f50b56973259f88bbb0ff7cb1b43cd97c54947dbfc4a68d1e70c16f5c44afa",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 720,
+            "height": 1280,
+            "nb_read_packets": "421"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "655"
+          }
+        ],
+        "format": {
+          "duration": "13.999870",
+          "size": "4645162"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "018-michael-jackson-dance",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20261008/18/32533091-5b5c-4bd4-aa20-b5bf5b06f233.webp",
+      "local": "public/effects/piclumen/018-michael-jackson-dance.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 32720,
+      "etag": "\"d1858a53deff633ae6720af275d9a1fa\"",
+      "bytes": 32720,
+      "sha256": "8609144473d5779e6bf771621bbbf3350d2ebecf4249068c40d75745af3fd958",
+      "reused": true
+    },
+    {
+      "id": "019-pet-dance",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261008/16/3330d266-6de5-4a70-bc15-b215537d1f3b.mp4",
+      "local": "public/effects/piclumen/019-pet-dance.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 4535151,
+      "etag": "\"99a49a76443681ab9ccda05e87164dd9\"",
+      "bytes": 4535151,
+      "sha256": "00dab0c991a5c6722364a04dd62d4ecb61fe387ead817b4e44d7a3df95faf3c1",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "nb_read_packets": "391"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "608"
+          }
+        ],
+        "format": {
+          "duration": "12.999870",
+          "size": "4535151"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "019-pet-dance",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20261008/16/83ec11af-22a8-4d2e-a005-6d7eae038618.webp",
+      "local": "public/effects/piclumen/019-pet-dance.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 49454,
+      "etag": "\"387168bf8d6f88e4399806fef5d38207\"",
+      "bytes": 49454,
+      "sha256": "e9ddb996297ad66465a41c62c0398897eb9f0b68fd7d3ca1400c9a7ef28d75fe",
+      "reused": true
+    },
+    {
+      "id": "020-strom-ii-ai-dance-video",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260924/20/e32cf91d-0a75-44cd-ade7-80269acdf579.mp4",
+      "local": "public/effects/piclumen/020-strom-ii-ai-dance-video.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 4989573,
+      "etag": "\"94cf448aaa593f716260ce2dd42e0886\"",
+      "bytes": 4989573,
+      "sha256": "2789b796f6565e2f455c3ca91be53623acaaef5b145753fc72e95d3620a56862",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "hevc",
+            "codec_type": "video",
+            "width": 854,
+            "height": 480,
+            "nb_read_packets": "450"
+          },
+          {
+            "codec_name": "pcm_s16le",
+            "codec_type": "audio",
+            "nb_read_packets": "704"
+          }
+        ],
+        "format": {
+          "duration": "15.018438",
+          "size": "4989573"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "020-strom-ii-ai-dance-video",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/normal/20260924/20/f6ebde1b-b390-4b40-9ad5-519eb37b1843.webp",
+      "local": "public/effects/piclumen/020-strom-ii-ai-dance-video.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 62758,
+      "etag": "\"8eb06cdbb4f2e7e28ee6ef5c425e243c\"",
+      "bytes": 62758,
+      "sha256": "5ff3fe886c3405759e71c38d39ad358b1551dc3cf5b761bb7309e17f077f8dcb",
+      "reused": true
+    },
+    {
+      "id": "021-giant-on-viaduct",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260907/18/0ca644dd-de9f-4520-b72c-2f8cca79404b.mp4",
+      "local": "public/effects/piclumen/021-giant-on-viaduct.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1864214,
+      "etag": "\"99f3c05d7586559ef3b692dec8b9bec7\"",
+      "bytes": 1864214,
+      "sha256": "baa6b6a15e93404ab49df45aca09843846128f5571c648d067dbf45335761c09",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 720,
+            "height": 480,
+            "nb_read_packets": "182"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "263"
+          }
+        ],
+        "format": {
+          "duration": "6.082993",
+          "size": "1864214"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "021-giant-on-viaduct",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260907/18/9b3c7a0b-46c0-4654-8621-13e44df81810.webp",
+      "local": "public/effects/piclumen/021-giant-on-viaduct.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 74852,
+      "etag": "\"cc99e86dc1d9b1f0583d36ddb3d37001\"",
+      "bytes": 74852,
+      "sha256": "2e518cdfbe555b7ee9b759b827a3a60dd1b6ec07f4fde1958762f3df2a8e8219",
+      "reused": true
+    },
+    {
+      "id": "022-ai-360-rotation",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260907/18/587fa285-7cff-4413-a97d-2566cf1c10e3.mp4",
+      "local": "public/effects/piclumen/022-ai-360-rotation.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1375590,
+      "etag": "\"2df6b23edbe43653bc2826d307b35737\"",
+      "bytes": 1375590,
+      "sha256": "04c47351449b1f3a145495070c790ddc4cf17ebfd3489a7721a429968e278aca",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 600,
+            "height": 400,
+            "nb_read_packets": "182"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "263"
+          }
+        ],
+        "format": {
+          "duration": "6.082993",
+          "size": "1375590"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "022-ai-360-rotation",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260907/18/2da69044-52fb-43a5-8c96-8ec082eaef5b.webp",
+      "local": "public/effects/piclumen/022-ai-360-rotation.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 113180,
+      "etag": "\"6fa965f0c6c7bdce8a6d1a73021941be\"",
+      "bytes": 113180,
+      "sha256": "b80fda30da5e8b96324d3d7e018dc833c17015f0fa9c69bec2e002c9b29aedd9",
+      "reused": true
+    },
+    {
+      "id": "023-squish-pout",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260907/18/4147c2d9-902f-45cf-b60c-0b9ba9ebab74.mp4",
+      "local": "public/effects/piclumen/023-squish-pout.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 846072,
+      "etag": "\"fa62cb460ba0795850f74f65de95ef76\"",
+      "bytes": 846072,
+      "sha256": "5a4cb97f2af663f6c896187c9d303a6425ccec6072f4fe8311613fa7cf3d6672",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1200,
+            "height": 800,
+            "nb_read_packets": "121"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "219"
+          }
+        ],
+        "format": {
+          "duration": "5.061995",
+          "size": "846072"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "023-squish-pout",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260907/18/c9141097-ef7a-422e-89a1-65b03c542f35.webp",
+      "local": "public/effects/piclumen/023-squish-pout.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 98502,
+      "etag": "\"a5b3e588372d47d7da7022241e5b7774\"",
+      "bytes": 98502,
+      "sha256": "fe63d4515dcb25fda76879539f586f9447779c2f06f25bc8365f049e22832f46",
+      "reused": true
+    },
+    {
+      "id": "024-skyburst-portrait",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260907/18/8c04b58f-c4e4-4c59-971d-5a53cc3d79c2.mp4",
+      "local": "public/effects/piclumen/024-skyburst-portrait.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 987808,
+      "etag": "\"db82fdbd378c4996260f076c79e8fa87\"",
+      "bytes": 987808,
+      "sha256": "eee9f0b96bc8660305a44681c3c5490667a33d7b952c3b477b5d9e704a734e9a",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1200,
+            "height": 800,
+            "nb_read_packets": "169"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "304"
+          }
+        ],
+        "format": {
+          "duration": "7.041667",
+          "size": "987808"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "024-skyburst-portrait",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260907/18/296037c8-353e-4e09-bcd9-1270c1a53174.webp",
+      "local": "public/effects/piclumen/024-skyburst-portrait.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 168346,
+      "etag": "\"4d02edb55392eb85720834e87e584707\"",
+      "bytes": 168346,
+      "sha256": "103e78f5d271c69acbc9cf0ace36c2c019ebde42d2f358634296127faf41cef4",
+      "reused": true
+    },
+    {
+      "id": "025-warrior-weveal",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260907/18/049bb025-5074-4301-8d67-6360f1dcaa26.mp4",
+      "local": "public/effects/piclumen/025-warrior-weveal.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 899150,
+      "etag": "\"b38b535c65e63ebad22e1c0536ce2c1a\"",
+      "bytes": 899150,
+      "sha256": "fd33e7708a87d1b0c3904f120150b45525eb068c62eefe7368e9b7e508143a16",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 720,
+            "height": 480,
+            "nb_read_packets": "152"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "219"
+          }
+        ],
+        "format": {
+          "duration": "5.085170",
+          "size": "899150"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "025-warrior-weveal",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260907/18/dcd23cc6-bd57-4f47-9e61-642f2236cd34.webp",
+      "local": "public/effects/piclumen/025-warrior-weveal.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 115304,
+      "etag": "\"43ab517e37a3178571df6fddbfe56e4f\"",
+      "bytes": 115304,
+      "sha256": "33ed4995a9b3889ca077036fa4f0560b3d569c7509206026acdd1ebfdbc77f8d",
+      "reused": true
+    },
+    {
+      "id": "026-la-calabaza-pet-dance",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261019/13/254c5b87-aab9-44ab-b6fd-59cacbd60f5f.mp4",
+      "local": "public/effects/piclumen/026-la-calabaza-pet-dance.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 4969218,
+      "etag": "\"4606adf4fd786760746e23134e9115fd\"",
+      "bytes": 4969218,
+      "sha256": "7d7479a2403443ac86cb3a28740f6fd04222572620e68f16f81e619d8d93cf41",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1200,
+            "height": 800,
+            "nb_read_packets": "391"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "608"
+          }
+        ],
+        "format": {
+          "duration": "12.999870",
+          "size": "4969218"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "026-la-calabaza-pet-dance",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20261018/15/609cb059-4dfe-4743-8c5e-a2e523428287.webp",
+      "local": "public/effects/piclumen/026-la-calabaza-pet-dance.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 142214,
+      "etag": "\"3b75899181b34195c592be8b76de3211\"",
+      "bytes": 142214,
+      "sha256": "e401b164e3d293714c7940b7679468af13c14359133823ba94f830fc3c9c1d74",
+      "reused": true
+    },
+    {
+      "id": "027-neon-dance-video",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261016/10/1d29f0bc-4950-4c7f-ae2c-361e9660ece4.mp4",
+      "local": "public/effects/piclumen/027-neon-dance-video.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 4927126,
+      "etag": "\"190a0e8685e630d35e41c18747665974\"",
+      "bytes": 4927126,
+      "sha256": "1487229d4d548a282f4ef11f947b58939886244741787980d194e9770971a872",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 854,
+            "height": 480,
+            "nb_read_packets": "421"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "655"
+          }
+        ],
+        "format": {
+          "duration": "13.999870",
+          "size": "4927126"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "027-neon-dance-video",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20261016/10/87234fe0-1906-4b7c-9407-16c098ecdcdf.webp",
+      "local": "public/effects/piclumen/027-neon-dance-video.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 50302,
+      "etag": "\"9ac5ec45c5061f98c7e3c982868263dd\"",
+      "bytes": 50302,
+      "sha256": "6b870b956ecc6a39888e07c4e821eb1f90f20a4b9c1ec053cdac5dcfb5a6a085",
+      "reused": true
+    },
+    {
+      "id": "028-smalltown-boy-ai-dance-pet-video",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261013/17/5efb5811-ddc6-4348-a110-f3ee9845130e.mp4",
+      "local": "public/effects/piclumen/028-smalltown-boy-ai-dance-pet-video.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 4742373,
+      "etag": "\"4cc090ae8f0f1c26f7fea1f4a3c0af3a\"",
+      "bytes": 4742373,
+      "sha256": "fa13c350d3521977e736ad4366f28205691d44c3c2fd5429fdf9627f4592327d",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 480,
+            "height": 854,
+            "nb_read_packets": "451"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "702"
+          }
+        ],
+        "format": {
+          "duration": "14.999870",
+          "size": "4742373"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "028-smalltown-boy-ai-dance-pet-video",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20261013/17/7eea460f-64b2-4ef5-8b0d-a587b00fda11.webp",
+      "local": "public/effects/piclumen/028-smalltown-boy-ai-dance-pet-video.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 87974,
+      "etag": "\"287df71ec1db5cea0b13d79da8913f48\"",
+      "bytes": 87974,
+      "sha256": "34b9da9f3b47df0e48b1813d06633065c47266011c553253a77777e0faba6ba3",
+      "reused": true
+    },
+    {
+      "id": "029-jawn-dance-videos",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20261010/16/05680ff2-52fd-4c79-bc80-f7e69157799f.mp4",
+      "local": "public/effects/piclumen/029-jawn-dance-videos.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 4094838,
+      "etag": "\"ac6c527c62d87f0faa9f25a7292c615f\"",
+      "bytes": 4094838,
+      "sha256": "f27d2243a19623dcd575e682145583691925978059f38a48c7dacef87047d286",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 854,
+            "height": 480,
+            "nb_read_packets": "331"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "514"
+          }
+        ],
+        "format": {
+          "duration": "10.999870",
+          "size": "4094838"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "029-jawn-dance-videos",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20261010/16/cdb612a7-8074-492f-9018-1108c81183a7.webp",
+      "local": "public/effects/piclumen/029-jawn-dance-videos.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 186992,
+      "etag": "\"63e0017baa7c4bf8555dabec7fec37a1\"",
+      "bytes": 186992,
+      "sha256": "e2a13f35dabf48c8b3d5fd8306b4ab5e15fc54c4e4b6a49b1d7afe8e3b8777d8",
+      "reused": true
+    },
+    {
+      "id": "030-ai-crying",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260930/10/2b1c8c91-5488-461b-899e-73ec9fe0b895.mp4",
+      "local": "public/effects/piclumen/030-ai-crying.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 4070348,
+      "etag": "\"158fd186182d067480c5ec611b090cde\"",
+      "bytes": 4070348,
+      "sha256": "25d84f00a55cf41ac942d6cc3cb7792fba96805b00785879f6d25204918ccab5",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 854,
+            "height": 480,
+            "nb_read_packets": "241"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "316"
+          }
+        ],
+        "format": {
+          "duration": "10.080000",
+          "size": "4070348"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "030-ai-crying",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260930/10/7d670494-c1e5-4e68-aa3e-1fb4b41d8008.webp",
+      "local": "public/effects/piclumen/030-ai-crying.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 77374,
+      "etag": "\"8c2a0f96068ce07786610f142e9a7da9\"",
+      "bytes": 77374,
+      "sha256": "2d4fb1b935bbc5ceb884baad729c0feb96523e630d0a838558a1ea1ad4d61e8f",
+      "reused": true
+    },
+    {
+      "id": "031-ai-tokyo-drift-video",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260928/18/3dffa9a0-cd61-4567-b006-d153e434a956.mp4",
+      "local": "public/effects/piclumen/031-ai-tokyo-drift-video.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 644574,
+      "etag": "\"646cb2d18b13de4bd99b0dc93887efaf\"",
+      "bytes": 644574,
+      "sha256": "3f73e4ecaa66ecd274d38ad558950287335cff52fdc8c02c335e5d2bbaae171d",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 640,
+            "height": 360,
+            "nb_read_packets": "152"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "220"
+          }
+        ],
+        "format": {
+          "duration": "5.085011",
+          "size": "644574"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "031-ai-tokyo-drift-video",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260928/18/5618e300-c7b3-4755-8477-afa8d9947441.webp",
+      "local": "public/effects/piclumen/031-ai-tokyo-drift-video.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 203516,
+      "etag": "\"3eb1f1e2c4668f8d5e90722a4af76714\"",
+      "bytes": 203516,
+      "sha256": "5caa125c421206b3c54f0e2a4b9a8b46703d37ebde54bbb4505f6716abbddab7",
+      "reused": true
+    },
+    {
+      "id": "032-run-fast",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260928/18/3c055bdf-5965-4b25-aeab-21d1f8e06416.mp4",
+      "local": "public/effects/piclumen/032-run-fast.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 585464,
+      "etag": "\"b194a0509c76c0bb284d7135477012ff\"",
+      "bytes": 585464,
+      "sha256": "7ebda4a07bd1be79a1eb4def6507538176eb822af4ec1276ab7095193addc4dd",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 640,
+            "height": 360,
+            "nb_read_packets": "94"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "136"
+          }
+        ],
+        "format": {
+          "duration": "3.133991",
+          "size": "585464"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "032-run-fast",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260928/18/20014e4d-fba2-431f-aada-08a19a463add.webp",
+      "local": "public/effects/piclumen/032-run-fast.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 193776,
+      "etag": "\"eb9691c843e75409240787bc027f96a1\"",
+      "bytes": 193776,
+      "sha256": "4aa380a5f0507f20099f92c7c19b3a40a115cd2fcf12b9ad24429ec16872ab41",
+      "reused": true
+    },
+    {
+      "id": "033-shrinking-sprite",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260910/14/a359476a-029f-4a7b-8eea-ad2fffeede5b.mp4",
+      "local": "public/effects/piclumen/033-shrinking-sprite.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1705176,
+      "etag": "\"b145def2b5169465ece4e28dc1beae6e\"",
+      "bytes": 1705176,
+      "sha256": "4df1f5cddea32aebcfdaac5d60e5c924f5ccca15ea987ce30f357adce62059e0",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 864,
+            "height": 496,
+            "nb_read_packets": "145"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "262"
+          }
+        ],
+        "format": {
+          "duration": "6.060000",
+          "size": "1705176"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "033-shrinking-sprite",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260910/14/d4c6709b-70fd-4c07-8de4-8ce4d5d55932.webp",
+      "local": "public/effects/piclumen/033-shrinking-sprite.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 132458,
+      "etag": "\"2cac522725816905c1115624062f00f9\"",
+      "bytes": 132458,
+      "sha256": "862c40354bbc2c5ea5b0395ccdc52323c3aeee2993a418d0cf226fc4b9d17cd2",
+      "reused": true
+    },
+    {
+      "id": "034-wicked-glow-up",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260910/10/2422f8dd-dadd-4a86-9857-c2379a1d65ac.mp4",
+      "local": "public/effects/piclumen/034-wicked-glow-up.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1883847,
+      "etag": "\"63e687a4abe0aadb61faf16dc5b8dff2\"",
+      "bytes": 1883847,
+      "sha256": "2ac114e45bb7208714ef071328b5cbf411173d63e9892693afefb0719fdfc43b",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 864,
+            "height": 496,
+            "nb_read_packets": "169"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "223"
+          }
+        ],
+        "format": {
+          "duration": "7.104000",
+          "size": "1883847"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "034-wicked-glow-up",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260910/10/53771ed4-ccb1-4584-b259-6132befc9eec.webp",
+      "local": "public/effects/piclumen/034-wicked-glow-up.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 173538,
+      "etag": "\"0841640ea3f6287fceffd8993f1b14b8\"",
+      "bytes": 173538,
+      "sha256": "4af03cf01268abeecdec8504dce713b1d3cdd3b504fd611c19ed85d48ddcbe31",
+      "reused": true
+    },
+    {
+      "id": "035-pulled-into-halloween-blind-box",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260910/10/e7673ac0-fa07-4456-b510-510bac4e78de.mp4",
+      "local": "public/effects/piclumen/035-pulled-into-halloween-blind-box.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 2116087,
+      "etag": "\"320c259bf1248e3ea262e1ce26d298a8\"",
+      "bytes": 2116087,
+      "sha256": "87a771d3c2d5aed74bd1e68cedb6fa680ee3e4c5785bb7eeb7feec5eff0d8881",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 864,
+            "height": 496,
+            "nb_read_packets": "145"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "191"
+          }
+        ],
+        "format": {
+          "duration": "6.080000",
+          "size": "2116087"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "035-pulled-into-halloween-blind-box",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260910/09/e44fde0d-9a4e-4e67-84e3-f17860bb54fd.webp",
+      "local": "public/effects/piclumen/035-pulled-into-halloween-blind-box.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 263398,
+      "etag": "\"592b096eafbae1a0e78286d3f216fea8\"",
+      "bytes": 263398,
+      "sha256": "fcc210db18359ba04993c05a3d56f83062e9eaff0e47d98394658cc9a8cd2fa9",
+      "reused": true
+    },
+    {
+      "id": "036-ai-kissing",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260909/18/14edcc9d-337f-4e2d-bf99-11f6e55e3cf9.mp4",
+      "local": "public/effects/piclumen/036-ai-kissing.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 990536,
+      "etag": "\"316eef51f6d1313c4c5b311bf88406ed\"",
+      "bytes": 990536,
+      "sha256": "8bd535a5dec9086da45ecd99c2d92bd75a914ea170e42db444347a2a4b440b8e",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 864,
+            "height": 496,
+            "nb_read_packets": "97"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "129"
+          }
+        ],
+        "format": {
+          "duration": "4.096000",
+          "size": "990536"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "036-ai-kissing",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260909/18/fd898a44-2b84-45b3-9da6-3798ded2469a.webp",
+      "local": "public/effects/piclumen/036-ai-kissing.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 35062,
+      "etag": "\"5549a10fad76d7b070273f1c165764cb\"",
+      "bytes": 35062,
+      "sha256": "85e73b630287fd552ab1208658103ade30606574be9bfc78ab39e3f452e314cd",
+      "reused": true
+    },
+    {
+      "id": "037-potion-witch",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260909/18/ed51a420-b4ff-4d24-8e17-884f2f052c59.mp4",
+      "local": "public/effects/piclumen/037-potion-witch.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1767029,
+      "etag": "\"fc9a804700436c426f844fa005bebb5f\"",
+      "bytes": 1767029,
+      "sha256": "33b4da20bf6fab62d03c231fdd8d927663e7ec854d8dd35f59268173ca37011e",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 864,
+            "height": 496,
+            "nb_read_packets": "145"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "191"
+          }
+        ],
+        "format": {
+          "duration": "6.080000",
+          "size": "1767029"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "037-potion-witch",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260909/18/721b8dad-39cd-49d7-baf0-f112f922aa10.webp",
+      "local": "public/effects/piclumen/037-potion-witch.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 121008,
+      "etag": "\"0056e76e39822a19a9cef08cf4ab59dc\"",
+      "bytes": 121008,
+      "sha256": "93da03fc4f8b83d46f1226d971c9f27cb786e5596b3ea7d51c8632b0a658e888",
+      "reused": true
+    },
+    {
+      "id": "038-haunted-portrait-animation",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260909/18/70356d20-516e-43ec-b127-5dfbd9a8a0b4.mp4",
+      "local": "public/effects/piclumen/038-haunted-portrait-animation.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1552126,
+      "etag": "\"c0df1381025dcae715c17b267b4b92a1\"",
+      "bytes": 1552126,
+      "sha256": "9674048986776c5a6118aad9865d1f883e41f6d42b22f050d0fc7aba7d48e013",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 640,
+            "height": 360,
+            "nb_read_packets": "98"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "142"
+          }
+        ],
+        "format": {
+          "duration": "3.273991",
+          "size": "1552126"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "038-haunted-portrait-animation",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260909/18/e698b2b6-7976-4965-b500-baf54a6f56e7.png",
+      "local": "public/effects/piclumen/038-haunted-portrait-animation.png",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/png",
+      "expectedBytes": 956087,
+      "etag": "\"0548bf54d42bdd5179d739751ef7fadb\"",
+      "bytes": 956087,
+      "sha256": "74c950b561658caecbf716a4981154636421ae084ee3fb461764ab682adc149b",
+      "reused": true
+    },
+    {
+      "id": "039-shadow-forest-chase",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260909/18/0be9c4fc-c7de-4a6b-94df-6832ef0f833b.mp4",
+      "local": "public/effects/piclumen/039-shadow-forest-chase.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1007568,
+      "etag": "\"9a8fd726242985c0d0e4d4b9e35102f7\"",
+      "bytes": 1007568,
+      "sha256": "67c37d0ccdc7c877bfc53442397fc15abac202a64d9665ff42b10cef966dd22c",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 640,
+            "height": 360,
+            "nb_read_packets": "114"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "165"
+          }
+        ],
+        "format": {
+          "duration": "3.808005",
+          "size": "1007568"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "039-shadow-forest-chase",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260909/18/f195ab24-e321-4d4e-9eff-3c605ce47eca.png",
+      "local": "public/effects/piclumen/039-shadow-forest-chase.png",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/png",
+      "expectedBytes": 959258,
+      "etag": "\"2996a71d6909907ec9ca49d0f72c2315\"",
+      "bytes": 959258,
+      "sha256": "eaee924c2a280e8743600cffe6136be242abda8ac272120decccff52435f9759",
+      "reused": true
+    },
+    {
+      "id": "040-zombie-bride",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260909/17/38abc68f-7441-43b6-82d1-a5e162424c34.mp4",
+      "local": "public/effects/piclumen/040-zombie-bride.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1108102,
+      "etag": "\"92eb683a87ff8b47626bb238a67e6e28\"",
+      "bytes": 1108102,
+      "sha256": "8c20995bb18c6a56bf192b697f3cf66a4f7c7bb486dfa008dab3285418a01fbb",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 640,
+            "height": 360,
+            "nb_read_packets": "122"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "177"
+          }
+        ],
+        "format": {
+          "duration": "4.086009",
+          "size": "1108102"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "040-zombie-bride",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260909/17/f82258ed-7f26-441a-935f-fae0e0ba0f5d.png",
+      "local": "public/effects/piclumen/040-zombie-bride.png",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/png",
+      "expectedBytes": 849942,
+      "etag": "\"dc534a6e2d058c69ed65eb3d5b6ce22a\"",
+      "bytes": 849942,
+      "sha256": "dad930b49d03abdc5a34fc6c64b0da300a1cad9284858d5014afc3a5c99ec52c",
+      "reused": true
+    },
+    {
+      "id": "041-pet-trick-or-treat",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260909/17/30a8c12b-7f31-4a25-8f48-a3c58971fe60.mp4",
+      "local": "public/effects/piclumen/041-pet-trick-or-treat.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1071791,
+      "etag": "\"2b1faee4f714f410c6776df34585f9c5\"",
+      "bytes": 1071791,
+      "sha256": "910e0072b9e8edefe42b78b7b599f6e94473c653919e4ee29517546f665214e4",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 640,
+            "height": 360,
+            "nb_read_packets": "117"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "169"
+          }
+        ],
+        "format": {
+          "duration": "3.900952",
+          "size": "1071791"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "041-pet-trick-or-treat",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260909/17/6b8cbe6e-8d5b-413e-91ad-92cce43ddca9.png",
+      "local": "public/effects/piclumen/041-pet-trick-or-treat.png",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/png",
+      "expectedBytes": 880704,
+      "etag": "\"cf5485056e339183ea391e2cd0e84aac\"",
+      "bytes": 880704,
+      "sha256": "a5829f735b4204d11a7e4168a4aabd60a11d70ea94604a7d96fe937ed289724d",
+      "reused": true
+    },
+    {
+      "id": "042-wandering-silk-city-parkour",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260908/18/840976cc-dee3-41bc-a99e-74a66c891c4c.mp4",
+      "local": "public/effects/piclumen/042-wandering-silk-city-parkour.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1602854,
+      "etag": "\"0fb152de3bc8ff73804db42a2913c899\"",
+      "bytes": 1602854,
+      "sha256": "60835cfe7512229346044fc9c43d53818353316ae911dce8da6da6c6ea262448",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 720,
+            "height": 480,
+            "nb_read_packets": "302"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "435"
+          }
+        ],
+        "format": {
+          "duration": "10.077007",
+          "size": "1602854"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "042-wandering-silk-city-parkour",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260908/18/5aefe016-12e4-4a44-9dfa-a5ce22c5fb6c.webp",
+      "local": "public/effects/piclumen/042-wandering-silk-city-parkour.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 128294,
+      "etag": "\"957018152de8e8d35ec57b96725a0c1c\"",
+      "bytes": 128294,
+      "sha256": "c845d479ac76789bb3c0f90c2787d4a73cdaf577c1fc3a4c30b2d6dea3e71d8d",
+      "reused": true
+    },
+    {
+      "id": "043-mini-figure-squeeze",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260908/17/096749a7-9c89-4709-9f4d-0cb554a745f7.mp4",
+      "local": "public/effects/piclumen/043-mini-figure-squeeze.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 814487,
+      "etag": "\"2656093e84e9a64d3d47de35bc44d120\"",
+      "bytes": 814487,
+      "sha256": "0bb4b2378134700d0ec086a6425edd068e0483eea4b13a042981b3dd4893a364",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 720,
+            "height": 480,
+            "nb_read_packets": "179"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "262"
+          }
+        ],
+        "format": {
+          "duration": "6.033991",
+          "size": "814487"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "043-mini-figure-squeeze",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260908/17/020dd5dc-432b-4345-ae62-9705a8b015cf.webp",
+      "local": "public/effects/piclumen/043-mini-figure-squeeze.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 117540,
+      "etag": "\"41cd2a2e376302ca7dfa8d621218cab6\"",
+      "bytes": 117540,
+      "sha256": "918baa2574f9745b01ac71b71a8c526202a5d69f304bc4274ebef04a29a65a13",
+      "reused": true
+    },
+    {
+      "id": "044-sculpted-self",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260908/17/22f9266b-b50b-481f-9cd5-e1bd3340c7cf.mp4",
+      "local": "public/effects/piclumen/044-sculpted-self.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 648762,
+      "etag": "\"16df5cf7b6213269e69c3b50cdef6daa\"",
+      "bytes": 648762,
+      "sha256": "b433987975dab0d624174b82632f9a7dfd8e3fea1b7c0ac62585042d5612e593",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 960,
+            "height": 640,
+            "nb_read_packets": "145"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "261"
+          }
+        ],
+        "format": {
+          "duration": "6.041667",
+          "size": "648762"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "044-sculpted-self",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260908/17/9a5560ea-c30c-4d48-94a2-a37f24649947.webp",
+      "local": "public/effects/piclumen/044-sculpted-self.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 102832,
+      "etag": "\"428ea5764ddf864adeeee2797d56605f\"",
+      "bytes": 102832,
+      "sha256": "752ec94011e017b0bea3238aea4b8c1a8af04537c3f11b62e369976f64fd19b9",
+      "reused": true
+    },
+    {
+      "id": "045-mugshot",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260908/17/5a64f41f-2a22-4c8c-8630-c2216e2ff240.mp4",
+      "local": "public/effects/piclumen/045-mugshot.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1685279,
+      "etag": "\"6f37a281a1d78e63cd9d936d91268ceb\"",
+      "bytes": 1685279,
+      "sha256": "d8c95d8b98b8ec1023d39893337ac07096d9431127a156844b5bf7fb5a5f5311",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 600,
+            "height": 400,
+            "nb_read_packets": "182"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "263"
+          }
+        ],
+        "format": {
+          "duration": "6.082993",
+          "size": "1685279"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "045-mugshot",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260908/17/a849c50a-da8f-456c-8a00-73203d221399.webp",
+      "local": "public/effects/piclumen/045-mugshot.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 54192,
+      "etag": "\"056fe84715229223d74b657a3391881c\"",
+      "bytes": 54192,
+      "sha256": "3c5c78ab9d28b47a6e7334db8b5cc5c34408d6c0301e27e0a527988904199820",
+      "reused": true
+    },
+    {
+      "id": "046-pet-peekaboo",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260908/17/990d6e4c-416b-4322-a95a-0a3a04857d6b.mp4",
+      "local": "public/effects/piclumen/046-pet-peekaboo.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 772913,
+      "etag": "\"6907b5fe0d6af7e60ae9f3a603b59dab\"",
+      "bytes": 772913,
+      "sha256": "5560f408555d9fb3344fbdcaee44c12a10d5261981b345d628655e48feafdf80",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1200,
+            "height": 800,
+            "nb_read_packets": "97"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "176"
+          }
+        ],
+        "format": {
+          "duration": "4.062993",
+          "size": "772913"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "046-pet-peekaboo",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260908/17/50ba713b-bbf7-406d-884e-8c89d326cf48.webp",
+      "local": "public/effects/piclumen/046-pet-peekaboo.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 194000,
+      "etag": "\"7b31712536a3c359d87fc0afcbf650dc\"",
+      "bytes": 194000,
+      "sha256": "0fabdf5acc383a3a31dd384dd6611137c7243d22e0c083f93f18277c1d52086d",
+      "reused": true
+    },
+    {
+      "id": "047-working-pet",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260908/17/243c5d8c-f9b1-43b2-854d-3b74c22895c3.mp4",
+      "local": "public/effects/piclumen/047-working-pet.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 656222,
+      "etag": "\"6f145ec81b6022e57a962161aa0948a7\"",
+      "bytes": 656222,
+      "sha256": "6b6c092b3f1ede11007643ec446f4983a4f25dc713029a5a85f0f91dc4d3a6d3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 600,
+            "height": 400,
+            "nb_read_packets": "122"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "177"
+          }
+        ],
+        "format": {
+          "duration": "4.086009",
+          "size": "656222"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "047-working-pet",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260908/17/fa118550-645d-4869-8035-e66259fd34bd.webp",
+      "local": "public/effects/piclumen/047-working-pet.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 127404,
+      "etag": "\"190f1cea74fbb6111476b6d75223495a\"",
+      "bytes": 127404,
+      "sha256": "d81cd1581382ab4f058e1295585cb46903034627824a0576400e4344d1aaddf8",
+      "reused": true
+    },
+    {
+      "id": "048-goofy-moves",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260907/18/8ae33f3e-b398-458e-8ccc-46e323e7fdc1.mp4",
+      "local": "public/effects/piclumen/048-goofy-moves.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1307155,
+      "etag": "\"ee7d3e541c6e6bcc760527e2e2210de7\"",
+      "bytes": 1307155,
+      "sha256": "57c87ddb68904885386d02701234648a17342c862fb3f136c28871a04feccfc2",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 720,
+            "height": 480,
+            "nb_read_packets": "196"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "282"
+          }
+        ],
+        "format": {
+          "duration": "6.548027",
+          "size": "1307155"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "048-goofy-moves",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260907/18/e51d1fd5-85c9-4b6e-bf0e-4e59c917049b.webp",
+      "local": "public/effects/piclumen/048-goofy-moves.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 103920,
+      "etag": "\"16789e15cf54b7534e6313d40644a4b4\"",
+      "bytes": 103920,
+      "sha256": "7e7ef7c0561f989c195cfcd4adc8c1395fb5b86d0bed0704055812e09f5c69fa",
+      "reused": true
+    },
+    {
+      "id": "049-birthday-spark",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260907/18/7c0788b8-4c22-4c9a-91be-b0872025c85f.mp4",
+      "local": "public/effects/piclumen/049-birthday-spark.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1904890,
+      "etag": "\"0a91e5b2def9c0b1e5d9bb179056309b\"",
+      "bytes": 1904890,
+      "sha256": "1685f69a3878392795dcac67a62db433aa5e7503532a1780a130ba2b337493c7",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 720,
+            "height": 480,
+            "nb_read_packets": "122"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "177"
+          }
+        ],
+        "format": {
+          "duration": "4.086009",
+          "size": "1904890"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "049-birthday-spark",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260907/18/7df9de59-0657-414b-957e-c64aec5d1f82.webp",
+      "local": "public/effects/piclumen/049-birthday-spark.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 191452,
+      "etag": "\"723f4a7a3b348a5be254fbc677176dcf\"",
+      "bytes": 191452,
+      "sha256": "b8b116308d457eab20215bf54ef074f54ee8178c2c770f82386231cf0df25406",
+      "reused": true
+    },
+    {
+      "id": "050-skeleton-ball-gala",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260909/13/177adf5a-ced9-4899-a571-6141ff70c670.mp4",
+      "local": "public/effects/piclumen/050-skeleton-ball-gala.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 2854564,
+      "etag": "\"66a4bb531d75d4b316a5af51d6a02ec5\"",
+      "bytes": 2854564,
+      "sha256": "88f7d1e39a1b6324ae9920993f03028688404315af5cd5e30096737ad368dd2d",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 640,
+            "height": 360,
+            "nb_read_packets": "146"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "263"
+          }
+        ],
+        "format": {
+          "duration": "6.083334",
+          "size": "2854564"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "050-skeleton-ball-gala",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260909/13/5181e4a3-e206-4bca-91c7-009de640df7a.webp",
+      "local": "public/effects/piclumen/050-skeleton-ball-gala.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 112426,
+      "etag": "\"04d87a307d1663e0800ecba4042f03d7\"",
+      "bytes": 112426,
+      "sha256": "57fca628142df4bdee436cbb631fea50331b7e683ebeffc2e67bb54d582cb873",
+      "reused": true
+    },
+    {
+      "id": "051-tilt-dance",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260810/15/1ad3c2a2-1adc-4621-a851-a6afc4f1f989.mp4",
+      "local": "public/effects/piclumen/051-tilt-dance.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1834706,
+      "etag": "\"2c0f059151604818d700aca886218951\"",
+      "bytes": 1834706,
+      "sha256": "97ab2b354f46aee07de6ff2ada67dda777f8e440d2c4a9097561281a617b20cb",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1264,
+            "height": 720,
+            "nb_read_packets": "248"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "358"
+          }
+        ],
+        "format": {
+          "duration": "8.289002",
+          "size": "1834706"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "051-tilt-dance",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260810/15/bef48db4-a1b9-4a64-b008-f3ce5d1857a1.webp",
+      "local": "public/effects/piclumen/051-tilt-dance.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 89500,
+      "etag": "\"44ef5ba40d57ea49cb5636ad866e0bac\"",
+      "bytes": 89500,
+      "sha256": "8dcfdfcd3d6088b6d27682ae5b34f1b8c839f09d4cef9069d2d84cd7ecc7551e",
+      "reused": true
+    },
+    {
+      "id": "052-bugging-dance",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260810/15/f00ba9e5-683e-4a07-a6ad-8130dc166414.mp4",
+      "local": "public/effects/piclumen/052-bugging-dance.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1969641,
+      "etag": "\"2189029c780a224776af218115c7dda6\"",
+      "bytes": 1969641,
+      "sha256": "c0b65b0330628432986ec372af159ebb3550e20e8076e63379b14d2385348066",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1264,
+            "height": 720,
+            "nb_read_packets": "318"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "456"
+          }
+        ],
+        "format": {
+          "duration": "10.600000",
+          "size": "1969641"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "052-bugging-dance",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260810/15/d988d78a-fe01-4d8b-a034-fe40cea47113.webp",
+      "local": "public/effects/piclumen/052-bugging-dance.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 95460,
+      "etag": "\"b01a227dba4ed24d4a69c7694b118e48\"",
+      "bytes": 95460,
+      "sha256": "1386fe4a3aa8d9ec641b7cabc2cccd008b217f0384ee8be480554a356ff6b846",
+      "reused": true
+    },
+    {
+      "id": "053-big-guy-dance",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260306/14/4cc36f43-cca7-46ef-b395-ec20bd21d215.mp4",
+      "local": "public/effects/piclumen/053-big-guy-dance.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 950139,
+      "etag": "\"015d0202744171fc99ab401433780c1b\"",
+      "bytes": 950139,
+      "sha256": "7b4039e6206104cf2d2819249532621420334b4706925bd62101b24890ab6f55",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 858,
+            "height": 484,
+            "nb_read_packets": "200"
+          }
+        ],
+        "format": {
+          "duration": "8.000000",
+          "size": "950139"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "053-big-guy-dance",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260306/14/d04a025e-01e2-47f5-8f57-6e6607bbe7c2.webp",
+      "local": "public/effects/piclumen/053-big-guy-dance.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 223190,
+      "etag": "\"490bb906e96bdbf2ea85a24c10927747\"",
+      "bytes": 223190,
+      "sha256": "04f42ce03cc5ebf1a73ba9d43cf2d58bcae8d6061c7cb7049ec2d1c375dd35ce",
+      "reused": true
+    },
+    {
+      "id": "054-magic-dance",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/apps/121212.mp4",
+      "local": "public/effects/piclumen/054-magic-dance.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 2048456,
+      "etag": "\"f843041e4b46ca664be22d3dbb8a403f\"",
+      "bytes": 2048456,
+      "sha256": "b7cd03192c335f378dca62ffae30e1dce5d979f1dde2aef6573b547f52271bb6",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 842,
+            "height": 480,
+            "nb_read_packets": "312"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "449"
+          }
+        ],
+        "format": {
+          "duration": "10.401995",
+          "size": "2048456"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "054-magic-dance",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/apps/121212.webp",
+      "local": "public/effects/piclumen/054-magic-dance.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 76392,
+      "etag": "\"b03fe84a4c1f1455bd7926456fe2c89d\"",
+      "bytes": 76392,
+      "sha256": "d5ee1d515709541aa35e410b965af998963d9ec0cada672005f5a24911350a0c",
+      "reused": true
+    },
+    {
+      "id": "055-twerk-dance",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260403/10/fd09cad6-da4a-4b97-aaa4-c8072d8d4ee4.mp4",
+      "local": "public/effects/piclumen/055-twerk-dance.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 2755462,
+      "etag": "\"e91a959c005ac2a9295e4d4f39501d81\"",
+      "bytes": 2755462,
+      "sha256": "4ff1b01d11652e763c921c5180d0172428cdab877ca026e12dfe19f33a376014",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 858,
+            "height": 484,
+            "nb_read_packets": "270"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "422"
+          }
+        ],
+        "format": {
+          "duration": "9.000000",
+          "size": "2755462"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "055-twerk-dance",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260403/10/ff6bd755-72d4-495c-81f0-3ef0c603107e.webp",
+      "local": "public/effects/piclumen/055-twerk-dance.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 442226,
+      "etag": "\"8caa6afb09d3a9d64609b7312335f144\"",
+      "bytes": 442226,
+      "sha256": "e76607168bf6f63e941caf3161fc0e0bcfdfcf4140d4fe0531e93bf40003dca4",
+      "reused": true
+    },
+    {
+      "id": "056-bombaye-dance",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260527/17/b63ba9b1-5515-478b-9a7d-245ebbaf159e.mp4",
+      "local": "public/effects/piclumen/056-bombaye-dance.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 2735855,
+      "etag": "\"1eea0086364b725822be1c9edec84214\"",
+      "bytes": 2735855,
+      "sha256": "3640eca9688b836d344f3e2c668fbeb0cb792d3090d12aa613b4e0c1ddb18b65",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 858,
+            "height": 484,
+            "nb_read_packets": "270"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "422"
+          }
+        ],
+        "format": {
+          "duration": "9.000000",
+          "size": "2735855"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "056-bombaye-dance",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260527/17/fec06de4-593b-498e-9f87-f8498ffe008d.webp",
+      "local": "public/effects/piclumen/056-bombaye-dance.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 121164,
+      "etag": "\"c2b177edd9d0e10803fb9fde6d51ac4d\"",
+      "bytes": 121164,
+      "sha256": "a3e08d6865ff4bf5f23e7651a76ad6768a08ca8c0d45bcb8920b95e5ef205f9d",
+      "reused": true
+    },
+    {
+      "id": "057-hyper-beat",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260522/16/b75f9d9d-31f8-4fdd-bd49-1bada5dee577.mp4",
+      "local": "public/effects/piclumen/057-hyper-beat.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1274184,
+      "etag": "\"702318e3ab2ad4d3810a86a9547344ec\"",
+      "bytes": 1274184,
+      "sha256": "ab225514711615f6cb19fe51fcacdf8ac9e13d3c945edb0a22cd2b7078559c06",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 858,
+            "height": 484,
+            "nb_read_packets": "270"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "422"
+          }
+        ],
+        "format": {
+          "duration": "9.000000",
+          "size": "1274184"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "057-hyper-beat",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260522/16/0dfb3d14-0f2e-4ea2-9385-69a8f03c416e.webp",
+      "local": "public/effects/piclumen/057-hyper-beat.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 91192,
+      "etag": "\"231949b8b82edc7f5e1db6d8dec38984\"",
+      "bytes": 91192,
+      "sha256": "7223a12357bc802750e963d023ef941b7fbd251f14af6bda7337392007df1ff3",
+      "reused": true
+    },
+    {
+      "id": "058-street-jazz",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260522/16/2c5053b5-eb5d-4df8-83e2-480a9284978f.mp4",
+      "local": "public/effects/piclumen/058-street-jazz.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1354043,
+      "etag": "\"c2ca2b98600cfabc6e1b441df2fe1a60\"",
+      "bytes": 1354043,
+      "sha256": "d452ebe36a3a46f1adb80e477d00ad9f89f357962461a06bee5660570a095a73",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 860,
+            "height": 484,
+            "nb_read_packets": "270"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "422"
+          }
+        ],
+        "format": {
+          "duration": "9.000000",
+          "size": "1354043"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "058-street-jazz",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260522/16/3a384a9f-19a1-4fda-a2a3-1ec7295d5387.webp",
+      "local": "public/effects/piclumen/058-street-jazz.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 386888,
+      "etag": "\"f01e969239c8f67cc94fbef1f78e151b\"",
+      "bytes": 386888,
+      "sha256": "0dee4d33296bfffe9cb13ba9d67daa4793bbd27a897588b9e9a916daa13f1830",
+      "reused": true
+    },
+    {
+      "id": "059-no-one-else-dance",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260424/16/e2d096d5-cf9f-4915-a7af-0a25553f4d46.mp4",
+      "local": "public/effects/piclumen/059-no-one-else-dance.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 2787227,
+      "etag": "\"c6fbefac06486c7bd41afa93cdcb2f9e\"",
+      "bytes": 2787227,
+      "sha256": "27936a9c18b8f63f81c8f5b3921e950f32bc7a955df5f0bfaa7c13d5bda54855",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 858,
+            "height": 484,
+            "nb_read_packets": "300"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "469"
+          }
+        ],
+        "format": {
+          "duration": "10.000000",
+          "size": "2787227"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "059-no-one-else-dance",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260424/16/69081afe-ec83-4889-b75f-191f08be3d39.webp",
+      "local": "public/effects/piclumen/059-no-one-else-dance.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 264772,
+      "etag": "\"b6b8b680d61669fb2882435c9151c3d4\"",
+      "bytes": 264772,
+      "sha256": "d268fa5c5429819b8dc89284e9d82506caa33a9c6c1c5a5baaa90ef6babd158f",
+      "reused": true
+    },
+    {
+      "id": "060-spaghetti-dance",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260416/17/ad09e8d7-56ea-46b0-ac79-8b52b513f33b.mp4",
+      "local": "public/effects/piclumen/060-spaghetti-dance.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1714232,
+      "etag": "\"c2fe9e4633363bf8706cf71591e1a34c\"",
+      "bytes": 1714232,
+      "sha256": "2cf41b93de20f00f9213743c34b5e1aed66cc80b4a2c34641eb9b3da649cfd75",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 858,
+            "height": 484,
+            "nb_read_packets": "180"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "282"
+          }
+        ],
+        "format": {
+          "duration": "6.000000",
+          "size": "1714232"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "060-spaghetti-dance",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260416/17/4b4a55e7-7842-478f-a318-526b1d588738.webp",
+      "local": "public/effects/piclumen/060-spaghetti-dance.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 196074,
+      "etag": "\"ef0b70c90672eb3b99059217c549125b\"",
+      "bytes": 196074,
+      "sha256": "999bbc4dbabfcffcc20f3379863040d36c855b25550a6b28db0db1a6dbcd3879",
+      "reused": true
+    },
+    {
+      "id": "061-gesture-dance",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260306/14/ff5af98a-f547-4656-908d-bbb92edb12f5.mp4",
+      "local": "public/effects/piclumen/061-gesture-dance.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1400628,
+      "etag": "\"15a0f7cd52260191c31f8121f7bed4d7\"",
+      "bytes": 1400628,
+      "sha256": "b06ed18a9ca0a6f63ae623bd59ba03e599f43ee1b4e5c78fdc97d8464a9b2472",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 858,
+            "height": 484,
+            "nb_read_packets": "300"
+          }
+        ],
+        "format": {
+          "duration": "12.000000",
+          "size": "1400628"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "061-gesture-dance",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260306/14/49c8bba3-94c2-4c6e-b7a4-afb1477641dc.webp",
+      "local": "public/effects/piclumen/061-gesture-dance.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 265100,
+      "etag": "\"d35e4d35336f1391e5d8bddcebb7848f\"",
+      "bytes": 265100,
+      "sha256": "01ed84debfb1b8c16f3547b1a21601cb9fd7d14df8117e114a7b37bbe377971c",
+      "reused": true
+    },
+    {
+      "id": "062-c-walk-dance",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260320/10/2b75360d-9b25-4061-9c47-5bf7adf0bda8.mp4",
+      "local": "public/effects/piclumen/062-c-walk-dance.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1505751,
+      "etag": "\"0fd726bd78f155624a20870be09303dd\"",
+      "bytes": 1505751,
+      "sha256": "c6801d0fc5c6bc392833bbd27bdb7ad3fa0c854fd5966d5684765a1226725304",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 858,
+            "height": 484,
+            "nb_read_packets": "250"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "469"
+          }
+        ],
+        "format": {
+          "duration": "10.000000",
+          "size": "1505751"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "062-c-walk-dance",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260320/10/4c26dcb4-740c-419f-a954-d9a00827a670.webp",
+      "local": "public/effects/piclumen/062-c-walk-dance.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 447488,
+      "etag": "\"94caf08fc282efd2691ce5fd0f0a3eb3\"",
+      "bytes": 447488,
+      "sha256": "62ea2b18a7906267d2f8e38f9fc15050082a8c5cabad9b3cd8d861e3ea967377",
+      "reused": true
+    },
+    {
+      "id": "063-playground-groove",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260206/18/e83dbc68-aea5-444b-ab1f-af18a803f82b.mp4",
+      "local": "public/effects/piclumen/063-playground-groove.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 844725,
+      "etag": "\"594a705f3492bd22b867dfbc9894eaae\"",
+      "bytes": 844725,
+      "sha256": "49154bc5ff73c7a2fb550e7980678ca3c393412986411b0d628b6162d69e8fd8",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "nb_read_packets": "328"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "472"
+          }
+        ],
+        "format": {
+          "duration": "10.936009",
+          "size": "844725"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "063-playground-groove",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260206/18/f303b69d-5f64-42db-bfc7-116d1d88a2ef.webp",
+      "local": "public/effects/piclumen/063-playground-groove.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 793038,
+      "etag": "\"e65299d4141f7b9a1ba182b46266bd42\"",
+      "bytes": 793038,
+      "sha256": "daa27dee1c87bab9f651697f9bf3627c878ca6d4566733de73aa8d82517a960a",
+      "reused": true
+    },
+    {
+      "id": "064-preschool-pop-star",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260206/17/0fcb175a-4108-41f1-af40-914cfcbccb19.mp4",
+      "local": "public/effects/piclumen/064-preschool-pop-star.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 928180,
+      "etag": "\"6ec911752263eba1b27fa9f5c4ee438a\"",
+      "bytes": 928180,
+      "sha256": "1d153bfb4bfb11164abeb66d18b9bb73d2349a9a59a61f797f732facf2ea6ff6",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "nb_read_packets": "316"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "455"
+          }
+        ],
+        "format": {
+          "duration": "10.540998",
+          "size": "928180"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "064-preschool-pop-star",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260206/17/740a74f6-ea76-4d3c-b191-e1f56417bd33.webp",
+      "local": "public/effects/piclumen/064-preschool-pop-star.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 540610,
+      "etag": "\"6bc855ab7916ec4fdc076dc29f4685eb\"",
+      "bytes": 540610,
+      "sha256": "5e09e9d3454cbb9d8f15815350e1bef533d014d5722414e656d679ea76ec1967",
+      "reused": true
+    },
+    {
+      "id": "065-playground-star",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260206/18/9ff8eeed-e186-4776-a1ba-3071f54d0c75.mp4",
+      "local": "public/effects/piclumen/065-playground-star.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 912070,
+      "etag": "\"56fa32e74c2bf43c4b4621e11753a387\"",
+      "bytes": 912070,
+      "sha256": "afc3cbc9447061ba92ffb5277a2dccd7790cce4738ac91b9cae90a421cb0d85e",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "nb_read_packets": "200"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "289"
+          }
+        ],
+        "format": {
+          "duration": "6.687007",
+          "size": "912070"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "065-playground-star",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260206/18/c15282c7-d39f-4937-a1bc-71544ab8b1c5.webp",
+      "local": "public/effects/piclumen/065-playground-star.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 802246,
+      "etag": "\"38b71dd03b7326ffdb21e994e08107a5\"",
+      "bytes": 802246,
+      "sha256": "695e8373f2dfdc2e3c51f56750ad377243c399d04f220eb3ed4935c8e0a3186b",
+      "reused": true
+    },
+    {
+      "id": "066-tiny-idol-style",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260210/14/b79c31dd-aff7-4ce6-8283-e81c6820c95e.mp4",
+      "local": "public/effects/piclumen/066-tiny-idol-style.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 2094499,
+      "etag": "\"fc88b4307ab1aae60555d7342cc25d8f\"",
+      "bytes": 2094499,
+      "sha256": "c93dd8ef8fa70c600e20240147950a146a608053e45e05c84897957c0d9f072a",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "nb_read_packets": "341"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "489"
+          }
+        ],
+        "format": {
+          "duration": "11.366667",
+          "size": "2094499"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "066-tiny-idol-style",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260210/14/72ae28cb-3e57-4714-8b00-de74fcbc5d04.webp",
+      "local": "public/effects/piclumen/066-tiny-idol-style.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 650918,
+      "etag": "\"22bcce30f0ab96f042433ba151e02d19\"",
+      "bytes": 650918,
+      "sha256": "2eebfe7911b88ed0abd01713692853ec44e2251ba7d9cb7d1b64dfc473fa0020",
+      "reused": true
+    },
+    {
+      "id": "067-studio-swagger-2",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260206/18/80ae53d2-3455-4a9a-b6f5-79db38d090b0.mp4",
+      "local": "public/effects/piclumen/067-studio-swagger-2.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 898729,
+      "etag": "\"d70195d1bacc5e8fde08766cb2d9c8f6\"",
+      "bytes": 898729,
+      "sha256": "8121758d87c1cca41a1d2416a9a0d94f5a9e3e0077650d3da65fe8fac21888eb",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "nb_read_packets": "232"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "335"
+          }
+        ],
+        "format": {
+          "duration": "7.755011",
+          "size": "898729"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "067-studio-swagger-2",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260206/18/8620a2e3-9c32-4899-8746-2d04eb617b0a.webp",
+      "local": "public/effects/piclumen/067-studio-swagger-2.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 723124,
+      "etag": "\"d7b0795e5ecec84b8dfb778b78b4e1c5\"",
+      "bytes": 723124,
+      "sha256": "b7730f8c90f63734511702f2710e5ef055b0a49a9cc1dc668e4a94d793441291",
+      "reused": true
+    },
+    {
+      "id": "068-k-pop-dance",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260327/16/d71360fe-52b1-4599-bf2c-2b1865d512d5.mp4",
+      "local": "public/effects/piclumen/068-k-pop-dance.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1174177,
+      "etag": "\"7e72705a9e3569ab6d5eca2b775b2f5e\"",
+      "bytes": 1174177,
+      "sha256": "d5b51f6f2d9d00243f49272f1dc2f2ed03ca927ea160e08f8aae1ff6b7556455",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "nb_read_packets": "120"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "188"
+          }
+        ],
+        "format": {
+          "duration": "4.000000",
+          "size": "1174177"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "068-k-pop-dance",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/apps/151515.webp",
+      "local": "public/effects/piclumen/068-k-pop-dance.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 325190,
+      "etag": "\"2c09c5d1529f42869a20b61d6bce96b5\"",
+      "bytes": 325190,
+      "sha256": "448844926b7d93236a505f16d41e26c254bb084ac1a90d4d98cae538ac71af50",
+      "reused": true
+    },
+    {
+      "id": "069-pop-princess-groove",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260210/14/a6f824a7-7063-4ca3-9e06-0db6110d764f.mp4",
+      "local": "public/effects/piclumen/069-pop-princess-groove.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1867181,
+      "etag": "\"36d2cd392facb28dbbe7a969ee21d241\"",
+      "bytes": 1867181,
+      "sha256": "6bd5d579be41c3830af2c3b23961114f2b6b4a6045dcecb15605a4cd2f749ef2",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 854,
+            "height": 480,
+            "nb_read_packets": "309"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "445"
+          }
+        ],
+        "format": {
+          "duration": "10.309002",
+          "size": "1867181"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "069-pop-princess-groove",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260210/14/7a041e86-4b31-4955-8754-3627cce46efb.webp",
+      "local": "public/effects/piclumen/069-pop-princess-groove.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 1165498,
+      "etag": "\"4efb0da02cb994c20a3780aeaa2a2374\"",
+      "bytes": 1165498,
+      "sha256": "d540a68c2bb81a74575089015683332d72dd8be11d1857526cf19b13cf0a319a",
+      "reused": true
+    },
+    {
+      "id": "070-street-style-groove",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260206/18/749d6ee8-470a-4d46-a6b3-5d21f6bc2d9a.mp4",
+      "local": "public/effects/piclumen/070-street-style-groove.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 911877,
+      "etag": "\"4ca5cc6fd53e4a187825f5a9725c61ab\"",
+      "bytes": 911877,
+      "sha256": "a4e389bc0374b4854a4717548589bd5972db2eb4e9baaa8862cf6dc8bb44d2b1",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "nb_read_packets": "336"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "482"
+          }
+        ],
+        "format": {
+          "duration": "11.200000",
+          "size": "911877"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "070-street-style-groove",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260210/15/aaedafd9-e855-4596-9965-fa89a112d623.webp",
+      "local": "public/effects/piclumen/070-street-style-groove.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 441696,
+      "etag": "\"1bb436ee466350548623f14411d8df8b\"",
+      "bytes": 441696,
+      "sha256": "768d41ecb84f8ecb2c9f62263a6bb0e8b7ecb26d142fd8ec7d858a9893281e4b",
+      "reused": true
+    },
+    {
+      "id": "071-studio-swagger",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260206/18/c40c52d8-b168-4687-a5e8-8f0d5c477574.mp4",
+      "local": "public/effects/piclumen/071-studio-swagger.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 961061,
+      "etag": "\"cc24bbd9830ad7dbc861100f5821aba3\"",
+      "bytes": 961061,
+      "sha256": "ba37b41ed452693e55b13d4ed6f8bd2b04669a1a2c9347dc575455a9d40229c2",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "nb_read_packets": "333"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "478"
+          }
+        ],
+        "format": {
+          "duration": "11.100000",
+          "size": "961061"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "071-studio-swagger",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260210/15/f656850f-b5fd-4331-abc1-f12028067cda.webp",
+      "local": "public/effects/piclumen/071-studio-swagger.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 470924,
+      "etag": "\"59c17788824ae823b69f5168babc6a78\"",
+      "bytes": 470924,
+      "sha256": "9074e6d00a8f4bdbf46d4c1dd8734342a8af5db0f88474a8ba2a9dcd2721ba15",
+      "reused": true
+    },
+    {
+      "id": "072-lion-pjs-disco",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260210/14/9c567c46-21e7-4efe-ba73-ef7304e9cd2a.mp4",
+      "local": "public/effects/piclumen/072-lion-pjs-disco.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 2819000,
+      "etag": "\"f317f93f1660ba0dc82b722bd1d8bd08\"",
+      "bytes": 2819000,
+      "sha256": "bac28fe16c88bd13ddef00a2410555600f59a45667eb78e72f5e21b23f2dc58d",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 854,
+            "height": 480,
+            "nb_read_packets": "440"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "633"
+          }
+        ],
+        "format": {
+          "duration": "14.675011",
+          "size": "2819000"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "072-lion-pjs-disco",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260210/14/cbe64028-72ca-4258-acc4-1908c6c196ae.webp",
+      "local": "public/effects/piclumen/072-lion-pjs-disco.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 742020,
+      "etag": "\"a1609f7be38d60c73c35002fe953b17c\"",
+      "bytes": 742020,
+      "sha256": "ef04ea31524fc9d4c8507e186365d998aaba6ffa88a1fe3abc2fa773aedbb5d2",
+      "reused": true
+    },
+    {
+      "id": "073-little-joy-dancer",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260210/15/613269ee-64cb-449c-afc7-e7493cf67e67.mp4",
+      "local": "public/effects/piclumen/073-little-joy-dancer.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 899794,
+      "etag": "\"a9fc0336a5c57054654a1b54c607ab19\"",
+      "bytes": 899794,
+      "sha256": "fe7a983de9bc4e0aeb264e0944c07ac91d5764910f0048eecf5cbd24473c98ed",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "nb_read_packets": "424"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "610"
+          }
+        ],
+        "format": {
+          "duration": "14.140998",
+          "size": "899794"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "073-little-joy-dancer",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260210/14/dd29af47-481d-4dec-853d-38d8a653575c.webp",
+      "local": "public/effects/piclumen/073-little-joy-dancer.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 832048,
+      "etag": "\"a23a1206aacbb333bbe8e8856710c20d\"",
+      "bytes": 832048,
+      "sha256": "acb54ff4f1930ab21ae3c065d7eba4ba2edcf28013b02e8d90aa5597d9f0ce90",
+      "reused": true
+    },
+    {
+      "id": "074-neighborhood-star",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260206/18/2139cbef-1718-44d6-b1d8-fdbd24adcaa6.mp4",
+      "local": "public/effects/piclumen/074-neighborhood-star.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 893972,
+      "etag": "\"6759b63d66614b56b434ee5d746f6c42\"",
+      "bytes": 893972,
+      "sha256": "a9058551a5d643e3778f76e63704f331c78727d5ab3f9b8d0aa3c364703c5a2c",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "nb_read_packets": "288"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "415"
+          }
+        ],
+        "format": {
+          "duration": "9.612993",
+          "size": "893972"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "074-neighborhood-star",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260206/18/6e9ce59e-4d31-4d62-9074-e320184aea30.webp",
+      "local": "public/effects/piclumen/074-neighborhood-star.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 691284,
+      "etag": "\"3e56e4c432d2c80200ea0ade03329e2a\"",
+      "bytes": 691284,
+      "sha256": "15a103066a06877e7561842cf2828f0dddc28f8f2d3d31690a122c117b6b9eec",
+      "reused": true
+    },
+    {
+      "id": "075-cool-hoodie-hopper",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260210/11/6c0f1171-9fd8-455b-9363-493fe0affbd2.mp4",
+      "local": "public/effects/piclumen/075-cool-hoodie-hopper.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1546374,
+      "etag": "\"2f75ed1e1f6b9be777b781a31db0a3e4\"",
+      "bytes": 1546374,
+      "sha256": "fe0eb900eb2ea60fa5548efcfd3f7e28df5f1cb3030b0b6713553d3402a4f6f9",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "nb_read_packets": "280"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "403"
+          }
+        ],
+        "format": {
+          "duration": "9.333991",
+          "size": "1546374"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "075-cool-hoodie-hopper",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/manage/20260210/11/47aebc4d-6d20-4745-a38f-9a6408d61b75.webp",
+      "local": "public/effects/piclumen/075-cool-hoodie-hopper.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 1006708,
+      "etag": "\"cc2a3d9a032d274972e8da132b27c199\"",
+      "bytes": 1006708,
+      "sha256": "af7986a49c8dc6dadc99ef7ae1859fc726e90435024735aadb58f22219354a21",
+      "reused": true
+    },
+    {
+      "id": "076-love-dance",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/manage/20260327/16/c891b2c9-2e98-4ff4-8445-cab36cb43107.mp4",
+      "local": "public/effects/piclumen/076-love-dance.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1076152,
+      "etag": "\"2351703a4e2b7a9529e66035c8987b3b\"",
+      "bytes": 1076152,
+      "sha256": "c9654f6ba469939405e4e465e760075eca19cf895eb0dd7d2279e4008e45ddb3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "nb_read_packets": "120"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "188"
+          }
+        ],
+        "format": {
+          "duration": "4.000000",
+          "size": "1076152"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "076-love-dance",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/apps/131313.webp",
+      "local": "public/effects/piclumen/076-love-dance.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 68898,
+      "etag": "\"1b1ef5831b2ca0a35ad4b27083031dbd\"",
+      "bytes": 68898,
+      "sha256": "82290b8037534b41bccc8702875f075ad441348efa5d0d4e9fc382a40e352d61",
+      "reused": true
+    },
+    {
+      "id": "077-kemusan-dance",
+      "kind": "video",
+      "source": "https://publish.piclumen.com/apps/141414.mp4",
+      "local": "public/effects/piclumen/077-kemusan-dance.mp4",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "expectedBytes": 1125520,
+      "etag": "\"c1a290d2c9eaa08a8b44806c01404c97\"",
+      "bytes": 1125520,
+      "sha256": "431850ed755c7a6eb2c935612915ed4d4851d4d60430a59301d879adeb8941f8",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 854,
+            "height": 480,
+            "nb_read_packets": "159"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "nb_read_packets": "230"
+          }
+        ],
+        "format": {
+          "duration": "5.317007",
+          "size": "1125520"
+        }
+      },
+      "reused": true
+    },
+    {
+      "id": "077-kemusan-dance",
+      "kind": "poster",
+      "source": "https://publish.piclumen.com/apps/141414.webp",
+      "local": "public/effects/piclumen/077-kemusan-dance.webp",
+      "status": "verified",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "expectedBytes": 668696,
+      "etag": "\"d6b3b92c259c53e4c1641f1898adf3e7\"",
+      "bytes": 668696,
+      "sha256": "0ff64509510e87a6906616369473dd36f420bc273f145f851c4439b1aea4411c",
+      "reused": true
+    }
+  ]
+}
