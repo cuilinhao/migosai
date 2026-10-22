@@ -242,6 +242,7 @@ function validateSession(
 ) {
   if (
     !new RegExp(`^cs_${row.provider_mode}_[A-Za-z0-9]+$`).test(session.id) ||
+    (row.checkout_id && session.id !== row.checkout_id) ||
     session.livemode !== (row.provider_mode === "live") ||
     session.mode !== "subscription" ||
     session.amount_total !== row.amount_cents ||
@@ -253,6 +254,37 @@ function validateSession(
     !metadataMatches(session.metadata, row)
   )
     reject();
+}
+async function retireExpiredCheckout(
+  db: D1Database,
+  row: SubscriptionRow,
+  session: Stripe.Checkout.Session,
+) {
+  validateSession(session, row);
+  if (
+    session.status !== "expired" ||
+    session.payment_status !== "unpaid" ||
+    session.subscription
+  )
+    throw new ApiError(
+      409,
+      "The previous checkout could not be closed. If you just paid, wait for confirmation; otherwise please retry.",
+    );
+  // Retire both records atomically, only while neither payment nor subscription
+  // has completed. The version also fences any older subscription sync in flight.
+  const results = await db.batch([
+    db.prepare(
+      "UPDATE subscriptions SET status='expired',sync_version=sync_version+1,updated_at=unixepoch() WHERE id=? AND user_id=? AND provider_mode=? AND status='pending' AND checkout_id=? AND subscription_id IS NULL AND EXISTS(SELECT 1 FROM orders WHERE id=? AND user_id=? AND provider_mode=? AND purchase_type='subscription' AND status='pending' AND checkout_id=?)",
+    ).bind(row.id, row.user_id, row.provider_mode, row.checkout_id, row.id, row.user_id, row.provider_mode, row.checkout_id),
+    db.prepare(
+      "UPDATE orders SET status='cancelled' WHERE id=? AND user_id=? AND provider_mode=? AND purchase_type='subscription' AND status='pending' AND checkout_id=? AND EXISTS(SELECT 1 FROM subscriptions WHERE id=? AND user_id=? AND provider_mode=? AND status='expired' AND checkout_id=?)",
+    ).bind(row.id, row.user_id, row.provider_mode, row.checkout_id, row.id, row.user_id, row.provider_mode, row.checkout_id),
+  ]);
+  if (results[0].meta.changes !== 1 || results[1].meta.changes !== 1)
+    throw new ApiError(
+      409,
+      "Your subscription checkout changed while switching plans. Please retry or check your payment status.",
+    );
 }
 export async function createSubscriptionCheckout(
   env: Env,
@@ -291,32 +323,34 @@ export async function createSubscriptionCheckout(
       "You already have a subscription. Manage it from billing settings.",
     );
   if (row?.checkout_id) {
-    const session = await stripeRequest(() =>
+    let session = await stripeRequest(() =>
       client.checkout.sessions.retrieve(row!.checkout_id!),
     );
     validateSession(session, row);
-    if (session.status === "expired") {
-      await db.batch([
-        db
-          .prepare(
-            "UPDATE subscriptions SET status='expired',updated_at=unixepoch() WHERE id=? AND status='pending'",
-          )
-          .bind(row.id),
-        db
-          .prepare(
-            "UPDATE orders SET status='cancelled' WHERE id=? AND status='pending'",
-          )
-          .bind(row.id),
-      ]);
+    if (
+      session.status === "open" &&
+      (row.plan_id !== plan.id || row.billing_interval !== interval)
+    ) {
+      try {
+        session = await client.checkout.sessions.expire(
+          row.checkout_id,
+          {},
+          { idempotencyKey: `migosai:subscription-expire:${mode}:${row.id}` },
+        );
+      } catch {
+        throw new ApiError(
+          502,
+          "The previous checkout could not be closed. If you just paid, wait for confirmation; otherwise please retry.",
+        );
+      }
+      await retireExpiredCheckout(db, row, session);
+      row = null;
+    } else if (session.status === "expired") {
+      await retireExpiredCheckout(db, row, session);
       row = null;
     } else if (session.status === "complete") {
       throw new ApiError(409, "Your subscription payment is being confirmed.");
     } else if (session.status === "open") {
-      if (row.plan_id !== plan.id || row.billing_interval !== interval)
-        throw new ApiError(
-          409,
-          "Complete or wait for the existing checkout to expire before choosing another plan.",
-        );
       return {
         checkoutUrl: hostedUrl(session.url, "checkout.stripe.com"),
         orderId: row.id,

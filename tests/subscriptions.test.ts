@@ -116,21 +116,28 @@ function stripeApi(
     payment?: Record<string, unknown>;
     intent?: Record<string, unknown>;
     session?: Record<string, unknown>;
+    expireSession?: Record<string, unknown>;
     createSession?: Record<string, unknown>;
     config?: Record<string, unknown>;
     portal?: Record<string, unknown>;
     price?: Record<string, unknown>;
     failCreateOnce?: boolean;
+    failExpire?: boolean;
+    beforeExpireResponse?: () => void;
   } = {},
 ) {
   let sent = new URLSearchParams();
   const checkoutRequests: string[] = [];
+  const expireRequests: { id: string; idempotencyKey: string | null }[] = [];
   vi.spyOn(globalThis, "fetch").mockImplementation(async (input, init) => {
     const url = new URL(String(input));
     if (url.origin !== "https://api.stripe.com" || init?.redirect !== "manual")
       throw Error("Unexpected destination");
     const body = new URLSearchParams(String(init?.body ?? ""));
-    if (url.pathname === `/v1/prices/${priceId}`)
+    if (
+      url.pathname === `/v1/prices/${priceId}` ||
+      url.pathname === `/v1/prices/${options.price?.id}`
+    )
       return Response.json({ ...price, ...options.price });
     if (url.pathname === "/v1/customers")
       return Response.json({
@@ -178,8 +185,7 @@ function stripeApi(
         ...options.createSession,
       });
     }
-    if (url.pathname === `/v1/checkout/sessions/${sessionId}`)
-      return Response.json({
+    const existingSession = {
         id: sessionId,
         url: `https://checkout.stripe.com/c/pay/${sessionId}`,
         mode: "subscription",
@@ -188,12 +194,25 @@ function stripeApi(
         total_details: { amount_discount: 0, amount_tax: 0 },
         livemode: false,
         status: "open",
+        payment_status: "unpaid",
+        subscription: null,
         customer: customerId,
         client_reference_id: metadata.orderId,
         metadata,
         expires_at: Math.floor(Date.now() / 1000) + 1800,
         ...options.session,
+      };
+    if (url.pathname === `/v1/checkout/sessions/${sessionId}`)
+      return Response.json(existingSession);
+    if (url.pathname === `/v1/checkout/sessions/${sessionId}/expire` && init?.method === "POST") {
+      expireRequests.push({
+        id: sessionId,
+        idempotencyKey: new Headers(init.headers).get("idempotency-key"),
       });
+      if (options.failExpire) throw Error("Stripe expiration unavailable");
+      options.beforeExpireResponse?.();
+      return Response.json({ ...existingSession, status: "expired", url: null, subscription: null, ...options.expireSession });
+    }
     if (url.pathname === `/v1/subscriptions/${subId}`)
       return Response.json(subscription(options.sub));
     if (url.pathname === `/v1/invoices/${invoiceId}`)
@@ -262,7 +281,7 @@ function stripeApi(
       });
     throw Error(`Unexpected Stripe path ${url.pathname}`);
   });
-  return { sent: () => sent, checkoutRequests };
+  return { sent: () => sent, checkoutRequests, expireRequests };
 }
 afterEach(() => {
   vi.restoreAllMocks();
@@ -472,6 +491,7 @@ describe("Stripe subscriptions", () => {
     expect(
       await createSubscriptionCheckout(env, user, "lite", "month", "en"),
     ).toEqual(checkout);
+    expect(api.expireRequests).toHaveLength(0);
     expect(
       sqlite.prepare("SELECT count(*) AS n FROM subscriptions").get(),
     ).toEqual({ n: 1 });
@@ -678,6 +698,132 @@ describe("Stripe subscriptions", () => {
         .prepare("SELECT status FROM subscriptions WHERE id=?")
         .get(checkout.orderId),
     ).toEqual({ status: "expired" });
+  });
+
+  it.each([
+    { plan: "lite", interval: "year", amount: 7308, variable: "STRIPE_PRICE_YEARLY_LITE" },
+    { plan: "standard", interval: "month", amount: 2499, variable: "STRIPE_PRICE_MONTHLY_STANDARD" },
+  ] as const)("closes an unpaid Checkout before switching to $plan/$interval", async ({ plan, interval, amount, variable }) => {
+    const { env, sqlite, checkout } = await setup();
+    const nextPrice = "price_switched123";
+    env[variable] = nextPrice;
+    const api = stripeApi({
+      session: { amount_total: 759 },
+      price: { id: nextPrice, unit_amount: amount, recurring: { interval, interval_count: 1, usage_type: "licensed" } },
+      createSession: { id: "cs_test_switched123", amount_total: amount, url: "https://checkout.stripe.com/c/pay/cs_test_switched123" },
+    });
+    const next = await createSubscriptionCheckout(env, user, plan, interval, "en");
+    expect(next.orderId).not.toBe(checkout.orderId);
+    expect(api.expireRequests).toEqual([{ id: sessionId, idempotencyKey: `migosai:subscription-expire:test:${checkout.orderId}` }]);
+    expect(api.checkoutRequests).toHaveLength(1);
+    expect(sqlite.prepare("SELECT status FROM subscriptions WHERE id=?").get(checkout.orderId)).toEqual({ status: "expired" });
+    expect(sqlite.prepare("SELECT status FROM orders WHERE id=?").get(checkout.orderId)).toEqual({ status: "cancelled" });
+    expect(sqlite.prepare("SELECT status,plan_id,billing_interval,amount_cents FROM subscriptions WHERE id=?").get(next.orderId)).toEqual({ status: "pending", plan_id: plan, billing_interval: interval, amount_cents: amount });
+    expect(sqlite.prepare("SELECT count(*) AS n FROM subscriptions WHERE status='pending'").get()).toEqual({ n: 1 });
+    expect(sqlite.prepare("SELECT count(*) AS n FROM subscription_credit_periods").get()).toEqual({ n: 0 });
+    expect(sqlite.prepare("SELECT credits FROM users").get()).toEqual({ credits: 100 });
+  });
+
+  it.each([
+    { options: { failExpire: true }, status: 502 },
+    { options: { expireSession: { status: "complete", subscription: subId } }, status: 409 },
+    { options: { expireSession: { status: "open" } }, status: 409 },
+    { options: { expireSession: { payment_status: "paid" } }, status: 409 },
+    { options: { expireSession: { subscription: subId } }, status: 409 },
+    { options: { expireSession: { id: "cs_test_foreign123" } }, status: 400 },
+    { options: { expireSession: { livemode: true } }, status: 400 },
+    { options: { expireSession: { customer: "cus_foreign123" } }, status: 400 },
+  ])("preserves the pending purchase when closing the old Checkout cannot be verified: $options", async ({ options, status }) => {
+    const { env, sqlite, checkout } = await setup();
+    const api = stripeApi(options);
+    await expect(createSubscriptionCheckout(env, user, "lite", "year", "en")).rejects.toMatchObject({ status });
+    expect(api.expireRequests).toHaveLength(1);
+    expect(api.checkoutRequests).toHaveLength(0);
+    expect(sqlite.prepare("SELECT id,status FROM subscriptions").get()).toEqual({ id: checkout.orderId, status: "pending" });
+    expect(sqlite.prepare("SELECT id,status FROM orders").get()).toEqual({ id: checkout.orderId, status: "pending" });
+  });
+
+  it("does not retire a purchase activated while Stripe expiration was in flight", async () => {
+    const { env, sqlite, checkout } = await setup();
+    const api = stripeApi({ beforeExpireResponse: () => {
+      sqlite.prepare("UPDATE subscriptions SET status='active',subscription_id=? WHERE id=?").run(subId, checkout.orderId);
+      sqlite.prepare("UPDATE orders SET status='paid' WHERE id=?").run(checkout.orderId);
+    } });
+    await expect(createSubscriptionCheckout(env, user, "lite", "year", "en")).rejects.toMatchObject({ status: 409 });
+    expect(api.expireRequests).toHaveLength(1);
+    expect(api.checkoutRequests).toHaveLength(0);
+    expect(sqlite.prepare("SELECT id,status FROM subscriptions").get()).toEqual({ id: checkout.orderId, status: "active" });
+    expect(sqlite.prepare("SELECT id,status FROM orders").get()).toEqual({ id: checkout.orderId, status: "paid" });
+  });
+
+  it("does not retire a purchase whose paid invoice arrives before the subscription sync", async () => {
+    const { env, sqlite, checkout } = await setup();
+    const api = stripeApi({ beforeExpireResponse: () => {
+      sqlite.prepare("UPDATE orders SET status='paid' WHERE id=?").run(checkout.orderId);
+    } });
+    await expect(createSubscriptionCheckout(env, user, "lite", "year", "en")).rejects.toMatchObject({ status: 409 });
+    expect(api.checkoutRequests).toHaveLength(0);
+    expect(sqlite.prepare("SELECT id,status FROM subscriptions").get()).toEqual({ id: checkout.orderId, status: "pending" });
+    expect(sqlite.prepare("SELECT id,status FROM orders").get()).toEqual({ id: checkout.orderId, status: "paid" });
+  });
+
+  it("keeps a completed Checkout for payment confirmation when the user switches intervals", async () => {
+    const { env, sqlite } = await setup();
+    const api = stripeApi({ session: { status: "complete", subscription: subId } });
+    await expect(createSubscriptionCheckout(env, user, "lite", "year", "en")).rejects.toMatchObject({ status: 409, message: "Your subscription payment is being confirmed." });
+    expect(api.expireRequests).toHaveLength(0);
+    expect(api.checkoutRequests).toHaveLength(0);
+    expect(sqlite.prepare("SELECT count(*) AS n FROM subscriptions").get()).toEqual({ n: 1 });
+  });
+
+  it("allows only one replacement when two plan switches race and reuses the winner", async () => {
+    const { env, db, sqlite, checkout } = await setup();
+    // Real D1 batches are serialized transactions. The SQLite test adapter's
+    // async statements need that serialization to avoid nested BEGIN artifacts.
+    let batchQueue = Promise.resolve();
+    env.DB = { ...db, batch: (statements: D1PreparedStatement[]) => {
+      const result = batchQueue.then(() => db.batch(statements));
+      batchQueue = result.then(() => {}, () => {});
+      return result;
+    } } as D1Database;
+    const api = stripeApi({
+      session: { amount_total: 759 },
+      price: { unit_amount: 7308, recurring: { interval: "year", interval_count: 1, usage_type: "licensed" } },
+      createSession: { id: "cs_test_switched123", url: "https://checkout.stripe.com/c/pay/cs_test_switched123" },
+    });
+    const fetchStripe = vi.mocked(globalThis.fetch).getMockImplementation()!;
+    let releaseReads!: () => void;
+    const bothReads = new Promise<void>(resolve => { releaseReads = resolve; });
+    let reads = 0;
+    vi.spyOn(globalThis, "fetch").mockImplementation(async (input, init) => {
+      const path = new URL(String(input)).pathname;
+      if (path === `/v1/checkout/sessions/${sessionId}`) {
+        if (++reads === 2) releaseReads();
+        await bothReads;
+      }
+      if (path === "/v1/checkout/sessions/cs_test_switched123") {
+        return Response.json({
+          id: "cs_test_switched123", url: "https://checkout.stripe.com/c/pay/cs_test_switched123",
+          mode: "subscription", amount_total: 7308, currency: "usd", total_details: { amount_discount: 0, amount_tax: 0 },
+          livemode: false, status: "open", customer: customerId, client_reference_id: metadata.orderId, metadata,
+        });
+      }
+      return fetchStripe(input, init);
+    });
+    const results = await Promise.allSettled([
+      createSubscriptionCheckout(env, user, "lite", "year", "en"),
+      createSubscriptionCheckout(env, user, "lite", "year", "en"),
+    ]);
+    expect(results.filter(result => result.status === "fulfilled")).toHaveLength(1);
+    expect(results.find(result => result.status === "rejected")).toMatchObject({ reason: { status: 409 } });
+    expect(api.expireRequests).toHaveLength(2);
+    expect(api.checkoutRequests).toHaveLength(1);
+    expect(sqlite.prepare("SELECT count(*) AS n FROM subscriptions WHERE status='pending'").get()).toEqual({ n: 1 });
+    expect(sqlite.prepare("SELECT status FROM orders WHERE id=?").get(checkout.orderId)).toEqual({ status: "cancelled" });
+    const winner = results.find(result => result.status === "fulfilled")!;
+    expect(await createSubscriptionCheckout(env, user, "lite", "year", "en")).toEqual(winner.value);
+    expect(api.expireRequests).toHaveLength(2);
+    expect(api.checkoutRequests).toHaveLength(1);
   });
   it("blocks a second checkout after activation and preserves the first purchase", async () => {
     const { env, sqlite } = await setup();
