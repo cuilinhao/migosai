@@ -57,7 +57,7 @@ describe('current public product brand without losing existing translations', ()
     const node = await resolveAsync(await ContactPage());
     const html = renderToStaticMarkup(<LocaleProvider locale={locale} messages={getMessages(locale)}>{node}</LocaleProvider>);
     expect(html).toContain('MigosAI'); expect(html).not.toMatch(/LobbyDuo|LOBBYDUO/);
-    expect(html).toContain('mailto:support@migosai.design');
+    expect(html).toContain('mailto:cuilinhao2021@gmail.com');
     for (const path of ['refund-policy', 'terms-of-service', 'privacy-policy', 'acceptable-use-policy']) expect(html).toContain(`href="${locale === 'en' ? '' : '/' + locale}/${path}"`);
   });
   it('keeps metadata site names and structured-data publishers aligned with the visible brand', async () => {

@@ -49,7 +49,7 @@
 - Processing includes upload, generation and review. Video duration is not a promise about completion time.
 - New video requests use Kie. APIMart processes music and historical video jobs. SeeAPI reviews generated video results before delivery; this is not a claim that every prompt or uploaded image is screened.
 - Upload only authorized material with the consent of each person depicted. Unauthorized celebrity or public-figure impersonation and misleading endorsements are prohibited.
-- Support, refunds, privacy requests, and content reports: support@migosai.design.
+- Support, refunds, privacy requests, and content reports: cuilinhao2021@gmail.com.
 
 ## FAQ
 - Q: Can I generate a complete Hotel Lobby AI video for free here? A: No. New accounts receive no free credits. Purchase a one-time credit pack and check that your balance covers the selected settings before generating. The default 10-second Wan template costs 60 credits. Existing account balances remain available.
