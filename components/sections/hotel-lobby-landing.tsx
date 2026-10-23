@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import { getTranslations } from "@/lib/i18n/server";
 import { localizePageContent } from "@/components/sections/localized-page-content";
 import Link from "@/components/i18n/localized-link";
@@ -9,10 +8,9 @@ import { FeaturesSection, FaqSection, SectionHeading, WorkflowSection } from "@/
 import { PricingCards } from "@/components/pricing-cards";
 import { homeFaqItems } from "@/content/home";
 import { HomeHero } from "@/components/sections/home-hero";
-import { HOTEL_LOBBY_PATH } from "@/content/public-pages";
 
-/** The complete original homepage, retained on its dedicated generator route. */
-export async function HotelLobbyLanding({ guide, showcaseDetails }: { guide?: ReactNode; showcaseDetails?: ReactNode }) {
+/** The original Hotel Lobby homepage, using the current generator and billing. */
+export async function HotelLobbyLanding() {
   const t = await getTranslations();
   return localizePageContent(<>
     <div className="home-stage">
@@ -25,16 +23,14 @@ export async function HotelLobbyLanding({ guide, showcaseDetails }: { guide?: Re
     </div></section>
     <section id="showcase" className="marketing-section home-showcase"><div className="section-container">
       <SectionHeading title="Hotel Lobby AI Videos Made with LobbyDuo" description="Unedited results from this generator using the built-in Hotel Lobby template. Your result depends on your photos and settings."/>
-      {showcaseDetails}
       <ShowcaseGrid portrait/>
-      <div className="centered-action"><Link href={`${HOTEL_LOBBY_PATH}#generator`} className="pill-gradient-button">Create a Hotel Lobby AI Video</Link></div>
+      <div className="centered-action"><Link href="/#generator" className="pill-gradient-button">Create a Hotel Lobby AI Video</Link></div>
     </div></section>
     <VideoExamples/>
     <WorkflowSection/>
     <FeaturesSection/>
-    {guide}
-    <FaqSection id="duo-faq" items={homeFaqItems}/>
+    <FaqSection items={homeFaqItems}/>
     <section id="pricing" className="marketing-section home-pricing"><div className="section-container"><SectionHeading title="LobbyDuo Pricing and Credit Plans" description="One-time credit packs and subscription plans in US dollars. Completely unused one-time packs may qualify for a refund within 14 days."/><PricingCards initialPurchaseType="packs"/></div></section>
-    <section id="cta" className="marketing-section home-cta"><div className="section-container"><SectionHeading title="Ready to make your Hotel Lobby AI video?" description="Start with two photos you have the right to use. Registration does not include free credits. Purchase a credit pack before generating."/><Link className="pill-gradient-button" href={`${HOTEL_LOBBY_PATH}#generator`}>Create Hotel Lobby AI Video</Link></div></section>
+    <section id="cta" className="marketing-section home-cta"><div className="section-container"><SectionHeading title="Ready to make your Hotel Lobby AI video?" description="Start with two photos you have the right to use. Registration does not include free credits. Purchase a credit pack before generating."/><Link className="pill-gradient-button" href="/#generator">Create Hotel Lobby AI Video</Link></div></section>
   </>, t);
 }
