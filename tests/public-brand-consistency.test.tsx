@@ -71,7 +71,7 @@ describe('current public product brand without losing existing translations', ()
     request.locale = 'en';
     const node = await resolveAsync(await HotelLobbyPage());
     const html = renderToStaticMarkup(<AuthProvider>{node}</AuthProvider>);
-    expect(html).toContain('Suggested starting settings for your own Wan template: two clear portraits, 9:16, 5 seconds, 480p (30 credits).');
+    expect(html).toContain('Suggested starting settings for your own Wan template: two clear portraits, 9:16, 5 seconds, 480p (15 credits).');
     expect(html).not.toContain('480p (50 credits)');
   });
   it('describes account access without incorrectly requiring Google as the only sign-in method', async () => {

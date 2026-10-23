@@ -5,7 +5,7 @@ import { GeoCta, GeoHeader, GeoRelatedLinks, GeoSection, GeoTable, geoMetadata }
 import { defaultVideoSettings, getVideoCost } from "@/lib/video-options";
 
 const path = "/hotel-lobby-ai-generator";
-const defaultCost = getVideoCost(defaultVideoSettings.duration, defaultVideoSettings.resolution, defaultVideoSettings.model);
+const defaultCost = getVideoCost(defaultVideoSettings.duration, defaultVideoSettings.resolution, defaultVideoSettings.model, 0);
 
 export async function generateMetadata() { return localizeMetadata(geoMetadata(
   "Hotel Lobby AI Generator — Quick Start Guide (2026)",
@@ -22,14 +22,14 @@ export default async function HotelLobbyQuickStartPage() {
       <ol className="geo-steps">
         <li><strong>Assign the two performers.</strong> Open the <Link href="/hotel-lobby-ai-video-generator#generator">video generator</Link> and sign in with Google. Put a separate, clear portrait in each slot: Person 1 is the left reference and Person 2 is the right reference. Both files must be JPG, PNG or WebP and no larger than 10 MB each.</li>
         <li><strong>Choose where the clip will go.</strong> Choose one of four stages, then set the model, frame shape, duration and resolution. In Sound and motion, keep template references or crop your own audio and motion video. Seedance creates original AI rap from an optional topic.</li>
-        <li><strong>Check the balance, then generate.</strong> {t("Compare the cost with your balance. The default Wan 3.0 template video is {seconds} seconds at 480p for {credits} credits; a 5-second template at 480p costs {shortCredits} credits.", { seconds: defaultVideoSettings.duration, credits: defaultCost, shortCredits: getVideoCost(5, "480p", "wan-3.0") })}</li>
+        <li><strong>Check the balance, then generate.</strong> {t("Compare the cost with your balance. The default Wan 3.0 template video is {seconds} seconds at 480p for {credits} credits; a 5-second template at 480p costs {shortCredits} credits.", { seconds: defaultVideoSettings.duration, credits: defaultCost, shortCredits: getVideoCost(5, "480p", "wan-3.0", 0) })}</li>
       </ol>
     </GeoSection>
 
     <GeoSection id="choose-settings" title="Choose settings for your first attempt">
       <GeoTable caption="A short decision guide" headings={["Your priority", "Starting point", "Check before submitting"]} rows={[
-        ["Use fewer credits", `5 seconds, 480p: ${getVideoCost(5, "480p", "wan-3.0")} credits`, "Wan template costs are shown here. Choose 5 seconds for a shorter first attempt."],
-        ["Request higher resolution", `5 seconds, 720p: ${getVideoCost(5, "720p", "wan-3.0")} credits`, "Resolution is an output setting; the quality of both photo references still matters."],
+        ["Use fewer credits", `5 seconds, 480p: ${getVideoCost(5, "480p", "wan-3.0", 0)} credits`, "Wan template costs are shown here. Choose 5 seconds for a shorter first attempt."],
+        ["Request higher resolution", `5 seconds, 720p: ${getVideoCost(5, "720p", "wan-3.0", 0)} credits`, "Resolution is an output setting; the quality of both photo references still matters."],
         ["Request a longer performance", "10 or 15 seconds in the format you need", "Duration affects cost. Read the updated credit amount before generating."],
       ]} />
       <p className="geo-note">Registration does not include free credits. Purchase a credit pack before generating. Read the <Link href="/hotel-lobby-ai-video-generator-free">credit and allowance guide</Link> for the full cost matrix.</p>

@@ -49,7 +49,7 @@ export default async function HotelLobbyPage() {
     </>} showcaseDetails={<>
       <h3>Hotel Lobby video reference gallery</h3>
       <p>These clips were generated with this tool. Results vary with your photos, model and settings.</p>
-      <p className="geo-note">{t("Suggested starting settings for your own Wan template: two clear portraits, 9:16, 5 seconds, 480p ({credits} credits).", { credits: getVideoCost(5, "480p", "wan-3.0") })} <Link href="/showcases">See more examples</Link>.</p>
+      <p className="geo-note">{t("Suggested starting settings for your own Wan template: two clear portraits, 9:16, 5 seconds, 480p ({credits} credits).", { credits: getVideoCost(5, "480p", "wan-3.0", 0) })} <Link href="/showcases">See more examples</Link>.</p>
     </>} />
     <GeoCta local />
     <GeoRelatedLinks current={HOTEL_LOBBY_PATH} />

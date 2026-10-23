@@ -1,6 +1,6 @@
 import { Input, BufferSource, MP4, WAVE } from 'mediabunny';
 import type { CreateVideoRequest } from '../contracts';
-import { getVideoSettings } from '../video-options';
+import { getVideoSettings, getVideoReferenceDuration } from '../video-options';
 import { requireUser } from './auth';
 import { appOrigin, database, media, type Env } from './env';
 import { ApiError } from './errors';
@@ -75,11 +75,11 @@ export async function validateVideoUploads(db: D1Database, userId: string, paylo
     if (!photo || !['image/jpeg', 'image/png', 'image/webp'].includes(photo.content_type)) throw new ApiError(400, 'Please upload both photos to your account.');
   }
   const settings = getVideoSettings(payload);
-  let referenceDuration = payload.duration;
+  let referenceDuration = getVideoReferenceDuration(payload);
   if (payload.referenceVideo) {
     const video = await upload(payload.referenceVideo);
     if (!video || video.media_kind !== 'video' || video.content_type !== 'video/mp4' || !video.duration || video.duration < 1.95 || video.duration > 15) throw new ApiError(400, 'Please upload your reference video again.');
-    referenceDuration = video.duration;
+    referenceDuration = getVideoReferenceDuration(payload, video.duration);
     if (payload.duration !== Math.max(settings.model === 'wan-3.0' ? 2 : 4, Math.round(referenceDuration))) throw new ApiError(400, 'Video duration must match the selected motion clip.');
   }
   if (payload.referenceAudio) {

@@ -5,8 +5,8 @@ import { GeoCta, GeoHeader, GeoRelatedLinks, GeoSection, GeoTable, geoMetadata }
 import { defaultVideoSettings, getVideoCost, videoDurations } from "@/lib/video-options";
 
 const path = "/hotel-lobby-ai-video-generator-free";
-const minimumCost = getVideoCost(5, "480p", "wan-3.0");
-const defaultCost = getVideoCost(defaultVideoSettings.duration, defaultVideoSettings.resolution, defaultVideoSettings.model);
+const minimumCost = getVideoCost(5, "480p", "wan-3.0", 0);
+const defaultCost = getVideoCost(defaultVideoSettings.duration, defaultVideoSettings.resolution, defaultVideoSettings.model, 0);
 
 export async function generateMetadata() {
   const t = await getTranslations();
@@ -32,8 +32,8 @@ export default async function FreeHotelLobbyGuidePage() {
     <GeoSection id="credit-costs" title="How many credits does each video cost?">
       <GeoTable caption="Wan template credits by duration and resolution" headings={["Video duration", "480p", "720p"]} rows={videoDurations.map((duration) => [
         `${duration} seconds`,
-        `${getVideoCost(duration, "480p", "wan-3.0")} credits`,
-        `${getVideoCost(duration, "720p", "wan-3.0")} credits`,
+        `${getVideoCost(duration, "480p", "wan-3.0", 0)} credits`,
+        `${getVideoCost(duration, "720p", "wan-3.0", 0)} credits`,
       ])} />
       <div className="geo-prose">
         <p>{t("These are Wan template costs. The default is {seconds} seconds at 480p for {credits} credits. Model, resolution, output duration and reference-video duration affect cost; aspect ratio does not. A 5-second template at 480p costs {shortCredits} credits.", { seconds: defaultVideoSettings.duration, credits: defaultCost, shortCredits: minimumCost })}</p>

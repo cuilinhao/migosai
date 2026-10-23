@@ -23,15 +23,22 @@ async function kieJob(polling = false, settings = {}) {
 }
 
 describe('Kie video integration', () => {
-  it('uses first-party template motion and soundtrack for new Wan requests', async () => {
-    const d = await kieJob(false, { model: 'wan-3.0', scene: 'hotel-lobby', motion: 'template', soundtrack: 'template', duration: 12 });
+  it.each(['template', 'song'] as const)('keeps uploaded identities without template actors when using %s audio', async soundtrack => {
+    const d = await kieJob(false, { model: 'wan-3.0', scene: 'hotel-lobby', motion: 'template', soundtrack, ...(soundtrack === 'song' ? { referenceAudio: 'users/u/uploads/song' } : {}), duration: 12, mode: 'human' });
     const fetcher = vi.spyOn(globalThis, 'fetch').mockResolvedValue(Response.json({ code: 200, data: { taskId: 'kie_task' } }));
     await d.tick();
     const body = JSON.parse(String(fetcher.mock.calls[0][1]?.body));
     expect(body).toMatchObject({ model: 'wan/3-0-video', input: {
-      reference_video_urls: ['https://example.test/templates/hotel-lobby/motion-12.mp4'],
-      reference_audio_urls: ['https://example.test/templates/hotel-lobby/audio-12.wav'], duration: 12, resolution: '480P',
+      duration: 12, resolution: '480P', audio: true,
     } });
+    expect(body.input.reference_video_urls).toBeUndefined();
+    expect(body.input.first_frame_url).toBeUndefined();
+    expect(body.input.reference_image_urls).toHaveLength(2);
+    for (const [i, key] of [input.leftImage, input.rightImage].entries()) expect(await verifyMediaSignature(d.env, key, new URL(body.input.reference_image_urls[i]))).toBe(true);
+    if (soundtrack === 'template') expect(body.input.reference_audio_urls).toEqual(['https://example.test/templates/hotel-lobby/audio-12.wav']);
+    else expect(await verifyMediaSignature(d.env, 'users/u/uploads/song', new URL(body.input.reference_audio_urls[0]))).toBe(true);
+    expect(body.input.prompt).not.toContain('Video1');
+    expect(body.input.prompt).toContain('Audio1');
     expect(d.row()).toMatchObject({ stage: 'polling', provider_id: 'kie_task' });
   });
 
@@ -79,7 +86,7 @@ describe('Kie video integration', () => {
     expect(JSON.parse(String(d.sqlite.prepare('SELECT payload FROM generations').get()?.payload))).toMatchObject({ model: 'wan-3.0', provider: 'kie' });
     const retry = await createGeneration(request(), 'video');
     expect((await retry.json() as {id:string}).id).toBe((await response.json() as {id:string}).id);
-    expect(d.sqlite.prepare('SELECT credits FROM users').get()?.credits).toBe(70);
+    expect(d.sqlite.prepare('SELECT credits FROM users').get()?.credits).toBe(85);
   });
 
   for (const explicitKey of [true, false]) it(`preserves a pre-switch reservation on retry (explicit key: ${explicitKey})`, async () => {

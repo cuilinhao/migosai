@@ -6,7 +6,7 @@ import type { AspectRatio, VideoDuration, VideoResolution } from "@/lib/contract
 import { aspectRatios, defaultVideoSettings, getVideoCost, videoDurations, videoResolutions } from "@/lib/video-options";
 
 const path = "/hotel-lobby-ai-template";
-const defaultCost = getVideoCost(defaultVideoSettings.duration, defaultVideoSettings.resolution, defaultVideoSettings.model);
+const defaultCost = getVideoCost(defaultVideoSettings.duration, defaultVideoSettings.resolution, defaultVideoSettings.model, 0);
 const configurations: { purpose: string; aspect: AspectRatio; duration: VideoDuration; resolution: VideoResolution; reason: string }[] = [
   { purpose: "First portrait-format attempt", aspect: "9:16", duration: 5, resolution: "480p", reason: "A short Wan template configuration; review the pairing before spending more on another generation." },
   { purpose: "A wider duo composition", aspect: "16:9", duration: 10, resolution: "720p", reason: "A landscape frame and a longer clip for a horizontal placement." },
@@ -48,7 +48,7 @@ export default async function HotelLobbyTemplatePage() {
       <GeoTable caption="Wan template configurations for different placements" headings={["Use case", "Configuration", "Cost", "Why choose it"]} rows={configurations.map((configuration) => [
         configuration.purpose,
         `${configuration.aspect} · ${configuration.duration} seconds · ${configuration.resolution}`,
-        `${getVideoCost(configuration.duration, configuration.resolution, "wan-3.0")} credits`,
+        `${getVideoCost(configuration.duration, configuration.resolution, "wan-3.0", 0)} credits`,
         configuration.reason,
       ])} />
       <div className="geo-prose">

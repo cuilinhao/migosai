@@ -42,11 +42,23 @@ export function updateVideoSettings(current: VideoSettings, patch: Partial<Video
   return next;
 }
 
+/** The built-in Hotel Lobby choreography must not carry another character's video identity. */
+export function usesHotelLobbyImageReferences(options: Partial<VideoSettings> & { referenceVideo?: string }): boolean {
+  return options.model === 'wan-3.0' && options.scene === 'hotel-lobby'
+    && options.motion === 'template' && !options.referenceVideo;
+}
+
+/** Shared browser/server quote policy. The server supplies independently verified upload duration. */
+export function getVideoReferenceDuration(options: Pick<VideoSettings, 'duration'> & Partial<VideoSettings> & { referenceVideo?: string }, uploadedDuration?: number): number {
+  if (usesHotelLobbyImageReferences(options)) return 0;
+  return uploadedDuration ?? options.duration;
+}
+
 export function getVideoCost(duration: VideoDuration, resolution: VideoResolution, model: VideoModel = 'seedance-2', referenceDuration = duration): number {
   if (!Number.isInteger(duration) || duration < (model === 'wan-3.0' ? 2 : 4) || duration > 15
     || !videoModels.some(m => m.id === model && m.resolutions.includes(resolution))) throw new Error('Invalid video options');
   if (model === 'wan-3.0') {
-    if (!Number.isFinite(referenceDuration) || referenceDuration < 1 || referenceDuration > 15 || referenceDuration + duration > 30.05) throw new Error('Invalid reference duration');
+    if (!Number.isFinite(referenceDuration) || (referenceDuration !== 0 && referenceDuration < 1) || referenceDuration > 15 || referenceDuration + duration > 30.05) throw new Error('Invalid reference duration');
     // Upload validation persists milliseconds; quote from that same precision.
     // Integer arithmetic also avoids adding a credit at floating-point boundaries.
     const referenceMs = Math.round(referenceDuration * 1000);

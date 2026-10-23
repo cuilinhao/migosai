@@ -9,7 +9,7 @@ import type { BlogBlock } from "@/content/blog";
 import "@/app/blog.css";
 
 /** Values interpolated into blog copy, so prices follow the live quote rules. */
-export const blogValues: Values = { shortCredits: getVideoCost(5, "480p", "wan-3.0") };
+export const blogValues: Values = { shortCredits: getVideoCost(5, "480p", "wan-3.0", 0) };
 
 export type BlogTranslate = (source: string, values?: Values) => string;
 

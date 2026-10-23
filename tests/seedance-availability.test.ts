@@ -54,7 +54,7 @@ describe('Seedance audio outage protection', () => {
     await d.tick(id);
     expect(JSON.parse(String(fetcher.mock.calls[0][1]?.body))).toMatchObject({ model: 'wan/3-0-video', input: { audio: true } });
     expect(d.sqlite.prepare('SELECT status,stage,provider_id FROM generations').get()).toMatchObject({ status: 'processing', stage: 'polling', provider_id: 'wan_task' });
-    expect(d.sqlite.prepare('SELECT credits FROM users').get()?.credits).toBe(70);
+    expect(d.sqlite.prepare('SELECT credits FROM users').get()?.credits).toBe(85);
     expect(d.sqlite.prepare("SELECT count(*) n FROM credit_ledger WHERE kind='generation'").get()?.n).toBe(1);
   });
 

@@ -18,8 +18,8 @@ const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 const TITLE = "9 Hotel Lobby AI Video Generators Compared (2026)";
 const DESCRIPTION = "Compare nine Hotel Lobby AI video tools by photos, prompts, credits and workflow. Official LobbyDuo blog; vendor information checked October 2, 2026.";
 const REVIEWED_DATE = "2026-10-02";
-const minimumCost = getVideoCost(5, "480p", "wan-3.0");
-const defaultCost = getVideoCost(defaultVideoSettings.duration, defaultVideoSettings.resolution, defaultVideoSettings.model);
+const minimumCost = getVideoCost(5, "480p", "wan-3.0", 0);
+const defaultCost = getVideoCost(defaultVideoSettings.duration, defaultVideoSettings.resolution, defaultVideoSettings.model, 0);
 
 export async function generateMetadata() { return localizeMetadata(geoMetadata(
   "Best Hotel Lobby AI Video Generators: 9 Compared (2026) | LobbyDuo",

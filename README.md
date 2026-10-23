@@ -18,7 +18,7 @@ LobbyDuo 是运行于 [migosai.design](https://migosai.design) 的双图视频�
 - `/showcases#seedance-examples` 另展示 2026-10-04 复测成功的两条带声音样片：Seedance 2.0 纯文字生成的柯基录音室短片，以及 Seedance 2.0 Fast 双图生成的巴哥与浣熊街头表演。复用已有输出，不新增生成费用；模型样片与首页的 Hotel Lobby 模板成果分开展示。
 - 博客 `/blog` 收录四篇 Hotel Lobby AI 文章与工具对比。文章正文与元数据在 `content/blog.ts`，五种语言译文在 `lib/i18n/messages/blog-*.json`，只在服务端渲染时使用、不进入客户端文案包；`tests/blog-content.test.tsx` 检查译文完整性、链接与占位符一致、内链有效及 sitemap 收录。
 
-默认视频为 Wan、Hotel Lobby、10 秒、480p、9:16，使用模板时消耗 60 积分；5 秒 480p 模板消耗 30 积分。最终价格以服务端验证后的参数和参考片段时长为准。新账户需先购买现有一次性积分套餐；已有余额不足时也需购买积分后生成。
+默认视频为 Wan、Hotel Lobby、10 秒、480p、9:16，默认模板不引用角色动作视频，消耗 30 积分；5 秒 480p 模板消耗 15 积分。最终价格以服务端验证后的参数和参考片段时长为准。新账户需先购买现有一次性积分套餐；已有余额不足时也需购买积分后生成。
 
 ## 本地运行
 

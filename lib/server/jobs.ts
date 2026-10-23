@@ -11,7 +11,7 @@ import type { ImagePayload } from './image-generations';
 import { createFalOzilGoalVideo, getFalVideo } from './fal';
 import type { OzilGoalPayload } from '../ozil-goal';
 import type { FlyingCarPayload } from '../flyingcar';
-import { getVideoSettings } from '../video-options';
+import { getVideoSettings, usesHotelLobbyImageReferences } from '../video-options';
 import { getVideoModelUnavailableReason } from '../video-availability';
 type Avatar={key:string;side:'left'|'right';taskId?:string;url?:string};
 export function generationResponse(job:Job):GenerationResponse{
@@ -187,7 +187,9 @@ export async function advanceJob(env:Env,id:string):Promise<void>{const db=datab
    if(payload.model){
     const settings=getVideoSettings(payload),origin=appOrigin(env);
     if(payload.referenceVideo)videoUrls=[await signedMediaUrl(env,payload.referenceVideo)];
-    else if(settings.motion==='template'&&settings.scene==='hotel-lobby')videoUrls=[`${origin}/templates/hotel-lobby/motion-${payload.duration}.mp4`];
+    // Wan treats video actors as identity references too. Its built-in Hotel
+    // Lobby performance must use the uploaded photos as the only visual input.
+    else if(settings.motion==='template'&&settings.scene==='hotel-lobby'&&!usesHotelLobbyImageReferences({...settings,referenceVideo:payload.referenceVideo}))videoUrls=[`${origin}/templates/hotel-lobby/motion-${payload.duration}.mp4`];
     if(settings.soundtrack!=='ai'){
      if(payload.referenceAudio)audioUrls=[await signedMediaUrl(env,payload.referenceAudio)];
      else if(settings.soundtrack==='template')audioUrls=[`${origin}/templates/hotel-lobby/audio-${payload.duration}.wav`];

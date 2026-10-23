@@ -2,7 +2,7 @@ import { getVideoCost } from "../lib/video-options";
 
 export const hotelLobbyTitle = "Hotel Lobby AI Video Generator — Two-Photo Duo Videos (2026)";
 export const hotelLobbyDescription = "Turn two photos into a Hotel Lobby style AI duo video without a prompt. Registration includes no free credits. Sign in, purchase a credit pack, choose your format and generate.";
-export const minimumVideoCredits = getVideoCost(5, "480p", "wan-3.0");
+export const minimumVideoCredits = getVideoCost(5, "480p", "wan-3.0", 0);
 
 export const hotelLobbySteps = [
   {

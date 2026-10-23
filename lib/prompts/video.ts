@@ -16,13 +16,18 @@ export function videoPrompt(options: CreateVideoRequest, references: { video: bo
   const image1 = wan ? 'Image1' : '@图片1', image2 = wan ? 'Image2' : '@图片2';
   const video = wan ? 'Video1' : '@视频1', audio = wan ? 'Audio1' : '@音频1';
   const soundtrack = options.soundtrack ?? (wan ? 'template' : 'ai');
+  const identity = wan
+    ? `Use ${image1} and ${image2} as the only sources for the performers' visual identities. Preserve each subject's species, face, fur or skin markings, colors, and body proportions from its own image. Do not turn an animal into a different species or a human. If both images show the same subject, show two separate copies of that subject. Never merge, swap, or replace the subjects.`
+    : '';
   const motion = references.video
-    ? `Follow ${video}'s choreography, gestures, timing and performance energy while keeping the identities from the reference images.`
-    : 'Use small rhythmic movements and coordinated natural gestures.';
+    ? `Follow ${video}'s choreography, gestures, timing and performance energy while keeping the identities from the reference images.${wan ? ' Do not copy the reference video actors, their appearance, or their clothing.' : ''}`
+    : wan
+      ? 'Perform side by side at the microphone, alternating short rap phrases with small rhythmic head nods, subtle body sways and coordinated natural gestures. Keep movements appropriate to the subjects in the uploaded images.'
+      : 'Use small rhythmic movements and coordinated natural gestures.';
   const sound = soundtrack === 'ai'
     ? `Create an upbeat original rap. Original instrumental and lyrics, no existing song, no artist imitation.${options.topic?.trim() ? ` The rap theme is ${JSON.stringify(options.topic.trim())}.` : ''}`
     : references.audio
       ? `Use ${audio} as the music and vocal reference throughout. Align lip movements, gestures and pacing with its vocals and rhythm. Preserve the supplied musical direction and avoid adding unrelated dialogue.`
       : 'Perform a rhythmic music performance together with synchronized expressions and gestures.';
-  return `Create a ${options.duration}-second ${orientation} music performance in ${options.aspect} framing. ${scenes[options.scene ?? 'hotel-lobby']} ${subjects} perform together. ${image1} is the left subject and ${image2} is the right subject. Preserve each reference identity consistently, keep the first subject on the left and the second on the right, and keep both visible throughout. ${motion} ${sound} Compose for ${orientation} framing with comfortable headroom. Natural expressions, accurate lip sync, subtle camera motion, polished realistic detail. No captions, no logos.`;
+  return `Create a ${options.duration}-second ${orientation} music performance in ${options.aspect} framing. ${scenes[options.scene ?? 'hotel-lobby']} ${subjects} perform together. ${image1} is the left subject and ${image2} is the right subject. Preserve each reference identity consistently, keep the first subject on the left and the second on the right, and keep both visible throughout. ${identity} ${motion} ${sound} Compose for ${orientation} framing with comfortable headroom. Natural expressions, accurate lip sync, subtle camera motion, polished realistic detail. No captions, no logos.`;
 }

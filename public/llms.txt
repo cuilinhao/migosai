@@ -43,7 +43,7 @@
 - Models: Wan 3.0, Seedance 2.0 and Seedance 2.0 Fast. Stages: Hotel Lobby, Luxury lobby, Recording studio and Street cypher. Wan uses the Hotel Lobby stage; the other stages use Seedance original audio.
 - Template duration choices: 5, 8, 10, 12 or 15 seconds. Uploaded motion clips can determine duration within the selected model's limits. Aspect ratios: 9:16, 16:9, 1:1, 4:3 or 3:4. Resolutions: 480p, 720p or 1080p; Seedance Fast supports up to 720p.
 - Sound choices: template soundtrack, an uploaded song, audio extracted from a motion clip, or original AI rap with an optional topic. Browsers prepare the selected short segment before uploading it. References guide generation; exact audio copying or identical movement is not guaranteed.
-- The default Wan template video is 10 seconds at 480p and costs 60 credits. A 5-second 480p template video costs 30 credits with Wan, 50 with Seedance or 40 with Seedance Fast. Wan charges for reference-video plus output duration; the server calculates the final quote from validated media metadata.
+- The default Wan template video is 10 seconds at 480p and costs 30 credits. A 5-second 480p template video costs 15 credits with Wan, 50 with Seedance or 40 with Seedance Fast. The built-in Wan template uses the uploaded photo identities, text choreography and template audio without a reference video. Uploaded motion clips add their validated reference-video duration to the output duration for Wan billing; the server calculates the final quote.
 - New accounts start with 0 credits. Registration and sign-in do not grant credits. Purchase a one-time credit pack before generating; existing account balances remain available. No subscription or automatic renewal is required. No daily free-video allowance is offered. Check the generator's quote before submitting.
 - LobbyDuo does not add its own watermark. This does not guarantee that source material or provider output contains no marks.
 - Processing includes upload, generation and review. Video duration is not a promise about completion time.
@@ -52,7 +52,7 @@
 - Support, refunds, privacy requests, and content reports: cuilinhao2021@gmail.com.
 
 ## FAQ
-- Q: Can I generate a complete Hotel Lobby AI video for free here? A: No. New accounts receive no free credits. Purchase a one-time credit pack and check that your balance covers the selected settings before generating. The default 10-second Wan template costs 60 credits. Existing account balances remain available.
+- Q: Can I generate a complete Hotel Lobby AI video for free here? A: No. New accounts receive no free credits. Purchase a one-time credit pack and check that your balance covers the selected settings before generating. The default 10-second Wan template costs 30 credits. Existing account balances remain available.
 - Q: Do I need to write a prompt? A: No. Scene instructions are built in. For original AI rap, a topic is optional.
 - Q: Do both people need to appear in one photo? A: No. Add one photo per performer to the two upload slots.
 - Q: Is this an official artist or COLORS product? A: No. LobbyDuo is an independent tool; descriptive references do not imply affiliation or endorsement.

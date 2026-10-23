@@ -22,6 +22,24 @@ async function setup() {
   return { ...d, request };
 }
 describe('custom generation reservation', () => {
+  it('charges the image-led template for output only, deduplicates and restores the actual debit on failure',async()=>{
+    const d=await setup();
+    const patch={motion:'template',soundtrack:'template',referenceVideo:undefined,referenceAudio:undefined,expectedCredits:1,referenceDuration:0};
+    const response=await POST(d.request(patch),undefined);
+    expect(response.status).toBe(202);
+    const first=await response.json() as {id:string};
+    const second=await (await POST(d.request(patch),undefined)).json() as {id:string};
+    expect(second.id).toBe(first.id);
+    expect(d.sqlite.prepare('SELECT cost FROM generations').get()).toEqual({cost:15});
+    expect(d.sqlite.prepare('SELECT credits FROM users').get()).toEqual({credits:85});
+    expect(d.sqlite.prepare("SELECT count(*) n,sum(amount) amount FROM credit_ledger WHERE kind='generation'").get()).toEqual({n:1,amount:-15});
+    const {refundGeneration}=await import('../lib/server/billing');
+    await refundGeneration(d.db,first.id,'failed','fixture failure');
+    await refundGeneration(d.db,first.id,'failed','fixture failure');
+    expect(d.sqlite.prepare('SELECT credits FROM users').get()).toEqual({credits:100});
+    expect(d.sqlite.prepare("SELECT count(*) n,sum(amount) amount FROM credit_ledger WHERE kind='refund'").get()).toEqual({n:1,amount:15});
+  });
+
   it('reserves actual model, motion and audio once and bills measured reference seconds', async () => {
     const d = await setup();
     const first = await (await createGeneration(d.request({ expectedCredits: 1, referenceDuration: 0 }), 'video')).json() as { id: string };

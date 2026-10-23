@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getVideoCost, validateVideo, updateVideoSettings, defaultVideoSettings } from '../lib/video-options';
+import { getVideoCost, getVideoReferenceDuration, validateVideo, updateVideoSettings, defaultVideoSettings } from '../lib/video-options';
 
 const legacy = { leftImage: 'users/u/uploads/left', rightImage: 'users/u/uploads/right', aspect: '9:16', duration: 5, resolution: '720p' };
 describe('custom video options', () => {
@@ -44,5 +44,28 @@ describe('custom video options', () => {
   });
   it('returns to an available duration after leaving a short custom motion clip', () => {
     expect(updateVideoSettings({ ...defaultVideoSettings, motion: 'video', duration: 3 }, { motion: 'template' }).duration).toBe(5);
+  });
+});
+
+const imageTemplate = {duration:5,model:'wan-3.0',scene:'hotel-lobby',motion:'template',soundtrack:'template'} as const;
+describe('image-led Hotel Lobby reference pricing',()=>{
+  it('quotes output seconds only when no reference video is submitted',()=>{
+    const helper=getVideoReferenceDuration;
+    expect(helper(imageTemplate)).toBe(0);
+    for(const [resolution,want] of [['480p',15],['720p',30],['1080p',60]] as const)expect(getVideoCost(5,resolution,'wan-3.0',0)).toBe(want);
+  });
+  it('never interprets a positive fraction below one second as a valid reference clip',()=>{
+    for(const duration of [-1,0.5,NaN,Infinity])expect(()=>getVideoCost(5,'480p','wan-3.0',duration)).toThrow();
+  });
+  it('keeps uploaded reference durations and legacy default pricing unchanged',()=>{
+    const helper=getVideoReferenceDuration;
+    expect(helper({...imageTemplate,motion:'video',referenceVideo:'own-video'},4.9)).toBe(4.9);
+    expect(helper({duration:5})).toBe(5);
+    expect(helper({...imageTemplate,model:'seedance-2'})).toBe(5);
+    expect(helper({...imageTemplate,scene:'luxury-lobby'})).toBe(5);
+    expect(helper({...imageTemplate,referenceVideo:'own-video'})).toBe(5);
+    expect(helper({...imageTemplate,soundtrack:'song'})).toBe(0);
+    expect(getVideoCost(5,'480p','wan-3.0')).toBe(30);
+    expect(getVideoCost(5,'480p','wan-3.0',4.9)).toBe(30);
   });
 });

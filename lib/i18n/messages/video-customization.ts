@@ -50,7 +50,7 @@ const rows: readonly TranslationRow[] = [
   ['Template motion', '範本動作', '템플릿 움직임', 'テンプレートの動き', 'Mouvements du modèle', 'Movimiento de la plantilla'],
   ['Your motion clip', '你的動作片段', '내 움직임 클립', '自分の動きのクリップ', 'Votre clip de mouvements', 'Tu clip de movimiento'],
   ['Upload a video and choose its movement reference.', '上傳影片並選取要參考的動作片段。', '영상을 업로드하고 참고할 움직임 구간을 선택하세요.', '動画をアップロードし、参考にする動きの区間を選んでください。', 'Importez une vidéo et choisissez les mouvements à utiliser comme référence.', 'Sube un vídeo y elige el fragmento de movimiento de referencia.'],
-  ['Use the built-in performance reference.', '使用內建的表演參考片段。', '기본 제공 퍼포먼스 참고 영상을 사용합니다.', '内蔵の参考パフォーマンスを使います。', 'Utilisez la performance de référence intégrée.', 'Usa la actuación de referencia incluida.'],
+  ['Use built-in choreography while keeping your photo subjects.', '使用內建動作編排，保留照片中的主角。', '사진 속 주인공을 유지하며 기본 안무를 사용합니다.', '写真の被写体を保ちながら、内蔵の振り付けを使います。', 'Utilisez la chorégraphie intégrée en conservant les sujets de vos photos.', 'Usa la coreografía incluida y conserva los sujetos de tus fotos.'],
   ['Soundtrack', '音軌', '음악', '音声', 'Bande sonore', 'Banda sonora'],
   ['Template soundtrack', '範本音軌', '템플릿 음악', 'テンプレートの音声', 'Bande sonore du modèle', 'Banda sonora de la plantilla'],
   ['Your song', '你的歌曲', '내 노래', '自分の曲', 'Votre chanson', 'Tu canción'],

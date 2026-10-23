@@ -6,7 +6,7 @@ import { ImagePlus, Sparkles, CreditCard, UserRound, X } from "lucide-react";
 import { useLocale } from "@/components/i18n/locale-provider";
 import { useAuth } from "@/components/auth-provider";
 import type { GenerationResponse, VideoSettings } from "@/lib/contracts";
-import { defaultVideoSettings, getVideoCost, updateVideoSettings, videoScenes } from "@/lib/video-options";
+import { defaultVideoSettings, getVideoCost, getVideoReferenceDuration, updateVideoSettings, videoScenes } from "@/lib/video-options";
 import { getVideoModelUnavailableReason } from "@/lib/video-availability";
 import { readApi, useGeneration, useGenerationTranslations } from "./use-generation";
 import { captureVideoSubmission, executeVideoSubmission, type UploadedPair } from "./video-submission";
@@ -104,7 +104,7 @@ export function DuoVideoGenerator() {
   }, [user?.id, authLoading, setGeneration]);
   useEffect(() => { if (generation?.status === "completed" || generation?.status === "failed") void refresh(); }, [generation?.status, refresh]);
 
-  const cost = getVideoCost(duration, resolution, settings.model, settings.motion === 'video' && referenceVideo ? referenceVideo.duration : duration);
+  const cost = getVideoCost(duration, resolution, settings.model, getVideoReferenceDuration(effectiveSettings, settings.motion === 'video' && referenceVideo ? referenceVideo.duration : undefined));
   const activeJob = Boolean(generation && !["completed", "failed", "cancelled"].includes(generation.status));
   const videoReady = generation?.status === "completed" && Boolean(generation.videoUrl);
   const progress = videoReady ? 100 : Math.min(99, Math.max(0, Math.round(generation?.progress ?? 0) || 0));
