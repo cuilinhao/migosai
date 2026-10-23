@@ -46,9 +46,9 @@ describe("effect sitemap discovery", () => {
     const entries = sitemap();
     for (const prefix of prefixes) {
       const home = prefix ? `${site}${prefix}` : `${site}/`;
-      expect(entries.find(entry => entry.url === home)?.lastModified).toBe("2026-10-22");
+      expect(entries.find(entry => entry.url === home)?.lastModified).toBe("2026-10-23");
       expect(entries.find(entry => entry.url === `${site}${prefix}/effects/003-ai-money-flex`)?.lastModified).toBe("2026-10-22");
-      expect(entries.find(entry => entry.url === `${site}${prefix}/hotel-lobby-ai-video-generator`)?.lastModified).toBe("2026-10-02");
+      expect(entries.find(entry => entry.url === `${site}${prefix}/hotel-lobby-ai-video-generator`)?.lastModified).toBe("2026-10-23");
     }
   });
 });
