@@ -44,7 +44,7 @@ export const publicPages: PublicPage[] = [
   { path: "/ozil-goal-generator/ozil-goal-meme", label: "Ozil Goal Meme", priority: 0.7, changeFrequency: "monthly", lastModified: "2026-10-15" },
   { path: "/ozil-goal-generator/ozil-goal-capcut-template", label: "Ozil Goal CapCut Template", priority: 0.7, changeFrequency: "monthly", lastModified: "2026-10-15" },
   { path: "/ozil-goal-generator/ai-football-video-from-photo", label: "AI Football Video from Photo", priority: 0.7, changeFrequency: "monthly", lastModified: "2026-10-15" },
-  { path: "/privacy-policy", label: "Privacy Policy", priority: 0.7, changeFrequency: "yearly", lastModified: "2026-10-03" },
+  { path: "/privacy-policy", label: "Privacy Policy", priority: 0.7, changeFrequency: "yearly", lastModified: "2026-10-23" },
   { path: "/terms-of-service", label: "Terms of Service", priority: 0.7, changeFrequency: "yearly", lastModified: "2026-10-03" },
   { path: "/refund-policy", label: "Refund Policy", priority: 0.7, changeFrequency: "yearly", lastModified: "2026-10-03" },
   { path: "/acceptable-use-policy", label: "Acceptable Use Policy", priority: 0.7, changeFrequency: "yearly", lastModified: "2026-10-03" },
