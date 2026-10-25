@@ -72,13 +72,13 @@ async function request(env: Env, url: string, mode: 'submit' | 'status' | 'resul
   return body;
 }
 
-async function createFalReferenceVideo(env: Env, imageUrl: string, config: typeof OZIL_GOAL_CONFIG | typeof WINDOW_PEEPER_CONFIG, prompt: string): Promise<string> {
+async function createFalReferenceVideo(env: Env, imageUrl: string, config: typeof OZIL_GOAL_CONFIG | typeof WINDOW_PEEPER_CONFIG, prompt: string, promptExpansionMode: 'disabled' | 'quality' = 'disabled'): Promise<string> {
   const data = await request(env, `${QUEUE_ORIGIN}/${config.endpoint}`, 'submit', {
     prompt,
     reference_image_urls: [imageUrl],
     reference_video_urls: [`${appOrigin(env)}${config.referencePath}`],
     duration: config.duration, resolution: '768P', aspect_ratio: config.aspect,
-    prompt_expansion_mode: 'disabled', enable_safety_checker: true, sync_mode: false,
+    prompt_expansion_mode: promptExpansionMode, enable_safety_checker: true, sync_mode: false,
   });
   const handle = validateHandle({ version: 1, requestId: data.request_id, statusUrl: data.status_url, resultUrl: data.response_url });
   return JSON.stringify(handle);
@@ -89,7 +89,7 @@ export async function createFalOzilGoalVideo(env: Env, imageUrl: string): Promis
 }
 
 export async function createFalWindowPeeperVideo(env: Env, imageUrl: string): Promise<string> {
-  return createFalReferenceVideo(env, imageUrl, WINDOW_PEEPER_CONFIG, windowPeeperPrompt());
+  return createFalReferenceVideo(env, imageUrl, WINDOW_PEEPER_CONFIG, windowPeeperPrompt(), 'quality');
 }
 
 export async function getFalVideo(env: Env, serialized: string): Promise<FalVideoResult> {
