@@ -16,17 +16,22 @@
 
 ## 素材
 
-完整来源、字节数、SHA-256 和已测媒体属性见 [asset-manifest.json](./asset-manifest.json)。目前记录 15 个本地文件：3 段视频、3 张主案例海报与 9 张 TikTok 海报。
+完整来源、字节数、SHA-256 和已测媒体属性见 [asset-manifest.json](./asset-manifest.json)。目前记录 16 个本地文件：3 段视频、1 条固定音轨、3 张主案例海报与 9 张 TikTok 海报。
 
 | 本地文件 | 来源 | 用途与已知属性 |
 |---|---|---|
 | `public/templates/window-peeper/motion.mp4` | [Theolicccc / CapCut 原模板](https://www.capcut.com/template-detail/7698670250123922694) | 固定动作参考及页面预览；8.2 秒，720 × 1280，H.264/AAC |
+| `public/templates/window-peeper/soundtrack.m4a` | 同一 CapCut 原模板音轨 | 生成后的固定配乐；循环衔接、结尾淡出，AAC 44.1 kHz 双声道 |
 | `public/window-peeper/original-poster.jpg` | 同一 CapCut 原模板 | 原模板海报 |
 | `public/window-peeper/burger.{jpg,mp4}` | [Viberot](https://viberot.com/video/window-peeper-ai) | 外部潮流案例；视频约 10.041667 秒，414 × 720 |
 | `public/window-peeper/cat.{jpg,mp4}` | [Viberot](https://viberot.com/video/window-peeper-ai) | 外部宠物案例；视频约 10.041667 秒，720 × 414 |
 | `public/window-peeper/*.avif` | manifest 中逐条列出的 TikTok 原作者页面 | 海报跳转到原帖，未伪装为本站作品 |
 
 原模板下载文件为 HEVC，为浏览器播放兼容转成 H.264/AAC 并启用 faststart；画幅、8.2 秒时长和参考动作保持不变。manifest 同时记录转换前后哈希。页面明确区分 8.2 秒来源预览与 15 秒生成规格；这些参考片不能证明 MigosAI 已真实生成相同效果。
+
+固定音轨直接从原模板提取，循环衔接以覆盖 15 秒生成片长，14.6–15 秒淡出并保留到 16 秒的静音余量。服务器按实际视频结束时间截取完整 AAC 包。原站公开前端只显示 MP4 内嵌音轨，没有发现独立配乐层；其服务端处理方式未知。本站采用生成后替换音轨，避免模型自行生成不同音乐。
+
+合成在 Workers 中复制压缩数据，不重新编码画面。当前接受 14–16 秒、单路 AVC、无 B 帧重排的视频，源文件上限 32 MiB、最终文件上限 48 MiB、未写出数据包上限 16 MiB；不支持的输出使用现有失败退款逻辑。B 帧目前明确拒绝，因为现有封装库会造成浏览器显示时间偏移；不能以库自身读取结果代替播放器互通验证。
 
 ## 本站生成与计费
 
@@ -36,7 +41,7 @@
 2. `POST /api/window-peeper/generations` 接收照片 key、明确同意和幂等键。服务器验证同源请求、账户、照片路径与数据库归属、MIME、R2 对象和大小；价格、模型、提示词、模板与参考视频均由服务器决定。
 3. 现有 `reserveGeneration`、D1 唯一约束与账本触发器预留积分；订阅余额、永久积分分配和退款沿用本站逻辑。同一次未知结果重试保留请求键和已上传照片。
 4. 现有任务 worker 以租约推进，提交单张签名照片与本站固定参考视频；未知付费提交结果进入人工核查，不自动再发一次付费请求。
-5. provider 完成后先存入私有 R2，再进入现有视频安全审核。只有通过审核、结果 key 与 ETag 匹配时才向用户提供播放/下载。确定失败及审核拒绝使用现有退款流程。
+5. provider 完成后先存入临时私有 R2；Window Peeper 保留压缩画面数据，丢弃模型音频，合入经过哈希核验的固定模板配乐。只有合成成功才完成最终文件上传，临时源随即删除；合成结果继续进入现有视频安全审核。只有通过审核、结果 key 与 ETag 匹配时才向用户提供播放/下载。确定格式失败及审核拒绝使用现有退款流程；临时存储或素材读取故障重试同一个 provider 结果，不重新付费生成。
 6. 历史响应携带 `template: 'window-peeper'`。生成器只恢复这一模板的未完成任务；作品库显示 Window Peeper 并返回对应生成器，已完成视频通过现有 My Videos / Assets 查看和下载。
 
 套餐区直接使用现有 `PricingEntry` / `PricingCards`，继续使用同一订阅、积分包、活动参数和结账入口。本次没有新建支付方案或复制参考站价格。
@@ -54,6 +59,7 @@
 | 场景提示词 | `lib/prompts/window-peeper.ts` |
 | API 校验和积分预留 | `lib/server/window-peeper.ts`、`app/api/window-peeper/generations/route.ts` |
 | provider 提交与共享任务推进 | `lib/server/fal.ts`、`lib/server/jobs.ts` |
+| 固定配乐合成与 R2 流式存储 | `lib/server/window-peeper-remux.ts`、`lib/server/window-peeper-soundtrack.ts` |
 | SEO、六语言路由与公开页登记 | `app/window-peeper-ai-video-generator/page.tsx`、`app/[locale]/[[...path]]/page.tsx`、`content/public-pages.ts` |
 | 发现入口和作品库标识 | `components/generator-menu.tsx`、`content/portal.ts`、`components/portal/portal-shell.tsx`、`components/account/asset-card.tsx`、`components/generator/generation-history.ts` |
 

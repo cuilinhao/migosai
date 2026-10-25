@@ -9,6 +9,8 @@ import { createVideoModeration, getVideoModeration, SeeApiError } from './seeapi
 import { createKieVideo, createKieOzilGoalVideo, createKieFlyingCarVideo, getKieVideo, createKieImage, getKieImage } from './kie';
 import type { ImagePayload } from './image-generations';
 import { createFalOzilGoalVideo, createFalWindowPeeperVideo, getFalVideo } from './fal';
+import { storeWindowPeeperVideo } from './window-peeper-soundtrack';
+import { WindowPeeperRemuxError } from './window-peeper-remux';
 import type { OzilGoalPayload } from '../ozil-goal';
 import type { WindowPeeperPayload } from '../window-peeper';
 import type { FlyingCarPayload } from '../flyingcar';
@@ -112,7 +114,11 @@ async function advanceModeration(env:Env,job:Job,fence:JobFence){
 async function quarantineVideo(env:Env,job:Job,fence:JobFence,url:string,cost:number|null,provider:'apimart'|'kie'|'fal'='apimart'){
  const db=database(env),key=`users/${job.user_id}/results/${job.id}/${crypto.randomUUID()}`;
  try{
-  await storeProviderMedia(env,url,key,'video',provider);
+  if(JSON.parse(job.payload).template==='window-peeper'){
+   // Extend the lease before the source download and streaming audio replacement.
+   await patch(db,job.id,fence,{progress:90,error:null});
+   await storeWindowPeeperVideo(env,url,key);
+  }else await storeProviderMedia(env,url,key,'video',provider);
   const object=await env.MEDIA!.head(key);
   if(!object?.etag)throw new Error('Could not verify the stored video.');
   const now=Math.floor(Date.now()/1000),expiresAt=now+3600;
@@ -233,7 +239,8 @@ export async function advanceJob(env:Env,id:string):Promise<void>{const db=datab
  }catch(error){
   try {
   if(error instanceof LostLease)return;
-  if(error instanceof ProviderError&&error.transientQuery){await patch(db,id,fence,{error:'The provider status is temporarily unavailable. We will check this saved task again.'});}
+  if(error instanceof WindowPeeperRemuxError){await refundGeneration(db,id,'failed','The generated video could not be prepared with this template. Your credits have been returned.',fence);}
+  else if(error instanceof ProviderError&&error.transientQuery){await patch(db,id,fence,{error:'The provider status is temporarily unavailable. We will check this saved task again.'});}
   else if(error instanceof ProviderError&&error.uncertain){await patch(db,id,fence,{stage:'manual_review',error:error.message});}
   else if(error instanceof ProviderError&&job.stage!=='polling'){await refundGeneration(db,id,'failed',error.message+' Your credits have been returned.',fence);}
   else {await patch(db,id,fence,{error:job.stage==='polling'?'The result is delayed. We will keep checking automatically.':'The service is temporarily unavailable. Your request is saved.'});}

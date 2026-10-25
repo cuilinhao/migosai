@@ -4,5 +4,5 @@ Image 1 exclusively supplies the subject's face, body proportions, hairstyle or 
 Create a realistic 15-second Window Peeper video with one continuous shot. Use Video 1 only for the nighttime apartment exterior, illuminated window, room lighting, camera framing and slow zoom, action sequence and curtain movement. Adapt its shorter sequence smoothly to the 15-second output without repeating actions or adding cuts.
 Begin outside the apartment building at night and slowly zoom toward one warmly illuminated window. Inside, the subject is casually eating a burger. The subject notices the camera and looks directly toward it, pauses awkwardly while holding the burger, then closes the curtain across the window. End with the curtain closed.
 Keep the uploaded identity consistent, the burger and curtain physically coherent, and the movement natural and continuous. Use only one subject. No identity changes between frames, blended faces, extra limbs, duplicated subjects, teleportation, text overlays or abrupt scene changes.
-Use subtle nighttime ambience and natural room sounds that fit the scene.`;
+Focus on the visual action. The final soundtrack will be added separately after generation; do not add speech or singing.`;
 }

@@ -3,6 +3,13 @@ import { database, jobEnv } from './helpers';
 import { reserveGeneration } from '../lib/server/billing';
 import { advanceJob, generationResponse } from '../lib/server/jobs';
 import { verifyMediaSignature } from '../lib/server/media';
+import { readFileSync } from 'node:fs';
+import { BufferSource, Input, MP4 } from 'mediabunny';
+import { memoryVideoBucket } from './window-peeper-r2-fixture';
+import type { Env } from '../lib/server/env';
+
+const providerVideo = new Uint8Array(readFileSync(new URL('./fixtures/window-peeper-audio/video-with-audio.mp4', import.meta.url)));
+const fixedSoundtrack = new Uint8Array(readFileSync(new URL('../public/templates/window-peeper/soundtrack.m4a', import.meta.url)));
 
 afterEach(() => vi.restoreAllMocks());
 const queueRoot = 'https://queue.fal.run/minimax/h3/requests/window_task';
@@ -11,7 +18,7 @@ const handle = JSON.stringify({ version: 1, requestId: 'window_task', statusUrl:
 async function setup(polling = false) {
   const d = database();
   d.sqlite.prepare("UPDATE users SET credits=600 WHERE id='u'").run();
-  const env = { ...jobEnv(d.db), FAL_KEY: 'fal-test-key', FAL_MEDIA_HOSTS: 'v3.fal.media,v3b.fal.media,fal.media' };
+  const env: Env = { ...jobEnv(d.db), FAL_KEY: 'fal-test-key', FAL_MEDIA_HOSTS: 'v3.fal.media,v3b.fal.media,fal.media' };
   const job = await reserveGeneration(d.db, 'u', 'window-peeper-once', 'video', {
     template: 'window-peeper', provider: 'fal', photo: 'users/u/uploads/portrait', consent: true,
     model: 'minimax-h3', endpoint: 'minimax/h3/reference-to-video', duration: 15, aspect: '9:16', resolution: '768p',
@@ -34,24 +41,17 @@ function assessment(flagged = false) {
   };
 }
 
-async function completedProvider(d: Awaited<ReturnType<typeof setup>>, flagged = false) {
-  const stored = new Map<string, { etag: string }>();
-  const removed: string[] = [];
-  d.env.MEDIA = {
-    createMultipartUpload: async (key: string) => ({
-      uploadPart: async (partNumber: number) => ({ partNumber, etag: 'part' }),
-      complete: async () => { stored.set(key, { etag: 'window-etag' }); return {}; }, abort: async () => {},
-    }),
-    head: async (key: string) => stored.get(key) ?? null,
-    delete: async (key: string) => { removed.push(key); stored.delete(key); },
-  } as unknown as R2Bucket;
+async function completedProvider(d: Awaited<ReturnType<typeof setup>>, flagged = false, sourceVideo = providerVideo) {
+  const media = memoryVideoBucket();
+  d.env.MEDIA = media.bucket;
+  d.env.ASSETS = { fetch: async () => new Response(fixedSoundtrack, { headers: { 'content-type': 'audio/mp4' } }) } as unknown as Fetcher;
   const fetcher = vi.spyOn(globalThis, 'fetch')
     .mockResolvedValueOnce(Response.json({ request_id: 'window_task', status: 'COMPLETED' }))
     .mockResolvedValueOnce(Response.json({ video: { url: 'https://v3b.fal.media/files/window.mp4', content_type: 'video/mp4' } }))
-    .mockResolvedValueOnce(new Response(new Uint8Array([0, 1, 2, 3]), { headers: { 'content-type': 'video/mp4', 'content-length': '4' } }))
+    .mockResolvedValueOnce(new Response(sourceVideo, { headers: { 'content-type': 'video/mp4', 'content-length': String(sourceVideo.byteLength) } }))
     .mockResolvedValueOnce(Response.json({ id: 'task_safety', object: 'inference', model: 'video-nsfw-filter', endpoint: 'video-moderation', provider: 'seeapi', status: 'queued', result: null, error: null }, { status: 202 }))
     .mockResolvedValueOnce(Response.json(assessment(flagged)));
-  return { stored, removed, fetcher };
+  return { ...media, fetcher };
 }
 
 describe('Window Peeper jobs', () => {
@@ -110,6 +110,13 @@ describe('Window Peeper jobs', () => {
     expect(generationResponse(d.row()).videoUrl).toBeUndefined();
     const key = d.row().moderation_key;
     expect(media.stored.has(key)).toBe(true);
+    expect(media.stored.size).toBe(1);
+    const prepared = new Input({ source: new BufferSource(media.stored.get(key)!.bytes), formats: [MP4] });
+    try {
+      expect(await (await prepared.getPrimaryAudioTrack())!.getSampleRate()).toBe(44100);
+      expect(await (await prepared.getPrimaryAudioTrack())!.getNumberOfChannels()).toBe(2);
+    } finally { prepared.dispose(); }
+    expect(d.row().moderation_etag).toBe(media.stored.get(key)!.etag);
     await d.tick(); await d.tick();
     expect(d.row()).toMatchObject({ status: 'completed', stage: 'terminal', moderation_verdict: 'passed', result_keys: JSON.stringify([key]) });
     expect(generationResponse(d.row())).toMatchObject({ template: 'window-peeper', videoUrl: `/api/media/${key}` });
@@ -129,6 +136,40 @@ describe('Window Peeper jobs', () => {
     expect(fetcher).toHaveBeenCalledTimes(1);
   });
 
+  it('retries a missing soundtrack using the same provider result without another paid submission', async () => {
+    const d = await setup(true), media = await completedProvider(d);
+    const asset = d.env.ASSETS!;
+    d.env.ASSETS = { fetch: async () => new Response('missing', { status: 404 }) } as unknown as Fetcher;
+    await d.tick();
+    expect(d.row()).toMatchObject({ stage: 'polling', status: 'processing', provider_id: handle, result_keys: null });
+    expect(media.stored.size).toBe(0);
+    expect(d.credits()).toBe(300);
+    d.env.ASSETS = asset;
+    media.fetcher.mockReset()
+      .mockResolvedValueOnce(Response.json({ request_id: 'window_task', status: 'COMPLETED' }))
+      .mockResolvedValueOnce(Response.json({ video: { url: 'https://v3b.fal.media/files/window.mp4' } }))
+      .mockResolvedValueOnce(new Response(providerVideo, { headers: { 'content-type': 'video/mp4' } }));
+    await d.tick();
+    expect(d.row()).toMatchObject({ stage: 'moderation_submitting', status: 'reviewing' });
+    expect(media.stored.size).toBe(1);
+    expect(media.fetcher.mock.calls.every(([, init]) => init?.method !== 'POST')).toBe(true);
+    expect(d.sqlite.prepare("SELECT count(*) n FROM credit_ledger WHERE kind='refund'").get()?.n).toBe(0);
+    expect(d.credits()).toBe(300);
+  });
+
+  it('refunds an unsupported generated video once without publishing its original audio', async () => {
+    const shortVideo = new Uint8Array(readFileSync(new URL('./fixtures/window-peeper-audio/short-avc.mp4', import.meta.url)));
+    const d = await setup(true), media = await completedProvider(d, false, shortVideo);
+    await d.tick(); await d.tick();
+    expect(d.row()).toMatchObject({ status: 'failed', stage: 'terminal', result_keys: null });
+    expect(generationResponse(d.row()).videoUrl).toBeUndefined();
+    expect(media.stored.size).toBe(0);
+    expect(media.aborted).toHaveLength(1);
+    expect(d.credits()).toBe(600);
+    expect(d.sqlite.prepare("SELECT count(*) n FROM credit_ledger WHERE kind='refund'").get()?.n).toBe(1);
+    expect(media.fetcher).toHaveBeenCalledTimes(3);
+  });
+
   it('removes blocked output and refunds exactly once through the shared safety pipeline', async () => {
     const d = await setup(true), media = await completedProvider(d, true);
     await d.tick(); const key = d.row().moderation_key;
@@ -136,7 +177,8 @@ describe('Window Peeper jobs', () => {
     expect(d.row()).toMatchObject({ status: 'failed', moderation_verdict: 'blocked' });
     expect(generationResponse(d.row()).videoUrl).toBeUndefined();
     expect(media.stored.has(key)).toBe(false);
-    expect(media.removed).toEqual([key]);
+    expect(media.removed).toHaveLength(2);
+    expect(media.removed.at(-1)).toBe(key);
     expect(d.credits()).toBe(600);
     expect(d.sqlite.prepare("SELECT count(*) n FROM credit_ledger WHERE kind='refund'").get()?.n).toBe(1);
   });

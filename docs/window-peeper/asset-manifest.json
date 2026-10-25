@@ -28,6 +28,20 @@
       "transform": "HEVC to H.264/AAC, 720x1280, 8.2 seconds, faststart; same reference motion."
     },
     {
+      "path": "/templates/window-peeper/soundtrack.m4a",
+      "source": "https://www.capcut.com/template-detail/7698670250123922694",
+      "bytes": 339723,
+      "sha256": "45f6b9632caa206a1ab49d4fe37ebe105673dc78cb8e715754a283bdcafef6e1",
+      "originalSha256": "dccfe22e08ff1292452b6ffa64f6abae8fc3ae7f477b252b399c5f9eea7f6465",
+      "media": {
+        "codec": "aac",
+        "sampleRate": 44100,
+        "channels": 2,
+        "duration": 16
+      },
+      "transform": "Extract original template audio; repeat with 120ms crossfade, fade out 14.6-15.0s, pad to 16s; AAC 192kbps. Final remux clips AAC packets at generated video end."
+    },
+    {
       "path": "/window-peeper/original-poster.jpg",
       "source": "https://www.capcut.com/template-detail/7698670250123922694",
       "bytes": 16577,
