@@ -13,10 +13,10 @@ const secret = 'whsec_workerFixture123';
 const priceId = 'price_worker123';
 const sessionId = 'cs_test_worker123';
 const hostedCheckoutUrl = `https://checkout.stripe.com/f/pay/${sessionId}#fid=worker%2Ffixture`;
-let worker, db, metadata, requests, upstreamStatus;
-const price = () => ({ id: priceId, object: 'price', active: true, livemode: false, currency: 'usd', unit_amount: 990, type: 'one_time', recurring: null, product: 'prod_worker123' });
-const paid = () => ({ id: sessionId, object: 'checkout.session', livemode: false, mode: 'payment', status: 'complete', payment_status: 'paid', client_reference_id: metadata.orderId, metadata, amount_total: 990, amount_subtotal: 990, currency: 'usd', payment_intent: 'pi_worker123' });
-const confirmed = () => ({ ...paid(), payment_intent: { id: 'pi_worker123', object: 'payment_intent', livemode: false, status: 'succeeded', currency: 'usd', amount: 990, amount_received: 990, metadata }, line_items: { object: 'list', has_more: false, data: [{ id: 'li_worker123', object: 'item', quantity: 1, amount_total: 990, amount_subtotal: 990, currency: 'usd', price: price() }] } });
+let worker, db, metadata, requests, upstreamStatus, purchaseAmount, purchasePriceId;
+const price = () => ({ id: purchasePriceId, object: 'price', active: true, livemode: false, currency: 'usd', unit_amount: purchaseAmount, type: 'one_time', recurring: null, product: 'prod_worker123' });
+const paid = () => ({ id: sessionId, object: 'checkout.session', livemode: false, mode: 'payment', status: 'complete', payment_status: 'paid', client_reference_id: metadata.orderId, metadata, amount_total: purchaseAmount, amount_subtotal: purchaseAmount, currency: 'usd', payment_intent: 'pi_worker123' });
+const confirmed = () => ({ ...paid(), payment_intent: { id: 'pi_worker123', object: 'payment_intent', livemode: false, status: 'succeeded', currency: 'usd', amount: purchaseAmount, amount_received: purchaseAmount, metadata }, line_items: { object: 'list', has_more: false, data: [{ id: 'li_worker123', object: 'item', quantity: 1, amount_total: purchaseAmount, amount_subtotal: purchaseAmount, currency: 'usd', price: price() }] } });
 
 beforeAll(async () => {
   const bundled = await build({
@@ -34,7 +34,7 @@ beforeAll(async () => {
             // Keep this baseline a regular purchase regardless of the CI date.
             // Restore before webhook verification so signature tolerance stays real.
             Date.now = () => Date.parse(url.searchParams.get('at') || '2026-10-25T12:00:00.000Z');
-            try { return Response.json(await createCheckout(env, {id:'u',email:'a@b.c',name:'Test'}, 'starter', 'ja', url.searchParams.has('expectedCredits') ? Number(url.searchParams.get('expectedCredits')) : undefined)); }
+            try { return Response.json(await createCheckout(env, {id:'u',email:'a@b.c',name:'Test'}, url.searchParams.get('packId') || 'starter', 'ja', url.searchParams.has('expectedCredits') ? Number(url.searchParams.get('expectedCredits')) : undefined)); }
             finally { Date.now = previousNow; }
           }
           if (path === '/spend') return Response.json(await reserveGeneration(env.DB, 'u', 'spend', 'video', {}, 400));
@@ -54,13 +54,13 @@ beforeAll(async () => {
   worker = new Miniflare(convertV4MiniflareOptions({
     modules: true, script: bundled.outputFiles[0].text, compatibilityDate: '2026-10-01', compatibilityFlags: ['nodejs_compat'], cf: false,
     d1Databases: ['DB'],
-    bindings: { APP_URL: origin, PAYMENT_PROVIDER: 'stripe', STRIPE_MODE: 'test', STRIPE_SECRET_KEY: 'sk_test_workerFixture123', STRIPE_WEBHOOK_SECRET: secret, STRIPE_PRICE_STARTER: priceId },
+    bindings: { APP_URL: origin, PAYMENT_PROVIDER: 'stripe', STRIPE_MODE: 'test', STRIPE_SECRET_KEY: 'sk_test_workerFixture123', STRIPE_WEBHOOK_SECRET: secret, STRIPE_PRICE_STARTER: priceId, STRIPE_PRICE_CREATOR: 'price_workerCreator', STRIPE_PRICE_PRO: 'price_workerPro', STRIPE_PRICE_BUSINESS: 'price_workerBusiness' },
     outboundService: async request => {
       const url = new URL(request.url);
       requests.push({ host: url.hostname, path: url.pathname, method: request.method, authorization: request.headers.get('authorization'), idempotency: request.headers.get('idempotency-key') });
       if (url.hostname !== 'api.stripe.com') return new Response('Blocked unexpected external destination', { status: 403 });
       if (upstreamStatus !== 200) return new Response('No redirect', { status: upstreamStatus, headers: { location: 'https://untrusted.example.invalid/capture' } });
-      if (url.pathname === `/v1/prices/${priceId}`) return Response.json(price());
+      if (url.pathname === `/v1/prices/${purchasePriceId}`) return Response.json(price());
       if (url.pathname === '/v1/checkout/sessions' && request.method === 'POST') {
         const body = new URLSearchParams(await request.text());
         metadata = Object.fromEntries([...body].filter(([key]) => key.startsWith('metadata[')).map(([key, value]) => [key.slice(9, -1), value]));
@@ -82,11 +82,12 @@ beforeAll(async () => {
 }, 30000);
 afterAll(async () => { await worker?.dispose(); });
 beforeEach(async () => {
-  metadata = null; requests = []; upstreamStatus = 200;
+  metadata = null; requests = []; upstreamStatus = 200; purchaseAmount = 990; purchasePriceId = priceId;
   await db.batch(['DELETE FROM webhook_events', 'DELETE FROM credit_ledger', 'DELETE FROM generation_subscription_allocations', 'DELETE FROM generation_credit_allocations', 'DELETE FROM generations', 'DELETE FROM orders', 'UPDATE users SET credits=100'].map(sql => db.prepare(sql)));
 });
-async function checkout(at, expectedCredits) {
+async function checkout(at, expectedCredits, packId = 'starter') {
   const url = new URL('/checkout', origin);
+  url.searchParams.set('packId', packId);
   if (at) url.searchParams.set('at', at);
   if (expectedCredits !== undefined) url.searchParams.set('expectedCredits', String(expectedCredits));
   return worker.dispatchFetch(url);
@@ -98,6 +99,37 @@ async function webhook(id = 'evt_worker123', timestamp = Math.floor(Date.now() /
 }
 
 describe('Stripe Checkout and accounting in workerd', () => {
+  it.each([
+    ['starter', priceId, 990, 300], ['creator', 'price_workerCreator', 2990, 950],
+    ['pro', 'price_workerPro', 4990, 1600], ['business', 'price_workerBusiness', 9990, 3300],
+  ])('settles a new %s checkout using the approved snapshot in D1', async (packId, configuredPrice, amount, credits) => {
+    purchasePriceId = configuredPrice; purchaseAmount = amount;
+    const response = await checkout(undefined, credits, packId);
+    expect(response.status).toBe(200);
+    const result = await response.json();
+    expect(await db.prepare('SELECT amount,credits,status FROM orders WHERE id=?').bind(result.orderId).first())
+      .toEqual({ amount, credits, status: 'pending' });
+    expect((await webhook()).status).toBe(200);
+    expect(await db.prepare("SELECT credits FROM users WHERE id='u'").first()).toEqual({ credits: 100 + credits });
+    expect((await db.prepare("SELECT amount FROM credit_ledger WHERE kind='payment'").all()).results).toEqual([{ amount: credits }]);
+  });
+
+  it.each([[1200, 0], [1440, 240]])('honors a historical Creator order for %i credits through signed webhook retries', async (credits, bonusCredits) => {
+    purchasePriceId = 'price_historicalCreator'; purchaseAmount = 2990;
+    metadata = { app: 'migosai', orderId: 'historical-order', userId: 'u', packId: 'creator', priceId: purchasePriceId,
+      amount: '2990', currency: 'USD', credits: String(credits), baseCredits: '1200', bonusCredits: String(bonusCredits),
+      ...(bonusCredits ? { campaignId: 'black-friday-2026' } : {}), mode: 'test' };
+    await db.prepare("INSERT INTO orders(id,user_id,pack_id,product_id,amount,currency,credits,checkout_id,provider,provider_mode) VALUES('historical-order','u','creator',?,2990,'USD',?,?,'stripe','test')")
+      .bind(purchasePriceId, credits, sessionId).run();
+    expect((await webhook('evt_historical123')).status).toBe(200);
+    expect((await worker.dispatchFetch(origin + '/spend')).status).toBe(200);
+    const replays = await Promise.all(Array.from({ length: 4 }, (_, index) => webhook(`evt_historicalReplay${index}`)));
+    expect(replays.map(response => response.status)).toEqual([200, 200, 200, 200]);
+    expect(await db.prepare("SELECT credits FROM users WHERE id='u'").first()).toEqual({ credits: credits - 300 });
+    expect((await db.prepare("SELECT amount FROM credit_ledger WHERE kind='payment'").all()).results).toEqual([{ amount: credits }]);
+    expect(await db.prepare("SELECT amount,credits,status FROM orders WHERE id='historical-order'").first()).toEqual({ amount: 2990, credits, status: 'paid' });
+  });
+
   it('creates Checkout and verifies signatures, then settles concurrent events once after credits are spent', async () => {
     const response = await checkout();
     expect(response.status).toBe(200);

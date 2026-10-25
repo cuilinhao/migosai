@@ -31,7 +31,7 @@ const price = {
   active: true,
   type: "recurring",
   currency: "usd",
-  unit_amount: 759,
+  unit_amount: 1490,
   livemode: false,
   recurring: { interval: "month", interval_count: 1, usage_type: "licensed" },
 };
@@ -69,12 +69,12 @@ function invoice(overrides = {}) {
     customer: customerId,
     status: "paid",
     currency: "usd",
-    amount_due: 759,
-    amount_paid: 759,
+    amount_due: 1490,
+    amount_paid: 1490,
     amount_remaining: 0,
     amount_paid_off_stripe: 0,
-    total: 759,
-    subtotal: 759,
+    total: 1490,
+    subtotal: 1490,
     discounts: [],
     total_discount_amounts: [],
     billing_reason: "subscription_create",
@@ -90,8 +90,8 @@ function line(overrides = {}) {
     id: "il_fixture123",
     object: "line_item",
     livemode: false,
-    amount: 759,
-    subtotal: 759,
+    amount: 1490,
+    subtotal: 1490,
     currency: "usd",
     quantity: 1,
     discount_amounts: [],
@@ -168,7 +168,7 @@ function stripeApi(
         object: "checkout.session",
         url: `https://checkout.stripe.com/c/pay/${sessionId}`,
         mode: "subscription",
-        amount_total: options.price ? 7308 : 759,
+        amount_total: options.price?.unit_amount ?? price.unit_amount,
         currency: "usd",
         total_details: { amount_discount: 0, amount_tax: 0 },
         livemode: false,
@@ -189,7 +189,7 @@ function stripeApi(
         id: sessionId,
         url: `https://checkout.stripe.com/c/pay/${sessionId}`,
         mode: "subscription",
-        amount_total: options.price ? 7308 : 759,
+        amount_total: options.price?.unit_amount ?? price.unit_amount,
         currency: "usd",
         total_details: { amount_discount: 0, amount_tax: 0 },
         livemode: false,
@@ -233,7 +233,7 @@ function stripeApi(
             livemode: false,
             status: "paid",
             currency: "usd",
-            amount_paid: 759,
+            amount_paid: 1490,
             payment: {
               type: "payment_intent",
               payment_intent: "pi_subscription123",
@@ -250,8 +250,8 @@ function stripeApi(
         status: "succeeded",
         livemode: false,
         customer: customerId,
-        amount: 759,
-        amount_received: 759,
+        amount: 1490,
+        amount_received: 1490,
         currency: "usd",
         ...options.intent,
       });
@@ -314,6 +314,134 @@ async function setup(options: Parameters<typeof stripeApi>[0] = {}) {
 }
 
 describe("Stripe subscriptions", () => {
+  it.each([
+    { amount: 759, credits: 550, storedPrice: priceId },
+    { amount: 1490, credits: 750, storedPrice: priceId },
+    { amount: 1490, credits: 550, storedPrice: "price_earlierLite" },
+  ])("closes an unpaid same-plan checkout whose stored quote changed: %j", async ({ amount, credits, storedPrice }) => {
+    const { env, sqlite, checkout } = await setup();
+    sqlite.prepare("UPDATE subscriptions SET amount_cents=?,monthly_credits=?,price_id=? WHERE id=?").run(amount, credits, storedPrice, checkout.orderId);
+    sqlite.prepare("UPDATE orders SET amount=?,credits=?,product_id=? WHERE id=?").run(amount, credits, storedPrice, checkout.orderId);
+    metadata = { ...metadata, amount: String(amount), credits: String(credits), priceId: storedPrice };
+    const api = stripeApi({ session: { amount_total: amount }, createSession: { id: "cs_test_repriced123", url: "https://checkout.stripe.com/c/pay/cs_test_repriced123" } });
+    const replacement = await createSubscriptionCheckout(env, user, "lite", "month", "en");
+    expect(replacement.orderId).not.toBe(checkout.orderId);
+    expect(api.expireRequests).toHaveLength(1);
+    expect(sqlite.prepare("SELECT status FROM subscriptions WHERE id=?").get(checkout.orderId)).toEqual({ status: "expired" });
+    expect(sqlite.prepare("SELECT status FROM orders WHERE id=?").get(checkout.orderId)).toEqual({ status: "cancelled" });
+    expect(sqlite.prepare("SELECT amount,credits,status FROM orders WHERE id=?").get(replacement.orderId)).toEqual({ amount: 1490, credits: 550, status: "pending" });
+  });
+
+  it("does not recover an older unbound checkout with a changed quote", async () => {
+    const { db, sqlite } = database();
+    const env = baseEnv(db);
+    stripeApi({ failCreateOnce: true });
+    await expect(createSubscriptionCheckout(env, user, "lite", "month", "en")).rejects.toMatchObject({ status: 502 });
+    sqlite.prepare("UPDATE subscriptions SET amount_cents=759,monthly_credits=750").run();
+    sqlite.prepare("UPDATE orders SET amount=759,credits=750").run();
+    const api = stripeApi({ createSession: { amount_total: 759 } });
+    await expect(createSubscriptionCheckout(env, user, "lite", "month", "en")).rejects.toMatchObject({ status: 409 });
+    expect(api.checkoutRequests).toHaveLength(0);
+    expect(sqlite.prepare("SELECT amount,credits,status,checkout_id FROM orders").get()).toEqual({ amount: 759, credits: 750, status: "pending", checkout_id: null });
+  });
+
+  it.each([
+    ["lite", "month", 759, 750],
+    ["lite", "year", 7308, 750],
+    ["elite-15000", "month", 11999, 15000],
+    ["elite-60000", "year", 323988, 60000],
+  ] as const)("renews historical %s/%s from its stored price and credits after the catalogue changes", async (planId, interval, amount, credits) => {
+    const { db, sqlite } = database();
+    const env = baseEnv(db);
+    // The current checkout configuration intentionally points elsewhere; neither
+    // fulfillment nor a retired Elite subscription needs its old env variable.
+    env.STRIPE_PRICE_MONTHLY_LITE = "price_newMonthlyLite";
+    env.STRIPE_PRICE_YEARLY_LITE = "price_newYearlyLite";
+    const historicalPriceId = "price_historical123";
+    const periodEnd = interval === "year"
+      ? Math.floor(new Date(new Date(start * 1000).setUTCFullYear(new Date(start * 1000).getUTCFullYear() + 1)).getTime() / 1000)
+      : end;
+    metadata = { app: "migosai", orderId: "historical-subscription", userId: "u", planId, billingInterval: interval,
+      priceId: historicalPriceId, amount: String(amount), credits: String(credits), mode: "test" };
+    sqlite.prepare("INSERT INTO subscriptions(id,user_id,provider_mode,plan_id,billing_interval,price_id,amount_cents,monthly_credits,customer_id,subscription_id,status) VALUES('historical-subscription','u','test',?,?,?,?,?,?,?,'active')")
+      .run(planId, interval, historicalPriceId, amount, credits, customerId, subId);
+    sqlite.prepare("INSERT INTO orders(id,user_id,pack_id,product_id,amount,currency,credits,provider,provider_mode,purchase_type,provider_order_id,status) VALUES('historical-subscription','u',?,?,?,'USD',?,'stripe','test','subscription','in_original123','paid')")
+      .run(planId, historicalPriceId, amount, credits);
+    stripeApi({
+      sub: { items: { has_more: false, data: [{ id: "si_fixture123", quantity: 1,
+        price: { ...price, id: historicalPriceId, unit_amount: amount, active: false, recurring: { interval, interval_count: 1, usage_type: "licensed" } },
+        current_period_start: start, current_period_end: periodEnd }] } },
+      invoice: { amount_due: amount, amount_paid: amount, total: amount, subtotal: amount, billing_reason: "subscription_cycle" },
+      line: { amount, subtotal: amount, period: { start, end: periodEnd }, pricing: { type: "price_details", price_details: { price: historicalPriceId } } },
+      payment: { amount_paid: amount },
+      intent: { amount, amount_received: amount },
+    });
+    await applySubscriptionEvent(env, event());
+    await applySubscriptionEvent(env, event());
+    const months = interval === "year" ? 12 : 1;
+    expect(sqlite.prepare("SELECT count(*) AS n,min(granted) AS smallest,max(granted) AS largest,sum(granted) AS total FROM subscription_credit_periods").get())
+      .toEqual({ n: months, smallest: credits, largest: credits, total: months * credits });
+    expect(sqlite.prepare("SELECT amount,credits,status,product_id FROM orders WHERE provider_order_id=?").get(invoiceId))
+      .toEqual({ amount, credits, status: "paid", product_id: historicalPriceId });
+    expect(sqlite.prepare("SELECT count(*) AS n FROM subscription_invoices").get()).toEqual({ n: 1 });
+    expect(sqlite.prepare("SELECT credits FROM users WHERE id='u'").get()).toEqual({ credits: 100 });
+  });
+
+  it.each([
+    ["lite", "month", 759], ["lite", "year", 7308],
+    ["standard", "month", 2499], ["standard", "year", 23988],
+    ["pro", "month", 4999], ["pro", "year", 44988],
+    ["elite-4000", "month", 11999], ["elite-4000", "year", 107988],
+  ] as const)("rejects an obsolete Stripe price configured for a new %s/%s checkout", async (planId, interval, amount) => {
+    const { db, sqlite } = database();
+    const env = baseEnv(db);
+    Object.assign(env, { [`STRIPE_PRICE_${interval === "month" ? "MONTHLY" : "YEARLY"}_${planId.replaceAll("-", "_").toUpperCase()}`]: priceId });
+    stripeApi({ price: { unit_amount: amount, recurring: { interval, interval_count: 1, usage_type: "licensed" } }, createSession: { amount_total: amount } });
+    await expect(createSubscriptionCheckout(env, user, planId, interval, "en")).rejects.toMatchObject({ status: 400 });
+    expect(sqlite.prepare("SELECT count(*) AS n FROM orders").get()).toEqual({ n: 0 });
+    expect(sqlite.prepare("SELECT count(*) AS n FROM subscriptions").get()).toEqual({ n: 0 });
+  });
+
+  it.each([
+    ["lite", "month", 1490, 550],
+    ["lite", "year", 16092, 550],
+    ["standard", "month", 2990, 1150],
+    ["standard", "year", 32292, 1150],
+    ["pro", "month", 4990, 1950],
+    ["pro", "year", 53892, 1950],
+    ["elite-4000", "month", 9990, 4000],
+    ["elite-4000", "year", 107892, 4000],
+  ] as const)("freezes the approved %s/%s price and monthly allowance in a new checkout", async (planId, interval, amount, credits) => {
+    const { db, sqlite } = database();
+    const env = baseEnv(db);
+    const configuredPrice = `price_${planId.replaceAll("-", "")}${interval}`;
+    Object.assign(env, { [`STRIPE_PRICE_${interval === "month" ? "MONTHLY" : "YEARLY"}_${planId.replaceAll("-", "_").toUpperCase()}`]: configuredPrice });
+    const api = stripeApi({
+      price: { id: configuredPrice, unit_amount: amount, recurring: { interval, interval_count: 1, usage_type: "licensed" } },
+      createSession: { amount_total: amount },
+    });
+    const checkout = await createSubscriptionCheckout(env, user, planId, interval, "en");
+    expect(sqlite.prepare("SELECT plan_id,billing_interval,price_id,amount_cents,monthly_credits FROM subscriptions WHERE id=?").get(checkout.orderId))
+      .toEqual({ plan_id: planId, billing_interval: interval, price_id: configuredPrice, amount_cents: amount, monthly_credits: credits });
+    expect(sqlite.prepare("SELECT purchase_type,amount,credits,status FROM orders WHERE id=?").get(checkout.orderId))
+      .toEqual({ purchase_type: "subscription", amount, credits, status: "pending" });
+    expect(api.sent().get("line_items[0][price]")).toBe(configuredPrice);
+    expect(metadata).toMatchObject({ planId, billingInterval: interval, amount: String(amount), credits: String(credits) });
+    expect(sqlite.prepare("SELECT count(*) AS n FROM subscription_credit_periods").get()).toEqual({ n: 0 });
+  });
+
+  it.each([
+    ["elite-15000", 11999], ["elite-25000", 17999], ["elite-40000", 25999], ["elite-60000", 35999],
+  ])("does not offer the retired %s plan to new buyers", async (planId, amount) => {
+    const { db, sqlite } = database();
+    const env = baseEnv(db);
+    Object.assign(env, { [`STRIPE_PRICE_MONTHLY_${String(planId).replaceAll("-", "_").toUpperCase()}`]: priceId });
+    stripeApi({ price: { unit_amount: amount }, createSession: { amount_total: amount } });
+    await expect(createSubscriptionCheckout(env, user, planId, "month", "en"))
+      .rejects.toMatchObject({ status: 400, message: "Unknown subscription plan." });
+    expect(sqlite.prepare("SELECT count(*) AS n FROM orders").get()).toEqual({ n: 0 });
+  });
+
   it.each([
     "customer.subscription.updated",
     "checkout.session.completed",
@@ -379,7 +507,7 @@ describe("Stripe subscriptions", () => {
           sqlite
             .prepare("SELECT sum(remaining) AS credits FROM subscription_credit_periods")
             .get(),
-        ).toEqual({ credits: 750 });
+        ).toEqual({ credits: 550 });
         expect(
           sqlite.prepare("SELECT status FROM orders WHERE id=?").get(checkout.orderId),
         ).toEqual({ status: "paid" });
@@ -485,8 +613,8 @@ describe("Stripe subscriptions", () => {
     ).toEqual({
       status: "pending",
       purchase_type: "subscription",
-      amount: 759,
-      credits: 750,
+      amount: 1490,
+      credits: 550,
     });
     expect(
       await createSubscriptionCheckout(env, user, "lite", "month", "en"),
@@ -523,7 +651,7 @@ describe("Stripe subscriptions", () => {
     ).toEqual({ n: 1 });
   });
   it.each([
-    { invoice: { amount_paid_off_stripe: 759 } },
+    { invoice: { amount_paid_off_stripe: 1490 } },
     { invoice: { livemode: true } },
     { invoice: { customer: "cus_foreign" } },
     { invoice: { amount_paid: 0 } },
@@ -592,7 +720,7 @@ describe("Stripe subscriptions", () => {
       sqlite
         .prepare("SELECT remaining,ends_at FROM subscription_credit_periods")
         .get(),
-    ).toEqual({ remaining: 750, ends_at: end });
+    ).toEqual({ remaining: 550, ends_at: end });
     expect(sqlite.prepare("SELECT credits FROM users").get()).toEqual({
       credits: 100,
     });
@@ -622,7 +750,7 @@ describe("Stripe subscriptions", () => {
       ) / 1000;
     const annualPrice = {
       ...price,
-      unit_amount: 7308,
+      unit_amount: 16092,
       recurring: {
         interval: "year",
         interval_count: 1,
@@ -646,14 +774,14 @@ describe("Stripe subscriptions", () => {
         },
       },
       invoice: {
-        amount_due: 7308,
-        amount_paid: 7308,
-        total: 7308,
-        subtotal: 7308,
+        amount_due: 16092,
+        amount_paid: 16092,
+        total: 16092,
+        subtotal: 16092,
       },
-      line: { amount: 7308, subtotal: 7308, period: { start, end: annualEnd } },
-      payment: { amount_paid: 7308 },
-      intent: { amount: 7308, amount_received: 7308 },
+      line: { amount: 16092, subtotal: 16092, period: { start, end: annualEnd } },
+      payment: { amount_paid: 16092 },
+      intent: { amount: 16092, amount_received: 16092 },
     });
     expect(api.sent().get("mode")).toBe("subscription");
     await applySubscriptionEvent(env, event());
@@ -664,14 +792,14 @@ describe("Stripe subscriptions", () => {
           "SELECT count(*) AS n,sum(granted) AS total FROM subscription_credit_periods",
         )
         .get(),
-    ).toEqual({ n: 12, total: 9000 });
+    ).toEqual({ n: 12, total: 6600 });
     expect(
       sqlite
         .prepare(
           "SELECT sum(remaining) AS n FROM subscription_credit_periods WHERE starts_at<=unixepoch() AND ends_at>unixepoch()",
         )
         .get(),
-    ).toEqual({ n: 750 });
+    ).toEqual({ n: 550 });
     expect(sqlite.prepare("SELECT credits FROM users").get()).toEqual({
       credits: 100,
     });
@@ -701,14 +829,14 @@ describe("Stripe subscriptions", () => {
   });
 
   it.each([
-    { plan: "lite", interval: "year", amount: 7308, variable: "STRIPE_PRICE_YEARLY_LITE" },
-    { plan: "standard", interval: "month", amount: 2499, variable: "STRIPE_PRICE_MONTHLY_STANDARD" },
+    { plan: "lite", interval: "year", amount: 16092, variable: "STRIPE_PRICE_YEARLY_LITE" },
+    { plan: "standard", interval: "month", amount: 2990, variable: "STRIPE_PRICE_MONTHLY_STANDARD" },
   ] as const)("closes an unpaid Checkout before switching to $plan/$interval", async ({ plan, interval, amount, variable }) => {
     const { env, sqlite, checkout } = await setup();
     const nextPrice = "price_switched123";
     env[variable] = nextPrice;
     const api = stripeApi({
-      session: { amount_total: 759 },
+      session: { amount_total: 1490 },
       price: { id: nextPrice, unit_amount: amount, recurring: { interval, interval_count: 1, usage_type: "licensed" } },
       createSession: { id: "cs_test_switched123", amount_total: amount, url: "https://checkout.stripe.com/c/pay/cs_test_switched123" },
     });
@@ -787,8 +915,8 @@ describe("Stripe subscriptions", () => {
       return result;
     } } as D1Database;
     const api = stripeApi({
-      session: { amount_total: 759 },
-      price: { unit_amount: 7308, recurring: { interval: "year", interval_count: 1, usage_type: "licensed" } },
+      session: { amount_total: 1490 },
+      price: { unit_amount: 16092, recurring: { interval: "year", interval_count: 1, usage_type: "licensed" } },
       createSession: { id: "cs_test_switched123", url: "https://checkout.stripe.com/c/pay/cs_test_switched123" },
     });
     const fetchStripe = vi.mocked(globalThis.fetch).getMockImplementation()!;
@@ -804,7 +932,7 @@ describe("Stripe subscriptions", () => {
       if (path === "/v1/checkout/sessions/cs_test_switched123") {
         return Response.json({
           id: "cs_test_switched123", url: "https://checkout.stripe.com/c/pay/cs_test_switched123",
-          mode: "subscription", amount_total: 7308, currency: "usd", total_details: { amount_discount: 0, amount_tax: 0 },
+          mode: "subscription", amount_total: 16092, currency: "usd", total_details: { amount_discount: 0, amount_tax: 0 },
           livemode: false, status: "open", customer: customerId, client_reference_id: metadata.orderId, metadata,
         });
       }
@@ -843,7 +971,7 @@ describe("Stripe subscriptions", () => {
       ...event("refund.failed", {
         id: "re_subscription123",
         payment_intent: "pi_subscription123",
-        amount: 759,
+        amount: 1490,
         currency: "usd",
       }),
       id: "evt_refund123",
@@ -857,7 +985,7 @@ describe("Stripe subscriptions", () => {
     ).toEqual({ review_required: 1, order_id: metadata.orderId });
     expect(
       sqlite.prepare("SELECT remaining FROM subscription_credit_periods").get(),
-    ).toEqual({ remaining: 750 });
+    ).toEqual({ remaining: 550 });
     expect(sqlite.prepare("SELECT credits FROM users").get()).toEqual({
       credits: 100,
     });

@@ -29,7 +29,7 @@ afterEach(() => { vi.restoreAllMocks(); vi.useRealTimers(); });
 
 describe('Stripe Black Friday credit packs', () => {
   it.each([
-    ['starter', 990, 360], ['creator', 2990, 1440], ['pro', 4990, 2640], ['business', 9990, 6000],
+    ['starter', 990, 360], ['creator', 2990, 1140], ['pro', 4990, 1920], ['business', 9990, 3960],
   ] as const)('quotes and freezes the %s pack at its original amount', async (packId, amount, credits) => {
     vi.setSystemTime(new Date('2026-11-27T12:00:00Z')); const { db, sqlite } = database();
     const configuredPrice = `price_${packId}123`;
@@ -121,6 +121,27 @@ describe('Stripe Black Friday credit packs', () => {
 });
 
 describe('Stripe Checkout creation', () => {
+  it.each([
+    ['starter', 990, 300], ['creator', 2990, 950], ['pro', 4990, 1600], ['business', 9990, 3300],
+  ] as const)('freezes the approved %s pack credits and amount for a new purchase', async (packId, amount, credits) => {
+    const { db, sqlite } = database();
+    const configuredPrice = `price_${packId}123`;
+    let sent = new URLSearchParams();
+    vi.spyOn(globalThis, 'fetch').mockImplementation(async (input, init) => {
+      const url = new URL(String(input));
+      if (url.pathname === `/v1/prices/${configuredPrice}`) return Response.json(price({ id: configuredPrice, unit_amount: amount }));
+      if (url.pathname !== '/v1/checkout/sessions') throw Error('Unexpected Stripe request');
+      sent = new URLSearchParams(String(init?.body));
+      return Response.json(checkoutFixture(sent, { amount_total: amount }));
+    });
+    const checkout = await createCheckout({ ...env(db), [`STRIPE_PRICE_${packId.toUpperCase()}`]: configuredPrice }, user, packId, 'en', credits);
+    expect(sqlite.prepare('SELECT amount,credits,status FROM orders WHERE id=?').get(checkout.orderId))
+      .toEqual({ amount, credits, status: 'pending' });
+    expect(sent.get('metadata[credits]')).toBe(String(credits));
+    expect(sent.get('metadata[baseCredits]')).toBe(String(credits));
+    expect(sent.get('metadata[bonusCredits]')).toBe('0');
+  });
+
   it('binds one-time checkout and the immutable price/credit snapshot to the authenticated user', async () => {
     const { db, sqlite } = database();
     const api = checkoutApi();
@@ -256,6 +277,34 @@ describe('Stripe raw webhook signatures', () => {
 });
 
 describe('Stripe payment accounting', () => {
+  it.each([
+    ['creator', 2990, 1200, 1200, 0],
+    ['pro', 4990, 2200, 2200, 0],
+    ['business', 9990, 5000, 5000, 0],
+    ['creator', 2990, 1440, 1200, 240],
+    ['business', 9990, 6000, 5000, 1000],
+  ] as const)('fulfills the saved historical %s order with %i cents and %i credits without requoting', async (packId, amount, credits, baseCredits, bonusCredits) => {
+    const { db, sqlite } = database();
+    const historicalPriceId = `price_historical${packId}`;
+    const snapshot = { ...metadata, packId, priceId: historicalPriceId, amount: String(amount), credits: String(credits),
+      baseCredits: String(baseCredits), bonusCredits: String(bonusCredits), ...(bonusCredits ? { campaignId: 'black-friday-2026' } : {}) };
+    sqlite.prepare("INSERT INTO orders(id,user_id,pack_id,product_id,amount,currency,credits,checkout_id,provider,provider_mode) VALUES('local-order','u',?,?,?,'USD',?,?,'stripe','test')")
+      .run(packId, historicalPriceId, amount, credits, sessionId);
+    const paid = paidSession({ amount_total: amount, amount_subtotal: amount, metadata: snapshot });
+    confirmApi(confirmedSession({ ...paid,
+      payment_intent: { ...confirmedSession().payment_intent, amount, amount_received: amount, metadata: snapshot },
+      line_items: { object: 'list', has_more: false, data: [{ id: 'li_fixture123', object: 'item', quantity: 1,
+        amount_total: amount, amount_subtotal: amount, currency: 'usd', price: price({ id: historicalPriceId, unit_amount: amount, active: false }) }] },
+    }));
+    await applyEvent(env(db), event(paid));
+    expect(balance(sqlite)).toEqual({ credits: 100 + credits });
+    await reserveGeneration(db, 'u', 'spend-historical', 'video', {}, 100 + credits);
+    await applyEvent(env(db), event(paid, { id: 'evt_historicalReplay' }));
+    expect(balance(sqlite)).toEqual({ credits: 0 });
+    expect(sqlite.prepare("SELECT amount FROM credit_ledger WHERE kind='payment'").all()).toEqual([{ amount: credits }]);
+    expect(sqlite.prepare('SELECT amount,credits,status FROM orders').get()).toEqual({ amount, credits, status: 'paid' });
+  });
+
   it('credits once after confirmed payment, even with duplicate and reordered events after consumption', async () => {
     const { db, sqlite } = database(); pending(sqlite); confirmApi();
     await applyEvent(env(db), event());

@@ -70,7 +70,7 @@ describe("Hotel Lobby homepage SEO restoration", () => {
     for (const id of ["mi-left-photo", "mi-right-photo", "generator", "features", "how-it-works", "faq"]) expect(html.match(new RegExp(`id="${id}"`, "g"))).toHaveLength(1);
     for (const item of [...workflowSteps, ...featureItems, ...homeFaqItems]) for (const text of Object.values(item)) expect(html).toContain(renderToStaticMarkup(<>{text.replaceAll("LobbyDuo", "MigosAI")}</>));
     expect(html).toContain("MigosAI Pricing and Credit Plans");
-    expect(html).toContain("Buy Starter"); expect(html).toContain("Buy Creator");
+    expect(html).toContain("Buy 300 credit pack"); expect(html).toContain("Buy 950 credit pack");
     expect(html).toContain("One-time credit packs and subscription plans");
     expect(html.match(/role="tab"/g)).toHaveLength(2);
     expect(html).not.toContain("No subscription");

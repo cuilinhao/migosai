@@ -311,6 +311,11 @@ export async function createSubscriptionCheckout(
   const priceId = env[key as keyof Env];
   if (typeof priceId !== "string" || !/^price_[A-Za-z0-9]+$/.test(priceId))
     throw new ApiError(503, "This subscription plan is not configured.");
+  const amount = interval === "month" ? plan.monthlyPriceCents : plan.yearlyPriceCents;
+  const matchesRequestedPurchase = (stored: SubscriptionRow) =>
+    stored.plan_id === plan.id && stored.billing_interval === interval &&
+    stored.price_id === priceId && stored.amount_cents === amount &&
+    stored.monthly_credits === plan.credits;
   let row = await db
     .prepare(
       `SELECT * FROM subscriptions WHERE user_id=? AND provider_mode=? AND status IN (${openStates})`,
@@ -329,7 +334,7 @@ export async function createSubscriptionCheckout(
     validateSession(session, row);
     if (
       session.status === "open" &&
-      (row.plan_id !== plan.id || row.billing_interval !== interval)
+      !matchesRequestedPurchase(row)
     ) {
       try {
         session = await client.checkout.sessions.expire(
@@ -366,12 +371,10 @@ export async function createSubscriptionCheckout(
       409,
       "The previous checkout needs support review before another can be created.",
     );
-  if (row && (row.plan_id !== plan.id || row.billing_interval !== interval))
+  if (row && !matchesRequestedPurchase(row))
     throw new ApiError(409, "Another subscription checkout is pending.");
   if (!row) {
     const id = crypto.randomUUID();
-    const amount =
-      interval === "month" ? plan.monthlyPriceCents : plan.yearlyPriceCents;
     const candidate = {
       id,
       user_id: user.id,

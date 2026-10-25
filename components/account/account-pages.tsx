@@ -6,7 +6,7 @@ import { Coins, Video } from "lucide-react";
 import { useLocale } from "@/components/i18n/locale-provider";
 import { useGenerationTranslations } from "@/components/generator/use-generation";
 import { useAuth } from "@/components/auth-provider";
-import { creditPacks, subscriptionPlans } from "@/content/pricing";
+import { creditPacks, getSubscriptionPlanName } from "@/content/pricing";
 import type { GenerationResponse } from "@/lib/contracts";
 import { accountView, type AccountSnapshot } from "./account-view";
 import { CreditBalances, SubscriptionDetails, type AccountSubscription } from "./subscription-management";
@@ -122,7 +122,7 @@ export function MyOrders() {
   return <div className="account-page"><div className="account-page-heading account-page-heading-lined"><h1>{t('My Orders')}</h1><p>{t('Your credit purchases and subscription billing.')}</p></div>
     <SubscriptionManagement/>
     <AccountMessage loading={loading} error={error} signedIn={signedIn} onRetry={retry}/>
-    {signedIn && !loading && !error && <div className="account-table-scroll"><table className="account-table orders-table"><thead><tr><th>{t('Order No')}</th><th>{t('Product Name')}</th><th>{t('Amount')}</th><th>{t('Status')}</th><th>{t('Paid At')}</th></tr></thead><tbody>{data?.length ? data.map((order) => <tr key={order.id}><td className="account-code">{order.id}</td><td>{order.purchaseType === "subscription" ? t("{plan} subscription", { plan: t(subscriptionPlans.find(plan=>plan.id===order.packId)?.name??order.packId) }) : t("{pack} Credits", { pack: t(creditPacks.find((pack) => pack.id === order.packId)?.name ?? order.packId) })}</td><td>{new Intl.NumberFormat(locale, { style: "currency", currency: order.currency || "USD" }).format(order.amountCents/100)}</td><td>{t(order.status)}</td><td>{dateTime(order.createdAt, locale)}</td></tr>) : <tr><td colSpan={5} className="account-table-empty">{t('No orders found')}</td></tr>}</tbody></table></div>}
+    {signedIn && !loading && !error && <div className="account-table-scroll"><table className="account-table orders-table"><thead><tr><th>{t('Order No')}</th><th>{t('Product Name')}</th><th>{t('Amount')}</th><th>{t('Status')}</th><th>{t('Paid At')}</th></tr></thead><tbody>{data?.length ? data.map((order) => <tr key={order.id}><td className="account-code">{order.id}</td><td>{order.purchaseType === "subscription" ? t("{plan} subscription", { plan: t(getSubscriptionPlanName(order.packId)) }) : t("{pack} Credits", { pack: t(creditPacks.find((pack) => pack.id === order.packId)?.name ?? order.packId) })}</td><td>{new Intl.NumberFormat(locale, { style: "currency", currency: order.currency || "USD" }).format(order.amountCents/100)}</td><td>{t(order.status)}</td><td>{dateTime(order.createdAt, locale)}</td></tr>) : <tr><td colSpan={5} className="account-table-empty">{t('No orders found')}</td></tr>}</tbody></table></div>}
   </div>;
 }
 

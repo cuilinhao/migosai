@@ -61,6 +61,23 @@ describe('Black Friday discovery and SEO', () => {
     expect(html).toContain('/pricing?promo=blackfriday#credit-packs');
   });
 
+  it('names the new packs by base credits and keeps the published 20% bonus', async () => {
+    const html = await render('en', '2026-11-27T12:00:00Z');
+    for (const credits of ['300', '950', '1,600', '3,300']) {
+      expect(html).toContain(`<h3>${credits} credit pack</h3>`);
+    }
+    for (const credits of ['360', '1,140', '1,920', '3,960']) expect(text(html)).toContain(credits);
+    expect(text(html)).toContain('20%');
+  });
+
+  it.each(locales)('describes the current four campaign totals in the FAQ for %s', async locale => {
+    const html = await render(locale);
+    const details = [...html.matchAll(/<details\b[^>]*>([\s\S]*?)<\/details>/g)].map(([, detail]) => text(detail));
+    const numbers = details[2].replace(/(\d)[,\s\u202f](?=\d{3}\b)/g, '$1').match(/\d+(?:[.,]\d+)?/g)!.map(value => value.replace(/[^\d]/g, ''));
+    expect(numbers).toEqual(expect.arrayContaining(['300', '950', '1600', '3300', '360', '1140', '1920', '3960', '990', '2990', '4990', '9990', '20']));
+    for (const oldTotal of ['1440', '2640', '6000']) expect(numbers).not.toContain(oldTotal);
+  });
+
   it('opens the same page during the campaign and closes it afterwards', async () => {
     expect(text(await render('en', '2026-11-20T00:00:00Z'))).toContain('Offer live now');
     const ended = text(await render('en', '2026-12-02T00:00:00Z'));

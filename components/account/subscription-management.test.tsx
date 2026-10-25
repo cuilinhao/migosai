@@ -8,6 +8,12 @@ import { getMessages, locales } from "../../lib/i18n";
 const active: AccountSubscription = {planId:"standard",billingInterval:"year",status:"active",cancelAtPeriodEnd:false,currentPeriodStart:"2026-10-01T00:00:00Z",currentPeriodEnd:"2027-10-01T00:00:00Z"};
 const render = (subscription: AccountSubscription | null) => renderToStaticMarkup(<LocaleProvider locale="en" messages={{}}><SubscriptionDetails subscription={subscription} busy={false} onManage={()=>{}}/></LocaleProvider>);
 describe("subscription account management",()=>{
+  it.each(["elite-15000", "elite-25000", "elite-40000", "elite-60000"])("keeps the historical Elite name for %s after its removal from new purchases", planId => {
+    const html = render({...active, planId});
+    expect(html).toContain("<dd>Elite</dd>");
+    expect(html).not.toContain(planId);
+    expect(html).toContain("Manage subscription");
+  });
   it("shows the annual plan, status and next renewal without claiming an annual credit grant",()=>{
     const html=render(active);
     for(const value of ["Standard","Annual billing","Active","Next renewal","Manage subscription","monthly"])expect(html).toContain(value);

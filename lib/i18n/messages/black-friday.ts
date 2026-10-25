@@ -161,12 +161,12 @@ const rows: readonly Row[] = [
   ],
   ["Which credit packs qualify?", "哪些點數包符合活動資格？", "어떤 크레딧 패키지가 대상인가요?", "どのクレジットパックが対象ですか？", "Quels packs de crédits sont éligibles ?", "¿Qué paquetes de créditos cumplen los requisitos?"],
   [
-    "All four one-time packs qualify: Starter, Creator, Pro and Business. During the offer, they contain 360, 1,440, 2,640 and 6,000 total credits respectively, at their regular prices of $9.90, $29.90, $49.90 and $99.90. This is 20% extra credits, not 20% off the price.",
-    "四種一次性點數包皆符合資格：入門、創作者、專業與商務。活動期間，各包總點數分別為 360、1,440、2,640 與 6,000 點，原價維持 $9.90、$29.90、$49.90 與 $99.90。優惠為加贈 20% 點數，並非價格打八折。",
-    "스타터, 크리에이터, 프로, 비즈니스의 네 가지 일회성 패키지가 모두 대상입니다. 행사 기간에는 각각 총 360, 1,440, 2,640, 6,000 크레딧이 포함되며, 기존 가격인 $9.90, $29.90, $49.90, $99.90이 유지됩니다. 이는 크레딧 20% 추가 증정이며, 가격 20% 할인이 아닙니다.",
-    "スターター、クリエイター、プロ、ビジネスの買い切りパック4種類すべてが対象です。期間中の合計はそれぞれ360、1,440、2,640、6,000クレジットで、通常価格の$9.90、$29.90、$49.90、$99.90は変わりません。クレジット20%増量であり、価格の20%割引ではありません。",
-    "Les quatre packs à achat unique sont éligibles : Débutant, Créateur, Pro et Entreprise. Pendant l’offre, ils contiennent respectivement 360, 1 440, 2 640 et 6 000 crédits au total, à leurs prix habituels de 9,90 $, 29,90 $, 49,90 $ et 99,90 $. Il s’agit de 20 % de crédits supplémentaires, pas d’une réduction de prix de 20 %.",
-    "Los cuatro paquetes de pago único cumplen los requisitos: Inicial, Creador, Pro y Empresa. Durante la oferta, contienen un total de 360, 1.440, 2.640 y 6.000 créditos respectivamente, a sus precios habituales de 9,90 $, 29,90 $, 49,90 $ y 99,90 $. Es un 20 % de créditos extra, no un descuento del 20 % en el precio.",
+    "All four one-time packs qualify: the 300, 950, 1,600 and 3,300 credit packs. During the offer, they contain 360, 1,140, 1,920 and 3,960 total credits respectively, at their regular prices of $9.90, $29.90, $49.90 and $99.90. This is 20% extra credits, not 20% off the price.",
+    "四種一次性點數包皆符合資格：300、950、1,600 與 3,300 點點數包。活動期間，各包總點數分別為 360、1,140、1,920 與 3,960 點，原價維持 $9.90、$29.90、$49.90 與 $99.90。優惠為加贈 20% 點數，並非價格打八折。",
+    "300, 950, 1,600, 3,300 크레딧의 네 가지 일회성 패키지가 모두 대상입니다. 행사 기간에는 각각 총 360, 1,140, 1,920, 3,960 크레딧이 포함되며, 기존 가격인 $9.90, $29.90, $49.90, $99.90이 유지됩니다. 이는 크레딧 20% 추가 증정이며, 가격 20% 할인이 아닙니다.",
+    "300、950、1,600、3,300クレジットの買い切りパック4種類すべてが対象です。期間中の合計はそれぞれ360、1,140、1,920、3,960クレジットで、通常価格の$9.90、$29.90、$49.90、$99.90は変わりません。クレジット20%増量であり、価格の20%割引ではありません。",
+    "Les quatre packs à achat unique sont éligibles : les packs de 300, 950, 1 600 et 3 300 crédits. Pendant l’offre, ils contiennent respectivement 360, 1 140, 1 920 et 3 960 crédits au total, à leurs prix habituels de 9,90 $, 29,90 $, 49,90 $ et 99,90 $. Il s’agit de 20 % de crédits supplémentaires, pas d’une réduction de prix de 20 %.",
+    "Los cuatro paquetes de pago único cumplen los requisitos: los paquetes de 300, 950, 1.600 y 3.300 créditos. Durante la oferta, contienen un total de 360, 1.140, 1.920 y 3.960 créditos respectivamente, a sus precios habituales de 9,90 $, 29,90 $, 49,90 $ y 99,90 $. Es un 20 % de créditos extra, no un descuento del 20 % en el precio.",
   ],
   ["Can existing users and subscribers get the bonus?", "現有用戶與訂閱用戶也能獲得加贈點數嗎？", "기존 사용자와 구독자도 추가 크레딧을 받을 수 있나요?", "既存ユーザーやサブスクリプション利用者も特典を受けられますか？", "Les utilisateurs existants et les abonnés peuvent-ils bénéficier du bonus ?", "¿Pueden los usuarios actuales y suscriptores recibir la bonificación?"],
   [

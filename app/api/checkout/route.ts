@@ -1,3 +1,4 @@
+import { subscriptionPlans } from "@/content/pricing";
 import { getEnv, appOrigin } from "@/lib/server/env";
 import { requireUser } from "@/lib/server/auth";
 import { sameOrigin, jsonBody } from "@/lib/server/security";
@@ -15,6 +16,14 @@ export const POST = api(async (request) => {
     body.purchaseType !== "subscription"
   )
     throw new ApiError(400, "Unknown purchase type.");
+  if (body.purchaseType === "subscription") {
+    const plan = subscriptionPlans.find((item) => item.id === body.planId);
+    if (!plan || (body.billingInterval !== "month" && body.billingInterval !== "year"))
+      throw new ApiError(400, "Unknown subscription plan.");
+    const amount = body.billingInterval === "month" ? plan.monthlyPriceCents : plan.yearlyPriceCents;
+    if (body.expectedCredits !== plan.credits || body.expectedAmountCents !== amount)
+      throw new ApiError(409, "This subscription offer has changed. Refresh pricing before you check out.");
+  }
   return Response.json(
     body.purchaseType === "subscription"
       ? await createSubscriptionCheckout(

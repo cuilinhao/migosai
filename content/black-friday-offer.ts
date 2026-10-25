@@ -1,8 +1,16 @@
 import type { creditPacks } from './pricing';
 
-// Append future campaigns under new IDs. Never edit or remove historical rules:
+type CreditPackCampaign = Readonly<{
+  id: string;
+  year: number;
+  bonusPercent: number;
+  startsAt: string;
+  endsAt: string;
+}>;
+
+// Never edit or remove historical rules:
 // delayed payments and refund reviews must retain the original offer contract.
-const creditPackCampaigns = Object.freeze({
+const historicalCreditPackCampaigns = Object.freeze({
   'black-friday-2026': Object.freeze({
     id: 'black-friday-2026',
     year: 2026,
@@ -11,6 +19,23 @@ const creditPackCampaigns = Object.freeze({
     endsAt: '2026-12-02T00:00:00.000Z',
   } as const),
 });
+
+/** New campaigns are capped at 10%; the published 2026 promise is grandfathered. */
+export function createCreditPackCampaignRegistry(futureCampaigns: readonly CreditPackCampaign[]) {
+  const campaigns: Record<string, CreditPackCampaign> = { ...historicalCreditPackCampaigns };
+  for (const campaign of futureCampaigns) {
+    if (Object.hasOwn(campaigns, campaign.id)) throw new Error(`Campaign ${campaign.id} is already registered.`);
+    if (!Number.isFinite(campaign.bonusPercent) || campaign.bonusPercent <= 0 || campaign.bonusPercent > 10) {
+      throw new Error('New credit pack campaigns may offer at most 10% bonus credits.');
+    }
+    campaigns[campaign.id] = Object.freeze({ ...campaign });
+  }
+  return Object.freeze(campaigns);
+}
+
+// Register future campaigns here. A checkout uses only the one selected campaign,
+// so bonuses are never combined; no future campaign is currently scheduled.
+const creditPackCampaigns = createCreditPackCampaignRegistry([]);
 
 export const blackFridayCampaign = creditPackCampaigns['black-friday-2026'];
 

@@ -62,12 +62,38 @@ beforeEach(() => {
   vi.mocked(requireUser).mockResolvedValue(state.user);
 });
 describe("subscription HTTP routes", () => {
+  it.each([
+    ["lite", "month", 1490, 550], ["lite", "year", 16092, 550],
+    ["standard", "month", 2990, 1150], ["standard", "year", 32292, 1150],
+    ["pro", "month", 4990, 1950], ["pro", "year", 53892, 1950],
+    ["elite-4000", "month", 9990, 4000], ["elite-4000", "year", 107892, 4000],
+  ])("accepts the current displayed quote for %s/%s", async (planId, billingInterval, expectedAmountCents, expectedCredits) => {
+    const response = await checkout(request("/api/checkout", { purchaseType: "subscription", planId, billingInterval, expectedAmountCents, expectedCredits }), {});
+    expect(response.status).toBe(200);
+    expect(await response.json()).toMatchObject({ orderId: "sub-local" });
+  });
+
+  it.each([
+    {}, { expectedCredits: 6000, expectedAmountCents: 4999 },
+    { expectedCredits: 1950 }, { expectedAmountCents: 4990 },
+    { expectedCredits: 1950, expectedAmountCents: 4999 },
+    { expectedCredits: 6000, expectedAmountCents: 4990 },
+    { expectedCredits: "1950", expectedAmountCents: 4990 },
+  ])("asks stale subscription clients to refresh before payment: %j", async (quote) => {
+    const response = await checkout(request("/api/checkout", { purchaseType: "subscription", planId: "pro", billingInterval: "month", ...quote }), {});
+    expect(response.status).toBe(409);
+    expect(await response.json()).toMatchObject({ error: "This subscription offer has changed. Refresh pricing before you check out." });
+    expect(backend.checkout).not.toHaveBeenCalled();
+  });
+
   it("passes only authenticated ownership and selected plan to recurring checkout", async () => {
     const response = await checkout(
       request("/api/checkout", {
         purchaseType: "subscription",
         planId: "lite",
         billingInterval: "year",
+        expectedCredits: 550,
+        expectedAmountCents: 16092,
         locale: "ja",
         userId: "other",
         amount: 1,

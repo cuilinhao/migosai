@@ -107,13 +107,13 @@ export default async function BlackFridayPage() {
       <header className={styles.sectionHeader}><p className={styles.eyebrow}>{t(copy.packs.eyebrow)}</p><h2 id="packs-title">{t(copy.packs.title)}</h2><p>{t(copy.packs.description)}</p></header>
       <p className={styles.offerNotice}>{packNotice}</p>
       <div className={styles.packGrid}>
-        {creditPacks.map((pack, index) => {
+        {creditPacks.map(pack => {
           // Show the advertised campaign allocation even before or after its window.
           // The adjacent notice and CTA explicitly distinguish preview/history from a live quote.
           const offer = getCreditPackOffer(pack, Date.parse(blackFridayCampaign.startsAt));
           return <article key={pack.id} className={`${styles.pack} ${pack.recommended ? styles.featuredPack : ""}`}>
             {pack.recommended && <span className={styles.packBadge}>{t(copy.packs.featured)}</span>}
-            <h3>{t(copy.packs.names[index])}</h3>
+            <h3>{t("{credits} credit pack", { credits: number.format(pack.credits) })}</h3>
             <p className={styles.packPrice}>{money.format(pack.price)}</p>
             <p className={styles.packPayment}>{t(copy.packs.oneTime)}</p>
             <div className={styles.packTotal}><Gem size={17} aria-hidden="true" /><strong>{t(copy.packs.total, { total: number.format(offer.credits) })}</strong></div>

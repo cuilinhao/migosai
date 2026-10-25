@@ -11,7 +11,6 @@ import styles from "./pricing-cards.module.css";
 
 type Purchase = { packId: PackId } | { purchaseType: "subscription"; planId: SubscriptionPlanId; billingInterval: BillingInterval };
 type PurchaseTab = "subscription" | "packs";
-const elitePlans = subscriptionPlans.filter(plan => plan.id.startsWith("elite-"));
 
 export function PricingCards({ initialPurchaseType = "subscription", offerTime = 0 }: { initialPurchaseType?: PurchaseTab; offerTime?: number } = {}) {
   const t = useTranslations();
@@ -20,9 +19,8 @@ export function PricingCards({ initialPurchaseType = "subscription", offerTime =
   const id = useId();
   const [tab, setTab] = useState<PurchaseTab>(initialPurchaseType);
   const [interval, setInterval] = useState<BillingInterval>("month");
-  const [eliteId, setEliteId] = useState<SubscriptionPlanId>("elite-15000");
   const [selectedPack, setSelectedPack] = useState<PackId>("creator");
-  const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlanId | "elite">("pro");
+  const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlanId>("standard");
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<{ userId: string; message: string } | null>(null);
   const [checkout, setCheckout] = useState<{ userId: string; url: string } | null>(null);
@@ -35,14 +33,13 @@ export function PricingCards({ initialPurchaseType = "subscription", offerTime =
     return () => { mounted.current = false; };
   }, []);
   const money = (cents: number) => new Intl.NumberFormat(locale, { style: "currency", currency: "USD" }).format(cents / 100);
-  const plans = subscriptionPlans.filter(plan => !plan.id.startsWith("elite-") || plan.id === eliteId);
 
   function clearNotice() { setError(null); setCheckout(null); }
   function selectPurchase(purchase: Purchase) {
     if (inFlight.current) return;
     clearNotice();
     if ("packId" in purchase) setSelectedPack(purchase.packId);
-    else setSelectedPlan(purchase.planId.startsWith("elite-") ? "elite" : purchase.planId);
+    else setSelectedPlan(purchase.planId);
   }
   function cardClick(event: MouseEvent<HTMLElement>, purchase: Purchase) {
     // Child controls handle their own actions; card selection must not clear a checkout they open.
@@ -69,7 +66,10 @@ export function PricingCards({ initialPurchaseType = "subscription", offerTime =
     setBusy(key);
     try {
       const pack = "packId" in purchase ? creditPacks.find(item => item.id === purchase.packId) : undefined;
-      const response = await fetch("/api/checkout", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...purchase, locale, ...(pack ? { expectedCredits: getCreditPackOffer(pack, offerTime).credits } : {}) }) });
+      const plan = "planId" in purchase ? subscriptionPlans.find(item => item.id === purchase.planId) : undefined;
+      const quote = pack ? { expectedCredits: getCreditPackOffer(pack, offerTime).credits }
+        : plan && "billingInterval" in purchase ? { expectedCredits: plan.credits, expectedAmountCents: purchase.billingInterval === "year" ? plan.yearlyPriceCents : plan.monthlyPriceCents } : {};
+      const response = await fetch("/api/checkout", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...purchase, locale, ...quote }) });
       const data: { checkoutUrl?: string; error?: string } = await response.json();
       if (!mounted.current || currentUserId.current !== userId) return;
       if (!response.ok || !data.checkoutUrl) throw new Error(data.error || "Checkout is unavailable right now. Please try again later.");
@@ -97,24 +97,23 @@ export function PricingCards({ initialPurchaseType = "subscription", offerTime =
       {tab === "subscription" && <div className={styles.billing} role="group" aria-label={t("Billing interval")}>
         <button type="button" aria-pressed={interval === "month"} disabled={busy !== null} onClick={() => changeInterval("month")}>{t("Monthly")}</button>
         <button type="button" aria-pressed={interval === "year"} disabled={busy !== null} onClick={() => changeInterval("year")}>{t("Yearly")}</button>
-        <span>{t("Save up to 25%")}</span>
+        <span>{t("Save 10%")}</span>
       </div>}
     </div>
 
     <div id={`${id}-subscription-panel`} role="tabpanel" aria-labelledby={`${id}-subscription-tab`} hidden={tab !== "subscription"} tabIndex={0}>
       {tab === "subscription" && <>
-        <div className={styles.grid}>{plans.map(plan => {
-          const elite = plan.id.startsWith("elite-");
+        <div className={styles.grid}>{subscriptionPlans.map(plan => {
           const monthlyCents = interval === "year" ? plan.yearlyPriceCents / 12 : plan.monthlyPriceCents;
-          const selected = selectedPlan === (elite ? "elite" : plan.id);
+          const selected = selectedPlan === plan.id;
           const purchase = { purchaseType: "subscription" as const, planId: plan.id, billingInterval: interval };
-          return <article key={elite ? "elite" : plan.id} className={`${styles.card} ${selected ? styles.featured : ""}`} data-selected={selected} onClick={event => cardClick(event, purchase)}>
+          return <article key={plan.id} className={`${styles.card} ${selected ? styles.featured : ""}`} data-selected={selected} onClick={event => cardClick(event, purchase)}>
+            {interval !== "year" && plan.id === "standard" && <span className={styles.discount}>{t("Recommended")}</span>}
             {interval === "year" && <span className={styles.discount}>{t("{percent}% OFF", { percent: Math.round((1 - plan.yearlyPriceCents / (12 * plan.monthlyPriceCents)) * 100) })}</span>}
             <h3 className={styles.planTitle}><button type="button" className={styles.cardSelect} aria-pressed={selected} disabled={busy !== null} onClick={() => selectPurchase(purchase)}><Diamond size={23} aria-hidden="true"/>{t(plan.name)}</button></h3>
             <div className={styles.price}>{interval === "year" && <del>{money(plan.monthlyPriceCents)}</del>}<strong>{money(monthlyCents)}</strong><span>{t("/mo")}</span></div>
             <p className={styles.billingNote}>{interval === "year" ? t("{amount} billed yearly", { amount: money(plan.yearlyPriceCents) }) : t("Billed monthly")}</p>
             <button type="button" className={styles.subscribe} aria-label={t("Subscribe to {plan}", { plan: t(plan.name) })} disabled={busy !== null} onClick={() => buy(purchase)}>{busy === `plan-${plan.id}` ? t("Opening checkout…") : t("Subscribe")}</button>
-            {elite && <div className={styles.eliteOptions} role="group" aria-label={t("Elite monthly credits")}>{elitePlans.map(tier => <button type="button" key={tier.id} aria-pressed={eliteId === tier.id} disabled={busy !== null} onClick={() => { clearNotice(); setEliteId(tier.id); }}>{tier.credits / 1000}K</button>)}</div>}
             <div className={styles.creditBox}><Zap size={19} aria-hidden="true"/><div><strong>{t("{credits} credits per month", { credits: plan.credits.toLocaleString(locale) })}</strong><span>{t("Up to {images} images at 1K", { images: Math.floor(plan.credits / 5).toLocaleString(locale) })}</span></div></div>
             <ul className={styles.benefits}>{["New credits every month", "Unused subscription credits expire monthly", ...benefits].map(benefit => <li key={benefit}><Check size={16} aria-hidden="true"/>{t(benefit)}</li>)}</ul>
             <p className={styles.cardFooter}>{t("Cancel renewal anytime. Access continues through your paid term.")}</p>
@@ -129,14 +128,15 @@ export function PricingCards({ initialPurchaseType = "subscription", offerTime =
         <div className={styles.grid}>{creditPacks.map(pack => {
           const offer = getCreditPackOffer(pack, offerTime);
           const selected = selectedPack === pack.id;
+          const packName = t("{credits} credit pack", { credits: pack.credits.toLocaleString(locale) });
           return <article className={`${styles.card} ${selected ? styles.featured : ""}`} data-selected={selected} key={pack.id} onClick={event => cardClick(event, { packId: pack.id })}>
           {(offer.bonusCredits > 0 || pack.recommended) && <span className={styles.discount}>{offer.bonusCredits > 0 ? t("{percent}% bonus credits", { percent: blackFridayCampaign.bonusPercent }) : t("Recommended")}</span>}
-          <h3 className={styles.planTitle}><button type="button" className={styles.cardSelect} aria-pressed={selected} disabled={busy !== null} onClick={() => selectPurchase({ packId: pack.id })}><Zap size={23} aria-hidden="true"/>{t(pack.name)}</button></h3>
+          <h3 className={styles.planTitle}><button type="button" className={styles.cardSelect} aria-pressed={selected} disabled={busy !== null} onClick={() => selectPurchase({ packId: pack.id })}><Zap size={23} aria-hidden="true"/>{packName}</button></h3>
           <div className={styles.price}><strong>{money(pack.amountCents)}</strong></div>
           <p className={styles.billingNote}>{t("One-time purchase")}</p>
-          <button type="button" className={styles.subscribe} disabled={busy !== null} onClick={() => buy({ packId: pack.id })}>{busy === `pack-${pack.id}` ? t("Opening checkout…") : t("Buy {pack}", { pack: t(pack.name) })}</button>
-          <div className={styles.creditBox}><Zap size={19} aria-hidden="true"/><div><strong>{t("{credits} credits", { credits: offer.credits.toLocaleString(locale) })}</strong>{offer.bonusCredits > 0 && <span>{t("{base} + {bonus} bonus credits", { base: offer.baseCredits.toLocaleString(locale), bonus: offer.bonusCredits.toLocaleString(locale) })}</span>}<span>{t("${price} / credit", { price: offer.bonusCredits > 0 ? (pack.price / offer.credits).toFixed(4) : pack.unitPrice })}</span></div></div>
-          <ul className={styles.benefits}>{["No automatic renewal", "Kept separately from subscription credits", ...benefits].map(benefit => <li key={benefit}><Check size={16} aria-hidden="true"/>{t(benefit)}</li>)}</ul>
+          <button type="button" className={styles.subscribe} disabled={busy !== null} onClick={() => buy({ packId: pack.id })}>{busy === `pack-${pack.id}` ? t("Opening checkout…") : t("Buy {pack}", { pack: packName })}</button>
+          <div className={styles.creditBox}><Zap size={19} aria-hidden="true"/><div><strong>{t("{credits} credits", { credits: offer.credits.toLocaleString(locale) })}</strong>{offer.bonusCredits > 0 && <span>{t("{base} + {bonus} bonus credits", { base: offer.baseCredits.toLocaleString(locale), bonus: offer.bonusCredits.toLocaleString(locale) })}</span>}<span>{t("${price} / credit", { price: (pack.amountCents / 100 / offer.credits).toFixed(4) })}</span></div></div>
+          <ul className={styles.benefits}>{["No automatic renewal", "Credits never expire", ...benefits].map(benefit => <li key={benefit}><Check size={16} aria-hidden="true"/>{t(benefit)}</li>)}</ul>
           <p className={styles.cardFooter}>{t(pack.description)}</p>
         </article>; })}</div>
         <p className={styles.explanation}>{t("Credit packs are one-time purchases. You can buy a pack with or without an active subscription.")}</p>

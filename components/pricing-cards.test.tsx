@@ -53,48 +53,50 @@ describe("pricing purchase choices", () => {
   it("moves the selected credit-pack highlight when clicking card content without opening checkout", () => {
     const props = { initialPurchaseType: "packs" as const };
     const before = render(props);
-    const selectedClass = card(before, "Creator").props.className;
-    const unselectedClass = card(before, "Starter").props.className;
-    clickCard(before, "Starter");
+    const selectedClass = card(before, "950 credit pack").props.className;
+    const unselectedClass = card(before, "300 credit pack").props.className;
+    clickCard(before, "300 credit pack");
     const after = render(props);
-    expect(card(after, "Starter").props.className).toBe(selectedClass);
-    expect(card(after, "Creator").props.className).toBe(unselectedClass);
-    expect(button(after, "Starter").props["aria-pressed"]).toBe(true);
-    expect(button(after, "Creator").props["aria-pressed"]).toBe(false);
-    clickCard(after, "Business");
-    expect(button(render(props), "Business").props["aria-pressed"]).toBe(true);
+    expect(card(after, "300 credit pack").props.className).toBe(selectedClass);
+    expect(card(after, "950 credit pack").props.className).toBe(unselectedClass);
+    expect(button(after, "300 credit pack").props["aria-pressed"]).toBe(true);
+    expect(button(after, "950 credit pack").props["aria-pressed"]).toBe(false);
+    clickCard(after, "3,300 credit pack");
+    expect(button(render(props), "3,300 credit pack").props["aria-pressed"]).toBe(true);
     expect(fetch).not.toHaveBeenCalled();
   });
   it("provides native keyboard-accessible selection buttons for subscription cards", async () => {
     const before = render();
-    const selectedClass = card(before, "Pro").props.className;
+    const selectedClass = card(before, "Standard").props.className;
     expect(button(before, "Lite").props.type).toBe("button");
     await click(before, "Lite");
     expect(card(render(), "Lite").props.className).toBe(selectedClass);
     expect(button(render(), "Lite").props["aria-pressed"]).toBe(true);
-    expect(button(render(), "Pro").props["aria-pressed"]).toBe(false);
+    expect(button(render(), "Standard").props["aria-pressed"]).toBe(false);
     await click(render(), "Yearly");
     expect(button(render(), "Lite").props["aria-pressed"]).toBe(true);
     expect(fetch).not.toHaveBeenCalled();
   });
-  it("does not select an Elite card when its tier control bubbles a click", async () => {
-    await click(render(), "25K");
-    clickCard(render(), "Elite", true);
+  it("offers one Elite allowance and does not change selection when a child control bubbles", () => {
+    const before = render();
+    clickCard(before, "Elite", true);
     const tree = render();
-    expect(button(tree, "Pro").props["aria-pressed"]).toBe(true);
+    expect(button(tree, "Standard").props["aria-pressed"]).toBe(true);
     expect(button(tree, "Elite").props["aria-pressed"]).toBe(false);
-    expect(textOf(tree)).toContain("25,000 credits per month");
+    expect(elements(tree).filter(element => element.type === "article")).toHaveLength(4);
+    expect(textOf(card(tree, "Elite"))).toContain("4,000 credits per month");
+    expect(elements(tree).some(element => element.props["aria-label"] === "Elite monthly credits")).toBe(false);
     expect(fetch).not.toHaveBeenCalled();
   });
   it("buys the clicked card once even when another card was selected", async () => {
     const props = { initialPurchaseType: "packs" as const };
-    clickCard(render(props), "Business");
-    await click(render(props), "Buy Starter");
-    clickCard(render(props), "Starter", true);
+    clickCard(render(props), "3,300 credit pack");
+    await click(render(props), "Buy 300 credit pack");
+    clickCard(render(props), "300 credit pack", true);
     expect(fetch).toHaveBeenCalledOnce();
     expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ packId: "starter", locale: "en", expectedCredits: 300 }) }));
     const tree = render(props);
-    expect(button(tree, "Starter").props["aria-pressed"]).toBe(true);
+    expect(button(tree, "300 credit pack").props["aria-pressed"]).toBe(true);
     expect(elements(tree).some(element => element.type === "a" && element.props.href === checkout)).toBe(true);
   });
   it("offers separate subscription and one-time choices and sends the selected monthly plan", async () => {
@@ -102,16 +104,43 @@ describe("pricing purchase choices", () => {
     expect(elements(tree).filter(element => element.props.role === "tab")).toHaveLength(2);
     expect(button(tree, "Subscription").props["aria-selected"]).toBe(true);
     await click(tree, "Subscribe to Lite");
-    expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ purchaseType: "subscription", planId: "lite", billingInterval: "month", locale: "en" }) }));
+    expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ purchaseType: "subscription", planId: "lite", billingInterval: "month", locale: "en", expectedCredits: 550, expectedAmountCents: 1490 }) }));
   });
-  it("shows the full annual bill while credits stay monthly and sends the selected Elite tier", async () => {
+  it.each([
+    ["Lite", "$14.90", "550", "$13.41", "$160.92"],
+    ["Standard", "$29.90", "1,150", "$26.91", "$322.92"],
+    ["Pro", "$49.90", "1,950", "$44.91", "$538.92"],
+    ["Elite", "$99.90", "4,000", "$89.91", "$1,078.92"],
+  ])("shows the approved monthly and annual quote for %s", async (plan, monthly, credits, annualMonthly, annualTotal) => {
+    expect(textOf(card(render(), plan))).toContain(monthly);
+    expect(textOf(card(render(), plan))).toContain(`${credits} credits per month`);
     await click(render(), "Yearly");
-    await click(render(), "25K");
-    const tree = render();
-    expect(textOf(tree)).toContain("$1,619.88 billed yearly");
-    expect(textOf(tree)).toContain("25,000 credits per month");
-    await click(tree, "Subscribe to Elite");
-    expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ purchaseType: "subscription", planId: "elite-25000", billingInterval: "year", locale: "en" }) }));
+    const annualCard = textOf(card(render(), plan));
+    expect(annualCard).toContain(annualMonthly);
+    expect(annualCard).toContain(`${annualTotal} billed yearly`);
+    expect(annualCard).toContain(`${credits} credits per month`);
+    expect(annualCard).toContain("10% OFF");
+    expect(textOf(render())).toContain("Save 10%");
+  });
+  it("sends the new Elite plan with its annual billing interval", async () => {
+    await click(render(), "Yearly");
+    await click(render(), "Subscribe to Elite");
+    expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ purchaseType: "subscription", planId: "elite-4000", billingInterval: "year", locale: "en", expectedCredits: 4000, expectedAmountCents: 107892 }) }));
+  });
+  it.each([
+    ["starter", "300", 300, "$0.0330 / credit"],
+    ["creator", "950", 950, "$0.0315 / credit"],
+    ["pro", "1,600", 1600, "$0.0312 / credit"],
+    ["business", "3,300", 3300, "$0.0303 / credit"],
+  ])("shows and submits the exact permanent allowance for %s", async (packId, formatted, credits, unitPrice) => {
+    const props = { initialPurchaseType: "packs" as const };
+    const tree = render(props);
+    const packCard = textOf(card(tree, `${formatted} credit pack`));
+    expect(packCard).toContain(`${formatted} credits`);
+    expect(packCard).toContain(unitPrice);
+    expect(packCard).toContain("Credits never expire");
+    await click(tree, `Buy ${formatted} credit pack`);
+    expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ packId, locale: "en", expectedCredits: credits }) }));
   });
   it("keeps one-time packs as a separate non-recurring checkout", async () => {
     await click(render(), "Credit packs");
@@ -119,21 +148,21 @@ describe("pricing purchase choices", () => {
     expect(textOf(tree)).toContain("One-time purchase");
     expect(textOf(tree)).not.toContain("billed yearly");
     for (const price of ["$9.90", "$29.90", "$49.90", "$99.90"]) expect(textOf(tree)).toContain(price);
-    await click(tree, "Buy Starter");
+    await click(tree, "Buy 300 credit pack");
     expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ packId: "starter", locale: "en", expectedCredits: 300 }) }));
   });
   it("sends the displayed promotional total so the server can reject an expired offer", async () => {
     const props = { initialPurchaseType: "packs" as const, offerTime: Date.parse("2026-11-27T12:00:00Z") };
     const tree = render(props);
     expect(textOf(tree)).toContain("360 credits");
-    await click(tree, "Buy Starter");
+    await click(tree, "Buy 300 credit pack");
     expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ packId: "starter", locale: "en", expectedCredits: 360 }) }));
   });
   it("keeps an expired-quote response on the page without opening checkout", async () => {
     const message = "This credit pack offer has changed. Refresh pricing before you check out.";
     vi.mocked(fetch).mockResolvedValue(new Response(JSON.stringify({ error: message }), { status: 409 }));
     const props = { initialPurchaseType: "packs" as const, offerTime: Date.parse("2026-11-27T12:00:00Z") };
-    await click(render(props), "Buy Starter");
+    await click(render(props), "Buy 300 credit pack");
     expect(window.open).not.toHaveBeenCalled();
     expect(textOf(render(props))).toContain(message);
   });

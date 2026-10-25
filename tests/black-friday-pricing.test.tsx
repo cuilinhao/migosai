@@ -18,7 +18,7 @@ function render(time: string, purchase: 'packs' | 'subscription' = 'packs') {
 describe('Black Friday pricing handoff', () => {
   it('keeps cash prices while showing the exact total and bonus during the campaign', () => {
     const html = render('2026-11-27T12:00:00Z');
-    for (const credits of ['360', '1,440', '2,640', '6,000']) expect(html).toContain(`${credits} credits`);
+    for (const credits of ['360', '1,140', '1,920', '3,960']) expect(html).toContain(`${credits} credits`);
     for (const amount of ['$9.90', '$29.90', '$49.90', '$99.90']) expect(html).toContain(amount);
     expect(html).toContain('300 + 60 bonus credits');
     expect(html).not.toContain('20% OFF');
@@ -27,14 +27,14 @@ describe('Black Friday pricing handoff', () => {
   it.each(['2026-11-19T23:59:59Z', '2026-12-02T00:00:00Z'])('shows regular pack credits outside the offer at %s', time => {
     const html = render(time);
     expect(html).toContain('300 credits');
-    expect(html).toContain('1,200 credits');
+    expect(html).toContain('950 credits');
     expect(html).not.toContain('300 + 60 bonus credits');
   });
 
   it('does not change subscription allowances during the campaign', () => {
     const html = render('2026-11-27T12:00:00Z', 'subscription');
-    expect(html).toContain('750 credits per month');
-    expect(html).not.toContain('900 credits per month');
+    expect(html).toContain('550 credits per month');
+    expect(html).not.toContain('660 credits per month');
   });
 
   it('quotes the current offer in the embedded Hotel Lobby purchase entry too', async () => {
@@ -57,7 +57,7 @@ describe('Black Friday pricing handoff', () => {
     expect(campaign).toContain('300 + 60 bonus credits');
     navigation.search = '';
     const regular = renderToStaticMarkup(<AuthProvider><PricingEntry offerTime={Date.parse('2026-11-27T12:00:00Z')}/></AuthProvider>);
-    expect(regular).toContain('750 credits per month');
+    expect(regular).toContain('550 credits per month');
   });
 
   it('localizes the campaign entry without adding internal acquisition UTM tags', async () => {
