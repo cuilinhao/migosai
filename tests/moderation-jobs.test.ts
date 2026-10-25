@@ -90,6 +90,8 @@ describe('video delivery moderation gate', () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('denied', { status: 403 }));
     await advanceJob(d.env, d.id);
     expect(d.row()).toMatchObject({ stage: 'manual_review', moderation_verdict: 'manual' });
+    expect(JSON.parse(d.row().moderation_state).diagnostic).toBeDefined();
+    expect(generationResponse(d.row())).not.toHaveProperty('diagnostic');
     expect(generationResponse(d.row()).videoUrl).toBeUndefined();
     expect(d.sqlite.prepare('SELECT credits FROM users').get()?.credits).toBe(50);
   });

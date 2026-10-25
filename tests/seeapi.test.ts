@@ -231,3 +231,80 @@ describe('SeeAPI transport failures', () => {
     expect(cancel).toHaveBeenCalledOnce();
   });
 });
+
+describe('SeeAPI safe diagnostic context', () => {
+  async function diagnostic(operation: Promise<unknown>) {
+    try { await operation; } catch (error) {
+      expect(error).toBeInstanceOf(SeeApiError);
+      return error as SeeApiError;
+    }
+    throw new Error('Expected a SeeApiError');
+  }
+
+  it('identifies a schema mismatch while retaining only bounded report metadata', async () => {
+    const report = cleanReport();
+    report.result.data.output.report_schema_version = 6;
+    report.result.data.output.download_url = persistedBody;
+    report.result.data.message = env.SEEAPI_API_KEY;
+    respond(report);
+    const error = await diagnostic(getVideoModeration(env, id));
+    expect(error).toMatchObject({ retryable: false, diagnostic: {
+      phase: 'report_schema', httpStatus: 200, taskStatus: 'succeeded', report: {
+        schemaVersion: 6, scope: 'sampled_frames', sampling_complete: true,
+        checked_frames: 2, flagged_frame_count: 0, framesLength: 2,
+      },
+    } });
+    const saved = JSON.stringify(error.diagnostic);
+    for (const privateText of [id, persistedBody, env.SEEAPI_API_KEY!, 'download_url', 'message', 'token=private']) expect(saved).not.toContain(privateText);
+  });
+
+  it('records the failing frame index without recording frame values or media URLs', async () => {
+    const report = cleanReport();
+    report.result.data.output.frames[1].timestamp_seconds = persistedBody;
+    report.result.data.output.frames[1].image_url = persistedBody;
+    respond(report);
+    const error = await diagnostic(getVideoModeration(env, id));
+    expect(error).toMatchObject({ retryable: false, diagnostic: { phase: 'frame_validation', frameIndex: 1 } });
+    expect(error.diagnostic).not.toHaveProperty('frames');
+    expect(JSON.stringify(error.diagnostic)).not.toContain('token=private');
+  });
+
+  it('retains allowlisted task failure codes but discards arbitrary provider messages', async () => {
+    respond({ ...task('failed'), error: { code: 'video_decode_failed', message: persistedBody, cause: env.SEEAPI_API_KEY } });
+    const error = await diagnostic(getVideoModeration(env, id));
+    expect(error).toMatchObject({ retryable: false, diagnostic: { phase: 'task_error', httpStatus: 200, taskStatus: 'failed', errorCode: 'video_decode_failed' } });
+    expect(JSON.stringify(error.diagnostic)).not.toContain('private');
+    expect(JSON.stringify(error.diagnostic)).not.toContain('secret');
+  });
+
+  it('redacts hostile status, code and report text instead of treating arbitrary tokens as safe codes', async () => {
+    const report = cleanReport();
+    report.status = { toString: persistedBody };
+    report.error = { code: env.SEEAPI_API_KEY, message: persistedBody };
+    Object.assign(report.result.data.output, { scope: persistedBody, sampling_complete: persistedBody, report_schema_version: 1e20, checked_frames: persistedBody });
+    respond(report);
+    const error = await diagnostic(getVideoModeration(env, id));
+    expect(error).toMatchObject({ retryable: false, diagnostic: { phase: 'task_error', taskStatus: 'unrecognized', errorCode: 'unrecognized', report: { scope: 'unrecognized' } } });
+    const saved = JSON.stringify(error.diagnostic);
+    expect(saved).not.toContain('private');
+    expect(saved).not.toContain('secret');
+    expect(saved).not.toContain('1e+20');
+    expect(error.diagnostic?.report?.checked_frames).toBeUndefined();
+  });
+
+  it('records HTTP status without reading or persisting the rejected response body', async () => {
+    const pull = vi.fn(), cancel = vi.fn();
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(new ReadableStream({ pull, cancel }, { highWaterMark: 0 }), { status: 503, headers: { 'Retry-After': '9' } }));
+    const error = await diagnostic(getVideoModeration(env, id));
+    expect(error).toMatchObject({ retryable: true, retryAfter: 9, diagnostic: { phase: 'http', httpStatus: 503 } });
+    expect(pull).not.toHaveBeenCalled();
+    expect(cancel).toHaveBeenCalledOnce();
+  });
+
+  it('classifies unreadable JSON separately without retaining parsing errors or response text', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{"secret":"token=private"'));
+    const error = await diagnostic(getVideoModeration(env, id));
+    expect(error).toMatchObject({ retryable: true, diagnostic: { phase: 'response_parse', httpStatus: 200 } });
+    expect(JSON.stringify(error)).not.toContain('token=private');
+  });
+});

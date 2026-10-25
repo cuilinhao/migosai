@@ -35,7 +35,7 @@ async function patch(db:D1Database,id:string,fence:JobFence,fields:Record<string
  if(typeof fields.stage==='string')fence.stage=fields.stage;
 }
 
-type ModerationState={version:1;requestBody:string;idempotencyKey:string;expiresAt:number;deadline:number;failures:number;taskId?:string;checkedFrames?:number;flaggedFrames?:number};
+type ModerationState={version:1;requestBody:string;idempotencyKey:string;expiresAt:number;deadline:number;failures:number;taskId?:string;checkedFrames?:number;flaggedFrames?:number;diagnostic?:unknown};
 const REVIEW_TIMEOUT=30*60;
 const MAX_REVIEW_FAILURES=8;
 function moderationState(job:Job):ModerationState{
@@ -43,8 +43,8 @@ function moderationState(job:Job):ModerationState{
  if(!state||state.version!==1||typeof state.requestBody!=='string'||state.idempotencyKey!==`migosai-video-moderation-${job.id}`||!Number.isSafeInteger(state.expiresAt)||!Number.isSafeInteger(state.deadline)||!Number.isInteger(state.failures)||state.failures<0||!job.moderation_key||!job.moderation_etag)throw new SeeApiError('Safety review state needs support attention.',false);
  return state;
 }
-async function holdForReview(db:D1Database,job:Job,fence:JobFence){
- await patch(db,job.id,fence,{stage:'manual_review',status:'reviewing',moderation_verdict:'manual',error:'Safety review could not be completed. Your video is held for review and cannot be downloaded.'});
+async function holdForReview(db:D1Database,job:Job,fence:JobFence,state?:ModerationState){
+ await patch(db,job.id,fence,{stage:'manual_review',status:'reviewing',moderation_verdict:'manual',error:'Safety review could not be completed. Your video is held for review and cannot be downloaded.',...(state?{moderation_state:JSON.stringify(state)}:{})});
 }
 async function refundBlockedVideo(env:Env,job:Job,fence:JobFence){
  const db=database(env);
@@ -102,7 +102,12 @@ async function advanceModeration(env:Env,job:Job,fence:JobFence){
    await patch(db,job.id,fence,{moderation_verdict:'blocked',moderation_cleanup_pending:1,next_poll:Math.floor(Date.now()/1000)+60,error:'This video did not pass the content safety check. Your credit return is being retried.'});
    return;
   }
-  if(!state||error instanceof SeeApiError&&!error.retryable){await holdForReview(db,job,fence);return;}
+  if(!state||error instanceof SeeApiError&&!error.retryable){
+   if(state&&error instanceof SeeApiError&&error.diagnostic){
+    state.diagnostic=error.diagnostic;
+   }
+   await holdForReview(db,job,fence,state);return;
+  }
   state.failures++;
   const now=Math.floor(Date.now()/1000);
   const delay=Math.max(Math.min(300,30*2**(state.failures-1)),error instanceof SeeApiError?error.retryAfter??0:0);

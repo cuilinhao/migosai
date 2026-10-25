@@ -6,11 +6,22 @@ const TASK_ID = /^[A-Za-z0-9_-]{1,200}$/;
 
 type RecordValue = Record<string, unknown>;
 type ModerationAssessment = { verdict: 'pending' | 'passed' | 'blocked'; checkedFrames?: number; flaggedFrames?: number };
+export type SeeApiDiagnostic = {
+  phase: string; httpStatus?: number; taskStatus?: string; errorCode?: string; frameIndex?: number;
+  report?: { schemaVersion?: number; scope?: string; sampling_complete?: boolean; checked_frames?: number; flagged_frame_count?: number; framesLength?: number };
+};
+const TASK_STATUSES = ['queued', 'processing', 'succeeded', 'failed', 'cancelled'];
+// Only fixed classifications are retained; arbitrary strings can carry secrets.
+const SAFE_ERROR_CODES = new Set(['failure', 'internal_error', 'server_error', 'provider_error', 'upstream_error',
+  'inference_error', 'inference_failed', 'processing_failed', 'validation_error', 'invalid_input', 'invalid_request',
+  'timeout', 'request_timeout', 'download_failed', 'video_download_failed', 'video_decode_failed', 'decode_error',
+  'ffmpeg_error', 'unsupported_media', 'unsupported_video_format', 'content_policy_blocked', 'runner_server_error']);
+const responseStatuses = new WeakMap<RecordValue, number>();
 
 // Deliberately omit response bodies, provider messages, URLs, and original causes.
 // Errors can be persisted or displayed without disclosing credentials or signed media URLs.
 export class SeeApiError extends Error {
-  constructor(message: string, public retryable = false, public retryAfter: number | undefined = undefined) {
+  constructor(message: string, public retryable = false, public retryAfter: number | undefined = undefined, public diagnostic?: SeeApiDiagnostic) {
     super(message);
     this.name = 'SeeApiError';
   }
@@ -19,8 +30,27 @@ export class SeeApiError extends Error {
 function record(value: unknown): value is RecordValue {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
 }
-function invalidResponse(): never {
-  throw new SeeApiError('The moderation response could not be verified. Manual review is required.');
+function responseDiagnostic(phase: string, value?: unknown, frameIndex?: number): SeeApiDiagnostic {
+  const diagnostic: SeeApiDiagnostic = { phase, ...(frameIndex === undefined ? {} : { frameIndex }) };
+  if (!record(value)) return diagnostic;
+  diagnostic.httpStatus = responseStatuses.get(value);
+  diagnostic.taskStatus = value.status === undefined ? 'missing' : typeof value.status === 'string' && TASK_STATUSES.includes(value.status) ? value.status : 'unrecognized';
+  if (record(value.error)) diagnostic.errorCode = typeof value.error.code === 'string' && SAFE_ERROR_CODES.has(value.error.code) ? value.error.code : 'unrecognized';
+  const output = record(value.result) && record(value.result.data) ? value.result.data.output : undefined;
+  if (record(output)) {
+    const number = (value: unknown) => typeof value === 'number' && Number.isFinite(value) && Math.abs(value) <= 1_000_000 ? value : undefined;
+    diagnostic.report = {
+      schemaVersion: number(output.report_schema_version),
+      scope: output.scope === undefined ? 'missing' : output.scope === 'sampled_frames' || output.scope === 'whole_video' ? output.scope : 'unrecognized',
+      sampling_complete: typeof output.sampling_complete === 'boolean' ? output.sampling_complete : undefined,
+      checked_frames: number(output.checked_frames), flagged_frame_count: number(output.flagged_frame_count),
+      framesLength: Array.isArray(output.frames) ? output.frames.length : undefined,
+    };
+  }
+  return diagnostic;
+}
+function invalidResponse(phase: string, value?: unknown, frameIndex?: number): never {
+  throw new SeeApiError('The moderation response could not be verified. Manual review is required.', false, undefined, responseDiagnostic(phase, value, frameIndex));
 }
 function validTaskId(value: unknown): value is string {
   return typeof value === 'string' && TASK_ID.test(value);
@@ -28,7 +58,7 @@ function validTaskId(value: unknown): value is string {
 function taskIdentity(value: unknown, expectedId?: string): RecordValue {
   if (!record(value) || !validTaskId(value.id) || (expectedId !== undefined && value.id !== expectedId)
     || value.object !== 'inference' || value.model !== 'video-nsfw-filter'
-    || value.endpoint !== 'video-moderation' || value.provider !== 'seeapi') invalidResponse();
+    || value.endpoint !== 'video-moderation' || value.provider !== 'seeapi') invalidResponse('task_identity', value);
   return value;
 }
 function retryDelay(value: string | null): number | undefined {
@@ -50,9 +80,9 @@ async function boundedJson(response: Response): Promise<unknown> {
   const contentLength = response.headers.get('Content-Length');
   if (contentLength !== null && Number(contentLength) > MAX_RESPONSE_BYTES) {
     await discardBody(response);
-    throw new SeeApiError('The moderation response exceeded its size limit.');
+    throw new SeeApiError('The moderation response exceeded its size limit.', false, undefined, { phase: 'response_size', httpStatus: response.status });
   }
-  if (!response.body) throw new SeeApiError('The moderation service returned an unreadable response.', true);
+  if (!response.body) throw new SeeApiError('The moderation service returned an unreadable response.', true, undefined, { phase: 'response_body', httpStatus: response.status });
   const reader = response.body.getReader();
   const decoder = new TextDecoder('utf-8', { fatal: true });
   let bytes = 0;
@@ -62,7 +92,7 @@ async function boundedJson(response: Response): Promise<unknown> {
       const chunk = await reader.read();
       if (chunk.done) break;
       bytes += chunk.value.byteLength;
-      if (bytes > MAX_RESPONSE_BYTES) throw new SeeApiError('The moderation response exceeded its size limit.');
+      if (bytes > MAX_RESPONSE_BYTES) throw new SeeApiError('The moderation response exceeded its size limit.', false, undefined, { phase: 'response_size', httpStatus: response.status });
       text += decoder.decode(chunk.value, { stream: true });
     }
     text += decoder.decode();
@@ -70,13 +100,13 @@ async function boundedJson(response: Response): Promise<unknown> {
   } catch (error) {
     try { await reader.cancel(); } catch { /* Preserve the original classification. */ }
     if (error instanceof SeeApiError) throw error;
-    throw new SeeApiError('The moderation service returned an unreadable response.', true);
+    throw new SeeApiError('The moderation service returned an unreadable response.', true, undefined, { phase: 'response_parse', httpStatus: response.status });
   } finally {
     reader.releaseLock();
   }
 }
 async function request(env: Env, path: string, body?: string, idempotencyKey?: string): Promise<unknown> {
-  if (!env.SEEAPI_API_KEY?.trim()) throw new SeeApiError('Video moderation is not configured.');
+  if (!env.SEEAPI_API_KEY?.trim()) throw new SeeApiError('Video moderation is not configured.', false, undefined, { phase: 'configuration' });
   let response: Response;
   try {
     response = await fetch(INFERENCES_URL + path, {
@@ -92,7 +122,7 @@ async function request(env: Env, path: string, body?: string, idempotencyKey?: s
       signal: AbortSignal.timeout(20_000),
     });
   } catch {
-    throw new SeeApiError('The moderation service could not be reached.', true);
+    throw new SeeApiError('The moderation service could not be reached.', true, undefined, { phase: 'network' });
   }
   if (!response.ok) {
     await discardBody(response);
@@ -101,30 +131,34 @@ async function request(env: Env, path: string, body?: string, idempotencyKey?: s
       retryable ? 'The moderation service is temporarily unavailable.' : 'The moderation request was rejected. Manual review is required.',
       retryable,
       retryable ? retryDelay(response.headers.get('Retry-After')) : undefined,
+      { phase: 'http', httpStatus: response.status },
     );
   }
-  return boundedJson(response);
+  const value = await boundedJson(response);
+  if (record(value)) responseStatuses.set(value, response.status);
+  return value;
 }
 
 export async function createVideoModeration(env: Env, body: string, idempotencyKey: string): Promise<{ id: string }> {
   if (!idempotencyKey || idempotencyKey.length > 255 || !/^[\x21-\x7e]+$/.test(idempotencyKey)) {
-    throw new SeeApiError('The moderation idempotency key is invalid.');
+    throw new SeeApiError('The moderation idempotency key is invalid.', false, undefined, { phase: 'idempotency_key' });
   }
   // Reusing the exact stored body is essential: rebuilding signed URLs breaks idempotency.
   const task = taskIdentity(await request(env, '', body, idempotencyKey));
-  if (!['queued', 'processing', 'succeeded', 'failed', 'cancelled'].includes(String(task.status))) invalidResponse();
+  if (!TASK_STATUSES.includes(String(task.status))) invalidResponse('task_status', task);
   return { id: task.id as string };
 }
 
 export async function getVideoModeration(env: Env, id: string): Promise<ModerationAssessment> {
-  if (!validTaskId(id)) throw new SeeApiError('The moderation task identifier is invalid.');
+  if (!validTaskId(id)) throw new SeeApiError('The moderation task identifier is invalid.', false, undefined, { phase: 'task_id' });
   const task = taskIdentity(await request(env, `/${encodeURIComponent(id)}`), id);
-  if (task.error !== null) invalidResponse();
+  if (task.error !== null) invalidResponse('task_error', task);
   if (task.status === 'queued' || task.status === 'processing') {
-    if (task.result !== null) invalidResponse();
+    if (task.result !== null) invalidResponse('pending_result', task);
     return { verdict: 'pending' };
   }
-  if (task.status !== 'succeeded' || !record(task.result) || task.result.type !== 'json' || !record(task.result.data)) invalidResponse();
+  if (task.status !== 'succeeded') invalidResponse('task_status', task);
+  if (!record(task.result) || task.result.type !== 'json' || !record(task.result.data)) invalidResponse('result_shape', task);
   const assessment = task.result.data;
   const output = assessment.output;
   // A policy block legitimately has no report. Never require clean-report fields to block.
@@ -138,20 +172,24 @@ export async function getVideoModeration(env: Env, id: string): Promise<Moderati
     }
     return { verdict: 'blocked', ...counts };
   }
-  if (assessment.flagged !== false || assessment.reason !== undefined || !record(output)
-    || output.nsfw_detected !== false || output.scope !== 'sampled_frames' || output.sampling_complete !== true
-    || output.output_layout !== 'named-files-v1' || output.report_schema_version !== 5
-    || output.flagged_frame_count !== 0 || !Number.isInteger(output.checked_frames)
-    || (output.checked_frames as number) < 1 || (output.checked_frames as number) > 32
-    || !Array.isArray(output.frames) || output.frames.length !== output.checked_frames) invalidResponse();
+  if (assessment.flagged !== false || assessment.reason !== undefined) invalidResponse('assessment_flag', task);
+  if (!record(output)) invalidResponse('report_shape', task);
+  if (output.nsfw_detected !== false) invalidResponse('report_flag', task);
+  if (output.scope !== 'sampled_frames') invalidResponse('report_scope', task);
+  if (output.sampling_complete !== true) invalidResponse('report_sampling', task);
+  if (output.output_layout !== 'named-files-v1') invalidResponse('report_layout', task);
+  if (output.report_schema_version !== 5) invalidResponse('report_schema', task);
+  if (output.flagged_frame_count !== 0) invalidResponse('report_flagged_count', task);
+  if (!Number.isInteger(output.checked_frames) || (output.checked_frames as number) < 1 || (output.checked_frames as number) > 32) invalidResponse('report_checked_count', task);
+  if (!Array.isArray(output.frames) || output.frames.length !== output.checked_frames) invalidResponse('report_frames', task);
   const frameNumbers = new Set<number>();
-  for (const frame of output.frames) {
+  for (const [index, frame] of output.frames.entries()) {
     if (!record(frame) || !Number.isSafeInteger(frame.frame_number) || (frame.frame_number as number) <= 0
       || frameNumbers.has(frame.frame_number as number)
       || typeof frame.timestamp_seconds !== 'number' || !Number.isFinite(frame.timestamp_seconds)
       || frame.timestamp_seconds < 0 || frame.timestamp_seconds > 30
       || frame.nsfw_detected !== false || !Array.isArray(frame.nsfw) || frame.nsfw.length !== 0
-      || (frame.special !== undefined && (!Array.isArray(frame.special) || frame.special.length !== 0))) invalidResponse();
+      || (frame.special !== undefined && (!Array.isArray(frame.special) || frame.special.length !== 0))) invalidResponse('frame_validation', task, index);
     frameNumbers.add(frame.frame_number as number);
   }
   return { verdict: 'passed', checkedFrames: output.checked_frames as number, flaggedFrames: 0 };
