@@ -55,7 +55,7 @@ async function completedProvider(d: Awaited<ReturnType<typeof setup>>, flagged =
 }
 
 describe('Window Peeper jobs', () => {
-  it('submits the signed identity photo with the fixed window motion and saves the queue handle', async () => {
+  it('submits the signed identity photo with quality prompt expansion and fixed window motion', async () => {
     const d = await setup();
     const fetcher = vi.spyOn(globalThis, 'fetch').mockResolvedValue(Response.json(queued));
     await d.tick();
@@ -66,7 +66,7 @@ describe('Window Peeper jobs', () => {
     expect(init).toMatchObject({ method: 'POST', redirect: 'manual', headers: { 'X-Fal-No-Retry': '1' } });
     const body = JSON.parse(String(init?.body));
     expect(body).toMatchObject({ duration: 15, resolution: '768P', aspect_ratio: '9:16', enable_safety_checker: true,
-      prompt_expansion_mode: 'disabled', sync_mode: false, reference_video_urls: ['https://example.test/templates/window-peeper/motion.mp4'] });
+      prompt_expansion_mode: 'quality', sync_mode: false, reference_video_urls: ['https://example.test/templates/window-peeper/motion.mp4'] });
     expect(body.reference_image_urls).toHaveLength(1);
     expect(await verifyMediaSignature(d.env, 'users/u/uploads/portrait', new URL(body.reference_image_urls[0]))).toBe(true);
     expect(body.prompt).toMatch(/Image 1/);
