@@ -909,5 +909,13 @@
   "No. Registration does not include free credits. Purchase a credit pack before generating. A five-second Wan template video at 480p needs 15 credits. You can browse the template, instructions and reference videos for free. Check the displayed generation cost and the pricing page before purchasing.": "いいえ。登録時に無料クレジットは付与されません。生成前にクレジットパックをご購入ください。480p・5秒のWanテンプレート動画には15クレジットが必要です。テンプレート、ガイド、参考動画は無料で閲覧できます。購入前に表示される生成料金と料金ページをご確認ください。",
   "Credits & Limits": "クレジットと利用制限",
   "5 seconds, 480p: 15 credits": "5秒・480p：15クレジット",
-  "5 seconds, 720p: 30 credits": "5秒・720p：30クレジット"
+  "5 seconds, 720p: 30 credits": "5秒・720p：30クレジット",
+  "Historical jobs may continue through the provider used when they were submitted. Available models and features may change.": "過去のジョブは、送信時に使用したプロバイダーで引き続き処理される場合があります。利用可能なモデルと機能は変更されることがあります。",
+  "We have zero tolerance for graphic violence or gore, threats or incitement to violence, hate targeting protected groups, and child sexual abuse, exploitation, grooming, or content that endangers children. These prohibitions apply to prompts, uploads, and outputs, whether real or AI-generated.": "生々しい暴力や流血、暴力の脅迫や扇動、保護対象の集団への憎悪、児童への性的虐待・搾取・グルーミング、または児童を危険にさらすコンテンツは一切容認しません。これらの禁止事項は、実際の内容かAI生成かを問わず、プロンプト、アップロード、出力に適用されます。",
+  "AI images: Nano Banana 2 through Kie.": "AI画像：Kie経由のNano Banana 2。",
+  "The following models and API providers currently power our tools:": "現在、各ツールでは以下のモデルとAPIプロバイダーを使用しています。",
+  "Hotel Lobby duo videos: Wan 3.0, Seedance 2.0, and Seedance 2.0 Fast through Kie.": "Hotel Lobbyのデュオ動画：Kie経由のWan 3.0、Seedance 2.0、Seedance 2.0 Fast。",
+  "New Ozil Goal videos: MiniMax H3 through fal.ai.": "新規のOzil Goal動画：fal.ai経由のMiniMax H3。",
+  "FlyingCar and the general video/effects workspace: Seedance 2.5 through Kie.": "FlyingCarおよび汎用の動画・エフェクトワークスペース：Kie経由のSeedance 2.5。",
+  "AI music: Suno V6, Suno V6 Wild, and Suno V6 Mini through APIMart.": "AI音楽：APIMart経由のSuno V6、Suno V6 Wild、Suno V6 Mini。"
 }

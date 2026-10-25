@@ -1,5 +1,6 @@
 import type Stripe from 'stripe';
 import { creditPacks } from '../../content/pricing';
+import { getCreditPackOffer, matchesCreditPackOfferMetadata } from '../../content/black-friday-offer';
 import type { User } from '../contracts';
 import { isLocale, localizeHref } from '../i18n/routing';
 import { appOrigin, database, type Env } from './env';
@@ -31,9 +32,14 @@ function checkoutUrl(value: unknown, sessionId: string, mode: 'test' | 'live'): 
   return url.href;
 }
 
-export async function createStripeCheckout(env: Env, user: User, packId: unknown, requestedLocale: unknown = 'en') {
+export async function createStripeCheckout(env: Env, user: User, packId: unknown, requestedLocale: unknown = 'en', expectedCredits?: unknown) {
   const pack = creditPacks.find(item => item.id === packId);
   if (!pack) throw new ApiError(400, 'Unknown credit pack.');
+  const offer = getCreditPackOffer(pack);
+  if (expectedCredits !== undefined) {
+    if (typeof expectedCredits !== 'number' || !Number.isSafeInteger(expectedCredits) || expectedCredits <= 0) throw new ApiError(400, 'Expected credits must be a positive integer.');
+    if (expectedCredits !== offer.credits) throw new ApiError(409, 'This credit pack offer has changed. Refresh pricing before you check out.');
+  }
   const locale = typeof requestedLocale === 'string' && isLocale(requestedLocale) ? requestedLocale : 'en';
   stripeWebhookSecret(env);
   const client = stripeClient(env);
@@ -54,8 +60,8 @@ export async function createStripeCheckout(env: Env, user: User, packId: unknown
   await db.prepare(`INSERT INTO orders
     (id,user_id,pack_id,product_id,amount,currency,credits,provider,provider_mode)
     VALUES (?,?,?,?,?,?,?,?,?)`)
-    .bind(orderId, user.id, pack.id, priceId, pack.amountCents, 'USD', pack.credits, 'stripe', mode).run();
-  const metadata = { app: 'migosai', orderId, userId: user.id, packId: pack.id, priceId, amount: String(pack.amountCents), currency: 'USD', credits: String(pack.credits), mode };
+    .bind(orderId, user.id, pack.id, priceId, pack.amountCents, 'USD', offer.credits, 'stripe', mode).run();
+  const metadata = { app: 'migosai', orderId, userId: user.id, packId: pack.id, priceId, amount: String(pack.amountCents), currency: 'USD', credits: String(offer.credits), baseCredits: String(offer.baseCredits), bonusCredits: String(offer.bonusCredits), ...(offer.campaignId ? { campaignId: offer.campaignId } : {}), mode };
   const returnPath = `${origin}${localizeHref('/pricing', locale)}`;
   let session;
   try {
@@ -64,6 +70,7 @@ export async function createStripeCheckout(env: Env, user: User, packId: unknown
       line_items: [{ price: priceId, quantity: 1 }],
       client_reference_id: orderId, customer_email: user.email, metadata,
       payment_intent_data: { metadata }, locale,
+      ...(offer.bonusCredits > 0 ? { custom_text: { submit: { message: `You will receive ${offer.credits} credits, including ${offer.bonusCredits} Black Friday bonus credits. One-time purchase; credits do not expire.` } } } : {}),
       success_url: `${returnPath}?checkout=completed&orderId=${encodeURIComponent(orderId)}`,
       cancel_url: `${returnPath}?checkout=cancelled&orderId=${encodeURIComponent(orderId)}`,
     }, { idempotencyKey: `stripe:${mode}:${orderId}` });
@@ -92,7 +99,8 @@ function matchesMetadata(metadata: Stripe.Metadata | null | undefined, order: St
   return !!metadata && metadata.app === 'migosai' && metadata.orderId === order.id && metadata.userId === order.user_id &&
     metadata.packId === order.pack_id && metadata.priceId === order.product_id &&
     metadata.amount === String(order.amount) && metadata.currency === order.currency &&
-    metadata.credits === String(order.credits) && metadata.mode === order.provider_mode;
+    metadata.credits === String(order.credits) && metadata.mode === order.provider_mode &&
+    matchesCreditPackOfferMetadata(metadata, order.credits);
 }
 
 function objectId(value: unknown): string | null {

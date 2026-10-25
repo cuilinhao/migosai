@@ -24,6 +24,6 @@ export const POST = api(async (request) => {
           body.billingInterval,
           body.locale,
         )
-      : await createCheckout(env, user, body.packId, body.locale),
+      : await createCheckout(env, user, body.packId, body.locale, body.expectedCredits),
   );
 });

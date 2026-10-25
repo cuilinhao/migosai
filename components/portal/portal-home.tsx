@@ -7,6 +7,7 @@ import Link from "@/components/i18n/localized-link";
 import { useTranslations } from "@/components/i18n/locale-provider";
 import { homeCreations, homeEffects, portalArticles, portalCreations, portalEffects, portalFaqs, portalTools, type PortalCreation } from "@/content/portal";
 import { ViewportVideo } from "./viewport-video";
+import { CampaignBanner } from "@/components/black-friday/campaign-banner";
 
 function SectionHeading({ title, description, href, children }: { title: string; description?: string; href?: string; children?: ReactNode }) {
   const t = useTranslations();
@@ -17,6 +18,7 @@ export function PortalHome() {
   const t = useTranslations();
   const carousel = useRef<HTMLDivElement>(null);
   return <div className="portal-home"><div className="portal-hero-backdrop"/><header className="portal-hero"><h1>{t("Create beyond imagination.")}<br/>{t("AI images, videos & music. All in MigosAI.")}</h1></header>
+    <CampaignBanner placement="home"/>
     <section className="portal-section portal-whats-new"><SectionHeading title="What's New" description="Fresh tools. More ways to bring your ideas to life."><div className="portal-carousel-controls"><button aria-label={t("Previous cards")} onClick={() => carousel.current?.scrollBy({ left: -390, behavior: "smooth" })}><ChevronLeft size={17}/></button><button aria-label={t("Next cards")} onClick={() => carousel.current?.scrollBy({ left: 390, behavior: "smooth" })}><ChevronRight size={17}/></button></div></SectionHeading>
       <div className="portal-news-track" ref={carousel}>
         <NewsCard href="/ai-image-generator" image="/landing/reference/1d20d4416701db4d.avif" title="Nano Banana 2" description="Your ideas, brought to life in stunning detail." badge="NEW" tone="image"><span className="portal-promo-word">NANO<br/><em>BANANA 2</em></span></NewsCard>

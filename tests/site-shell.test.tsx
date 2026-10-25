@@ -27,6 +27,7 @@ import AccountLayout from '../app/app/layout';
 import OrdersPage from '../app/app/my-orders/page';
 import CreditsPage from '../app/app/my-credits/page';
 import AssetsPage from '../app/app/assets/page';
+import { SUPPORT_EMAIL, SUPPORT_MAILTO } from '../content/support';
 
 const request=vi.hoisted(()=>({path:'/',locale:'en'}));
 vi.mock('next/headers',()=>({headers:async()=>new Headers({'x-migos-locale':request.locale,'x-migos-pathname':request.path})}));
@@ -52,6 +53,11 @@ async function renderRoute(path:string,page:()=>ReactNode|Promise<ReactNode>,loc
 function activeSidebarLinks(html:string):string[] {
   const sidebar=html.match(/<aside\b[^>]*class="portal-sidebar"[^>]*>([\s\S]*?)<\/aside>/)?.[1]??'';
   return [...sidebar.matchAll(/<a\b([^>]*)>/g)].filter(([,attributes])=>attributes.includes('aria-current="page"')).map(([,attributes])=>attributes.match(/href="([^"]+)"/)?.[1]??'');
+}
+function expectVisibleSupportEmail(html:string) {
+  const footer=html.match(/<footer\b[^>]*>([\s\S]*?)<\/footer>/)?.[1]??'';
+  expect(footer).toContain(`href="${SUPPORT_MAILTO}"`);
+  expect(footer).toContain(`>${SUPPORT_EMAIL}</a>`);
 }
 const publicRoutes=[
   {path:'/hotel-lobby-ai-video-generator',page:HotelLobbyPage,active:'/ai-video-generator'},
@@ -79,6 +85,7 @@ describe('public pages share the live portal layout',()=>{
       expect(html.match(/<footer(?:\s|>)/g)??[],`${path}: footer landmarks`).toHaveLength(1);
       expect(html.match(/class="portal-footer"/g)??[]).toHaveLength(1);
       expect(html.match(/class="portal-shell"/g)??[]).toHaveLength(1);
+      expectVisibleSupportEmail(html);
       expect(html).toContain('<h1');
       expect(activeSidebarLinks(html)).toEqual(active?[localizeHref(active,locale)]:[]);
       for(const href of ['/ai-image-generator','/hotel-lobby-ai-video-generator','/ai-rap-song-generator','/pricing','/blog'])expect(html).toContain(`href="${localizeHref(href,locale)}"`);
@@ -89,15 +96,16 @@ describe('public pages share the live portal layout',()=>{
 describe('standalone routes keep their own layout',()=>{
   const standalone=[
     {path:'/landing',page:LandingPage,footerCount:1},
-    {path:'/sign-in',page:SignInPage,footerCount:0},
-    {path:'/sign-up',page:SignUpPage,footerCount:0},
-    {path:'/app/my-orders',page:()=>AccountLayout({children:<OrdersPage/>}),footerCount:0},
-    {path:'/app/my-credits',page:()=>AccountLayout({children:<CreditsPage/>}),footerCount:0},
+    {path:'/sign-in',page:SignInPage,footerCount:1},
+    {path:'/sign-up',page:SignUpPage,footerCount:1},
+    {path:'/app/my-orders',page:()=>AccountLayout({children:<OrdersPage/>}),footerCount:1},
+    {path:'/app/my-credits',page:()=>AccountLayout({children:<CreditsPage/>}),footerCount:1},
   ];
   for(const {path,page,footerCount}of standalone)it.each(locales)(`${path} does not receive a second portal shell in %s`,async locale=>{
     const html=await renderRoute(path,page,locale);
     expect(html.match(/<main(?:\s|>)/g)??[]).toHaveLength(1);
     expect(html.match(/<footer(?:\s|>)/g)??[]).toHaveLength(footerCount);
+    expectVisibleSupportEmail(html);
     expect(html).not.toContain('class="portal-shell"');
     expect(html).not.toContain('class="portal-footer"');
     expect(html).not.toContain('class="portal-nav"');
@@ -106,14 +114,26 @@ describe('standalone routes keep their own layout',()=>{
 });
 
 describe('assets workspace uses the shared portal once',()=>{
-  it.each(locales)('keeps the active Assets navigation without the account shell or footer in %s',async locale=>{
+  it.each(locales)('keeps the active Assets navigation with one compact support footer in %s',async locale=>{
     const html=await renderRoute('/app/assets',()=>AccountLayout({children:<AssetsPage/>}),locale);
     expect(html.match(/class="portal-shell portal-assets-workspace"/g)??[]).toHaveLength(1);
     expect(html.match(/class="portal-nav"/g)??[]).toHaveLength(1);
     expect(html.match(/<main(?:\s|>)/g)??[]).toHaveLength(1);
     expect(activeSidebarLinks(html)).toEqual([localizeHref('/app/assets',locale)]);
     expect(html).not.toContain('dashboard-nav');
-    expect(html).not.toContain('<footer');
+    expect(html.match(/<footer(?:\s|>)/g)??[]).toHaveLength(1);
+    expect(html).toContain('class="support-footer"');
+    expectVisibleSupportEmail(html);
     expect(html).toContain('MigosAI');
+  });
+});
+
+describe('video workspaces keep support available',()=>{
+  for(const path of ['/ai-video-generator','/effects/ai-baby-dance'])it.each(locales)(`${path} has one compact support footer in %s`,async locale=>{
+    const html=await renderRoute(path,()=> <div>Workspace</div>,locale);
+    expect(html.match(/<main(?:\s|>)/g)??[]).toHaveLength(1);
+    expect(html.match(/<footer(?:\s|>)/g)??[]).toHaveLength(1);
+    expect(html).toContain('class="support-footer"');
+    expectVisibleSupportEmail(html);
   });
 });

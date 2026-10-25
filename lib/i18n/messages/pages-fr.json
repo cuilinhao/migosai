@@ -909,5 +909,13 @@
   "No. Registration does not include free credits. Purchase a credit pack before generating. A five-second Wan template video at 480p needs 15 credits. You can browse the template, instructions and reference videos for free. Check the displayed generation cost and the pricing page before purchasing.": "Non. L’inscription ne donne droit à aucun crédit gratuit. Achetez un pack de crédits avant de générer. Une vidéo Wan de cinq secondes avec le modèle en 480p nécessite 15 crédits. Les modèles, les instructions et les vidéos de référence sont consultables gratuitement. Vérifiez le coût de génération affiché et la page des tarifs avant l’achat.",
   "Credits & Limits": "Crédits et limites",
   "5 seconds, 480p: 15 credits": "5 secondes, 480p : 15 crédits",
-  "5 seconds, 720p: 30 credits": "5 secondes, 720p : 30 crédits"
+  "5 seconds, 720p: 30 credits": "5 secondes, 720p : 30 crédits",
+  "Historical jobs may continue through the provider used when they were submitted. Available models and features may change.": "Les anciennes tâches peuvent continuer à être traitées par le fournisseur utilisé lors de leur soumission. Les modèles et fonctionnalités disponibles peuvent changer.",
+  "We have zero tolerance for graphic violence or gore, threats or incitement to violence, hate targeting protected groups, and child sexual abuse, exploitation, grooming, or content that endangers children. These prohibitions apply to prompts, uploads, and outputs, whether real or AI-generated.": "Nous ne tolérons aucune violence graphique ou scène sanglante, menace ou incitation à la violence, haine visant des groupes protégés, ni aucun abus sexuel, exploitation ou manipulation à des fins sexuelles d’enfants, ni aucun contenu mettant des enfants en danger. Ces interdictions s’appliquent aux descriptions, aux fichiers importés et aux résultats, qu’ils soient réels ou générés par IA.",
+  "AI images: Nano Banana 2 through Kie.": "Images IA : Nano Banana 2 via Kie.",
+  "The following models and API providers currently power our tools:": "Nos outils utilisent actuellement les modèles et fournisseurs d’API suivants :",
+  "Hotel Lobby duo videos: Wan 3.0, Seedance 2.0, and Seedance 2.0 Fast through Kie.": "Vidéos de duo Hotel Lobby : Wan 3.0, Seedance 2.0 et Seedance 2.0 Fast via Kie.",
+  "New Ozil Goal videos: MiniMax H3 through fal.ai.": "Nouvelles vidéos Ozil Goal : MiniMax H3 via fal.ai.",
+  "FlyingCar and the general video/effects workspace: Seedance 2.5 through Kie.": "FlyingCar et l’espace général de création vidéo et d’effets : Seedance 2.5 via Kie.",
+  "AI music: Suno V6, Suno V6 Wild, and Suno V6 Mini through APIMart.": "Musique IA : Suno V6, Suno V6 Wild et Suno V6 Mini via APIMart."
 }

@@ -8,7 +8,7 @@ export async function generateMetadata() { return localizeMetadata({ title: "Acc
 
 const sections = [
   { id: "permission-and-responsibility", title: "Permission and Responsibility", body: <p>Use only photos, audio, video, and other material you own or are authorized to use. Obtain permission from each person depicted; a parent or guardian must authorize images of minors. An image being public online does not give you permission to use it. You are responsible for your inputs and for publishing generated results.</p> },
-  { id: "prohibited-content", title: "Prohibited Content and Conduct", body: <><p>The following six categories are prohibited:</p><ul>
+  { id: "prohibited-content", title: "Prohibited Content and Conduct", body: <><p>We have zero tolerance for graphic violence or gore, threats or incitement to violence, hate targeting protected groups, and child sexual abuse, exploitation, grooming, or content that endangers children. These prohibitions apply to prompts, uploads, and outputs, whether real or AI-generated.</p><p>The following six categories are prohibited:</p><ul>
     <li>Sexual or exploitative content: nudity, pornography, non-consensual intimate imagery, sexual deepfakes, and any sexualization or exploitation of minors.</li>
     <li>Violence, hate, and harassment: graphic violence, threats, incitement, hateful attacks against protected groups, targeted abuse, or defamatory content.</li>
     <li>Unauthorized impersonation: using a real person, celebrity, or public figure without permission, or making anyone appear to say, do, or endorse something in a misleading way.</li>
@@ -23,5 +23,5 @@ const sections = [
 
 export default async function AcceptableUsePolicyPage() {
   const t = await getTranslations();
-  return localizePageContent(<LegalPage title="Acceptable Use Policy" subtitle="Consent, safe creation, and content reports" sections={sections}/>, t);
+  return localizePageContent(<LegalPage updatedAt="2026-10-23" title="Acceptable Use Policy" subtitle="Consent, safe creation, and content reports" sections={sections}/>, t);
 }

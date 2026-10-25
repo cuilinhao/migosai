@@ -8,6 +8,7 @@ import { FeaturesSection, FaqSection, SectionHeading, WorkflowSection } from "@/
 import { PricingCards } from "@/components/pricing-cards";
 import { homeFaqItems } from "@/content/home";
 import { HomeHero } from "@/components/sections/home-hero";
+import { CampaignBanner } from "@/components/black-friday/campaign-banner";
 
 /** The original Hotel Lobby homepage, using the current generator and billing. */
 export async function HotelLobbyLanding() {
@@ -30,7 +31,7 @@ export async function HotelLobbyLanding() {
     <WorkflowSection/>
     <FeaturesSection/>
     <FaqSection items={homeFaqItems}/>
-    <section id="pricing" className="marketing-section home-pricing"><div className="section-container"><SectionHeading title="LobbyDuo Pricing and Credit Plans" description="One-time credit packs and subscription plans in US dollars. Completely unused one-time packs may qualify for a refund within 14 days."/><PricingCards initialPurchaseType="packs"/></div></section>
+    <section id="pricing" className="marketing-section home-pricing"><div className="section-container"><CampaignBanner placement="home"/><SectionHeading title="LobbyDuo Pricing and Credit Plans" description="One-time credit packs and subscription plans in US dollars. Completely unused one-time packs may qualify for a refund within 14 days."/><PricingCards initialPurchaseType="packs" offerTime={Date.now()}/></div></section>
     <section id="cta" className="marketing-section home-cta"><div className="section-container"><SectionHeading title="Ready to make your Hotel Lobby AI video?" description="Start with two photos you have the right to use. Registration does not include free credits. Purchase a credit pack before generating."/><Link className="pill-gradient-button" href="/#generator">Create Hotel Lobby AI Video</Link></div></section>
   </>, t);
 }

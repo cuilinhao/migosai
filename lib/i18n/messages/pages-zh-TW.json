@@ -909,5 +909,13 @@
   "No. Registration does not include free credits. Purchase a credit pack before generating. A five-second Wan template video at 480p needs 15 credits. You can browse the template, instructions and reference videos for free. Check the displayed generation cost and the pricing page before purchasing.": "不可以。註冊不會贈送免費點數。請先購買點數方案再生成。5 秒、480p 的 Wan 範本影片需 15 點。您可以免費瀏覽範本、操作說明與參考影片。購買前請確認顯示的生成費用與價格頁面。",
   "Credits & Limits": "點數與使用限制",
   "5 seconds, 480p: 15 credits": "5 秒、480p：15 點",
-  "5 seconds, 720p: 30 credits": "5 秒、720p：30 點"
+  "5 seconds, 720p: 30 credits": "5 秒、720p：30 點",
+  "Historical jobs may continue through the provider used when they were submitted. Available models and features may change.": "歷史任務可能繼續由提交時使用的服務供應商處理。可用模型與功能可能會變更。",
+  "We have zero tolerance for graphic violence or gore, threats or incitement to violence, hate targeting protected groups, and child sexual abuse, exploitation, grooming, or content that endangers children. These prohibitions apply to prompts, uploads, and outputs, whether real or AI-generated.": "我們對血腥暴力、暴力威脅或煽動、針對受保護群體的仇恨，以及兒童性虐待、剝削、誘騙或危害兒童安全的內容採取零容忍立場。無論是真實內容或 AI 生成內容，這些禁令均適用於提示詞、上傳內容與輸出結果。",
+  "AI images: Nano Banana 2 through Kie.": "AI 圖片：透過 Kie 使用 Nano Banana 2。",
+  "The following models and API providers currently power our tools:": "目前我們的工具使用以下模型與 API 服務供應商：",
+  "Hotel Lobby duo videos: Wan 3.0, Seedance 2.0, and Seedance 2.0 Fast through Kie.": "Hotel Lobby 雙人影片：透過 Kie 使用 Wan 3.0、Seedance 2.0 與 Seedance 2.0 Fast。",
+  "New Ozil Goal videos: MiniMax H3 through fal.ai.": "新的 Ozil Goal 影片：透過 fal.ai 使用 MiniMax H3。",
+  "FlyingCar and the general video/effects workspace: Seedance 2.5 through Kie.": "FlyingCar 與通用影片／特效工作區：透過 Kie 使用 Seedance 2.5。",
+  "AI music: Suno V6, Suno V6 Wild, and Suno V6 Mini through APIMart.": "AI 音樂：透過 APIMart 使用 Suno V6、Suno V6 Wild 與 Suno V6 Mini。"
 }

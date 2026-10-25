@@ -87,7 +87,7 @@ describe("Hotel Lobby homepage SEO restoration", () => {
 
   it.each(locales)("keeps the original localized home anchors and visible internal links in %s", async locale => {
     const html = await renderPage(locale, true);
-    for (const path of ["/#generator", "/#features", "/#how-it-works", "/#faq", "/hotel-lobby-ai-video-generator", "/showcases", "/showcases#video-examples", "/pricing", "/blog", "/ai-rap-song-generator", "/hotel-lobby-ai-video-generator-free", "/hotel-lobby-ai-template", "/hotel-lobby-ai-filter", "/hotel-lobby-ai-generator", "/blog/best-hotel-lobby-ai-video-generators-2026"]) expect(html).toContain(`href="${localizeHref(path, locale)}"`);
+    for (const path of ["/#generator", "/#features", "/#how-it-works", "/#faq", "/hotel-lobby-ai-video-generator", "/showcases", "/showcases#video-examples", "/pricing", "/black-friday", "/blog", "/ai-rap-song-generator", "/hotel-lobby-ai-video-generator-free", "/hotel-lobby-ai-template", "/hotel-lobby-ai-filter", "/hotel-lobby-ai-generator", "/blog/best-hotel-lobby-ai-video-generators-2026"]) expect(html).toContain(`href="${localizeHref(path, locale)}"`);
     expect(html).not.toContain(`href="${localizeHref("/hotel-lobby-ai-video-generator#generator", locale)}"`);
     expect(html).toContain('mailto:cuilinhao2021@gmail.com');
   });

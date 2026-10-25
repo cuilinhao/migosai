@@ -97,7 +97,13 @@ describe("subscription HTTP routes", () => {
       state.user,
       "starter",
       "en",
+      undefined,
     );
+  });
+  it("passes only the displayed total as an offer precondition for credit checkout", async () => {
+    const response = await checkout(request("/api/checkout", { packId: "starter", locale: "en", expectedCredits: 360, credits: 999999, bonusCredits: 999999, campaignId: "forged" }), {});
+    expect(response.status).toBe(200);
+    expect(backend.credits).toHaveBeenCalledWith(state.env, state.user, "starter", "en", 360);
   });
   it("rejects unknown purchase types", async () => {
     expect(

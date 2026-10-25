@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { localeFromPath, stripLocale } from "./lib/i18n/routing";
+import { localeFromPath, localizeHref, stripLocale } from "./lib/i18n/routing";
 
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const locale = localeFromPath(pathname);
   const stripped = stripLocale(pathname);
+  if (stripped === "/landingpage") {
+    const destination = request.nextUrl.clone();
+    destination.pathname = localizeHref("/landing", locale);
+    return NextResponse.redirect(destination, 308);
+  }
   if (pathname === "/en" || pathname.startsWith("/en/")) {
     const destination = request.nextUrl.clone();
     destination.pathname = stripped;

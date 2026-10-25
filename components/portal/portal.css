@@ -48,3 +48,10 @@ html:has(.portal-video-workspace){scrollbar-width:none}html:has(.portal-video-wo
 .portal-assets-workspace .portal-content{padding:0;margin-left:232px;overflow:hidden;height:100dvh}.portal-assets-workspace .portal-content main{height:100%;min-width:0}.portal-assets-workspace .portal-account-bar{position:absolute;z-index:25;right:16px;top:16px;height:40px;gap:10px}.portal-assets-workspace .portal-signin{height:40px;border:0;border-radius:24px;background:#f5f5f5;color:#121212;padding:0 20px}.portal-assets-workspace .portal-account-menu{top:44px}.portal-assets-workspace .portal-credit{font-size:12px}.portal-assets-workspace .portal-mobile-header{display:none}
 @media(max-width:900px) and (min-width:768px){.portal-assets-workspace .portal-content{margin-left:192px}}
 @media(max-width:767px){.portal-assets-workspace .portal-sidebar{display:none}.portal-assets-workspace .portal-mobile-header{display:flex;position:relative;top:auto;left:auto;height:64px;padding:0 12px}.portal-assets-workspace .portal-content{margin-left:0;padding:0;height:calc(100dvh - 64px)}.portal-assets-workspace .portal-account-bar{top:12px;right:12px;height:36px}.portal-assets-workspace .portal-signin{height:36px;padding:0 14px;font-size:12px}.portal-assets-workspace .portal-credit{display:none}}
+
+/* A visible support address also accompanies compact creation and account views. */
+.portal-footer a[href^="mailto:"],.support-footer a[href^="mailto:"]{overflow-wrap:anywhere}
+.support-footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 16px;padding:18px 16px;border-top:1px solid #292929;background:#0b0b0b;color:#c5c5c5;font-family:"DM Sans",sans-serif;font-size:12px;line-height:1.6}
+.support-footer a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.support-footer a:focus-visible{outline:2px solid #bb8bff;outline-offset:4px}
+@media(max-width:600px){.portal-video-workspace .support-footer{padding-bottom:calc(86px + env(safe-area-inset-bottom))}}

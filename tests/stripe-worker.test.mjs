@@ -27,8 +27,16 @@ beforeAll(async () => {
       export default { async fetch(request, env) {
         globalThis.testEnv = env;
         try {
-          const path = new URL(request.url).pathname;
-          if (path === '/checkout') return Response.json(await createCheckout(env, {id:'u',email:'a@b.c',name:'Test'}, 'starter', 'ja'));
+          const url = new URL(request.url);
+          const path = url.pathname;
+          if (path === '/checkout') {
+            const previousNow = Date.now;
+            // Keep this baseline a regular purchase regardless of the CI date.
+            // Restore before webhook verification so signature tolerance stays real.
+            Date.now = () => Date.parse(url.searchParams.get('at') || '2026-10-25T12:00:00.000Z');
+            try { return Response.json(await createCheckout(env, {id:'u',email:'a@b.c',name:'Test'}, 'starter', 'ja', url.searchParams.has('expectedCredits') ? Number(url.searchParams.get('expectedCredits')) : undefined)); }
+            finally { Date.now = previousNow; }
+          }
           if (path === '/spend') return Response.json(await reserveGeneration(env.DB, 'u', 'spend', 'video', {}, 400));
           if (path === '/api/webhooks/stripe') return POST(request, {});
           return new Response('Not found', {status:404});
@@ -77,7 +85,12 @@ beforeEach(async () => {
   metadata = null; requests = []; upstreamStatus = 200;
   await db.batch(['DELETE FROM webhook_events', 'DELETE FROM credit_ledger', 'DELETE FROM generation_subscription_allocations', 'DELETE FROM generation_credit_allocations', 'DELETE FROM generations', 'DELETE FROM orders', 'UPDATE users SET credits=100'].map(sql => db.prepare(sql)));
 });
-async function checkout() { return worker.dispatchFetch(origin + '/checkout'); }
+async function checkout(at, expectedCredits) {
+  const url = new URL('/checkout', origin);
+  if (at) url.searchParams.set('at', at);
+  if (expectedCredits !== undefined) url.searchParams.set('expectedCredits', String(expectedCredits));
+  return worker.dispatchFetch(url);
+}
 async function webhook(id = 'evt_worker123', timestamp = Math.floor(Date.now() / 1000)) {
   const raw = JSON.stringify({ id, object: 'event', type: 'checkout.session.completed', livemode: false, data: { object: paid() } });
   const signature = `t=${timestamp},v1=${createHmac('sha256', secret).update(`${timestamp}.${raw}`).digest('hex')}`;
@@ -101,6 +114,43 @@ describe('Stripe Checkout and accounting in workerd', () => {
     expect(duplicates.map(response => response.status)).toEqual([200, 200, 200, 200, 200, 200]);
     expect(await db.prepare("SELECT credits FROM users WHERE id='u'").first()).toEqual({ credits: 0 });
     expect(await db.prepare("SELECT count(*) AS n FROM credit_ledger WHERE kind='payment'").first()).toEqual({ n: 1 });
+  });
+  it('settles a promotional Checkout through a signed webhook and grants base plus bonus only once', async () => {
+    const response = await checkout('2026-11-27T12:00:00.000Z', 360);
+    expect(response.status).toBe(200);
+    const result = await response.json();
+    expect(await db.prepare('SELECT amount,credits,status FROM orders WHERE id=?').bind(result.orderId).first())
+      .toEqual({ amount: 990, credits: 360, status: 'pending' });
+    expect(metadata).toMatchObject({ credits: '360', baseCredits: '300', bonusCredits: '60', campaignId: 'black-friday-2026' });
+    // Use a current signature: only checkout quoting uses the controlled clock.
+    expect((await webhook('evt_promotional123')).status).toBe(200);
+    expect(await db.prepare("SELECT credits FROM users WHERE id='u'").first()).toEqual({ credits: 460 });
+    expect(await db.prepare('SELECT status FROM orders WHERE id=?').bind(result.orderId).first()).toEqual({ status: 'paid' });
+    expect((await worker.dispatchFetch(origin + '/spend')).status).toBe(200);
+    const duplicates = await Promise.all(Array.from({ length: 6 }, (_, index) => webhook(`evt_promotionalReplay${index}`)));
+    expect(duplicates.map(response => response.status)).toEqual([200, 200, 200, 200, 200, 200]);
+    expect(await db.prepare("SELECT credits FROM users WHERE id='u'").first()).toEqual({ credits: 60 });
+    expect((await db.prepare("SELECT amount FROM credit_ledger WHERE kind='payment'").all()).results).toEqual([{ amount: 360 }]);
+  });
+  it.each([
+    ['2026-11-19T23:59:59.999Z', 300],
+    ['2026-11-20T00:00:00.000Z', 360],
+    ['2026-12-01T23:59:59.999Z', 360],
+    ['2026-12-02T00:00:00.000Z', 300],
+  ])('uses the server quote at the campaign boundary %s', async (at, credits) => {
+    const response = await checkout(at, credits);
+    expect(response.status).toBe(200);
+    expect((await webhook()).status).toBe(200);
+    expect(await db.prepare("SELECT credits FROM users WHERE id='u'").first()).toEqual({ credits: 100 + credits });
+    expect(await db.prepare('SELECT amount,credits,status FROM orders').first()).toEqual({ amount: 990, credits, status: 'paid' });
+  });
+  it.each([
+    ['2026-11-20T00:00:00.000Z', 300],
+    ['2026-12-02T00:00:00.000Z', 360],
+  ])('rejects a stale page quote at %s before creating Checkout', async (at, expectedCredits) => {
+    expect((await checkout(at, expectedCredits)).status).toBe(409);
+    expect(await db.prepare('SELECT count(*) AS n FROM orders').first()).toEqual({ n: 0 });
+    expect(await db.prepare("SELECT credits FROM users WHERE id='u'").first()).toEqual({ credits: 100 });
   });
   it('rejects stale signed requests without granting credits', async () => {
     expect((await checkout()).status).toBe(200);

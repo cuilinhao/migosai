@@ -32,6 +32,7 @@ export const publicPages: PublicPage[] = [
   { path: "/blog/hotel-lobby-ai-video-cat-dog", label: "Hotel Lobby AI Video With Your Cat or Dog", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-10-04" },
   { path: "/blog/hotel-lobby-ai-video-problems-fixes", label: "Hotel Lobby AI Video Problems and Fixes", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-10-04" },
   { path: "/pricing", label: "Pricing", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/black-friday", label: "Black Friday 2026", priority: 0.8, changeFrequency: "weekly", lastModified: "2026-10-25" },
   { path: "/showcases", label: "Reference Examples", priority: 0.7, changeFrequency: "monthly" },
   { path: "/ai-rap-song-generator", label: "AI Rap Song Generator", priority: 0.7, changeFrequency: "monthly" },
   { path: "/flying-car-ai-video-generator", label: "Flying Car AI Generator", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-10-17" },

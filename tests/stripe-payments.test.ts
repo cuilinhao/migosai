@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { database, jobEnv } from './helpers';
 import { createCheckout } from '../lib/server/payments';
 import type { Env } from '../lib/server/env';
@@ -24,7 +24,101 @@ function checkoutApi(priceOverrides = {}, sessionOverrides = {}) {
   });
   return { fetcher, sent: () => sent };
 }
-afterEach(() => vi.restoreAllMocks());
+beforeEach(() => { vi.useFakeTimers({ toFake: ['Date'] }); vi.setSystemTime(new Date('2026-10-25T00:00:00Z')); });
+afterEach(() => { vi.restoreAllMocks(); vi.useRealTimers(); });
+
+describe('Stripe Black Friday credit packs', () => {
+  it.each([
+    ['starter', 990, 360], ['creator', 2990, 1440], ['pro', 4990, 2640], ['business', 9990, 6000],
+  ] as const)('quotes and freezes the %s pack at its original amount', async (packId, amount, credits) => {
+    vi.setSystemTime(new Date('2026-11-27T12:00:00Z')); const { db, sqlite } = database();
+    const configuredPrice = `price_${packId}123`;
+    vi.spyOn(globalThis, 'fetch').mockImplementation(async (input, init) => {
+      if (String(input).includes('/v1/prices/')) return Response.json(price({ id: configuredPrice, unit_amount: amount }));
+      return Response.json(checkoutFixture(new URLSearchParams(String(init?.body)), { amount_total: amount }));
+    });
+    await createCheckout({ ...env(db), [`STRIPE_PRICE_${packId.toUpperCase()}`]: configuredPrice }, user, packId, 'en', credits);
+    expect(sqlite.prepare('SELECT amount,credits,product_id FROM orders').get()).toEqual({ amount, credits, product_id: configuredPrice });
+  });
+  it('freezes bonus credits and displays the total without discounting the Stripe price', async () => {
+    vi.setSystemTime(new Date('2026-11-27T12:00:00Z'));
+    const { db, sqlite } = database(); const api = checkoutApi();
+    await createCheckout(env(db), user, 'starter', 'en', 360);
+    expect(sqlite.prepare('SELECT amount,credits,status FROM orders').get()).toEqual({ amount: 990, credits: 360, status: 'pending' });
+    for (const prefix of ['metadata', 'payment_intent_data[metadata]']) {
+      expect(api.sent().get(`${prefix}[credits]`)).toBe('360');
+      expect(api.sent().get(`${prefix}[baseCredits]`)).toBe('300');
+      expect(api.sent().get(`${prefix}[bonusCredits]`)).toBe('60');
+      expect(api.sent().get(`${prefix}[campaignId]`)).toBe('black-friday-2026');
+    }
+    expect(api.sent().get('line_items[0][price]')).toBe(priceId);
+    expect(api.sent().get('custom_text[submit][message]')).toContain('360');
+    expect(api.sent().get('custom_text[submit][message]')).toContain('60');
+    expect(balance(sqlite)).toEqual({ credits: 100 });
+  });
+  it('does not show promotional checkout text outside the campaign', async () => {
+    const { db } = database(); const api = checkoutApi();
+    await createCheckout(env(db), user, 'starter', 'en', 300);
+    expect(api.sent().get('custom_text[submit][message]')).toBeNull();
+  });
+  it.each([0, -1, 1.5, '360', null, Number.MAX_SAFE_INTEGER + 1])('rejects invalid expected credits %j before creating a payment', async expected => {
+    const { db, sqlite } = database(); const api = checkoutApi();
+    await expect(createCheckout(env(db), user, 'starter', 'en', expected)).rejects.toMatchObject({ status: 400 });
+    expect(sqlite.prepare('SELECT count(*) AS n FROM orders').get()).toEqual({ n: 0 });
+    expect(api.fetcher).not.toHaveBeenCalled();
+  });
+  it.each([['2026-11-27T00:00:00Z', 300], ['2026-12-02T00:00:00Z', 360]])('rejects a stale displayed offer at %s', async (date, expected) => {
+    vi.setSystemTime(new Date(date)); const { db, sqlite } = database(); const api = checkoutApi();
+    await expect(createCheckout(env(db), user, 'starter', 'en', expected)).rejects.toMatchObject({ status: 409, message: 'This credit pack offer has changed. Refresh pricing before you check out.' });
+    expect(sqlite.prepare('SELECT count(*) AS n FROM orders').get()).toEqual({ n: 0 });
+    expect(api.fetcher).not.toHaveBeenCalled();
+  });
+  it.each([
+    ['2026-11-19T23:59:59Z', '2026-11-20T00:00:01Z', 300],
+    ['2026-12-01T23:59:59Z', '2026-12-02T00:00:01Z', 360],
+  ])('honors the creation snapshot from %s when paid at %s and never grants twice', async (created, paid, credits) => {
+    vi.setSystemTime(new Date(created)); const { db, sqlite } = database(); const api = checkoutApi();
+    const order = await createCheckout(env(db), user, 'starter');
+    const snapshot = Object.fromEntries([...api.sent()].filter(([key]) => key.startsWith('metadata[')).map(([key, value]) => [key.slice(9, -1), value]));
+    api.fetcher.mockRestore(); vi.setSystemTime(new Date(paid));
+    const paidCheckout = paidSession({ client_reference_id: order.orderId, metadata: snapshot });
+    const confirmed = confirmedSession({ ...paidCheckout, payment_intent: { ...confirmedSession().payment_intent, metadata: snapshot } });
+    confirmApi(confirmed);
+    await applyEvent(env(db), event(paidCheckout));
+    expect(balance(sqlite)).toEqual({ credits: 100 + credits });
+    await reserveGeneration(db, 'u', 'consume-campaign', 'video', {}, 100 + credits);
+    await applyEvent(env(db), event(paidCheckout));
+    await applyEvent(env(db), event(paidCheckout, { id: 'evt_later123', type: 'checkout.session.async_payment_succeeded' }));
+    expect(balance(sqlite)).toEqual({ credits: 0 });
+    expect(sqlite.prepare("SELECT amount FROM credit_ledger WHERE kind='payment'").all()).toEqual([{ amount: credits }]);
+  });
+  it.each(['baseCredits', 'bonusCredits', 'campaignId'])('rejects altered offer %s before offering checkout', async field => {
+    vi.setSystemTime(new Date('2026-11-27T12:00:00Z')); const { db, sqlite } = database();
+    const fetcher = vi.spyOn(globalThis, 'fetch').mockImplementation(async (input, init) => {
+      if (String(input).includes('/v1/prices/')) return Response.json(price());
+      const result = checkoutFixture(new URLSearchParams(String(init?.body)));
+      result.metadata[field] = 'altered'; return Response.json(result);
+    });
+    await expect(createCheckout(env(db), user, 'starter')).rejects.toMatchObject({ status: 502 });
+    expect(sqlite.prepare('SELECT checkout_id FROM orders').get()).toEqual({ checkout_id: null });
+    fetcher.mockRestore();
+  });
+  it.each(['credits', 'baseCredits', 'bonusCredits', 'campaignId'])('rejects altered paid offer metadata %s without granting credits', async field => {
+    const { db, sqlite } = database(); pending(sqlite);
+    sqlite.prepare('UPDATE orders SET credits=360').run();
+    const snapshot = { ...metadata, credits: '360', baseCredits: '300', bonusCredits: '60', campaignId: 'black-friday-2026', [field]: 'altered' };
+    const paid = paidSession({ metadata: snapshot });
+    confirmApi(confirmedSession({ metadata: snapshot, payment_intent: { ...confirmedSession().payment_intent, metadata: snapshot } }));
+    await expect(applyEvent(env(db), event(paid))).rejects.toMatchObject({ status: 400 });
+    assertUnpaid(sqlite);
+  });
+  it('offers the bonus again on a separate purchase by the same customer', async () => {
+    vi.setSystemTime(new Date('2026-11-27T12:00:00Z')); const { db, sqlite } = database();
+    const firstApi = checkoutApi(); await createCheckout(env(db), user, 'starter'); firstApi.fetcher.mockRestore();
+    checkoutApi({}, { id: 'cs_test_second123' }); await createCheckout(env(db), user, 'starter');
+    expect(sqlite.prepare('SELECT amount,credits FROM orders').all()).toEqual([{ amount: 990, credits: 360 }, { amount: 990, credits: 360 }]);
+  });
+});
 
 describe('Stripe Checkout creation', () => {
   it('binds one-time checkout and the immutable price/credit snapshot to the authenticated user', async () => {

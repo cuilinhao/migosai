@@ -1,5 +1,6 @@
 import { isLocale, localizeHref } from '../i18n/routing';
 import { creditPacks } from '../../content/pricing';
+import { getCreditPackOffer, matchesCreditPackOfferMetadata } from '../../content/black-friday-offer';
 import { appOrigin, database, type Env } from './env';
 import { ApiError } from './errors';
 import { waffoClient, waffoMode, waffoStoreId, type WaffoEvent } from './waffo';
@@ -59,12 +60,17 @@ function validatedCheckoutUrl(value: unknown, sessionId: unknown): string {
   return url.href;
 }
 
-export async function createCheckout(env: Env, user: User, packId: unknown, requestedLocale: unknown = "en") {
-  if (env.PAYMENT_PROVIDER === 'stripe') return createStripeCheckout(env, user, packId, requestedLocale);
+export async function createCheckout(env: Env, user: User, packId: unknown, requestedLocale: unknown = "en", expectedCredits?: unknown) {
+  if (env.PAYMENT_PROVIDER === 'stripe') return createStripeCheckout(env, user, packId, requestedLocale, expectedCredits);
   if (env.PAYMENT_PROVIDER && env.PAYMENT_PROVIDER !== 'waffo') throw new ApiError(503, 'Payment provider is not configured.');
   const locale = typeof requestedLocale === "string" && isLocale(requestedLocale) ? requestedLocale : "en";
   const pack = creditPacks.find(item => item.id === packId);
   if (!pack) throw new ApiError(400, 'Unknown credit pack.');
+  const offer = getCreditPackOffer(pack);
+  if (expectedCredits !== undefined) {
+    if (typeof expectedCredits !== 'number' || !Number.isSafeInteger(expectedCredits) || expectedCredits <= 0) throw new ApiError(400, 'Expected credits must be a positive integer.');
+    if (expectedCredits !== offer.credits) throw new ApiError(409, 'This credit pack offer has changed. Refresh pricing before you check out.');
+  }
   const client = waffoClient(env);
   const mode = waffoMode(env);
   const storeId = waffoStoreId(env);
@@ -78,7 +84,7 @@ export async function createCheckout(env: Env, user: User, packId: unknown, requ
   await db.prepare(`INSERT INTO orders
     (id,user_id,pack_id,product_id,amount,currency,credits,provider,provider_mode,store_id)
     VALUES (?,?,?,?,?,?,?,?,?,?)`)
-    .bind(orderId, user.id, pack.id, productId, pack.amountCents, 'USD', pack.credits,
+    .bind(orderId, user.id, pack.id, productId, pack.amountCents, 'USD', offer.credits,
       'waffo', mode, storeId).run();
 
   let session: Awaited<ReturnType<typeof client.checkout.createSession>>;
@@ -88,7 +94,7 @@ export async function createCheckout(env: Env, user: User, packId: unknown, requ
       currency: 'USD',
       buyerEmail: user.email,
       successUrl: `${origin}${localizeHref("/pricing", locale)}?checkout=completed&orderId=${encodeURIComponent(orderId)}`,
-      metadata: { orderId, userId: user.id, packId: pack.id, productId },
+      metadata: { orderId, userId: user.id, packId: pack.id, productId, credits: String(offer.credits), baseCredits: String(offer.baseCredits), bonusCredits: String(offer.bonusCredits), ...(offer.campaignId ? { campaignId: offer.campaignId } : {}) },
       orderMerchantExternalId: orderId,
     }, { idempotencyKey: orderId });
   } catch {
@@ -119,6 +125,8 @@ function requireMatchingOrder(row: Order | null, event: WaffoEvent, env: Env): a
     data.orderMerchantExternalId !== row.id ||
     metadata?.orderId !== row.id || metadata?.userId !== row.user_id ||
     metadata?.packId !== row.pack_id || metadata?.productId !== row.product_id ||
+    (metadata.credits !== undefined && metadata.credits !== String(row.credits)) ||
+    !matchesCreditPackOfferMetadata(metadata, row.credits) ||
     (data.chargedAmount !== undefined && displayToCents(data.chargedAmount) !== row.amount) ||
     displayToCents(data.listPrice?.total) !== row.amount ||
     data.paymentId !== event.eventId ||

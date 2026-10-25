@@ -1,8 +1,11 @@
 import { generateKeyPairSync } from 'node:crypto';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { database, jobEnv } from './helpers';
 import { applyCheckout, createCheckout, recordReviewEvent } from '../lib/server/payments';
 import type { WaffoEvent } from '../lib/server/waffo';
+
+beforeEach(() => { vi.useFakeTimers({ toFake: ['Date'] }); vi.setSystemTime(new Date('2026-10-25T00:00:00Z')); });
+afterEach(() => { vi.restoreAllMocks(); vi.useRealTimers(); });
 
 const pem = generateKeyPairSync('rsa', { modulusLength: 2048 }).privateKey.export({ type: 'pkcs8', format: 'pem' }).toString();
 const productId = 'PROD_1234567890123456789012';
@@ -34,6 +37,42 @@ function graphql(paymentCents = '990') { return vi.spyOn(globalThis, 'fetch').mo
 }); }
 
 describe('Waffo payment accounting', () => {
+  it('freezes the promotional total at the unchanged price and retains the offer metadata', async () => {
+    vi.setSystemTime(new Date('2026-11-27T12:00:00Z'));
+    const { db, sqlite } = database(); let sent: any;
+    vi.spyOn(globalThis, 'fetch').mockImplementation(async (_url, init) => {
+      sent = JSON.parse(String(init?.body));
+      return Response.json({ data: { sessionId: 'cs_550e8400-e29b-41d4-a716-446655440000', checkoutUrl: 'https://checkout.waffo.ai/store/checkout/cs_550e8400-e29b-41d4-a716-446655440000', expiresAt: '2026-11-28T00:00:00Z' } });
+    });
+    await createCheckout(env(db), { id: 'u', email: 'a@b.c', name: 'Test' }, 'starter', 'en', 360);
+    expect(sqlite.prepare('SELECT amount,credits FROM orders').get()).toEqual({ amount: 990, credits: 360 });
+    expect(sent.productId).toBe(productId);
+    expect(sent.metadata).toMatchObject({ credits: '360', baseCredits: '300', bonusCredits: '60', campaignId: 'black-friday-2026' });
+  });
+  it.each([[0, 400], ['360', 400], [null, 400], [300, 409]])('rejects an invalid or stale expected total %j before creating an order', async (expected, status) => {
+    vi.setSystemTime(new Date('2026-11-27T00:00:00Z')); const { db, sqlite } = database();
+    const fetcher = vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('Unexpected provider request'));
+    await expect(createCheckout(env(db), { id: 'u', email: 'a@b.c', name: 'Test' }, 'starter', 'en', expected)).rejects.toMatchObject({ status });
+    expect(sqlite.prepare('SELECT count(*) AS n FROM orders').get()).toEqual({ n: 0 });
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+  it('honors a promotional order snapshot after the campaign ends across duplicate payment events', async () => {
+    const { db, sqlite } = database(); pending(sqlite);
+    sqlite.prepare('UPDATE orders SET credits=360').run();
+    vi.setSystemTime(new Date('2026-12-02T00:00:01Z')); graphql();
+    const incoming = event();
+    Object.assign(incoming.data.orderMetadata!, { credits: '360', baseCredits: '300', bonusCredits: '60', campaignId: 'black-friday-2026' });
+    await applyCheckout(env(db), incoming); await applyCheckout(env(db), incoming);
+    expect(sqlite.prepare('SELECT credits FROM users WHERE id=?').get('u')).toEqual({ credits: 460 });
+    expect(sqlite.prepare("SELECT amount FROM credit_ledger WHERE kind='payment'").all()).toEqual([{ amount: 360 }]);
+  });
+  it.each(['credits', 'baseCredits', 'bonusCredits', 'campaignId'])('rejects altered promotional metadata %s before crediting', async field => {
+    const { db, sqlite } = database(); pending(sqlite); sqlite.prepare('UPDATE orders SET credits=360').run(); graphql();
+    const incoming = event();
+    Object.assign(incoming.data.orderMetadata!, { credits: '360', baseCredits: '300', bonusCredits: '60', campaignId: 'black-friday-2026', [field]: 'altered' });
+    await expect(applyCheckout(env(db), incoming)).rejects.toMatchObject({ status: 400 });
+    expect(sqlite.prepare('SELECT credits FROM users WHERE id=?').get('u')).toEqual({ credits: 100 });
+  });
   it('requires an HTTPS success return address before creating an order', async () => {
     const { db, sqlite } = database();
     const fetcher = vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('unexpected request'));

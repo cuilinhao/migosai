@@ -15,8 +15,8 @@ describe("subscription policy copy",()=>{
     if(!isValidElement<Parameters<typeof LegalPage>[0]>(terms)||!isValidElement<Parameters<typeof LegalPage>[0]>(refund))throw new Error("Expected legal page elements");
     const termsHtml=renderToStaticMarkup(<LocaleProvider locale={locale} messages={messages}>{await LegalPage(terms.props)}</LocaleProvider>);
     const refundHtml=renderToStaticMarkup(<LocaleProvider locale={locale} messages={messages}>{await LegalPage(refund.props)}</LocaleProvider>);
-    const effectiveDate=new Intl.DateTimeFormat(locale,{dateStyle:"long",timeZone:"UTC"}).format(new Date("2026-10-22T00:00:00Z"));
-    expect(termsHtml).toContain(effectiveDate);expect(refundHtml).toContain(effectiveDate);
+    const formatDate=(date:string)=>new Intl.DateTimeFormat(locale,{dateStyle:"long",timeZone:"UTC"}).format(new Date(`${date}T00:00:00Z`));
+    expect(termsHtml).toContain(formatDate("2026-10-23"));expect(refundHtml).toContain(formatDate("2026-10-22"));
     const unchanged=renderToStaticMarkup(await LegalPage({title:"Policy",subtitle:"",sections:[]}));
     expect(unchanged).toContain(messages["Last updated October 3, 2026"]??"Last updated October 3, 2026");
     expect(termsHtml).not.toContain("with no subscription or automatic renewal");expect(refundHtml).not.toContain("There are no subscriptions");
