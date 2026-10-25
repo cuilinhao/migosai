@@ -1,5 +1,7 @@
 # Window Peeper 原生内页重构笔记
 
+> 本文为开发阶段历史记录，保留当时的验证范围。最新 GitHub 推送、正式上线与线上验收状态见 [RELEASE.md](./RELEASE.md)；本轮仍未执行真实付费生成或付款。
+
 记录日期：2026-10-25。代码基线：`baf39fe`。本次在 MigosAI 现有项目新增 `/window-peeper-ai-video-generator`，交付本地代码与预览，未部署生产。
 
 ## 来源与实现范围

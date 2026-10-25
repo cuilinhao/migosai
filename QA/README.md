@@ -2,6 +2,15 @@
 
 自动化测试源码保留在 `tests/` 和 `components/**/*.test.*`。原始浏览器截图、生产账户与订单记录、供应商响应和生成的测试报告留在被忽略的本地归档，本目录只维护可复现的验证说明。
 
+## 2026-10-25 Window Peeper 内页上线
+
+15:21:49（Asia/Shanghai），版本 `cbae4c6b-55a4-4a5c-be2f-65d2624df8fc` 已发布至 100% 流量，运行源码 `a345658f34b9dad6790fe59f33a6a166c2e6ed41` 已推送 GitHub main。新增 `/window-peeper-ai-video-generator`，沿用本站主题、生成、积分、审核、作品库和套餐。
+
+- 发布前 112 个文件 / 1899 项测试、类型检查、标准 Cloudflare 构建及真实隔离 Worker 的 12 项 API 检查通过。
+- 生产 156 个多语言页面、687 个 sitemap URL 精确匹配，0 失败；专项 24 页面、15 素材 GET/MIME/SHA-256、3 项 API 检查全部通过。六语言首页 title、description、H1、lang、canonical 与上线前精确一致。
+- 46 项绑定逐项不变，10 个 Secrets 保留，无待执行迁移。线上参考视频播放、FAQ、积分包切换和登录弹窗正常；1280px / 390px 无横向溢出，原暗色背景保留。
+- 未调用真实付费生成、未实际付款；参考片播放不等于本站出片已验证。详细版本、部署 ID 与边界见 [发布记录](../docs/window-peeper/RELEASE.md)，原始证据位于忽略目录 `.local-evidence/window-peeper-release-20261025/`。
+
 ## 2026-10-22 Sitemap 补全与 GSC 提交
 
 19:49（Asia/Shanghai）版本 `611ef9ff-6377-4fa4-88da-d1916cb8ccfb` 已发布至 100% 流量，运行源码 `5beea33` 已推送 GitHub main。
