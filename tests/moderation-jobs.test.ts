@@ -18,10 +18,11 @@ function assessment(flagged = false) {
   return { id: 'task_safety', object: 'inference', model: 'video-nsfw-filter', endpoint: 'video-moderation', provider: 'seeapi', status: 'succeeded', error: null, result: { type: 'json', data: { flagged, ...(flagged ? { reason: 'content_policy_blocked', output: null } : { output: { nsfw_detected: false, scope: 'sampled_frames', sampling_complete: true, checked_frames: 1, flagged_frame_count: 0, report_schema_version: 5, output_layout: 'named-files-v1', timestamp_source: 'frame_index_div_fps_estimate', frames: [{ frame_number: 1, timestamp_seconds: 0, nsfw_detected: false, nsfw: [] }] } }) } } };
 }
 
-async function pendingModeration(stage = 'moderation_submitting') {
+async function pendingModeration(stage = 'moderation_submitting', candidateScoped = false) {
   const d = await generatedVideo(), now = Math.floor(Date.now() / 1000);
-  const key = `users/u/results/${d.id}/candidate`;
-  const state = { version: 1, requestBody: JSON.stringify({ input: { video_url: 'https://example.test/fixed-signed-url', num_frames: 32 } }), idempotencyKey: `migosai-video-moderation-${d.id}`, expiresAt: now + 3600, deadline: now + 1800, failures: 0, ...(stage === 'moderation_polling' ? { taskId: 'task_safety' } : {}) };
+  const candidate = candidateScoped ? crypto.randomUUID() : 'candidate';
+  const key = `users/u/results/${d.id}/${candidate}`;
+  const state = { version: 1, requestBody: JSON.stringify({ input: { video_url: 'https://example.test/fixed-signed-url', num_frames: 32 } }), idempotencyKey: `migosai-video-moderation-${d.id}${candidateScoped ? `-${candidate}` : ''}`, expiresAt: now + 3600, deadline: now + 1800, failures: 0, ...(stage === 'moderation_polling' ? { taskId: 'task_safety' } : {}) };
   d.sqlite.prepare("UPDATE generations SET stage=?,status='reviewing',moderation_verdict='pending',moderation_key=?,moderation_etag='video-etag',moderation_state=? WHERE id=?").run(stage, key, JSON.stringify(state), d.id);
   return { ...d, key, state };
 }
@@ -37,11 +38,11 @@ describe('video delivery moderation gate', () => {
     expect(generationResponse(d.row()).videoUrl).toBeUndefined();
     const state = JSON.parse(d.row().moderation_state);
     expect(JSON.parse(state.requestBody).input).toMatchObject({ num_frames: 32, strict_special_care: true, return_frames: 'none' });
-    expect(state.idempotencyKey).toBe(`migosai-video-moderation-${d.id}`);
+    expect(state.idempotencyKey).toBe(`migosai-video-moderation-${d.id}-${d.row().moderation_key.split('/').at(-1)}`);
   });
 
-  it('reuses the exact persisted body and key after an uncertain submission', async () => {
-    const d = await pendingModeration();
+  it.each([false, true])('reuses the exact persisted body and key after an uncertain submission (candidateScoped=%s)', async candidateScoped => {
+    const d = await pendingModeration('moderation_submitting', candidateScoped);
     const requests: RequestInit[] = [];
     const fetcher = vi.spyOn(globalThis, 'fetch').mockImplementation(async (_url, init) => { requests.push(init!); if (requests.length === 1) throw new TypeError('network'); return Response.json({ id: 'task_safety', object: 'inference', model: 'video-nsfw-filter', endpoint: 'video-moderation', provider: 'seeapi', status: 'queued', result: null, error: null }, { status: 202 }); });
     await advanceJob(d.env, d.id);
@@ -55,8 +56,8 @@ describe('video delivery moderation gate', () => {
     expect(d.sqlite.prepare("SELECT count(*) n FROM credit_ledger WHERE kind='generation'").get()?.n).toBe(1);
   });
 
-  it('publishes only the approved immutable candidate', async () => {
-    const d = await pendingModeration('moderation_polling');
+  it.each([false, true])('publishes only the approved immutable candidate (candidateScoped=%s)', async candidateScoped => {
+    const d = await pendingModeration('moderation_polling', candidateScoped);
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(Response.json(assessment()));
     await advanceJob(d.env, d.id);
     expect(d.row()).toMatchObject({ status: 'completed', moderation_verdict: 'passed', result_keys: JSON.stringify([d.key]) });
@@ -105,13 +106,34 @@ describe('video delivery moderation gate', () => {
     expect(fetcher).not.toHaveBeenCalled();
   });
 
-  it('does not release an overwritten candidate even after a clean verdict', async () => {
-    const d = await pendingModeration('moderation_polling');
+  it.each([false, true])('does not release an overwritten candidate even after a clean verdict (candidateScoped=%s)', async candidateScoped => {
+    const d = await pendingModeration('moderation_polling', candidateScoped);
     vi.mocked(d.env.MEDIA.head).mockResolvedValue({ etag: 'changed' } as R2Object);
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(Response.json(assessment()));
     await advanceJob(d.env, d.id);
     expect(d.row()).toMatchObject({ stage: 'manual_review', moderation_verdict: 'manual' });
     expect(generationResponse(d.row()).videoUrl).toBeUndefined();
+  });
+
+  it.each(['moderation_submitting', 'moderation_polling'])('holds a mismatched candidate idempotency key before any %s request', async stage => {
+    const d = await pendingModeration(stage, true);
+    const staleKey = `migosai-video-moderation-${d.id}-${crypto.randomUUID()}`;
+    d.sqlite.prepare('UPDATE generations SET moderation_state=? WHERE id=?').run(JSON.stringify({ ...d.state, idempotencyKey: staleKey }), d.id);
+    const fetcher = vi.spyOn(globalThis, 'fetch');
+    await advanceJob(d.env, d.id);
+    expect(d.row()).toMatchObject({ stage: 'manual_review', moderation_verdict: 'manual', result_keys: null });
+    expect(fetcher).not.toHaveBeenCalled();
+    expect(generationResponse(d.row()).videoUrl).toBeUndefined();
+    expect(d.sqlite.prepare("SELECT count(*) n FROM credit_ledger WHERE kind='generation'").get()?.n).toBe(1);
+  });
+
+  it('rejects a candidate suffix that is not a UUID even when its idempotency key matches', async () => {
+    const d = await pendingModeration();
+    d.sqlite.prepare('UPDATE generations SET moderation_state=? WHERE id=?').run(JSON.stringify({ ...d.state, idempotencyKey: `${d.state.idempotencyKey}-candidate` }), d.id);
+    const fetcher = vi.spyOn(globalThis, 'fetch');
+    await advanceJob(d.env, d.id);
+    expect(d.row()).toMatchObject({ stage: 'manual_review', moderation_verdict: 'manual' });
+    expect(fetcher).not.toHaveBeenCalled();
   });
 
   it('hides historical results without a passing moderation verdict', async () => {

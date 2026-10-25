@@ -29,9 +29,9 @@
 
 原模板下载文件为 HEVC，为浏览器播放兼容转成 H.264/AAC 并启用 faststart；画幅、8.2 秒时长和参考动作保持不变。manifest 同时记录转换前后哈希。页面明确区分 8.2 秒来源预览与 15 秒生成规格；这些参考片不能证明 MigosAI 已真实生成相同效果。
 
-固定音轨直接从原模板提取，循环衔接以覆盖 15 秒生成片长，14.6–15 秒淡出并保留到 16 秒的静音余量。服务器按实际视频结束时间截取完整 AAC 包。原站公开前端只显示 MP4 内嵌音轨，没有发现独立配乐层；其服务端处理方式未知。本站采用生成后替换音轨，避免模型自行生成不同音乐。
+固定音轨直接从原模板提取，循环衔接以覆盖 15 秒生成片长，14.6–15 秒淡出并保留到 16 秒的静音余量。合成时将这条固定音轨交给 FFmpeg，实际输出时长和音轨以出片检查为准。原站公开前端只显示 MP4 内嵌音轨，没有发现独立配乐层；其服务端处理方式未知。本站采用生成后替换音轨，避免模型自行生成不同音乐。
 
-合成在 Workers 中复制压缩数据，不重新编码画面。当前接受 14–16 秒、单路 AVC、无 B 帧重排的视频，源文件上限 32 MiB、最终文件上限 48 MiB、未写出数据包上限 16 MiB；不支持的输出使用现有失败退款逻辑。B 帧目前明确拒绝，因为现有封装库会造成浏览器显示时间偏移；不能以库自身读取结果代替播放器互通验证。
+合成由现有 Fal 账号的 `fal-ai/ffmpeg-api/merge-audio-video` 执行原生 FFmpeg，Workers 负责持久化任务进度和下载最终 MP4。固定输入为已生成视频、本站固定背景音乐和零起始偏移。旧的 Workers 内 JS 封装实现已移除；不能将第三方 API 未公开的编码参数或内部命令当作已知事实。
 
 ## 本站生成与计费
 
@@ -41,7 +41,7 @@
 2. `POST /api/window-peeper/generations` 接收照片 key、明确同意和幂等键。服务器验证同源请求、账户、照片路径与数据库归属、MIME、R2 对象和大小；价格、模型、提示词、模板与参考视频均由服务器决定。
 3. 现有 `reserveGeneration`、D1 唯一约束与账本触发器预留积分；订阅余额、永久积分分配和退款沿用本站逻辑。同一次未知结果重试保留请求键和已上传照片。
 4. 现有任务 worker 以租约推进，提交单张签名照片与本站固定参考视频；未知付费提交结果进入人工核查，不自动再发一次付费请求。
-5. provider 完成后先存入临时私有 R2；Window Peeper 保留压缩画面数据，丢弃模型音频，合入经过哈希核验的固定模板配乐。只有合成成功才完成最终文件上传，临时源随即删除；合成结果继续进入现有视频安全审核。只有通过审核、结果 key 与 ETag 匹配时才向用户提供播放/下载。确定格式失败及审核拒绝使用现有退款流程；临时存储或素材读取故障重试同一个 provider 结果，不重新付费生成。
+5. provider 完成后，先在同一任务的 `assets` 中保存原视频 URL，再提交 FFmpeg 合成。`provider_id` 保留原视频生成任务，FFmpeg 的 handle 和结果地址单独持久化。合成完成后下载最终 MP4 到私有 R2，再进入既有安全审核；只有审核通过且 key/ETag 匹配才提供播放与下载。查询或下载故障只重试已保存的子任务；提交结果不确定时不盲目重提。明确失败及审核拒绝使用现有退款流程，不新增积分扣费。
 6. 历史响应携带 `template: 'window-peeper'`。生成器只恢复这一模板的未完成任务；作品库显示 Window Peeper 并返回对应生成器，已完成视频通过现有 My Videos / Assets 查看和下载。
 
 套餐区直接使用现有 `PricingEntry` / `PricingCards`，继续使用同一订阅、积分包、活动参数和结账入口。本次没有新建支付方案或复制参考站价格。
@@ -59,7 +59,7 @@
 | 场景提示词 | `lib/prompts/window-peeper.ts` |
 | API 校验和积分预留 | `lib/server/window-peeper.ts`、`app/api/window-peeper/generations/route.ts` |
 | provider 提交与共享任务推进 | `lib/server/fal.ts`、`lib/server/jobs.ts` |
-| 固定配乐合成与 R2 流式存储 | `lib/server/window-peeper-remux.ts`、`lib/server/window-peeper-soundtrack.ts` |
+| FFmpeg 固定配乐合成、任务恢复与 R2 存储 | `lib/server/fal-ffmpeg.ts`、`lib/server/jobs.ts`、`lib/server/media.ts` |
 | SEO、六语言路由与公开页登记 | `app/window-peeper-ai-video-generator/page.tsx`、`app/[locale]/[[...path]]/page.tsx`、`content/public-pages.ts` |
 | 发现入口和作品库标识 | `components/generator-menu.tsx`、`content/portal.ts`、`components/portal/portal-shell.tsx`、`components/account/asset-card.tsx`、`components/generator/generation-history.ts` |
 

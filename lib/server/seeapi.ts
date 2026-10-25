@@ -15,7 +15,7 @@ const TASK_STATUSES = ['queued', 'processing', 'succeeded', 'failed', 'cancelled
 const SAFE_ERROR_CODES = new Set(['failure', 'internal_error', 'server_error', 'provider_error', 'upstream_error',
   'inference_error', 'inference_failed', 'processing_failed', 'validation_error', 'invalid_input', 'invalid_request',
   'timeout', 'request_timeout', 'download_failed', 'video_download_failed', 'video_decode_failed', 'decode_error',
-  'ffmpeg_error', 'unsupported_media', 'unsupported_video_format', 'content_policy_blocked', 'runner_server_error']);
+  'ffmpeg_error', 'unsupported_media', 'unsupported_video_format', 'content_policy_blocked', 'runner_server_error', 'MEDIA_INVALID']);
 const responseStatuses = new WeakMap<RecordValue, number>();
 
 // Deliberately omit response bodies, provider messages, URLs, and original causes.

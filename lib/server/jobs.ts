@@ -9,8 +9,9 @@ import { createVideoModeration, getVideoModeration, SeeApiError } from './seeapi
 import { createKieVideo, createKieOzilGoalVideo, createKieFlyingCarVideo, getKieVideo, createKieImage, getKieImage } from './kie';
 import type { ImagePayload } from './image-generations';
 import { createFalOzilGoalVideo, createFalWindowPeeperVideo, getFalVideo } from './fal';
-import { storeWindowPeeperVideo } from './window-peeper-soundtrack';
-import { WindowPeeperRemuxError } from './window-peeper-remux';
+import { createFalWindowPeeperAudio, getFalWindowPeeperAudio } from './fal-ffmpeg';
+import { validMediaUrl } from './security';
+import { ApiError } from './errors';
 import type { OzilGoalPayload } from '../ozil-goal';
 import type { WindowPeeperPayload } from '../window-peeper';
 import type { FlyingCarPayload } from '../flyingcar';
@@ -24,7 +25,7 @@ export function generationResponse(job:Job):GenerationResponse{
  if(job.kind==='video')try{const saved=JSON.parse(job.payload)?.template;if(saved==='ozil-goal'||saved==='flyingcar'||saved==='window-peeper')template=saved;}catch{/* Malformed old metadata must not hide the job. */}
  const approved=job.kind==='video'&&job.moderation_verdict==='passed'&&keys.length===1&&keys[0]===job.moderation_key&&!!job.moderation_etag;
  const unreviewed=job.kind==='video'&&job.status==='completed'&&!approved;
- const statusMessage=job.moderation_verdict==='manual'?'Safety review needs attention. Your video remains unavailable.':job.stage==='manual_review'?'This request needs support review. It will not be retried automatically.':job.stage.startsWith('moderation_')?'Checking video safety before delivery…':undefined;
+ const statusMessage=job.moderation_verdict==='manual'?'Safety review needs attention. Your video remains unavailable.':job.stage==='manual_review'?'This request needs support review. It will not be retried automatically.':job.stage.startsWith('moderation_')?'Checking video safety before delivery…':template==='window-peeper'&&(['audio_ready','submitting_audio','audio_polling','audio_storing'].includes(job.stage))?'Adding the template soundtrack…':undefined;
  return {id:job.id,...(template?{template}:{}),status:job.status as GenerationStatus,progress:job.progress,...(job.error||unreviewed?{error:job.error??'This video is unavailable until its safety review is completed.'}:{}),...(statusMessage?{statusMessage}:{}),...(job.status==='completed'?(job.kind==='music'?{audioUrls:keys.map(key=>`/api/media/${key}`)}:job.kind==='image'?{imageUrls:keys.map(key=>`/api/media/${key}`)}:approved?{videoUrl:`/api/media/${keys[0]}`}:{ }):{})};
 }
 class LostLease extends Error {}
@@ -38,9 +39,14 @@ async function patch(db:D1Database,id:string,fence:JobFence,fields:Record<string
 type ModerationState={version:1;requestBody:string;idempotencyKey:string;expiresAt:number;deadline:number;failures:number;taskId?:string;checkedFrames?:number;flaggedFrames?:number;diagnostic?:unknown};
 const REVIEW_TIMEOUT=30*60;
 const MAX_REVIEW_FAILURES=8;
+const CANDIDATE_UUID=/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
 function moderationState(job:Job):ModerationState{
  const state=JSON.parse(job.moderation_state??'null');
- if(!state||state.version!==1||typeof state.requestBody!=='string'||state.idempotencyKey!==`migosai-video-moderation-${job.id}`||!Number.isSafeInteger(state.expiresAt)||!Number.isSafeInteger(state.deadline)||!Number.isInteger(state.failures)||state.failures<0||!job.moderation_key||!job.moderation_etag)throw new SeeApiError('Safety review state needs support attention.',false);
+ const baseKey=`migosai-video-moderation-${job.id}`,candidate=job.moderation_key?.split('/').at(-1);
+ // Existing in-flight tasks keep their legacy key. New keys identify exactly
+ // one candidate so replacing a file never replays a prior candidate's review.
+ const validKey=state&&(state.idempotencyKey===baseKey||(candidate&&CANDIDATE_UUID.test(candidate)&&state.idempotencyKey===`${baseKey}-${candidate}`));
+ if(!state||state.version!==1||typeof state.requestBody!=='string'||!validKey||!Number.isSafeInteger(state.expiresAt)||!Number.isSafeInteger(state.deadline)||!Number.isInteger(state.failures)||state.failures<0||!job.moderation_key||!job.moderation_etag)throw new SeeApiError('Safety review state needs support attention.',false);
  return state;
 }
 async function holdForReview(db:D1Database,job:Job,fence:JobFence,state?:ModerationState){
@@ -117,23 +123,55 @@ async function advanceModeration(env:Env,job:Job,fence:JobFence){
 }
 
 async function quarantineVideo(env:Env,job:Job,fence:JobFence,url:string,cost:number|null,provider:'apimart'|'kie'|'fal'='apimart'){
- const db=database(env),key=`users/${job.user_id}/results/${job.id}/${crypto.randomUUID()}`;
+ const db=database(env),candidate=crypto.randomUUID(),key=`users/${job.user_id}/results/${job.id}/${candidate}`;
  try{
-  if(JSON.parse(job.payload).template==='window-peeper'){
-   // Extend the lease before the source download and streaming audio replacement.
-   await patch(db,job.id,fence,{progress:90,error:null});
-   await storeWindowPeeperVideo(env,url,key);
-  }else await storeProviderMedia(env,url,key,'video',provider);
+  await storeProviderMedia(env,url,key,'video',provider);
   const object=await env.MEDIA!.head(key);
   if(!object?.etag)throw new Error('Could not verify the stored video.');
   const now=Math.floor(Date.now()/1000),expiresAt=now+3600;
   const videoUrl=await createModerationMediaUrl(env,job.id,key,object.etag,expiresAt);
-  const state:ModerationState={version:1,idempotencyKey:`migosai-video-moderation-${job.id}`,expiresAt,deadline:now+REVIEW_TIMEOUT,failures:0,requestBody:JSON.stringify({model:'video-nsfw-filter',endpoint:'video-moderation',provider:'seeapi',input:{video_url:videoUrl,num_frames:32,threshold_offset:0.02,strict_special_care:true,return_frames:'none'}})};
+  const state:ModerationState={version:1,idempotencyKey:`migosai-video-moderation-${job.id}-${candidate}`,expiresAt,deadline:now+REVIEW_TIMEOUT,failures:0,requestBody:JSON.stringify({model:'video-nsfw-filter',endpoint:'video-moderation',provider:'seeapi',input:{video_url:videoUrl,num_frames:32,threshold_offset:0.02,strict_special_care:true,return_frames:'none'}})};
   await patch(db,job.id,fence,{stage:'moderation_submitting',status:'reviewing',progress:95,result_keys:null,moderation_key:key,moderation_etag:object.etag,moderation_verdict:'pending',moderation_state:JSON.stringify(state),provider_cost:cost,error:null});
  }catch(error){
   // Unique keys prevent stale uploaders from overwriting the selected candidate.
   // Read back after an uncertain D1 write before deleting an unselected object.
   try{const current=await db.prepare('SELECT moderation_key FROM generations WHERE id=?').bind(job.id).first<{moderation_key:string|null}>();if(current&&current.moderation_key!==key)await env.MEDIA!.delete(key);}catch{/* Uncertain objects remain private and unlinked. */}
+  throw error;
+ }
+}
+type WindowPeeperAudioState={version:1;kind:'window-peeper-audio';sourceUrl:string;handle?:string;outputUrl?:string};
+function windowPeeperAudioState(env:Env,job:Job):WindowPeeperAudioState{
+ let state:WindowPeeperAudioState|null;
+ try{state=JSON.parse(job.assets??'null');}catch{state=null;}
+ const validUrl=(value:unknown):value is string=>typeof value==='string'&&!/\s/.test(value)&&validMediaUrl(value,env.FAL_MEDIA_HOSTS??'');
+ if(!state||state.version!==1||state.kind!=='window-peeper-audio'||!validUrl(state.sourceUrl)
+  ||((job.stage==='audio_polling'||job.stage==='audio_storing')&&(typeof state.handle!=='string'||!state.handle))
+  ||(job.stage==='audio_storing'&&!validUrl(state.outputUrl)))throw new ProviderError('The saved soundtrack preparation state needs support review.',true);
+ return state;
+}
+async function advanceWindowPeeperAudio(env:Env,job:Job,fence:JobFence){
+ const db=database(env),state=windowPeeperAudioState(env,job);
+ if(job.stage==='audio_ready'){
+  // This checkpoint precedes the external POST. An interrupted submission is
+  // reconciled manually instead of creating a second FFmpeg task.
+  await patch(db,job.id,fence,{stage:'submitting_audio',status:'processing',progress:87,error:null});
+  state.handle=await createFalWindowPeeperAudio(env,state.sourceUrl);
+  await patch(db,job.id,fence,{stage:'audio_polling',assets:JSON.stringify(state),error:null});return;
+ }
+ if(job.stage==='audio_polling'){
+  const result=await getFalWindowPeeperAudio(env,state.handle!);
+  if(result.status==='failed'){await refundGeneration(db,job.id,'failed','The video soundtrack could not be prepared. Your credits have been returned.',fence);return;}
+  if(result.status!=='completed'){await patch(db,job.id,fence,{progress:90,error:null});return;}
+  const output=result.result?.videos?.[0]?.url?.[0];
+  if(typeof output!=='string'||/\s/.test(output)||!validMediaUrl(output,env.FAL_MEDIA_HOSTS??''))throw new ProviderError('The prepared video could not be verified. Support must review this request.',true);
+  state.outputUrl=output;
+  // Saving is its own durable stage: R2 retries read this result rather than
+  // resubmitting either the original video model or the audio preparation job.
+  await patch(db,job.id,fence,{stage:'audio_storing',assets:JSON.stringify(state),progress:92,error:null});return;
+ }
+ try{await quarantineVideo(env,job,fence,state.outputUrl!,job.provider_cost,'fal');}
+ catch(error){
+  if(error instanceof ApiError&&error.status===413){await refundGeneration(db,job.id,'failed','The prepared video exceeds the media limit. Your credits have been returned.',fence);return;}
   throw error;
  }
 }
@@ -182,6 +220,7 @@ export async function advanceJob(env:Env,id:string):Promise<void>{const db=datab
   }
   providerConfigured(env,provider);
   if(job.kind==='video'&&(job.stage==='new'||job.stage==='ready'))moderationConfigured(env);
+  if(job.kind==='video'&&payload.template==='window-peeper'&&['audio_ready','audio_polling','audio_storing'].includes(job.stage)){await advanceWindowPeeperAudio(env,job,fence);return;}
   if(job.stage.startsWith('submitting')){await patch(db,id,fence,{stage:'manual_review',error:'The provider submission could not be confirmed. Support is reviewing this request; it will not be resubmitted automatically.'});return;}
   if(job.kind==='video'&&payload.template==='ozil-goal'&&(job.stage==='new'||job.stage==='ready')){
    const portrait=await signedMediaUrl(env,payload.photo);
@@ -237,6 +276,10 @@ export async function advanceJob(env:Env,id:string):Promise<void>{const db=datab
    if(status!=='completed'){await patch(db,id,fence,{progress:Math.max(45,Math.min(95,Number(data?.progress)||45)),error:null});return;}
    const urls=job.kind==='video'?[data?.result?.videos?.[0]?.url?.[0]]:data?.result?.music?.map((m:{audio_url?:string})=>m.audio_url);
    if(!Array.isArray(urls)||!urls.length||urls.length>4||urls.some(u=>typeof u!=='string'))throw new ProviderError('The provider returned an incomplete result. Support must review this generation.',true);
+   if(job.kind==='video'&&payload.template==='window-peeper'){
+    const state:WindowPeeperAudioState={version:1,kind:'window-peeper-audio',sourceUrl:urls[0]};
+    await patch(db,id,fence,{stage:'audio_ready',status:'processing',assets:JSON.stringify(state),progress:85,provider_cost:typeof data.cost==='number'?data.cost:null,result_keys:null,moderation_state:null,moderation_verdict:null,moderation_key:null,moderation_etag:null,error:null});return;
+   }
    if(job.kind==='video'){await quarantineVideo(env,job,fence,urls[0],typeof data.cost==='number'?data.cost:null,provider);return;}
    const keys:string[]=[];for(let i=0;i<urls.length;i++)keys.push(await storeProviderMedia(env,urls[i],`users/${job.user_id}/results/${job.id}/${i}`,job.kind));
    await patch(db,id,fence,{status:'completed',stage:'terminal',result_keys:JSON.stringify(keys),progress:100,error:null,provider_cost:typeof data.cost==='number'?data.cost:null});return;
@@ -244,8 +287,7 @@ export async function advanceJob(env:Env,id:string):Promise<void>{const db=datab
  }catch(error){
   try {
   if(error instanceof LostLease)return;
-  if(error instanceof WindowPeeperRemuxError){await refundGeneration(db,id,'failed','The generated video could not be prepared with this template. Your credits have been returned.',fence);}
-  else if(error instanceof ProviderError&&error.transientQuery){await patch(db,id,fence,{error:'The provider status is temporarily unavailable. We will check this saved task again.'});}
+  if(error instanceof ProviderError&&error.transientQuery){await patch(db,id,fence,{error:'The provider status is temporarily unavailable. We will check this saved task again.'});}
   else if(error instanceof ProviderError&&error.uncertain){await patch(db,id,fence,{stage:'manual_review',error:error.message});}
   else if(error instanceof ProviderError&&job.stage!=='polling'){await refundGeneration(db,id,'failed',error.message+' Your credits have been returned.',fence);}
   else {await patch(db,id,fence,{error:job.stage==='polling'?'The result is delayed. We will keep checking automatically.':'The service is temporarily unavailable. Your request is saved.'});}

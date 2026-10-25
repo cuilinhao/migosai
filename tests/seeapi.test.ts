@@ -277,6 +277,15 @@ describe('SeeAPI safe diagnostic context', () => {
     expect(JSON.stringify(error.diagnostic)).not.toContain('secret');
   });
 
+  it('retains MEDIA_INVALID without copying its media-decoding message or private input', async () => {
+    respond({ ...task('failed'), error: { code: 'MEDIA_INVALID', message: `Input media could not be decoded or incomplete: ${persistedBody}`, details: { key: env.SEEAPI_API_KEY } } });
+    const error = await diagnostic(getVideoModeration(env, id));
+    expect(error).toMatchObject({ retryable: false, diagnostic: { phase: 'task_error', httpStatus: 200, taskStatus: 'failed', errorCode: 'MEDIA_INVALID' } });
+    expect(JSON.stringify(error)).not.toContain('token=private');
+    expect(JSON.stringify(error)).not.toContain(env.SEEAPI_API_KEY!);
+    expect(JSON.stringify(error)).not.toContain('could not be decoded');
+  });
+
   it('redacts hostile status, code and report text instead of treating arbitrary tokens as safe codes', async () => {
     const report = cleanReport();
     report.status = { toString: persistedBody };
