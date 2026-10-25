@@ -1,0 +1,897 @@
+import type { Locale } from '@/lib/i18n/routing';
+
+const english = {
+  seoTitle: 'Window Peeper AI Video Generator | MigosAI',
+  seoDescription: 'Turn one photo into a Window Peeper AI video. Create the playful window reveal with MiniMax H3, explore trend references, and save your video with MigosAI.',
+  badge: 'The Window Peeper trend, starring you',
+  heroTitle: 'The neighbor is you.',
+  heroAccent: 'Make it awkward.',
+  heroDescription: 'Put yourself (or your pet) in the Window Peeper trend. One photo, a midnight burger, and a very suspicious stare.',
+  heroBenefits: ['Just one photo', 'No editing skills', 'Pets welcome, too'],
+  generatorTitle: 'Create your Window Peeper video',
+  generatorSubtitle: 'Add your photo. We’ll take care of the window reveal.',
+  photoLabel: 'Start with your photo',
+  uploadTitle: 'Drop your photo here or choose a file',
+  uploadHint: 'One person or pet. A clear face makes the best entrance.',
+  uploadFormats: 'JPG, PNG or WebP · Up to 10 MB',
+  replacePhoto: 'Click to choose a different photo',
+  removePhoto: 'Remove photo',
+  selectedPhoto: 'Your selected photo',
+  privacyLink: 'How we handle photos',
+  settingsTitle: 'Make it yours',
+  model: 'AI model',
+  duration: 'Video length',
+  resolution: 'Resolution',
+  format: 'Aspect ratio',
+  fixedSettings: 'These settings are fixed for the Window Peeper template.',
+  consent: 'I own this photo or have permission to use it, and accept the',
+  terms: 'Terms of Service',
+  aiDisclosure: 'This video is AI-generated, not real footage.',
+  generate: 'Generate my video',
+  checkingAccount: 'Checking account…',
+  preparing: 'Preparing photo…',
+  uploading: 'Uploading photo…',
+  starting: 'Starting your video…',
+  generating: 'Making your video',
+  queued: 'Waiting to start…',
+  reviewing: 'Reviewing your photo…',
+  credits: 'credits',
+  available: 'available',
+  buyCredits: 'Get credits',
+  signInNote: 'Sign in to generate with your MigosAI credits.',
+  refundNote: 'Failed generations are refunded automatically.',
+  savedNote: 'Saved in your',
+  myVideos: 'My Videos',
+  leaveNote: 'You can leave this page. Your video will be in My Videos.',
+  pollRetry: 'Status will retry automatically.',
+  uploadProgress: 'Photo upload progress',
+  videoProgress: 'Video generation progress',
+  resultReady: 'Your Window Peeper video is ready.',
+  resultLabel: 'Your generated Window Peeper video',
+  download: 'Download video',
+  viewRecord: 'View generation record',
+  invalidType: 'Choose a JPG, PNG or WebP photo.',
+  invalidSize: 'Choose a photo under 10 MB.',
+  missingPhoto: 'Add one clear photo first.',
+  missingConsent: 'Please confirm photo consent before generating.',
+  insufficientCredits: 'You need {credits} credits to create this video.',
+  createFailed: 'Could not create the video.',
+  generationFailed: 'Generation could not be completed.',
+  previewTitle: 'Original template preview',
+  previewBadge: 'POV: your neighbor noticed 👀',
+  previewNote: 'This could be you',
+  previewSticker: 'well, this is awkward',
+  playPreview: 'Play the original trend reference',
+  previewCaption: 'Reference clip · Theolicccc / CapCut · 8.2s',
+  sourceLink: 'View source',
+  previewDisclosure: 'Source preview · not a generated result. Your generated video will be 15 seconds; results vary.',
+  trust: ['Private photos & results', 'Failed generations refunded', 'Download-ready MP4'],
+  howKicker: 'Less editing. More posting.',
+  howTitle: 'Three steps to your window moment.',
+  howDescription: 'No timeline, no prompt writing. We have the scene ready.',
+  steps: [
+    { title: 'Pick your main character', description: 'Upload one clear photo of yourself, a consenting friend, or your pet. Front-facing works best.' },
+    { title: 'Let the awkwardness happen', description: 'Check the fixed settings and credit cost, then let MiniMax H3 set the scene. Your 15-second video is saved in My Videos.' },
+    { title: 'Save it. Send it. Get the look.', description: 'Download your MP4 and share it on TikTok, Reels or Shorts. Remember to label it as AI-generated.' },
+  ],
+  examplesKicker: 'Meet the template',
+  examplesTitle: 'Window Peeper video examples',
+  examplesDescription: 'The original, the midnight snack, and one very suspicious cat. Pick your favorite kind of awkward.',
+  examples: [
+    { title: 'The original Window Peeper', description: 'The original template behind the window moment.', badge: 'Original template' },
+    { title: 'Caught mid-burger', description: 'A blonde bob, a midnight burger, and an uncomfortably long stare.', badge: 'Trend reference' },
+    { title: 'The cat next door', description: 'Same window. Same burger. A much furrier neighbor.', badge: 'Trend reference' },
+  ],
+  playExample: 'Play reference video',
+  exampleError: 'Video unavailable. Open the original source.',
+  attribution: 'These are external trend references from CapCut, Viberot and TikTok, not videos generated by MigosAI. All credits belong to their respective creators.',
+  galleryTitle: 'More window moments from TikTok',
+  galleryDescription: 'Open a poster to watch the creator’s original post on TikTok.',
+  watchTikTok: 'Watch on TikTok',
+  pricingKicker: 'Big meme energy. Small commitment.',
+  pricingTitle: 'A few credits. A lot of awkward.',
+  pricingDescription: 'Use your MigosAI credits for Window Peeper and the rest of our creative tools. Each Window Peeper video uses {credits} credits.',
+  faqKicker: 'A little window shopping',
+  faqTitle: 'Curious? Good.',
+  faqDescription: 'Everything to know before becoming the suspicious neighbor.',
+  faqs: [
+    { question: 'What is the Window Peeper trend?', answer: 'A camera zooms toward a lit apartment window. Someone eating a burger notices the camera, stares back, then shuts the curtain. Our AI uses the original template video for motion and your photo for the subject.' },
+    { question: 'Do I need CapCut or a prompt?', answer: 'No. Upload one photo and check the settings in your browser. The original template video guides the motion and camera; your photo guides identity. AI results can vary.' },
+    { question: 'Which model and settings does this use?', answer: 'This template uses MiniMax H3, with a 15-second duration, 768p resolution and a vertical 9:16 format. Each video costs {credits} MigosAI credits. These settings are fixed for this template.' },
+    { question: 'Can my pet be the neighbor?', answer: 'Yes. Try a clear, front-facing photo of one pet. A person or pet with visible eyes works best. Use photos you own or have permission to process. JPG, PNG and WebP files up to 10 MB are supported.' },
+    { question: 'What happens if a video fails?', answer: 'Confirmed generation failures return the credits automatically. A completed video you dislike is still a completed generation. If a submission is being checked, avoid resubmitting and contact support if it does not update.' },
+    { question: 'Are my photos and videos public?', answer: 'Photos and results are tied to your account. The generation provider receives a temporary photo link to create the clip. Your completed video is saved in My Videos, where you can watch and download it. See our Privacy Policy for details.' },
+  ],
+  ctaTitle: 'Your window moment is waiting.',
+  ctaDescription: 'One photo. One burger. Absolutely no eye contact. (Just kidding.)',
+  ctaButton: 'Put me in the window',
+};
+
+export type WindowPeeperCopy = typeof english;
+const translations: Partial<Record<Locale, WindowPeeperCopy>> = {
+  "ko": {
+    "seoTitle": "Window Peeper AI 동영상 생성기 | MigosAI",
+    "seoDescription": "사진 한 장으로 Window Peeper AI 동영상을 만들어 보세요. MiniMax H3로 재미있는 창문 등장 장면을 만들고, 트렌드 참고 영상을 살펴본 뒤 MigosAI에 저장하세요.",
+    "badge": "당신이 주인공인 Window Peeper 트렌드",
+    "heroTitle": "그 이웃이 바로 당신.",
+    "heroAccent": "어색하게 만나볼까요?",
+    "heroDescription": "당신이나 반려동물을 Window Peeper 트렌드의 주인공으로 만들어 보세요. 사진 한 장, 한밤의 햄버거, 그리고 수상한 눈빛.",
+    "heroBenefits": [
+      "사진 한 장이면 충분",
+      "편집 기술은 필요 없어요",
+      "반려동물도 환영"
+    ],
+    "generatorTitle": "나만의 Window Peeper 동영상 만들기",
+    "generatorSubtitle": "사진을 추가하세요. 창문 등장 장면은 저희가 만들어 드릴게요.",
+    "photoLabel": "사진으로 시작하세요",
+    "uploadTitle": "사진을 여기에 놓거나 파일을 선택하세요",
+    "uploadHint": "사람 한 명 또는 반려동물 한 마리. 얼굴이 선명할수록 등장 장면이 잘 나와요.",
+    "uploadFormats": "JPG, PNG 또는 WebP · 최대 10 MB",
+    "replacePhoto": "다른 사진을 선택하려면 클릭하세요",
+    "removePhoto": "사진 삭제",
+    "selectedPhoto": "선택한 사진",
+    "privacyLink": "사진 처리 방식 안내",
+    "settingsTitle": "나만의 영상으로",
+    "model": "AI 모델",
+    "duration": "동영상 길이",
+    "resolution": "해상도",
+    "format": "화면 비율",
+    "fixedSettings": "Window Peeper 템플릿에는 이 설정이 고정되어 있습니다.",
+    "consent": "이 사진을 소유하거나 사용 허락을 받았으며 다음 약관에 동의합니다:",
+    "terms": "서비스 이용약관",
+    "aiDisclosure": "이 동영상은 AI로 생성되며 실제 촬영 영상이 아닙니다.",
+    "generate": "내 동영상 생성하기",
+    "checkingAccount": "계정 확인 중…",
+    "preparing": "사진 준비 중…",
+    "uploading": "사진 업로드 중…",
+    "starting": "동영상 생성 시작 중…",
+    "generating": "동영상 생성 중",
+    "queued": "시작 대기 중…",
+    "reviewing": "사진 검토 중…",
+    "credits": "크레딧",
+    "available": "사용 가능",
+    "buyCredits": "크레딧 구매",
+    "signInNote": "MigosAI 크레딧으로 생성하려면 로그인하세요.",
+    "refundNote": "생성에 실패하면 크레딧이 자동으로 환불됩니다.",
+    "savedNote": "저장 위치:",
+    "myVideos": "내 동영상",
+    "leaveNote": "이 페이지를 떠나도 됩니다. 완성된 영상은 내 동영상에서 확인하세요.",
+    "pollRetry": "상태 확인을 자동으로 다시 시도합니다.",
+    "uploadProgress": "사진 업로드 진행률",
+    "videoProgress": "동영상 생성 진행률",
+    "resultReady": "Window Peeper 동영상이 완성되었습니다.",
+    "resultLabel": "생성된 Window Peeper 동영상",
+    "download": "동영상 다운로드",
+    "viewRecord": "생성 기록 보기",
+    "invalidType": "JPG, PNG 또는 WebP 사진을 선택하세요.",
+    "invalidSize": "10 MB 미만의 사진을 선택하세요.",
+    "missingPhoto": "먼저 선명한 사진 한 장을 추가하세요.",
+    "missingConsent": "생성하기 전에 사진 사용 동의를 확인하세요.",
+    "insufficientCredits": "이 동영상을 만들려면 {credits} 크레딧이 필요합니다.",
+    "createFailed": "동영상을 생성하지 못했습니다.",
+    "generationFailed": "생성을 완료하지 못했습니다.",
+    "previewTitle": "오리지널 템플릿 미리보기",
+    "previewBadge": "POV: 이웃이 눈치챘다 👀",
+    "previewNote": "당신의 모습이 될 수도 있어요",
+    "previewSticker": "음, 좀 어색하네요",
+    "playPreview": "오리지널 트렌드 참고 영상 재생",
+    "previewCaption": "참고 영상 · Theolicccc / CapCut · 8.2초",
+    "sourceLink": "출처 보기",
+    "previewDisclosure": "원본 미리보기이며 생성 결과가 아닙니다. 생성되는 영상은 15초이고 결과는 달라질 수 있습니다.",
+    "trust": [
+      "비공개 사진과 결과",
+      "생성 실패 시 환불",
+      "바로 다운로드하는 MP4"
+    ],
+    "howKicker": "편집은 줄이고, 게시물은 늘리고.",
+    "howTitle": "세 단계로 완성하는 나만의 창문 장면.",
+    "howDescription": "타임라인 편집도 프롬프트 작성도 필요 없어요. 장면은 준비되어 있습니다.",
+    "steps": [
+      {
+        "title": "주인공을 골라 주세요",
+        "description": "본인, 출연에 동의한 친구 또는 반려동물의 선명한 사진 한 장을 업로드하세요. 정면 사진이 가장 좋습니다."
+      },
+      {
+        "title": "어색한 순간을 기다려 보세요",
+        "description": "고정 설정과 크레딧 비용을 확인한 뒤 MiniMax H3에 장면을 맡기세요. 15초 영상은 내 동영상에 저장됩니다."
+      },
+      {
+        "title": "저장하고 보내고, 그 눈빛을 나누세요",
+        "description": "MP4를 다운로드해 TikTok, Reels 또는 Shorts에 공유하세요. AI로 생성한 영상임을 표시하는 것도 잊지 마세요."
+      }
+    ],
+    "examplesKicker": "템플릿을 만나보세요",
+    "examplesTitle": "Window Peeper 동영상 예시",
+    "examplesDescription": "오리지널, 한밤의 간식, 그리고 아주 수상한 고양이. 마음에 드는 어색함을 골라 보세요.",
+    "examples": [
+      {
+        "title": "오리지널 Window Peeper",
+        "description": "창문 장면의 시작이 된 오리지널 템플릿.",
+        "badge": "오리지널 템플릿"
+      },
+      {
+        "title": "햄버거 먹다 딱 걸렸네",
+        "description": "금발 단발머리, 한밤의 햄버거, 그리고 불편할 만큼 긴 시선.",
+        "badge": "트렌드 참고 영상"
+      },
+      {
+        "title": "옆집 고양이",
+        "description": "같은 창문, 같은 햄버거. 다만 이웃의 털이 훨씬 많아졌죠.",
+        "badge": "트렌드 참고 영상"
+      }
+    ],
+    "playExample": "참고 동영상 재생",
+    "exampleError": "동영상을 재생할 수 없습니다. 원본 출처를 열어 보세요.",
+    "attribution": "이 영상들은 CapCut, Viberot, TikTok의 외부 트렌드 참고 자료이며 MigosAI가 생성한 결과물이 아닙니다. 모든 크레딧은 각 원작자에게 있습니다.",
+    "galleryTitle": "TikTok에서 만나는 더 많은 창문 장면",
+    "galleryDescription": "포스터를 열어 TikTok에서 크리에이터의 원본 게시물을 시청하세요.",
+    "watchTikTok": "TikTok에서 보기",
+    "pricingKicker": "재미는 크게, 부담은 작게.",
+    "pricingTitle": "적은 크레딧으로, 어색함은 가득.",
+    "pricingDescription": "MigosAI 크레딧으로 Window Peeper와 다양한 창작 도구를 이용하세요. Window Peeper 동영상 한 편에 {credits} 크레딧이 사용됩니다.",
+    "faqKicker": "잠깐 둘러보고 가세요",
+    "faqTitle": "궁금하신가요? 좋아요.",
+    "faqDescription": "수상한 이웃이 되기 전에 알아둘 모든 것.",
+    "faqs": [
+      {
+        "question": "Window Peeper 트렌드는 무엇인가요?",
+        "answer": "카메라가 불 켜진 아파트 창문으로 다가갑니다. 햄버거를 먹던 사람이 카메라를 알아차리고 빤히 바라보다가 커튼을 닫습니다. AI는 오리지널 템플릿 영상의 동작과 업로드한 사진의 주인공을 결합합니다."
+      },
+      {
+        "question": "CapCut이나 프롬프트가 필요한가요?",
+        "answer": "아니요. 브라우저에서 사진 한 장을 업로드하고 설정을 확인하면 됩니다. 오리지널 템플릿 영상은 동작과 카메라 움직임을, 사진은 주인공의 모습을 안내합니다. AI 결과는 달라질 수 있습니다."
+      },
+      {
+        "question": "어떤 모델과 설정을 사용하나요?",
+        "answer": "이 템플릿은 MiniMax H3를 사용하며, 길이 15초, 해상도 768p, 세로 9:16 비율로 생성합니다. 영상 한 편에 MigosAI {credits} 크레딧이 필요합니다. 이 템플릿의 설정은 고정되어 있습니다."
+      },
+      {
+        "question": "반려동물도 이웃이 될 수 있나요?",
+        "answer": "네. 반려동물 한 마리가 정면을 바라보는 선명한 사진으로 시도해 보세요. 눈이 잘 보이는 사람이나 반려동물 사진이 가장 좋습니다. 직접 소유하거나 처리 허락을 받은 사진을 사용하세요. 최대 10 MB의 JPG, PNG, WebP 파일을 지원합니다."
+      },
+      {
+        "question": "영상 생성에 실패하면 어떻게 되나요?",
+        "answer": "생성 실패가 확정되면 크레딧이 자동으로 반환됩니다. 완성된 영상이 마음에 들지 않더라도 생성은 완료된 것으로 처리됩니다. 제출한 요청을 확인 중이라면 다시 제출하지 말고, 상태가 갱신되지 않을 경우 지원팀에 문의하세요."
+      },
+      {
+        "question": "내 사진과 영상은 공개되나요?",
+        "answer": "사진과 결과는 계정에 연결됩니다. 생성 제공업체는 영상을 만들기 위해 임시 사진 링크를 전달받습니다. 완성된 영상은 내 동영상에 저장되며, 여기서 시청하고 다운로드할 수 있습니다. 자세한 내용은 개인정보 처리방침을 확인하세요."
+      }
+    ],
+    "ctaTitle": "당신의 창문 장면이 기다리고 있어요.",
+    "ctaDescription": "사진 하나, 햄버거 하나. 절대 눈은 마주치지 마세요. (농담이에요.)",
+    "ctaButton": "나를 창가에 등장시키기"
+  },
+  "ja": {
+    "seoTitle": "Window Peeper AI動画生成ツール | MigosAI",
+    "seoDescription": "写真1枚からWindow PeeperのAI動画を作成。MiniMax H3で窓からひょっこり顔を出すシーンを生成し、トレンドの参考動画を見ながらMigosAIに保存できます。",
+    "badge": "あなたが主役のWindow Peeperトレンド",
+    "heroTitle": "その隣人は、あなた。",
+    "heroAccent": "気まずくいこう。",
+    "heroDescription": "あなたやペットをWindow Peeperトレンドの主役に。写真1枚、真夜中のハンバーガー、そしてとびきり怪しい視線。",
+    "heroBenefits": [
+      "写真1枚だけ",
+      "編集スキル不要",
+      "ペットも大歓迎"
+    ],
+    "generatorTitle": "Window Peeper動画を作ろう",
+    "generatorSubtitle": "写真を追加するだけ。窓から登場するシーンはお任せください。",
+    "photoLabel": "まずは写真から",
+    "uploadTitle": "ここに写真をドロップ、またはファイルを選択",
+    "uploadHint": "人物またはペットを1人・1匹。顔がはっきり写っていると、登場シーンがより自然に。",
+    "uploadFormats": "JPG・PNG・WebP · 最大10 MB",
+    "replacePhoto": "クリックして別の写真を選択",
+    "removePhoto": "写真を削除",
+    "selectedPhoto": "選択した写真",
+    "privacyLink": "写真の取り扱いについて",
+    "settingsTitle": "あなたらしい動画に",
+    "model": "AIモデル",
+    "duration": "動画の長さ",
+    "resolution": "解像度",
+    "format": "アスペクト比",
+    "fixedSettings": "Window Peeperテンプレートの設定は固定です。",
+    "consent": "この写真を所有しているか、使用許可を得ており、次の規約に同意します：",
+    "terms": "利用規約",
+    "aiDisclosure": "この動画はAI生成であり、実際に撮影された映像ではありません。",
+    "generate": "動画を生成する",
+    "checkingAccount": "アカウントを確認中…",
+    "preparing": "写真を準備中…",
+    "uploading": "写真をアップロード中…",
+    "starting": "動画生成を開始中…",
+    "generating": "動画を生成中",
+    "queued": "開始を待っています…",
+    "reviewing": "写真を確認中…",
+    "credits": "クレジット",
+    "available": "利用可能",
+    "buyCredits": "クレジットを購入",
+    "signInNote": "MigosAIクレジットで生成するにはログインしてください。",
+    "refundNote": "生成に失敗した場合、クレジットは自動で返却されます。",
+    "savedNote": "保存先：",
+    "myVideos": "マイ動画",
+    "leaveNote": "このページを離れても大丈夫です。動画はマイ動画に保存されます。",
+    "pollRetry": "状態の確認を自動で再試行します。",
+    "uploadProgress": "写真アップロードの進行状況",
+    "videoProgress": "動画生成の進行状況",
+    "resultReady": "Window Peeper動画が完成しました。",
+    "resultLabel": "生成されたWindow Peeper動画",
+    "download": "動画をダウンロード",
+    "viewRecord": "生成履歴を見る",
+    "invalidType": "JPG、PNG、WebPの写真を選んでください。",
+    "invalidSize": "10 MB未満の写真を選んでください。",
+    "missingPhoto": "まず、鮮明な写真を1枚追加してください。",
+    "missingConsent": "生成する前に写真の使用同意を確認してください。",
+    "insufficientCredits": "この動画の作成には{credits}クレジットが必要です。",
+    "createFailed": "動画を作成できませんでした。",
+    "generationFailed": "生成を完了できませんでした。",
+    "previewTitle": "オリジナルテンプレートのプレビュー",
+    "previewBadge": "POV：お隣さんに気づかれた 👀",
+    "previewNote": "ここにいるのは、あなたかも",
+    "previewSticker": "うん、これは気まずい",
+    "playPreview": "元のトレンドの参考動画を再生",
+    "previewCaption": "参考クリップ · Theolicccc / CapCut · 8.2秒",
+    "sourceLink": "出典を見る",
+    "previewDisclosure": "元動画のプレビューであり、生成結果ではありません。生成される動画は15秒で、結果は異なる場合があります。",
+    "trust": [
+      "写真と結果は非公開",
+      "生成失敗時は返却",
+      "すぐダウンロードできるMP4"
+    ],
+    "howKicker": "編集は少なく。投稿はもっと。",
+    "howTitle": "3ステップで、あなたの窓辺のシーンに。",
+    "howDescription": "タイムライン編集もプロンプト作成も不要。シーンは準備できています。",
+    "steps": [
+      {
+        "title": "主役を選ぼう",
+        "description": "ご自身、出演に同意した友人、またはペットの鮮明な写真を1枚アップロード。正面を向いた写真がおすすめです。"
+      },
+      {
+        "title": "気まずい瞬間はお任せ",
+        "description": "固定設定と必要なクレジットを確認したら、MiniMax H3にシーン作りを任せましょう。15秒の動画はマイ動画に保存されます。"
+      },
+      {
+        "title": "保存して、送って、あの視線を。",
+        "description": "MP4をダウンロードし、TikTok、Reels、Shortsでシェア。AIで生成された動画であることを忘れずに明記してください。"
+      }
+    ],
+    "examplesKicker": "テンプレートをご紹介",
+    "examplesTitle": "Window Peeper動画のサンプル",
+    "examplesDescription": "オリジナル、真夜中のおやつ、そしてとても怪しい猫。お好みの気まずさを選んでみてください。",
+    "examples": [
+      {
+        "title": "オリジナルのWindow Peeper",
+        "description": "あの窓辺のシーンの元になったオリジナルテンプレート。",
+        "badge": "オリジナルテンプレート"
+      },
+      {
+        "title": "ハンバーガーの最中に見つかった",
+        "description": "金髪のボブ、真夜中のハンバーガー、そして気まずいほど長い視線。",
+        "badge": "トレンド参考動画"
+      },
+      {
+        "title": "お隣の猫",
+        "description": "同じ窓。同じハンバーガー。でも隣人は、ずっとふわふわ。",
+        "badge": "トレンド参考動画"
+      }
+    ],
+    "playExample": "参考動画を再生",
+    "exampleError": "動画を再生できません。元の出典を開いてください。",
+    "attribution": "これらはCapCut、Viberot、TikTokの外部トレンド参考動画であり、MigosAIが生成した動画ではありません。クレジットは各クリエイターに帰属します。",
+    "galleryTitle": "TikTokで見つけた、もっと多くの窓辺のシーン",
+    "galleryDescription": "ポスターを開くと、TikTokでクリエイターの元の投稿を視聴できます。",
+    "watchTikTok": "TikTokで見る",
+    "pricingKicker": "ミームの勢いは大きく。負担は小さく。",
+    "pricingTitle": "少しのクレジットで、たっぷりの気まずさ。",
+    "pricingDescription": "MigosAIクレジットはWindow Peeperをはじめ、さまざまな制作ツールで使えます。Window Peeper動画1本につき{credits}クレジットを使用します。",
+    "faqKicker": "ちょっと、のぞいてみましょう",
+    "faqTitle": "気になりますか？いいですね。",
+    "faqDescription": "怪しい隣人になる前に、知っておきたいこと。",
+    "faqs": [
+      {
+        "question": "Window Peeperトレンドとは？",
+        "answer": "カメラが明かりのついたアパートの窓へズーム。ハンバーガーを食べている人がカメラに気づき、見つめ返してからカーテンを閉めます。AIはオリジナルテンプレート動画を動きの参考にし、あなたの写真を主役に使います。"
+      },
+      {
+        "question": "CapCutやプロンプトは必要ですか？",
+        "answer": "いいえ。ブラウザで写真を1枚アップロードし、設定を確認するだけです。オリジナルテンプレート動画が動きとカメラワークの参考になり、写真が主役の見た目の参考になります。AIの結果は異なる場合があります。"
+      },
+      {
+        "question": "どのモデルと設定を使いますか？",
+        "answer": "このテンプレートはMiniMax H3を使用し、長さ15秒、解像度768p、縦型9:16で生成します。動画1本につきMigosAIの{credits}クレジットが必要です。このテンプレートの設定は固定です。"
+      },
+      {
+        "question": "ペットも隣人になれますか？",
+        "answer": "はい。ペット1匹が正面を向いた鮮明な写真でお試しください。人物でもペットでも、目がはっきり見える写真がおすすめです。ご自身が所有するか、処理の許可を得た写真をご使用ください。最大10 MBのJPG、PNG、WebPに対応しています。"
+      },
+      {
+        "question": "動画生成に失敗した場合は？",
+        "answer": "生成失敗が確定すると、クレジットは自動で返却されます。完成した動画が好みに合わない場合も、生成完了として扱われます。送信したリクエストを確認中の場合は再送信せず、状態が更新されなければサポートにお問い合わせください。"
+      },
+      {
+        "question": "写真や動画は公開されますか？",
+        "answer": "写真と結果はあなたのアカウントに紐づきます。動画を作るため、生成サービスには一時的な写真リンクが渡されます。完成した動画はマイ動画に保存され、視聴やダウンロードができます。詳細はプライバシーポリシーをご覧ください。"
+      }
+    ],
+    "ctaTitle": "あなたの窓辺のシーンが待っています。",
+    "ctaDescription": "写真1枚。ハンバーガー1個。目は絶対に合わせないで。（冗談です。）",
+    "ctaButton": "窓の向こうに登場する"
+  },
+  "fr": {
+    "seoTitle": "Générateur de vidéos IA Window Peeper | MigosAI",
+    "seoDescription": "Transformez une photo en vidéo IA Window Peeper. Créez une apparition amusante à la fenêtre avec MiniMax H3, explorez les références de la tendance et enregistrez votre vidéo sur MigosAI.",
+    "badge": "La tendance Window Peeper, avec vous en vedette",
+    "heroTitle": "Le voisin, c’est vous.",
+    "heroAccent": "Place au malaise.",
+    "heroDescription": "Invitez-vous, ou votre animal, dans la tendance Window Peeper. Une photo, un burger de minuit et un regard franchement suspect.",
+    "heroBenefits": [
+      "Une seule photo",
+      "Aucun talent de montage requis",
+      "Les animaux aussi sont les bienvenus"
+    ],
+    "generatorTitle": "Créez votre vidéo Window Peeper",
+    "generatorSubtitle": "Ajoutez votre photo. Nous nous chargeons de l’apparition à la fenêtre.",
+    "photoLabel": "Commencez avec votre photo",
+    "uploadTitle": "Déposez votre photo ici ou choisissez un fichier",
+    "uploadHint": "Une personne ou un animal. Un visage bien net fait la meilleure entrée.",
+    "uploadFormats": "JPG, PNG ou WebP · Jusqu’à 10 MB",
+    "replacePhoto": "Cliquez pour choisir une autre photo",
+    "removePhoto": "Retirer la photo",
+    "selectedPhoto": "Votre photo sélectionnée",
+    "privacyLink": "Comment nous traitons vos photos",
+    "settingsTitle": "À votre image",
+    "model": "Modèle IA",
+    "duration": "Durée de la vidéo",
+    "resolution": "Résolution",
+    "format": "Format d’image",
+    "fixedSettings": "Ces paramètres sont fixes pour le modèle Window Peeper.",
+    "consent": "Cette photo m’appartient ou j’ai l’autorisation de l’utiliser, et j’accepte les",
+    "terms": "Conditions d’utilisation",
+    "aiDisclosure": "Cette vidéo est générée par IA et ne constitue pas une séquence réelle.",
+    "generate": "Générer ma vidéo",
+    "checkingAccount": "Vérification du compte…",
+    "preparing": "Préparation de la photo…",
+    "uploading": "Envoi de la photo…",
+    "starting": "Lancement de votre vidéo…",
+    "generating": "Création de votre vidéo",
+    "queued": "En attente de démarrage…",
+    "reviewing": "Vérification de votre photo…",
+    "credits": "crédits",
+    "available": "disponibles",
+    "buyCredits": "Acheter des crédits",
+    "signInNote": "Connectez-vous pour créer avec vos crédits MigosAI.",
+    "refundNote": "Les crédits sont remboursés automatiquement en cas d’échec.",
+    "savedNote": "Enregistrée dans",
+    "myVideos": "Mes vidéos",
+    "leaveNote": "Vous pouvez quitter cette page. Votre vidéo sera dans Mes vidéos.",
+    "pollRetry": "La vérification du statut sera relancée automatiquement.",
+    "uploadProgress": "Progression de l’envoi de la photo",
+    "videoProgress": "Progression de la génération vidéo",
+    "resultReady": "Votre vidéo Window Peeper est prête.",
+    "resultLabel": "Votre vidéo Window Peeper générée",
+    "download": "Télécharger la vidéo",
+    "viewRecord": "Voir l’historique de génération",
+    "invalidType": "Choisissez une photo JPG, PNG ou WebP.",
+    "invalidSize": "Choisissez une photo de moins de 10 MB.",
+    "missingPhoto": "Ajoutez d’abord une photo nette.",
+    "missingConsent": "Confirmez l’autorisation d’utiliser la photo avant de générer.",
+    "insufficientCredits": "Il vous faut {credits} crédits pour créer cette vidéo.",
+    "createFailed": "Impossible de créer la vidéo.",
+    "generationFailed": "La génération n’a pas pu aboutir.",
+    "previewTitle": "Aperçu du modèle original",
+    "previewBadge": "POV : votre voisin vous a repéré 👀",
+    "previewNote": "Ça pourrait être vous",
+    "previewSticker": "bon, c’est gênant",
+    "playPreview": "Lire la référence originale de la tendance",
+    "previewCaption": "Extrait de référence · Theolicccc / CapCut · 8,2 s",
+    "sourceLink": "Voir la source",
+    "previewDisclosure": "Aperçu de la source, pas un résultat généré. Votre vidéo générée durera 15 secondes ; les résultats peuvent varier.",
+    "trust": [
+      "Photos et résultats privés",
+      "Générations échouées remboursées",
+      "MP4 prêt à télécharger"
+    ],
+    "howKicker": "Moins de montage. Plus de publications.",
+    "howTitle": "Trois étapes pour votre scène à la fenêtre.",
+    "howDescription": "Pas de montage, pas de prompt à écrire. La scène est prête.",
+    "steps": [
+      {
+        "title": "Choisissez votre personnage principal",
+        "description": "Importez une photo nette de vous, d’un ami consentant ou de votre animal. Une photo de face donne les meilleurs résultats."
+      },
+      {
+        "title": "Laissez le malaise s’installer",
+        "description": "Vérifiez les paramètres fixes et le coût en crédits, puis laissez MiniMax H3 planter le décor. Votre vidéo de 15 secondes est enregistrée dans Mes vidéos."
+      },
+      {
+        "title": "Enregistrez. Envoyez. Partagez ce regard.",
+        "description": "Téléchargez votre MP4 et partagez-le sur TikTok, Reels ou Shorts. Pensez à indiquer qu’il a été généré par IA."
+      }
+    ],
+    "examplesKicker": "Découvrez le modèle",
+    "examplesTitle": "Exemples de vidéos Window Peeper",
+    "examplesDescription": "L’original, le petit creux de minuit et un chat très suspect. Choisissez votre malaise préféré.",
+    "examples": [
+      {
+        "title": "Le Window Peeper original",
+        "description": "Le modèle original à l’origine de cette scène à la fenêtre.",
+        "badge": "Modèle original"
+      },
+      {
+        "title": "Surpris en plein burger",
+        "description": "Un carré blond, un burger de minuit et un regard beaucoup trop long.",
+        "badge": "Référence de la tendance"
+      },
+      {
+        "title": "Le chat d’à côté",
+        "description": "Même fenêtre. Même burger. Un voisin nettement plus poilu.",
+        "badge": "Référence de la tendance"
+      }
+    ],
+    "playExample": "Lire la vidéo de référence",
+    "exampleError": "Vidéo indisponible. Ouvrez la source originale.",
+    "attribution": "Ces vidéos sont des références externes de la tendance provenant de CapCut, Viberot et TikTok, et non des vidéos générées par MigosAI. Le mérite revient à leurs créateurs respectifs.",
+    "galleryTitle": "D’autres scènes à la fenêtre sur TikTok",
+    "galleryDescription": "Ouvrez une vignette pour regarder la publication originale du créateur sur TikTok.",
+    "watchTikTok": "Regarder sur TikTok",
+    "pricingKicker": "Un gros potentiel de mème. Un petit engagement.",
+    "pricingTitle": "Quelques crédits. Beaucoup de malaise.",
+    "pricingDescription": "Utilisez vos crédits MigosAI pour Window Peeper et nos autres outils créatifs. Chaque vidéo Window Peeper utilise {credits} crédits.",
+    "faqKicker": "Un peu de lèche-vitrine",
+    "faqTitle": "Curieux ? Tant mieux.",
+    "faqDescription": "Tout ce qu’il faut savoir avant de devenir le voisin suspect.",
+    "faqs": [
+      {
+        "question": "Qu’est-ce que la tendance Window Peeper ?",
+        "answer": "La caméra zoome vers la fenêtre éclairée d’un appartement. Une personne qui mange un burger remarque la caméra, la fixe, puis ferme le rideau. Notre IA utilise la vidéo du modèle original pour les mouvements et votre photo pour le sujet."
+      },
+      {
+        "question": "Ai-je besoin de CapCut ou d’un prompt ?",
+        "answer": "Non. Importez une photo et vérifiez les paramètres dans votre navigateur. La vidéo du modèle original guide les mouvements et la caméra ; votre photo guide l’identité du sujet. Les résultats IA peuvent varier."
+      },
+      {
+        "question": "Quels modèle et paramètres sont utilisés ?",
+        "answer": "Ce modèle utilise MiniMax H3, avec une durée de 15 secondes, une résolution de 768p et un format vertical 9:16. Chaque vidéo coûte {credits} crédits MigosAI. Ces paramètres sont fixes pour ce modèle."
+      },
+      {
+        "question": "Mon animal peut-il jouer le voisin ?",
+        "answer": "Oui. Essayez une photo nette, de face, d’un seul animal. Les meilleurs résultats s’obtiennent avec une personne ou un animal dont les yeux sont visibles. Utilisez des photos qui vous appartiennent ou que vous avez l’autorisation de traiter. Les fichiers JPG, PNG et WebP jusqu’à 10 MB sont acceptés."
+      },
+      {
+        "question": "Que se passe-t-il si une vidéo échoue ?",
+        "answer": "En cas d’échec confirmé de la génération, les crédits sont automatiquement restitués. Une vidéo terminée qui ne vous plaît pas reste une génération terminée. Si votre demande est en cours de vérification, évitez de la renvoyer et contactez l’assistance si le statut n’évolue pas."
+      },
+      {
+        "question": "Mes photos et vidéos sont-elles publiques ?",
+        "answer": "Les photos et les résultats sont liés à votre compte. Le prestataire de génération reçoit un lien temporaire vers la photo pour créer la vidéo. La vidéo terminée est enregistrée dans Mes vidéos, où vous pouvez la regarder et la télécharger. Consultez notre Politique de confidentialité pour plus de détails."
+      }
+    ],
+    "ctaTitle": "Votre scène à la fenêtre vous attend.",
+    "ctaDescription": "Une photo. Un burger. Surtout, aucun contact visuel. (On plaisante.)",
+    "ctaButton": "Mettez-moi à la fenêtre"
+  },
+  "es": {
+    "seoTitle": "Generador de videos IA Window Peeper | MigosAI",
+    "seoDescription": "Convierte una foto en un video IA Window Peeper. Crea una divertida aparición en la ventana con MiniMax H3, explora referencias de la tendencia y guarda tu video en MigosAI.",
+    "badge": "La tendencia Window Peeper, contigo de protagonista",
+    "heroTitle": "El vecino eres tú.",
+    "heroAccent": "Que sea incómodo.",
+    "heroDescription": "Métete, o mete a tu mascota, en la tendencia Window Peeper. Una foto, una hamburguesa de medianoche y una mirada muy sospechosa.",
+    "heroBenefits": [
+      "Solo una foto",
+      "No hace falta saber editar",
+      "Las mascotas también son bienvenidas"
+    ],
+    "generatorTitle": "Crea tu video Window Peeper",
+    "generatorSubtitle": "Añade tu foto. Nosotros nos encargamos de la aparición en la ventana.",
+    "photoLabel": "Empieza con tu foto",
+    "uploadTitle": "Arrastra tu foto aquí o elige un archivo",
+    "uploadHint": "Una persona o una mascota. Una cara nítida hace la mejor entrada.",
+    "uploadFormats": "JPG, PNG o WebP · Hasta 10 MB",
+    "replacePhoto": "Haz clic para elegir otra foto",
+    "removePhoto": "Quitar foto",
+    "selectedPhoto": "Tu foto seleccionada",
+    "privacyLink": "Cómo tratamos tus fotos",
+    "settingsTitle": "Dale tu toque",
+    "model": "Modelo de IA",
+    "duration": "Duración del video",
+    "resolution": "Resolución",
+    "format": "Relación de aspecto",
+    "fixedSettings": "Estos ajustes son fijos para la plantilla Window Peeper.",
+    "consent": "Soy propietario de esta foto o tengo permiso para usarla, y acepto los",
+    "terms": "Términos del servicio",
+    "aiDisclosure": "Este video se genera con IA y no es una grabación real.",
+    "generate": "Generar mi video",
+    "checkingAccount": "Comprobando la cuenta…",
+    "preparing": "Preparando la foto…",
+    "uploading": "Subiendo la foto…",
+    "starting": "Iniciando tu video…",
+    "generating": "Creando tu video",
+    "queued": "Esperando para empezar…",
+    "reviewing": "Revisando tu foto…",
+    "credits": "créditos",
+    "available": "disponibles",
+    "buyCredits": "Obtener créditos",
+    "signInNote": "Inicia sesión para generar con tus créditos MigosAI.",
+    "refundNote": "Los créditos se devuelven automáticamente si la generación falla.",
+    "savedNote": "Guardado en",
+    "myVideos": "Mis videos",
+    "leaveNote": "Puedes salir de esta página. Tu video estará en Mis videos.",
+    "pollRetry": "La consulta del estado se reintentará automáticamente.",
+    "uploadProgress": "Progreso de subida de la foto",
+    "videoProgress": "Progreso de generación del video",
+    "resultReady": "Tu video Window Peeper está listo.",
+    "resultLabel": "Tu video Window Peeper generado",
+    "download": "Descargar video",
+    "viewRecord": "Ver historial de generación",
+    "invalidType": "Elige una foto JPG, PNG o WebP.",
+    "invalidSize": "Elige una foto de menos de 10 MB.",
+    "missingPhoto": "Primero añade una foto clara.",
+    "missingConsent": "Confirma el permiso para usar la foto antes de generar.",
+    "insufficientCredits": "Necesitas {credits} créditos para crear este video.",
+    "createFailed": "No se pudo crear el video.",
+    "generationFailed": "No se pudo completar la generación.",
+    "previewTitle": "Vista previa de la plantilla original",
+    "previewBadge": "POV: tu vecino se ha dado cuenta 👀",
+    "previewNote": "Podrías ser tú",
+    "previewSticker": "bueno, esto es incómodo",
+    "playPreview": "Reproducir la referencia original de la tendencia",
+    "previewCaption": "Clip de referencia · Theolicccc / CapCut · 8,2 s",
+    "sourceLink": "Ver fuente",
+    "previewDisclosure": "Vista previa de la fuente, no un resultado generado. Tu video generado durará 15 segundos; los resultados pueden variar.",
+    "trust": [
+      "Fotos y resultados privados",
+      "Devolución si la generación falla",
+      "MP4 listo para descargar"
+    ],
+    "howKicker": "Menos edición. Más publicaciones.",
+    "howTitle": "Tres pasos hasta tu momento en la ventana.",
+    "howDescription": "Sin líneas de tiempo ni prompts que escribir. La escena ya está lista.",
+    "steps": [
+      {
+        "title": "Elige a tu protagonista",
+        "description": "Sube una foto clara de ti, de un amigo que haya dado su consentimiento o de tu mascota. Una foto de frente funciona mejor."
+      },
+      {
+        "title": "Deja que llegue la incomodidad",
+        "description": "Revisa los ajustes fijos y el coste en créditos y deja que MiniMax H3 prepare la escena. Tu video de 15 segundos se guarda en Mis videos."
+      },
+      {
+        "title": "Guárdalo. Envíalo. Comparte esa mirada.",
+        "description": "Descarga tu MP4 y compártelo en TikTok, Reels o Shorts. Recuerda indicar que se ha generado con IA."
+      }
+    ],
+    "examplesKicker": "Conoce la plantilla",
+    "examplesTitle": "Ejemplos de videos Window Peeper",
+    "examplesDescription": "El original, el antojo de medianoche y un gato muy sospechoso. Elige tu tipo de incomodidad favorito.",
+    "examples": [
+      {
+        "title": "El Window Peeper original",
+        "description": "La plantilla original detrás de ese momento en la ventana.",
+        "badge": "Plantilla original"
+      },
+      {
+        "title": "Pillado en plena hamburguesa",
+        "description": "Una melena rubia corta, una hamburguesa de medianoche y una mirada incómodamente larga.",
+        "badge": "Referencia de la tendencia"
+      },
+      {
+        "title": "El gato de al lado",
+        "description": "La misma ventana. La misma hamburguesa. Un vecino mucho más peludo.",
+        "badge": "Referencia de la tendencia"
+      }
+    ],
+    "playExample": "Reproducir video de referencia",
+    "exampleError": "Video no disponible. Abre la fuente original.",
+    "attribution": "Estas son referencias externas de la tendencia de CapCut, Viberot y TikTok, no videos generados por MigosAI. Todo el mérito corresponde a sus respectivos creadores.",
+    "galleryTitle": "Más momentos en la ventana desde TikTok",
+    "galleryDescription": "Abre una portada para ver la publicación original de su creador en TikTok.",
+    "watchTikTok": "Ver en TikTok",
+    "pricingKicker": "Mucho potencial de meme. Poco compromiso.",
+    "pricingTitle": "Unos pocos créditos. Mucha incomodidad.",
+    "pricingDescription": "Usa tus créditos MigosAI en Window Peeper y en nuestras demás herramientas creativas. Cada video Window Peeper utiliza {credits} créditos.",
+    "faqKicker": "Un vistazo al escaparate",
+    "faqTitle": "¿Tienes curiosidad? Bien.",
+    "faqDescription": "Todo lo que debes saber antes de convertirte en el vecino sospechoso.",
+    "faqs": [
+      {
+        "question": "¿Qué es la tendencia Window Peeper?",
+        "answer": "Una cámara se acerca a la ventana iluminada de un apartamento. Alguien que está comiendo una hamburguesa ve la cámara, le devuelve la mirada y cierra la cortina. Nuestra IA usa el video de la plantilla original como referencia de movimiento y tu foto para el protagonista."
+      },
+      {
+        "question": "¿Necesito CapCut o un prompt?",
+        "answer": "No. Sube una foto y revisa los ajustes en tu navegador. El video de la plantilla original guía el movimiento y la cámara; tu foto guía la identidad. Los resultados de IA pueden variar."
+      },
+      {
+        "question": "¿Qué modelo y ajustes utiliza?",
+        "answer": "Esta plantilla utiliza MiniMax H3, con una duración de 15 segundos, resolución de 768p y formato vertical 9:16. Cada video cuesta {credits} créditos MigosAI. Estos ajustes son fijos para esta plantilla."
+      },
+      {
+        "question": "¿Puede mi mascota ser el vecino?",
+        "answer": "Sí. Prueba con una foto clara y de frente de una sola mascota. Lo ideal es una persona o mascota cuyos ojos se vean bien. Usa fotos de tu propiedad o que tengas permiso para procesar. Se admiten archivos JPG, PNG y WebP de hasta 10 MB."
+      },
+      {
+        "question": "¿Qué ocurre si un video falla?",
+        "answer": "Si se confirma un fallo de generación, los créditos se devuelven automáticamente. Un video terminado que no te guste sigue siendo una generación completada. Si se está comprobando tu solicitud, evita enviarla de nuevo y contacta con soporte si el estado no cambia."
+      },
+      {
+        "question": "¿Mis fotos y videos son públicos?",
+        "answer": "Las fotos y los resultados están vinculados a tu cuenta. El proveedor de generación recibe un enlace temporal a la foto para crear el clip. El video terminado se guarda en Mis videos, donde puedes verlo y descargarlo. Consulta nuestra Política de privacidad para conocer los detalles."
+      }
+    ],
+    "ctaTitle": "Tu momento en la ventana te espera.",
+    "ctaDescription": "Una foto. Una hamburguesa. Nada de contacto visual. (Es broma.)",
+    "ctaButton": "Ponme en la ventana"
+  },
+  "zh-TW": {
+    "seoTitle": "Window Peeper AI 影片產生器 | MigosAI",
+    "seoDescription": "將一張照片變成 Window Peeper AI 影片。透過 MiniMax H3 製作逗趣的窗邊探頭場景，瀏覽潮流參考影片，並將作品儲存於 MigosAI。",
+    "badge": "Window Peeper 潮流，由你主演",
+    "heroTitle": "那個鄰居，就是你。",
+    "heroAccent": "讓場面尷尬起來。",
+    "heroDescription": "讓你自己（或你的寵物）加入 Window Peeper 潮流。一張照片、一個午夜漢堡，還有一道非常可疑的眼神。",
+    "heroBenefits": [
+      "只要一張照片",
+      "不需要剪輯技巧",
+      "也歡迎寵物加入"
+    ],
+    "generatorTitle": "製作你的 Window Peeper 影片",
+    "generatorSubtitle": "加入照片，窗邊探頭的演出就交給我們。",
+    "photoLabel": "從你的照片開始",
+    "uploadTitle": "將照片拖曳至此，或選擇檔案",
+    "uploadHint": "一個人或一隻寵物。臉部越清楚，登場越精彩。",
+    "uploadFormats": "JPG、PNG 或 WebP · 最大 10 MB",
+    "replacePhoto": "點擊選擇其他照片",
+    "removePhoto": "移除照片",
+    "selectedPhoto": "你選擇的照片",
+    "privacyLink": "我們如何處理照片",
+    "settingsTitle": "打造你的版本",
+    "model": "AI 模型",
+    "duration": "影片長度",
+    "resolution": "解析度",
+    "format": "長寬比",
+    "fixedSettings": "Window Peeper 範本使用固定設定。",
+    "consent": "我擁有這張照片或已取得使用許可，並同意",
+    "terms": "服務條款",
+    "aiDisclosure": "這是 AI 生成影片，並非真實拍攝畫面。",
+    "generate": "生成我的影片",
+    "checkingAccount": "正在確認帳號…",
+    "preparing": "正在準備照片…",
+    "uploading": "正在上傳照片…",
+    "starting": "正在啟動影片生成…",
+    "generating": "正在製作影片",
+    "queued": "等待開始…",
+    "reviewing": "正在審核照片…",
+    "credits": "點數",
+    "available": "可用",
+    "buyCredits": "購買點數",
+    "signInNote": "登入後即可使用 MigosAI 點數生成影片。",
+    "refundNote": "生成失敗時，點數會自動退還。",
+    "savedNote": "儲存至你的",
+    "myVideos": "我的影片",
+    "leaveNote": "你可以離開此頁面，完成的影片會出現在「我的影片」。",
+    "pollRetry": "系統將自動重試狀態查詢。",
+    "uploadProgress": "照片上傳進度",
+    "videoProgress": "影片生成進度",
+    "resultReady": "你的 Window Peeper 影片已完成。",
+    "resultLabel": "你生成的 Window Peeper 影片",
+    "download": "下載影片",
+    "viewRecord": "查看生成紀錄",
+    "invalidType": "請選擇 JPG、PNG 或 WebP 照片。",
+    "invalidSize": "請選擇小於 10 MB 的照片。",
+    "missingPhoto": "請先加入一張清晰的照片。",
+    "missingConsent": "生成前請先確認照片使用同意。",
+    "insufficientCredits": "製作這部影片需要 {credits} 點數。",
+    "createFailed": "無法建立影片。",
+    "generationFailed": "無法完成生成。",
+    "previewTitle": "原始範本預覽",
+    "previewBadge": "POV：你的鄰居發現了 👀",
+    "previewNote": "窗邊的可能就是你",
+    "previewSticker": "嗯，這下尷尬了",
+    "playPreview": "播放原始潮流參考影片",
+    "previewCaption": "參考片段 · Theolicccc / CapCut · 8.2 秒",
+    "sourceLink": "查看來源",
+    "previewDisclosure": "來源預覽，並非生成結果。生成影片長度為 15 秒，實際結果可能不同。",
+    "trust": [
+      "照片與結果不公開",
+      "生成失敗退還點數",
+      "MP4 完成即可下載"
+    ],
+    "howKicker": "少一點剪輯，多一點分享。",
+    "howTitle": "三個步驟，迎接你的窗邊時刻。",
+    "howDescription": "不用編輯時間軸，也不用寫提示詞。場景已為你準備好。",
+    "steps": [
+      {
+        "title": "選出你的主角",
+        "description": "上傳一張你本人、已同意出鏡的朋友，或寵物的清晰照片。正面照的效果最好。"
+      },
+      {
+        "title": "讓尷尬自然發生",
+        "description": "確認固定設定與點數費用，再讓 MiniMax H3 為你安排場景。15 秒影片會儲存至「我的影片」。"
+      },
+      {
+        "title": "存下來、傳出去，分享那個眼神",
+        "description": "下載 MP4，分享到 TikTok、Reels 或 Shorts。別忘了標示這是 AI 生成影片。"
+      }
+    ],
+    "examplesKicker": "認識這個範本",
+    "examplesTitle": "Window Peeper 影片範例",
+    "examplesDescription": "原始版本、午夜點心，還有一隻非常可疑的貓。挑一種你最喜歡的尷尬。",
+    "examples": [
+      {
+        "title": "原始 Window Peeper",
+        "description": "那個窗邊時刻背後的原始範本。",
+        "badge": "原始範本"
+      },
+      {
+        "title": "漢堡吃到一半被逮個正著",
+        "description": "金色鮑伯短髮、午夜漢堡，還有長得讓人不自在的凝視。",
+        "badge": "潮流參考"
+      },
+      {
+        "title": "隔壁那隻貓",
+        "description": "同一扇窗，同一個漢堡。只是鄰居毛茸茸了許多。",
+        "badge": "潮流參考"
+      }
+    ],
+    "playExample": "播放參考影片",
+    "exampleError": "影片無法播放，請開啟原始來源。",
+    "attribution": "這些是來自 CapCut、Viberot 和 TikTok 的外部潮流參考，並非 MigosAI 生成的作品。所有創作功勞皆歸各原創作者。",
+    "galleryTitle": "更多來自 TikTok 的窗邊時刻",
+    "galleryDescription": "點選封面，在 TikTok 觀看創作者的原始貼文。",
+    "watchTikTok": "在 TikTok 觀看",
+    "pricingKicker": "迷因感十足，負擔卻不大。",
+    "pricingTitle": "少少點數，滿滿尷尬。",
+    "pricingDescription": "MigosAI 點數可用於 Window Peeper 及其他創作工具。每部 Window Peeper 影片使用 {credits} 點數。",
+    "faqKicker": "先來逛逛這扇窗",
+    "faqTitle": "好奇嗎？那就對了。",
+    "faqDescription": "成為可疑鄰居之前，你需要知道的一切。",
+    "faqs": [
+      {
+        "question": "什麼是 Window Peeper 潮流？",
+        "answer": "鏡頭拉近一扇亮著燈的公寓窗戶。正在吃漢堡的人注意到鏡頭，回望片刻，再把窗簾拉上。我們的 AI 使用原始範本影片作為動作參考，並以你的照片作為主角。"
+      },
+      {
+        "question": "需要 CapCut 或提示詞嗎？",
+        "answer": "不需要。在瀏覽器上傳一張照片並確認設定即可。原始範本影片引導動作與鏡頭，你的照片則引導主角外貌。AI 結果可能有所不同。"
+      },
+      {
+        "question": "使用什麼模型與設定？",
+        "answer": "此範本使用 MiniMax H3，影片長度為 15 秒、解析度為 768p、畫面比例為直式 9:16。每部影片需要 {credits} MigosAI 點數。此範本的設定固定。"
+      },
+      {
+        "question": "我的寵物可以當鄰居嗎？",
+        "answer": "可以。試試一隻寵物的清晰正面照。人或寵物的眼睛清楚可見時效果最好。請使用你擁有或已獲准處理的照片。支援最大 10 MB 的 JPG、PNG 與 WebP 檔案。"
+      },
+      {
+        "question": "影片生成失敗會怎樣？",
+        "answer": "確認生成失敗後，點數會自動退還。已完成但不符合你喜好的影片，仍屬於已完成的生成。若提交的請求仍在確認中，請勿重複提交；如果狀態持續未更新，請聯絡客服。"
+      },
+      {
+        "question": "我的照片與影片會公開嗎？",
+        "answer": "照片與結果會連結至你的帳號。生成服務供應商會取得暫時的照片連結，用來製作影片。完成的影片會儲存至「我的影片」，你可以在那裡觀看及下載。詳情請參閱隱私權政策。"
+      }
+    ],
+    "ctaTitle": "你的窗邊時刻，正在等你。",
+    "ctaDescription": "一張照片，一個漢堡，絕對別對上眼。（開玩笑的。）",
+    "ctaButton": "讓我出現在窗邊"
+  }
+};
+
+export function getWindowPeeperCopy(locale: Locale): WindowPeeperCopy {
+  return translations[locale] ?? english;
+}
+
+export const windowPeeperSources = {
+  original: { author: 'Theolicccc · CapCut', url: 'https://www.capcut.com/template-detail/7698670250123922694' },
+  variations: { author: 'Viberot', url: 'https://viberot.com/video/window-peeper-ai' },
+  tiktok: [
+    { author: 'ninezincreates1.ai', url: 'https://www.tiktok.com/@ninezincreates1.ai/video/7699230565790289160', id: '7699230565790289160' },
+    { author: 'Elsa', url: 'https://www.tiktok.com/@elsanna6/video/7699149207046835487', id: '7699149207046835487' },
+    { author: 'Chefunfiltered', url: 'https://www.tiktok.com/@chefunfiltered88/video/7699011257050942753', id: '7699011257050942753' },
+    { author: 'Elyas', url: 'https://www.tiktok.com/@elyas2415/video/7699180226042924321', id: '7699180226042924321' },
+    { author: 'Lucia', url: 'https://www.tiktok.com/@user8204974817318/video/7699026634535374098', id: '7699026634535374098' },
+    { author: 'Shen2', url: 'https://www.tiktok.com/@mspy607907/video/7699049344112069919', id: '7699049344112069919' },
+    { author: 'Mirella', url: 'https://www.tiktok.com/@user4841088481780/video/7699164688063450388', id: '7699164688063450388' },
+    { author: 'Vivian', url: 'https://www.tiktok.com/@jegw4g2rk5/video/7699359861368196373', id: '7699359861368196373' },
+    { author: 'Stella', url: 'https://www.tiktok.com/@jmen.vtzu/video/7699136481356434718', id: '7699136481356434718' },
+  ],
+};

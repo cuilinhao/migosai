@@ -8,18 +8,22 @@ import { createModerationMediaUrl } from './moderation-media';
 import { createVideoModeration, getVideoModeration, SeeApiError } from './seeapi';
 import { createKieVideo, createKieOzilGoalVideo, createKieFlyingCarVideo, getKieVideo, createKieImage, getKieImage } from './kie';
 import type { ImagePayload } from './image-generations';
-import { createFalOzilGoalVideo, getFalVideo } from './fal';
+import { createFalOzilGoalVideo, createFalWindowPeeperVideo, getFalVideo } from './fal';
 import type { OzilGoalPayload } from '../ozil-goal';
+import type { WindowPeeperPayload } from '../window-peeper';
 import type { FlyingCarPayload } from '../flyingcar';
 import { getVideoSettings, usesHotelLobbyImageReferences } from '../video-options';
 import { getVideoModelUnavailableReason } from '../video-availability';
 type Avatar={key:string;side:'left'|'right';taskId?:string;url?:string};
 export function generationResponse(job:Job):GenerationResponse{
  const keys:string[]=JSON.parse(job.result_keys??'[]');
+ let template:GenerationResponse['template'];
+ // Return only the public discriminator, never photo keys or prompt metadata.
+ if(job.kind==='video')try{const saved=JSON.parse(job.payload)?.template;if(saved==='ozil-goal'||saved==='flyingcar'||saved==='window-peeper')template=saved;}catch{/* Malformed old metadata must not hide the job. */}
  const approved=job.kind==='video'&&job.moderation_verdict==='passed'&&keys.length===1&&keys[0]===job.moderation_key&&!!job.moderation_etag;
  const unreviewed=job.kind==='video'&&job.status==='completed'&&!approved;
  const statusMessage=job.moderation_verdict==='manual'?'Safety review needs attention. Your video remains unavailable.':job.stage==='manual_review'?'This request needs support review. It will not be retried automatically.':job.stage.startsWith('moderation_')?'Checking video safety before delivery…':undefined;
- return {id:job.id,status:job.status as GenerationStatus,progress:job.progress,...(job.error||unreviewed?{error:job.error??'This video is unavailable until its safety review is completed.'}:{}),...(statusMessage?{statusMessage}:{}),...(job.status==='completed'?(job.kind==='music'?{audioUrls:keys.map(key=>`/api/media/${key}`)}:job.kind==='image'?{imageUrls:keys.map(key=>`/api/media/${key}`)}:approved?{videoUrl:`/api/media/${keys[0]}`}:{ }):{})};
+ return {id:job.id,...(template?{template}:{}),status:job.status as GenerationStatus,progress:job.progress,...(job.error||unreviewed?{error:job.error??'This video is unavailable until its safety review is completed.'}:{}),...(statusMessage?{statusMessage}:{}),...(job.status==='completed'?(job.kind==='music'?{audioUrls:keys.map(key=>`/api/media/${key}`)}:job.kind==='image'?{imageUrls:keys.map(key=>`/api/media/${key}`)}:approved?{videoUrl:`/api/media/${keys[0]}`}:{ }):{})};
 }
 class LostLease extends Error {}
 async function patch(db:D1Database,id:string,fence:JobFence,fields:Record<string,string|number|null>){
@@ -159,7 +163,7 @@ export async function advanceJob(env:Env,id:string):Promise<void>{const db=datab
   if(job.kind==='video'&&job.stage.startsWith('moderation_')){await advanceModeration(env,job,fence);return;}
   // Pin the provider on reservation so a rollout never queries or resubmits an
   // existing APIMart task through Kie. Historical payloads remain APIMart jobs.
-  const payload=JSON.parse(job.payload) as (CreateVideoRequest&{provider?:'kie';template?:undefined})|OzilGoalPayload|FlyingCarPayload;
+  const payload=JSON.parse(job.payload) as (CreateVideoRequest&{provider?:'kie';template?:undefined})|OzilGoalPayload|WindowPeeperPayload|FlyingCarPayload;
   const provider=job.kind==='video'&&payload.provider==='fal'?'fal':job.kind==='video'&&payload.provider==='kie'?'kie':'apimart';
   if(payload.provider==='kie'&&payload.template!=='flyingcar'&&(job.stage==='new'||job.stage==='ready')){
    const unavailableReason=getVideoModelUnavailableReason(payload.model);
@@ -172,6 +176,12 @@ export async function advanceJob(env:Env,id:string):Promise<void>{const db=datab
    const portrait=await signedMediaUrl(env,payload.photo);
    await patch(db,id,fence,{stage:'submitting_generation',status:'processing',progress:45});
    const taskId=payload.provider==='fal'?await createFalOzilGoalVideo(env,portrait):await createKieOzilGoalVideo(env,portrait);
+   await patch(db,id,fence,{stage:'polling',provider_id:taskId,status:'processing'});return;
+  }
+  if(job.kind==='video'&&payload.template==='window-peeper'&&(job.stage==='new'||job.stage==='ready')){
+   const portrait=await signedMediaUrl(env,payload.photo);
+   await patch(db,id,fence,{stage:'submitting_generation',status:'processing',progress:45});
+   const taskId=await createFalWindowPeeperVideo(env,portrait);
    await patch(db,id,fence,{stage:'polling',provider_id:taskId,status:'processing'});return;
   }
   if(job.kind==='video'&&payload.template==='flyingcar'&&(job.stage==='new'||job.stage==='ready')){

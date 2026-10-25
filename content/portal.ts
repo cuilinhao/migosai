@@ -7,6 +7,7 @@ export const portalTools = [
   { title: "Hotel Lobby", description: "Two photos. One unforgettable rap duo.", href: "/hotel-lobby-ai-video-generator", icon: "video", tag: "Popular" },
   { title: "Flying Car", description: "Take your car from the street to the sky.", href: "/flying-car-ai-video-generator", icon: "sparkles", tag: "Video" },
   { title: "Özil Goal", description: "Put yourself in an iconic football moment.", href: "/ozil-goal-generator", icon: "video", tag: "Video" },
+  { title: "Window Peeper", description: "One photo. Your own awkward window moment.", href: "/window-peeper-ai-video-generator", icon: "video", tag: "Video" },
   { title: "AI Music", description: "Original rap tracks from your own ideas.", href: "/ai-rap-song-generator", icon: "audio", tag: "Audio" },
   { title: "Image Upscaler", description: "More detail. More possibilities.", icon: "image" },
   { title: "Background Remover", description: "Make your subject the center of attention.", icon: "scissors" },

@@ -1,5 +1,7 @@
 import { OZIL_GOAL_CONFIG } from '../ozil-goal';
+import { WINDOW_PEEPER_CONFIG } from '../window-peeper';
 import { falOzilGoalPrompt } from '../prompts/ozil-goal';
+import { windowPeeperPrompt } from '../prompts/window-peeper';
 import { appOrigin, type Env } from './env';
 import { ApiError } from './errors';
 import { ProviderError } from './provider';
@@ -70,16 +72,24 @@ async function request(env: Env, url: string, mode: 'submit' | 'status' | 'resul
   return body;
 }
 
-export async function createFalOzilGoalVideo(env: Env, imageUrl: string): Promise<string> {
-  const data = await request(env, `${QUEUE_ORIGIN}/${OZIL_GOAL_CONFIG.endpoint}`, 'submit', {
-    prompt: falOzilGoalPrompt(),
+async function createFalReferenceVideo(env: Env, imageUrl: string, config: typeof OZIL_GOAL_CONFIG | typeof WINDOW_PEEPER_CONFIG, prompt: string): Promise<string> {
+  const data = await request(env, `${QUEUE_ORIGIN}/${config.endpoint}`, 'submit', {
+    prompt,
     reference_image_urls: [imageUrl],
-    reference_video_urls: [`${appOrigin(env)}${OZIL_GOAL_CONFIG.referencePath}`],
-    duration: OZIL_GOAL_CONFIG.duration, resolution: '768P', aspect_ratio: OZIL_GOAL_CONFIG.aspect,
+    reference_video_urls: [`${appOrigin(env)}${config.referencePath}`],
+    duration: config.duration, resolution: '768P', aspect_ratio: config.aspect,
     prompt_expansion_mode: 'disabled', enable_safety_checker: true, sync_mode: false,
   });
   const handle = validateHandle({ version: 1, requestId: data.request_id, statusUrl: data.status_url, resultUrl: data.response_url });
   return JSON.stringify(handle);
+}
+
+export async function createFalOzilGoalVideo(env: Env, imageUrl: string): Promise<string> {
+  return createFalReferenceVideo(env, imageUrl, OZIL_GOAL_CONFIG, falOzilGoalPrompt());
+}
+
+export async function createFalWindowPeeperVideo(env: Env, imageUrl: string): Promise<string> {
+  return createFalReferenceVideo(env, imageUrl, WINDOW_PEEPER_CONFIG, windowPeeperPrompt());
 }
 
 export async function getFalVideo(env: Env, serialized: string): Promise<FalVideoResult> {

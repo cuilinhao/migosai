@@ -1,0 +1,98 @@
+{
+  "body": {
+    "background": "oklch(0.977 0.004 75)",
+    "color": "oklch(0.275 0.007 60)",
+    "fontFamily": "\"Inter Variable\", Inter, sans-serif, -apple-system, \"system-ui\", \"Segoe UI\", Helvetica, Arial, sans-serif"
+  },
+  "counts": {
+    "canvas": 0,
+    "image": 14,
+    "video": 1
+  },
+  "document": {
+    "height": 6027,
+    "width": 1440
+  },
+  "headings": [
+    {
+      "tag": "H1",
+      "text": "The neighbor is you.Make it awkward."
+    },
+    {
+      "tag": "H2",
+      "text": "Start with your photo"
+    },
+    {
+      "tag": "H2",
+      "text": "Make it yours"
+    },
+    {
+      "tag": "H2",
+      "text": "Three steps to your window moment."
+    },
+    {
+      "tag": "H3",
+      "text": "Pick your main character"
+    },
+    {
+      "tag": "H3",
+      "text": "Let the awkwardness happen"
+    },
+    {
+      "tag": "H3",
+      "text": "Save it. Send it. Get the look."
+    },
+    {
+      "tag": "H2",
+      "text": "Window Peeper video examples"
+    },
+    {
+      "tag": "H3",
+      "text": "The original window moment"
+    },
+    {
+      "tag": "H3",
+      "text": "Caught mid-burger"
+    },
+    {
+      "tag": "H3",
+      "text": "The cat next door"
+    },
+    {
+      "tag": "H2",
+      "text": "A few credits. A lot of awkward."
+    },
+    {
+      "tag": "H3",
+      "text": "Just peeping"
+    },
+    {
+      "tag": "H3",
+      "text": "Regular neighbor"
+    },
+    {
+      "tag": "H3",
+      "text": "The whole building"
+    },
+    {
+      "tag": "H2",
+      "text": "Curious? Good."
+    },
+    {
+      "tag": "H2",
+      "text": "Your window moment is waiting."
+    }
+  ],
+  "lang": "en",
+  "stylesheets": [
+    "https://windowpeeper.net/assets/index-BD60fBuQ.css",
+    "https://windowpeeper.net/assets/windowpeeper-KtYNhF1k.css",
+    "https://accounts.google.com/gsi/style"
+  ],
+  "title": "Window Peeper — Window Peeper AI Video Generator",
+  "url": "https://windowpeeper.net/",
+  "viewport": {
+    "height": 900,
+    "width": 1440
+  }
+}

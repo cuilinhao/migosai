@@ -3,6 +3,9 @@ import type { Messages } from "../translator";
 
 type Row = readonly [string, string, string, string, string, string];
 const rows: readonly Row[] = [
+  ["Window Peeper AI Generator", "Window Peeper AI 影片產生器", "Window Peeper AI 영상 생성기", "Window Peeper AI動画生成ツール", "Générateur vidéo IA Window Peeper", "Generador de vídeos IA Window Peeper"],
+  ["Window Peeper AI Video Generator", "Window Peeper AI 影片產生器", "Window Peeper AI 영상 생성기", "Window Peeper AI動画生成ツール", "Générateur vidéo IA Window Peeper", "Generador de vídeos IA Window Peeper"],
+  ["One photo. Your own awkward window moment.", "一張照片，打造你的尷尬窗邊時刻。", "사진 한 장으로 나만의 어색한 창가 순간을 만드세요.", "写真1枚で、気まずい窓辺のワンシーンを。", "Une photo pour votre moment gênant à la fenêtre.", "Una foto para tu propio momento incómodo en la ventana."],
   ["Home", "首頁", "홈", "ホーム", "Accueil", "Inicio"],
   ["Tools", "工具", "도구", "ツール", "Outils", "Herramientas"],
   ["Effects", "特效", "효과", "エフェクト", "Effets", "Efectos"],

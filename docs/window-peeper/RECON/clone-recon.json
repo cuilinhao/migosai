@@ -1,0 +1,101 @@
+{
+  "body": {
+    "background": "rgb(11, 11, 11)",
+    "color": "rgb(245, 245, 245)",
+    "fontFamily": "\"DM Sans\", sans-serif"
+  },
+  "counts": {
+    "canvas": 0,
+    "image": 13,
+    "video": 0
+  },
+  "document": {
+    "height": 6696,
+    "width": 1440
+  },
+  "headings": [
+    {
+      "tag": "H1",
+      "text": "The neighbor is you.Make it awkward."
+    },
+    {
+      "tag": "H3",
+      "text": "2Make it yours"
+    },
+    {
+      "tag": "H2",
+      "text": "Three steps to your window moment."
+    },
+    {
+      "tag": "H3",
+      "text": "Pick your main character"
+    },
+    {
+      "tag": "H3",
+      "text": "Let the awkwardness happen"
+    },
+    {
+      "tag": "H3",
+      "text": "Save it. Send it. Get the look."
+    },
+    {
+      "tag": "H2",
+      "text": "Window Peeper video examples"
+    },
+    {
+      "tag": "H3",
+      "text": "The original Window Peeper"
+    },
+    {
+      "tag": "H3",
+      "text": "Caught mid-burger"
+    },
+    {
+      "tag": "H3",
+      "text": "The cat next door"
+    },
+    {
+      "tag": "H3",
+      "text": "More window moments from TikTok"
+    },
+    {
+      "tag": "H2",
+      "text": "A few credits. A lot of awkward."
+    },
+    {
+      "tag": "H3",
+      "text": "Lite"
+    },
+    {
+      "tag": "H3",
+      "text": "Standard"
+    },
+    {
+      "tag": "H3",
+      "text": "Pro"
+    },
+    {
+      "tag": "H3",
+      "text": "Elite"
+    },
+    {
+      "tag": "H2",
+      "text": "Curious? Good."
+    },
+    {
+      "tag": "H2",
+      "text": "Your window moment is waiting."
+    }
+  ],
+  "lang": "en",
+  "stylesheets": [
+    "http://127.0.0.1:3000/_next/static/css/app/layout.css?v=1792911077263",
+    "http://127.0.0.1:3000/_next/static/css/app/window-peeper-ai-video-generator/page.css?v=1792911077263"
+  ],
+  "title": "Window Peeper AI Video Generator | MigosAI",
+  "url": "http://127.0.0.1:3000/window-peeper-ai-video-generator",
+  "viewport": {
+    "height": 900,
+    "width": 1440
+  }
+}

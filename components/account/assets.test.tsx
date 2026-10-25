@@ -50,6 +50,7 @@ describe('private asset library', () => {
     [undefined,'/hotel-lobby-ai-video-generator'],
     ['ozil-goal','/ozil-goal-generator'],
     ['flyingcar','/flying-car-ai-video-generator'],
+    ['window-peeper','/window-peeper-ai-video-generator'],
   ] as const)('keeps the %s video recovery link attached to its original generator', (template,href)=>{
     const html=renderToStaticMarkup(createElement(AssetCard,{asset:{...video,template,status:'processing',progress:20,videoUrl:undefined}}));
     expect(html).toContain(`href="${href}"`);

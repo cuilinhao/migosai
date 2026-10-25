@@ -1,0 +1,149 @@
+{
+  "reference": "https://windowpeeper.net/",
+  "retrieved": "2026-10-25",
+  "assets": [
+    {
+      "path": "/templates/window-peeper/motion.mp4",
+      "source": "https://www.capcut.com/template-detail/7698670250123922694",
+      "bytes": 1283399,
+      "sha256": "b694d711ad80115e9144fcd7c02120a50878558c0e6a71f1f2f41383d0c21927",
+      "media": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 720,
+            "height": 1280
+          },
+          {
+            "codec_name": "aac"
+          }
+        ],
+        "format": {
+          "duration": "8.200000"
+        }
+      },
+      "originalSha256": "dccfe22e08ff1292452b6ffa64f6abae8fc3ae7f477b252b399c5f9eea7f6465",
+      "transform": "HEVC to H.264/AAC, 720x1280, 8.2 seconds, faststart; same reference motion."
+    },
+    {
+      "path": "/window-peeper/original-poster.jpg",
+      "source": "https://www.capcut.com/template-detail/7698670250123922694",
+      "bytes": 16577,
+      "sha256": "97e848e1a7171b39080f415e929ee35650b2496c636f591fc3801c08a874ede3"
+    },
+    {
+      "path": "/window-peeper/burger.jpg",
+      "source": "https://viberot.com/video/window-peeper-ai",
+      "bytes": 21773,
+      "sha256": "3bfd0e81a6f1799da117087b18c60398776cca6353b78698591efbc147b541ce"
+    },
+    {
+      "path": "/window-peeper/burger.mp4",
+      "source": "https://viberot.com/video/window-peeper-ai",
+      "bytes": 656738,
+      "sha256": "b8ff0a2f69619f7fb08f2ac2930a09dfea92376ae31aaf0751a8378bc8cb17e0",
+      "media": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 414,
+            "height": 720
+          },
+          {
+            "codec_name": "aac"
+          }
+        ],
+        "format": {
+          "duration": "10.041667"
+        }
+      }
+    },
+    {
+      "path": "/window-peeper/cat.jpg",
+      "source": "https://viberot.com/video/window-peeper-ai",
+      "bytes": 23637,
+      "sha256": "b86299ad509c0591f33536e5e3396aeb370b5ebb419b637291337f48361c98e5"
+    },
+    {
+      "path": "/window-peeper/cat.mp4",
+      "source": "https://viberot.com/video/window-peeper-ai",
+      "bytes": 560746,
+      "sha256": "215760c8a226bad10a90f2e70d98f8124500e0dd1c3e2443de67d8946237b8b4",
+      "media": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 720,
+            "height": 414
+          },
+          {
+            "codec_name": "aac"
+          }
+        ],
+        "format": {
+          "duration": "10.041667"
+        }
+      }
+    },
+    {
+      "path": "/window-peeper/7699230565790289160.avif",
+      "source": "https://www.tiktok.com/@ninezincreates1.ai/video/7699230565790289160",
+      "bytes": 6185,
+      "sha256": "2418563227f08bc536d7d16ce93736b317f843307e6b945f39f5cb9465dab44b"
+    },
+    {
+      "path": "/window-peeper/7699149207046835487.avif",
+      "source": "https://www.tiktok.com/@elsanna6/video/7699149207046835487",
+      "bytes": 6487,
+      "sha256": "f4e7ebb9626d4d9d4273d174741872875a008459bf6138f17529eb54d106ddf6"
+    },
+    {
+      "path": "/window-peeper/7699011257050942753.avif",
+      "source": "https://www.tiktok.com/@chefunfiltered88/video/7699011257050942753",
+      "bytes": 6870,
+      "sha256": "2089b4636445f688b3a1151eed47f4cfc562549c2d388ac9d0fa5083705a58b7"
+    },
+    {
+      "path": "/window-peeper/7699180226042924321.avif",
+      "source": "https://www.tiktok.com/@elyas2415/video/7699180226042924321",
+      "bytes": 6360,
+      "sha256": "b459991dcf0fee1f5f997665396b86a986edbcd3c99a03381c3436ec5f664fd8"
+    },
+    {
+      "path": "/window-peeper/7699026634535374098.avif",
+      "source": "https://www.tiktok.com/@user8204974817318/video/7699026634535374098",
+      "bytes": 9439,
+      "sha256": "7d4143009e114fbdc60385f5e242c4b82c5e255340ec54465599d643b08ab8f5"
+    },
+    {
+      "path": "/window-peeper/7699049344112069919.avif",
+      "source": "https://www.tiktok.com/@mspy607907/video/7699049344112069919",
+      "bytes": 7975,
+      "sha256": "ccc1e9f85ee1f041e274f70cdd2642e7dc165affacaaac3c5eefc26551fb16c6"
+    },
+    {
+      "path": "/window-peeper/7699164688063450388.avif",
+      "source": "https://www.tiktok.com/@user4841088481780/video/7699164688063450388",
+      "bytes": 8549,
+      "sha256": "813d6e4abf7c2f33ec56d9eaa068b28bcfd747ef7bda0e384ee70de9f3b6ff8f"
+    },
+    {
+      "path": "/window-peeper/7699359861368196373.avif",
+      "source": "https://www.tiktok.com/@jegw4g2rk5/video/7699359861368196373",
+      "bytes": 5529,
+      "sha256": "737a66f193ff3b6c869bc91d3726722cdc582af2772498ee46dfa9369e6f8186"
+    },
+    {
+      "path": "/window-peeper/7699136481356434718.avif",
+      "source": "https://www.tiktok.com/@jmen.vtzu/video/7699136481356434718",
+      "bytes": 7656,
+      "sha256": "3bae7302d9449e0fa7c7238c24ab8d5dd49abde350164bfaecee0d31683f18fd"
+    }
+  ]
+}

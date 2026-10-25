@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "name": "Window Peeper → MigosAI",
+    "description": "保留参考站信息结构和轻量交互，使用现有 MigosAI 主题与真实业务组件的原生内页重构。",
+    "created_at": "2026-10-25",
+    "mode": "内容前端原生重构；视觉与内容适配",
+    "source_references": [
+      "https://windowpeeper.net/",
+      "original-recon.json",
+      "original-1440.jpg",
+      "original-768.jpg",
+      "original-390.jpg",
+      "clone-recon.json",
+      "preview-desktop.jpg",
+      "../asset-manifest.json"
+    ],
+    "evidence_policy": "运行时值引用 recon；实现值引用仓库 CSS；主观观感明确标为人工观察；未知项不推定。",
+    "constraints": [
+      "用户要求保留 MigosAI 黑底、深灰卡片、紫粉品牌色与 PortalShell。",
+      "不修改全局主题变量或替换首页正文。",
+      "不将原站账户、付款或服务端 API 作为本站依赖。",
+      "不报告未经测量的像素相似度，不把外部参考视频当作本站生成结果。"
+    ]
+  },
+  "design_system": {
+    "color": {
+      "source": {
+        "body_background": "oklch(0.977 0.004 75)",
+        "body_foreground": "oklch(0.275 0.007 60)",
+        "evidence": "original-recon.json: body",
+        "page_css_tokens": {
+          "--wp-ink": "oklch(24% .025 275)",
+          "--wp-muted": "oklch(48% .025 275)",
+          "--wp-accent": "oklch(52% .22 278)",
+          "--wp-tint": "oklch(96.5% .017 285)",
+          "--wp-border": "oklch(90% .016 280)"
+        },
+        "page_css_evidence": "/tmp/migosai-window-peeper-recon/windowpeeper-KtYNhF1k.css（公开部署样式快照）"
+      },
+      "target": {
+        "background": "var(--background) = #0b0b0b",
+        "foreground": "var(--foreground) = #f5f5f5",
+        "card": "var(--card) = #181818",
+        "border": "var(--border) = #303030",
+        "primary": "var(--primary) = #c38aff",
+        "accent": "var(--accent) = #30203d",
+        "brand_gradient": "var(--brand-gradient) = linear-gradient(100deg,#b864f5,#e9a9d8)",
+        "success": "var(--success) = #6ad49b",
+        "error": "var(--destructive) = #ff8c9b",
+        "evidence": "app/globals.css:7；clone-recon.json: body"
+      },
+      "mapping": "原站浅色页面/紫色强调 → 本站既有暗色表面/紫粉渐变；这是获批主题约束，非视觉误差修补。"
+    },
+    "typography": {
+      "source_body_computed": "Inter Variable, Inter, sans-serif（完整回退见 original-recon.json）",
+      "source_page_css_declaration": "Nunito Variable,Nunito,sans-serif",
+      "source_heading_computed": {
+        "status": "unknown",
+        "needed_evidence": "原站具体标题节点的 getComputedStyle；body 字体与页面 CSS 声明不能直接证明标题实际字体。"
+      },
+      "target_font_families": { "heading": "DM Sans, sans-serif", "body": "DM Sans, sans-serif" },
+      "target_type_scale": {
+        "hero": "clamp(38px,4.6vw,62px), weight 700, line-height 1.07, tracking -.045em；宽屏/手机由局部 media rules 调整",
+        "heading_2": "clamp(27px,3.1vw,36px), weight 700",
+        "body": "15px, line-height 1.6",
+        "caption": "局部 9–11px"
+      },
+      "evidence": "original-recon.json / clone-recon.json: body；源页面 CSS；app/globals.css:10；components/window-peeper/window-peeper.module.css"
+    },
+    "layout": {
+      "section_order": ["Hero", "双栏生成区", "三步骤", "三组主案例", "TikTok 海报画廊", "本站套餐", "FAQ", "CTA"],
+      "source_observation": "原站截图为居中内容、左侧表单与右侧手机预览、三列步骤和媒体卡片。",
+      "target_max_content_width": "1040px（位于现有 PortalShell 内）",
+      "target_generator_columns": "1fr 1fr；680px 及以下为单列",
+      "target_gallery": "桌面三列；680px 及以下主案例为可横向滚动卡片，TikTok 画廊为单列",
+      "target_breakpoints_px": [1500, 1100, 900, 680, 360],
+      "verified_viewports_px": [1440, 768, 390],
+      "overflow_result": "三个已核对视口的 scrollWidth 均等于 innerWidth。",
+      "evidence": "原站及本站三档截图；components/window-peeper/window-peeper.module.css；实际浏览器视口检查"
+    },
+    "shape": {
+      "target_generator_radius": "22px；手机17px",
+      "target_upload_radius": "12px",
+      "target_button_radius": "10px",
+      "target_media_radius": "15px 主案例；21px 手机框",
+      "border_usage": "使用现有 border/input token 的细边框；上传区为1.5px虚线边框",
+      "evidence": "components/window-peeper/window-peeper.module.css"
+    },
+    "components": {
+      "navigation": "现有 PortalShell 和 localized-link；增加工具/生成器菜单入口",
+      "generator": "一张图片、明确同意、只读固定设置、300积分按钮、进度、错误和结果下载",
+      "preview": "略微倾斜的手机框、参考视频、浮动短标签；结果完成后替换为用户视频",
+      "pricing": "现有 PricingEntry / PricingCards",
+      "modal": "现有 MigosAI 登录弹窗",
+      "faq": "原生 details/summary",
+      "iconography": "lucide-react 线性图标",
+      "evidence": "components/window-peeper/page-content.tsx；components/window-peeper/generator.tsx"
+    }
+  },
+  "design_style": {
+    "evidence_level": "人工观察与获批设计约束，不是像素测量",
+    "aesthetic": {
+      "mood": ["幽默", "轻松", "夜间窗边场景"],
+      "visual_metaphor": "用户置身被镜头发现的窗边吃汉堡场景；手机框承载短视频预览。",
+      "target_brand": "MigosAI 暗色创作工具内页"
+    },
+    "composition": {
+      "hierarchy_method": "标题尺寸、紫粉强调行、双栏操作区、分段小标题",
+      "flow_direction": "从介绍到生成，再到使用步骤、案例、套餐和FAQ",
+      "grouping_strategy": "圆角卡片、边界和垂直留白"
+    },
+    "imagery": {
+      "treatment": "保留实际来源素材，海报显示完整主体，视频使用原生控件与 contain 布局",
+      "attribution": "CapCut / Viberot / TikTok 来源链接与外部参考披露",
+      "generation_claim": "未执行真实付费出片，不能把案例当作本站结果"
+    },
+    "interaction_feel": {
+      "feedback": "选图缩略图、可移除选择、按钮忙碌态、上传与任务进度、错误文字",
+      "hover": "轻微位移或亮度变化，上传区边框/背景反馈",
+      "accessibility": "focus-visible轮廓、原生控件、状态区域与reduced-motion规则"
+    },
+    "brand_voice_in_ui": {
+      "tone": "友好、轻松，围绕尴尬窗边时刻",
+      "functional_copy": "模型、规格、积分、来源和审核状态使用直接说明",
+      "languages": ["en", "ko", "ja", "fr", "es", "zh-TW"]
+    }
+  },
+  "visual_effects": {
+    "overview": {
+      "effect_intensity": "subtle-accent",
+      "performance_tier": "lightweight",
+      "primary_technology": "CSS、原生HTML视频与静态SVG图标",
+      "fallback_strategy": "视频失败显示海报和原始来源链接；prefers-reduced-motion关闭动画与过渡"
+    },
+    "background_effects": { "type": "静态径向渐变", "technology": "CSS", "scope": "预览区和末尾CTA" },
+    "text_effects": { "type": "gradient-fill", "technology": "CSS background-clip", "scope": "Hero强调行" },
+    "motion": { "micro_duration": "约0.18–0.3秒", "loading": "CSS旋转图标", "scroll": "原生滚动和案例scroll-snap" },
+    "canvas_drawings": { "enabled": false, "evidence": "当前原站/本站DOM探针canvas均为0；新页实现不使用canvas渲染效果" },
+    "3d_elements": { "enabled": false, "scope": "本次实现" },
+    "shader_effects": { "enabled": false, "scope": "本次实现" },
+    "particle_systems": { "enabled": false, "scope": "本次实现" },
+    "composite_notes": "没有为本次内页添加WebGL、Canvas或滚动动画库。原站DOM探针只描述捕获时状态，不推断未触发页面的内部渲染能力。"
+  }
+}

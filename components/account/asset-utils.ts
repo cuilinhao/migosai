@@ -1,6 +1,6 @@
 import type { GenerationResponse } from '@/lib/contracts';
 
-export type Asset = GenerationResponse & { kind:'image'|'video'|'music';cost:number;createdAt:string;template?:'ozil-goal'|'flyingcar';name?:string };
+export type Asset = GenerationResponse & { kind:'image'|'video'|'music';cost:number;createdAt:string;template?:'ozil-goal'|'flyingcar'|'window-peeper';name?:string };
 export type Filter = Asset['kind']|'all';
 export type Source = 'creation'|'uploaded';
 export type LibraryItem = Asset & { assetId:string };
