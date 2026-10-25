@@ -74,6 +74,31 @@ describe('subscription accounting in real Cloudflare D1/workerd',()=>{
   expect(refunds.every(r=>r.status===200)).toBe(true);
   expect(await balance()).toMatchObject({balance:160,permanentCredits:100,subscriptionCredits:60});
  });
+ it('concurrent renewal deliveries keep one effective allowance even after the policy changes',async()=>{
+  const input=await sub();
+  await db.prepare('UPDATE subscriptions SET amount_cents=759,monthly_credits=750').run();
+  input.monthlyCredits=750;
+  const deliveries=await Promise.all(Array.from({length:6},()=>post('/grant',{...input,allowanceCredits:400})));
+  expect(deliveries.every(response=>response.status===200)).toBe(true);
+  expect((await Promise.all(deliveries.map(response=>response.json()))).filter(body=>body.granted)).toHaveLength(1);
+  expect(await balance()).toMatchObject({balance:500,permanentCredits:100,subscriptionCredits:400});
+  expect((await post('/spend',{key:'renewal-spend',cost:100})).status).toBe(200);
+  expect((await post('/grant',input)).status).toBe(200);
+  expect((await post('/grant',{...input,allowanceCredits:500})).status).toBe(200);
+  expect(await balance()).toMatchObject({balance:400,permanentCredits:100,subscriptionCredits:300});
+  expect(await db.prepare('SELECT monthly_credits FROM subscription_invoices').first()).toEqual({monthly_credits:400});
+  expect(await db.prepare("SELECT count(*) n,sum(amount) amount FROM credit_ledger WHERE kind='subscription_grant'").first()).toEqual({n:1,amount:400});
+ });
+ it('a racing policy change cannot mix the invoice snapshot and its allowance bucket',async()=>{
+  const input=await sub();
+  const deliveries=await Promise.all([40,50,40,50].map(allowanceCredits=>post('/grant',{...input,allowanceCredits})));
+  expect(deliveries.every(response=>response.status===200)).toBe(true);
+  expect((await Promise.all(deliveries.map(response=>response.json()))).filter(body=>body.granted)).toHaveLength(1);
+  const invoice=await db.prepare('SELECT monthly_credits FROM subscription_invoices').first();
+  expect([40,50]).toContain(invoice.monthly_credits);
+  expect(await db.prepare('SELECT granted,remaining FROM subscription_credit_periods').first()).toEqual({granted:invoice.monthly_credits,remaining:invoice.monthly_credits});
+  expect(await db.prepare("SELECT count(*) n,sum(amount) amount FROM credit_ledger WHERE kind='subscription_grant'").first()).toEqual({n:1,amount:invoice.monthly_credits});
+ });
  it('expires at the exclusive end boundary and refunds into the original bucket only',async()=>{
   await active();const spent=await (await post('/spend',{key:'expire',cost:90})).json();
   await db.prepare('UPDATE subscription_credit_periods SET starts_at=unixepoch()-100,ends_at=unixepoch()').run();

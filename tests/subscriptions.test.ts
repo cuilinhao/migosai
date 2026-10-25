@@ -1069,3 +1069,86 @@ describe("Stripe subscriptions", () => {
     });
   });
 });
+
+describe('scheduled allowance for an existing monthly subscriber', () => {
+  const cutoff = 1795473320;
+  const periodSeconds = 30 * 86400;
+  function legacySetup(policy: Record<string, string> = {}, periodStart = cutoff, billingReason = 'subscription_cycle') {
+    const { db, sqlite } = database();
+    const env = baseEnv(db);
+    const legacyPrice = { ...price, id: 'price_legacy759', unit_amount: 759 };
+    metadata = { app: 'migosai', orderId: 'legacy-allowance', userId: 'u', planId: 'lite', billingInterval: 'month', priceId: legacyPrice.id, amount: '759', credits: '750', mode: 'test', ...policy };
+    sqlite.prepare("INSERT INTO subscriptions(id,user_id,provider_mode,plan_id,billing_interval,price_id,amount_cents,monthly_credits,customer_id,subscription_id,status) VALUES('legacy-allowance','u','test','lite','month',?,759,750,?,?,'active')").run(legacyPrice.id, customerId, subId);
+    sqlite.prepare("INSERT INTO orders(id,user_id,pack_id,product_id,amount,currency,credits,provider,provider_mode,purchase_type,provider_order_id,status) VALUES('legacy-allowance','u','lite',?,759,'USD',750,'stripe','test','subscription','in_initialLegacy','paid')").run(legacyPrice.id);
+    const apiOptions = {
+      sub: { items: { has_more: false, data: [{ id: 'si_fixture123', quantity: 1, price: legacyPrice,
+        // Stripe may already be in a later period when an older invoice arrives.
+        current_period_start: cutoff + periodSeconds, current_period_end: cutoff + 2 * periodSeconds }] } },
+      invoice: { amount_due: 759, amount_paid: 759, total: 759, subtotal: 759, billing_reason: billingReason },
+      line: { amount: 759, subtotal: 759, period: { start: periodStart, end: periodStart + periodSeconds }, pricing: { type: 'price_details', price_details: { price: legacyPrice.id } } },
+      payment: { amount_paid: 759 }, intent: { amount: 759, amount_received: 759 },
+    };
+    stripeApi(apiOptions);
+    return { env, sqlite, apiOptions };
+  }
+  const renewalPolicy = { renewalCredits: '400', renewalCreditsEffectiveAt: String(cutoff) };
+
+  it.each([[cutoff - 1, 750], [cutoff, 400], [cutoff + periodSeconds, 400]])('uses the invoice period start %i to grant %i credits at the unchanged price', async (periodStart, expectedCredits) => {
+    const { env, sqlite } = legacySetup(renewalPolicy, periodStart);
+    await applySubscriptionEvent(env, event());
+    await applySubscriptionEvent(env, event());
+    expect(sqlite.prepare('SELECT monthly_credits FROM subscription_invoices').get()).toEqual({ monthly_credits: expectedCredits });
+    expect(sqlite.prepare('SELECT granted,remaining FROM subscription_credit_periods').get()).toEqual({ granted: expectedCredits, remaining: expectedCredits });
+    expect(sqlite.prepare("SELECT amount,credits FROM orders WHERE provider_order_id=?").get(invoiceId)).toEqual({ amount: 759, credits: expectedCredits });
+    expect(sqlite.prepare("SELECT amount,credits FROM orders WHERE id='legacy-allowance'").get()).toEqual({ amount: 759, credits: 750 });
+    expect(sqlite.prepare('SELECT amount_cents,monthly_credits FROM subscriptions').get()).toEqual({ amount_cents: 759, monthly_credits: 750 });
+    expect(sqlite.prepare("SELECT sum(amount) AS amount,count(*) AS n FROM credit_ledger WHERE kind='subscription_grant'").get()).toEqual({ amount: expectedCredits, n: 1 });
+    expect(sqlite.prepare("SELECT credits FROM users WHERE id='u'").get()).toEqual({ credits: 100 });
+  });
+
+  it('does not apply a renewal allowance to the original subscription purchase', async () => {
+    const { env, sqlite } = legacySetup(renewalPolicy, cutoff, 'subscription_create');
+    await applySubscriptionEvent(env, event());
+    expect(sqlite.prepare('SELECT granted FROM subscription_credit_periods').get()).toEqual({ granted: 750 });
+  });
+
+  it('keeps an already granted renewal and its order at 400 after policy removal or edits', async () => {
+    const { env, sqlite } = legacySetup(renewalPolicy);
+    await applySubscriptionEvent(env, event());
+    sqlite.prepare('UPDATE subscription_credit_periods SET remaining=215').run();
+    delete metadata.renewalCredits;
+    delete metadata.renewalCreditsEffectiveAt;
+    await applySubscriptionEvent(env, event());
+    metadata.renewalCredits = '450'; metadata.renewalCreditsEffectiveAt = String(cutoff);
+    await applySubscriptionEvent(env, event());
+    expect(sqlite.prepare('SELECT granted,remaining FROM subscription_credit_periods').get()).toEqual({ granted: 400, remaining: 215 });
+    expect(sqlite.prepare('SELECT monthly_credits FROM subscription_invoices').get()).toEqual({ monthly_credits: 400 });
+    expect(sqlite.prepare('SELECT credits FROM orders WHERE provider_order_id=?').get(invoiceId)).toEqual({ credits: 400 });
+    expect(sqlite.prepare("SELECT count(*) AS n FROM credit_ledger WHERE kind='subscription_grant'").get()).toEqual({ n: 1 });
+  });
+
+  it.each([
+    { renewalCredits: '400' }, { renewalCreditsEffectiveAt: String(cutoff) },
+    { ...renewalPolicy, renewalCredits: '0' }, { ...renewalPolicy, renewalCredits: '-1' },
+    { ...renewalPolicy, renewalCredits: '400.5' }, { ...renewalPolicy, renewalCredits: '9007199254740992' },
+    { ...renewalPolicy, renewalCreditsEffectiveAt: 'bad' }, { ...renewalPolicy, renewalCreditsEffectiveAt: '0' },
+  ] as Record<string, string>[])('rejects malformed administrative renewal metadata without granting: %j', async policy => {
+    const { env, sqlite } = legacySetup(policy);
+    await expect(applySubscriptionEvent(env, event())).rejects.toMatchObject({ status: 400 });
+    expect(sqlite.prepare('SELECT count(*) AS n FROM subscription_invoices').get()).toEqual({ n: 0 });
+    expect(sqlite.prepare('SELECT count(*) AS n FROM subscription_credit_periods').get()).toEqual({ n: 0 });
+  });
+
+  it('leaves an unconfigured subscriber at the original allowance and ignores webhook-supplied policy', async () => {
+    const { env, sqlite } = legacySetup();
+    await applySubscriptionEvent(env, event('invoice.paid', { id: invoiceId, object: 'invoice', metadata: renewalPolicy }));
+    expect(sqlite.prepare('SELECT granted FROM subscription_credit_periods').get()).toEqual({ granted: 750 });
+  });
+
+  it.each(['customer.subscription.deleted', 'invoice.payment_failed'])('never grants a future allowance on %s', async type => {
+    const { env, sqlite, apiOptions } = legacySetup(renewalPolicy);
+    stripeApi({ ...apiOptions, sub: { ...apiOptions.sub, status: 'canceled', cancel_at_period_end: true } });
+    await applySubscriptionEvent(env, event(type, { id: type.startsWith('customer.') ? subId : invoiceId }));
+    expect(sqlite.prepare('SELECT count(*) AS n FROM subscription_credit_periods').get()).toEqual({ n: 0 });
+  });
+});

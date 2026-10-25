@@ -74,6 +74,31 @@ function metadataMatches(
     )
   );
 }
+/** Extra administrator metadata changes future renewal allowances only. The
+ * original purchase metadata remains the identity used to verify old orders.
+ */
+function renewalAllowance(
+  row: SubscriptionRow,
+  metadata: Stripe.Metadata,
+  billingReason: Stripe.Invoice.BillingReason | null,
+  periodStart: number,
+): number | undefined {
+  const credits = metadata.renewalCredits;
+  const effectiveAt = metadata.renewalCreditsEffectiveAt;
+  if (credits === undefined && effectiveAt === undefined) return undefined;
+  if (
+    !/^[1-9]\d*$/.test(credits ?? "") ||
+    !/^[1-9]\d*$/.test(effectiveAt ?? "") ||
+    !Number.isSafeInteger(Number(credits)) ||
+    !Number.isSafeInteger(Number(effectiveAt))
+  ) reject();
+  if (
+    row.billing_interval !== "month" ||
+    billingReason !== "subscription_cycle" ||
+    periodStart < Number(effectiveAt)
+  ) return undefined;
+  return Number(credits);
+}
 function paymentOrigin(env: Env) {
   const origin = appOrigin(env);
   if (stripeMode(env) === "live" && !origin.startsWith("https://"))
@@ -599,6 +624,7 @@ async function paidInvoice(env: Env, event: Stripe.Event) {
     periodEnd: line.period.end,
     interval: row.billing_interval,
     monthlyCredits: row.monthly_credits,
+    allowanceCredits: renewalAllowance(row, sub.metadata, invoice.billing_reason, line.period.start),
   });
   // The first Checkout order becomes paid only after the durable invoice grant.
   const db = database(env);
@@ -610,9 +636,9 @@ async function paidInvoice(env: Env, event: Stripe.Event) {
       .bind(invoiceId, row.id),
     db
       .prepare(
-        `INSERT INTO orders(id,user_id,pack_id,product_id,amount,currency,credits,provider,provider_mode,purchase_type,provider_order_id,status) SELECT ?,user_id,pack_id,product_id,amount,currency,credits,provider,provider_mode,'subscription',?,'paid' FROM orders WHERE id=? AND status='paid' AND provider_order_id!=? ON CONFLICT(id) DO NOTHING`,
+        `INSERT INTO orders(id,user_id,pack_id,product_id,amount,currency,credits,provider,provider_mode,purchase_type,provider_order_id,status) SELECT ?,o.user_id,o.pack_id,o.product_id,o.amount,o.currency,i.monthly_credits,o.provider,o.provider_mode,'subscription',?,'paid' FROM orders o JOIN subscription_invoices i ON i.subscription_id=o.id AND i.user_id=o.user_id AND i.provider_mode=o.provider_mode AND i.invoice_id=? WHERE o.id=? AND o.status='paid' AND o.provider_order_id!=? ON CONFLICT(id) DO NOTHING`,
       )
-      .bind(`${row.id}:${invoiceId}`, invoiceId, row.id, invoiceId),
+      .bind(`${row.id}:${invoiceId}`, invoiceId, invoiceId, row.id, invoiceId),
     db
       .prepare(
         `INSERT INTO webhook_events(id,event_type,order_id) VALUES(?,?,?) ON CONFLICT(id) DO NOTHING`,

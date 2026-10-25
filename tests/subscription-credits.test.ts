@@ -68,6 +68,62 @@ describe('verified invoice grants',()=>{
  });
 });
 
+describe('verified renewal allowances',()=>{
+ function renewal(){
+  const data=database();
+  data.sqlite.exec("INSERT INTO subscriptions(id,user_id,provider_mode,plan_id,billing_interval,price_id,amount_cents,monthly_credits) VALUES('legacy','u','test','lite','month','price_legacy',759,750)");
+  const periodStart=Math.floor(Date.now()/1000)-60;
+  return {...data,input:{subscriptionId:'legacy',userId:'u',providerMode:'test' as const,invoiceId:'in_renewal',periodStart,periodEnd:periodStart+30*86400,interval:'month' as const,monthlyCredits:750}};
+ }
+ it('records the verified allowance without changing the original purchase or permanent balance',async()=>{
+  const {db,sqlite,input}=renewal();
+  const {grantSubscriptionInvoice}=await import('../lib/server/subscription-credits');
+  expect(await grantSubscriptionInvoice(db,{...input,allowanceCredits:400})).toEqual({granted:true});
+  expect(sqlite.prepare('SELECT monthly_credits FROM subscription_invoices').get()).toEqual({monthly_credits:400});
+  expect(sqlite.prepare('SELECT granted,remaining FROM subscription_credit_periods').get()).toEqual({granted:400,remaining:400});
+  expect(sqlite.prepare("SELECT amount FROM credit_ledger WHERE kind='subscription_grant'").get()).toEqual({amount:400});
+  expect(sqlite.prepare('SELECT amount_cents,monthly_credits FROM subscriptions').get()).toEqual({amount_cents:759,monthly_credits:750});
+  expect(sqlite.prepare("SELECT credits FROM users WHERE id='u'").get()).toEqual({credits:100});
+ });
+ it('keeps a consumed original invoice unchanged when a later policy is supplied on replay',async()=>{
+  const {db,sqlite,input}=renewal();
+  const {grantSubscriptionInvoice}=await import('../lib/server/subscription-credits');
+  await grantSubscriptionInvoice(db,input);
+  await reserveGeneration(db,'u','original-spend','video',{},200);
+  expect(await grantSubscriptionInvoice(db,{...input,allowanceCredits:400})).toEqual({granted:false});
+  expect(sqlite.prepare('SELECT monthly_credits FROM subscription_invoices').get()).toEqual({monthly_credits:750});
+  expect(sqlite.prepare('SELECT granted,remaining FROM subscription_credit_periods').get()).toEqual({granted:750,remaining:550});
+  expect(sqlite.prepare("SELECT count(*) n,sum(amount) amount FROM credit_ledger WHERE kind='subscription_grant'").get()).toEqual({n:1,amount:750});
+ });
+ it('keeps the first verified allowance after policy removal or change and still rejects conflicting purchase evidence',async()=>{
+  const {db,sqlite,input}=renewal();
+  const {grantSubscriptionInvoice}=await import('../lib/server/subscription-credits');
+  await grantSubscriptionInvoice(db,{...input,allowanceCredits:400});
+  await reserveGeneration(db,'u','renewal-spend','video',{},100);
+  expect(await grantSubscriptionInvoice(db,input)).toEqual({granted:false});
+  expect(await grantSubscriptionInvoice(db,{...input,allowanceCredits:500})).toEqual({granted:false});
+  await expect(grantSubscriptionInvoice(db,{...input,monthlyCredits:400,allowanceCredits:400})).rejects.toThrow();
+  await expect(grantSubscriptionInvoice(db,{...input,periodStart:input.periodStart+1,allowanceCredits:400})).rejects.toThrow('conflicts with the original grant');
+  await expect(grantSubscriptionInvoice(db,{...input,userId:'another',allowanceCredits:400})).rejects.toThrow();
+  expect(sqlite.prepare('SELECT monthly_credits FROM subscription_invoices').get()).toEqual({monthly_credits:400});
+  expect(sqlite.prepare('SELECT granted,remaining FROM subscription_credit_periods').get()).toEqual({granted:400,remaining:300});
+  expect(sqlite.prepare("SELECT count(*) n,sum(amount) amount FROM credit_ledger WHERE kind='subscription_grant'").get()).toEqual({n:1,amount:400});
+ });
+ it.each([0,-1,1.5,Number.MAX_SAFE_INTEGER+1,NaN])('rejects invalid allowance %s without creating a grant',async allowanceCredits=>{
+  const {db,sqlite,input}=renewal();
+  const {grantSubscriptionInvoice}=await import('../lib/server/subscription-credits');
+  await expect(grantSubscriptionInvoice(db,{...input,allowanceCredits})).rejects.toThrow('Invalid subscription invoice grant');
+  expect(sqlite.prepare('SELECT count(*) n FROM subscription_invoices').get()).toEqual({n:0});
+ });
+ it('does not allow a monthly renewal policy to modify annual allowances',async()=>{
+  const {db,sqlite,input}=renewal();
+  sqlite.exec("UPDATE subscriptions SET billing_interval='year'");
+  const {grantSubscriptionInvoice}=await import('../lib/server/subscription-credits');
+  await expect(grantSubscriptionInvoice(db,{...input,interval:'year',periodEnd:input.periodStart+365*86400,allowanceCredits:400})).rejects.toThrow('Invalid subscription invoice grant');
+  expect(sqlite.prepare('SELECT count(*) n FROM subscription_invoices').get()).toEqual({n:0});
+ });
+});
+
 describe('authenticated spendable balance',()=>{
  it('currentUser reports only active subscription allowance together with permanent credits',async()=>{
   const {db}=fixture();

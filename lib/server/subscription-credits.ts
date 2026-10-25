@@ -11,7 +11,7 @@ export async function getCreditBalance(db:D1Database,userId:string):Promise<Cred
  if(!row)throw new Error('Credit account not found.');
  return row;
 }
-export type SubscriptionInvoiceGrant={subscriptionId:string;userId:string;providerMode:'test'|'live';invoiceId:string;periodStart:number;periodEnd:number;interval:'month'|'year';monthlyCredits:number};
+export type SubscriptionInvoiceGrant={subscriptionId:string;userId:string;providerMode:'test'|'live';invoiceId:string;periodStart:number;periodEnd:number;interval:'month'|'year';monthlyCredits:number;allowanceCredits?:number};
 /** Clamp each month against the original UTC anchor, never the prior clamped date. */
 function anchoredMonth(start:number,offset:number):number{
  const date=new Date(start*1000);
@@ -20,23 +20,27 @@ function anchoredMonth(start:number,offset:number):number{
  return Date.UTC(year,month,Math.min(date.getUTCDate(),lastDay),date.getUTCHours(),date.getUTCMinutes(),date.getUTCSeconds())/1000;
 }
 function validGrant(input:SubscriptionInvoiceGrant):boolean{
- return !!input.subscriptionId&&!!input.userId&&!!input.invoiceId&&['test','live'].includes(input.providerMode)&&['month','year'].includes(input.interval)&&Number.isSafeInteger(input.monthlyCredits)&&input.monthlyCredits>0&&Number.isSafeInteger(input.periodStart)&&input.periodStart>0&&Number.isSafeInteger(input.periodEnd)&&input.periodEnd>input.periodStart&&(input.periodEnd-input.periodStart)>=(input.interval==='year'?364:27)*86400&&(input.periodEnd-input.periodStart)<=(input.interval==='year'?367:32)*86400;
+ return !!input.subscriptionId&&!!input.userId&&!!input.invoiceId&&['test','live'].includes(input.providerMode)&&['month','year'].includes(input.interval)&&Number.isSafeInteger(input.monthlyCredits)&&input.monthlyCredits>0&&(input.allowanceCredits===undefined||(input.interval==='month'&&Number.isSafeInteger(input.allowanceCredits)&&input.allowanceCredits>0))&&Number.isSafeInteger(input.periodStart)&&input.periodStart>0&&Number.isSafeInteger(input.periodEnd)&&input.periodEnd>input.periodStart&&(input.periodEnd-input.periodStart)>=(input.interval==='year'?364:27)*86400&&(input.periodEnd-input.periodStart)<=(input.interval==='year'?367:32)*86400;
 }
 function matches(row:Record<string,unknown>,input:SubscriptionInvoiceGrant):boolean{
- return row.subscription_id===input.subscriptionId&&row.user_id===input.userId&&row.provider_mode===input.providerMode&&row.invoice_id===input.invoiceId&&row.period_start===input.periodStart&&row.period_end===input.periodEnd&&row.billing_interval===input.interval&&row.monthly_credits===input.monthlyCredits;
+ return row.subscription_id===input.subscriptionId&&row.user_id===input.userId&&row.provider_mode===input.providerMode&&row.invoice_id===input.invoiceId&&row.period_start===input.periodStart&&row.period_end===input.periodEnd&&row.billing_interval===input.interval;
 }
 /** Call only after Stripe payment/ownership/price evidence has been verified.
+ * monthlyCredits is the original purchase; allowanceCredits is an optional
+ * verified monthly renewal policy. The invoice freezes its actual allowance.
  * One D1 batch atomically creates the invoice, all allowance buckets and ledger
  * records. A duplicate invoice cannot replenish consumed or expired allowance.
  */
 export async function grantSubscriptionInvoice(db:D1Database,input:SubscriptionInvoiceGrant):Promise<{granted:boolean}>{
  if(!validGrant(input))throw new Error('Invalid subscription invoice grant.');
  const invoiceKey=`${input.providerMode}:${input.invoiceId}`;
- const args=[input.subscriptionId,input.userId,input.providerMode,input.invoiceId,input.periodStart,input.periodEnd,input.interval,input.monthlyCredits];
- const existing=await db.prepare('SELECT * FROM subscription_invoices WHERE provider_mode=? AND invoice_id=?').bind(input.providerMode,input.invoiceId).first<Record<string,unknown>>();
- if(existing){if(!matches(existing,input))throw new Error('Subscription invoice conflicts with the original grant.');return {granted:false};}
  const subscription=await db.prepare('SELECT user_id,provider_mode,billing_interval,monthly_credits FROM subscriptions WHERE id=?').bind(input.subscriptionId).first<Record<string,unknown>>();
  if(!subscription||subscription.user_id!==input.userId||subscription.provider_mode!==input.providerMode||subscription.billing_interval!==input.interval||subscription.monthly_credits!==input.monthlyCredits)throw new Error('Subscription invoice does not match the subscription.');
+ // Validate the original purchase even on retries. Once granted, the persisted
+ // invoice allowance wins over later policy changes or removal.
+ const existing=await db.prepare('SELECT * FROM subscription_invoices WHERE provider_mode=? AND invoice_id=?').bind(input.providerMode,input.invoiceId).first<Record<string,unknown>>();
+ if(existing){if(!matches(existing,input))throw new Error('Subscription invoice conflicts with the original grant.');return {granted:false};}
+ const args=[input.subscriptionId,input.userId,input.providerMode,input.invoiceId,input.periodStart,input.periodEnd,input.interval,input.allowanceCredits??input.monthlyCredits];
  const statements=[db.prepare(`INSERT INTO subscription_invoices(id,subscription_id,user_id,provider_mode,invoice_id,period_start,period_end,billing_interval,monthly_credits) VALUES(?,?,?,?,?,?,?,?,?) ON CONFLICT(provider_mode,invoice_id) DO NOTHING`).bind(invoiceKey,...args)];
  const count=input.interval==='year'?12:1;
  for(let index=0;index<count;index++){
