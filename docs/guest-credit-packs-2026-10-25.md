@@ -27,4 +27,13 @@
 - 迁移前远程 D1 已导出至隔离工作区内 `.local-evidence/guest-release/pre-guest-wallets.sql`，权限 600，未纳入 Git。
 - 真实线上验收只打开收银台、不提交付款；支付与生成履约通过本地真实数据库测试验证。
 
-生产版本、迁移和线上验收结果在发布后补录。
+## 生产发布与线上验收
+
+- 功能提交：`6dee3c242d2e0402dd97f3bdc307f8ab2d3fca3f`，已合并并推送 `main`，主项目目录已同步；原有 `next-env.d.ts` 本地修改保留。
+- 兼容迁移 `0010_guest_wallets.sql` 已在生产 D1 成功应用。
+- 2026-10-25 16:48:37（北京时间）发布 Worker `7be9b2dc-6a01-4994-9529-614f2086b8be`，承接 100% 流量。与前一版本相比，40 项运行绑定、域名路由及定时任务保持一致。
+- 匿名浏览器打开线上定价页，默认选中 Credit packs；直接点击 300 积分包可进入 Stripe live 收银台，无登录/注册拦截。收银台显示 $9.90 / 300 permanent credits，邮箱为空，不传内部占位邮箱。
+- 验收未填写支付信息、未提交真实付款。返回网站后，测试订单仍为 pending；只读 D1 检查确认 `amount=990`、`credits=300`、`is_guest=1`、钱包余额 0、账本记录 0、该钱包订单数 1。
+- 使用该测试游客钱包的恢复码在线恢复成功，页面显示 Wallet restored；恢复后无需登录即可访问同一笔订单。恢复码只在测试浏览器内存中使用，未记录进发布文档或截图。
+- 线上截图位于 `/tmp/migosai-guest-release-evidence/default-credit-packs.png` 和 `/tmp/migosai-guest-release-evidence/guest-stripe-checkout.png`。私有验收数据位于工作树 `.local-evidence/guest-release/`，不纳入 Git。
+- 独立线上回归通过：24 个页面与 15 个媒体文件校验、六语言首页 SEO/H1/canonical 基线、六语言定价页默认积分包、六语言游客钱包页面的 200/语言/noindex。媒体请求一次临时网络失败后首次重试成功。证据为 `.local-evidence/guest-release/guest-final-release-checks.json`。
