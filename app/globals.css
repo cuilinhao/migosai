@@ -2,6 +2,7 @@
 @import "./geo.css";
 @import "./video-examples.css";
 @import "./home-hero.css";
+@import "./home-discovery.css";
 
 :root{color-scheme:dark;--background:#0b0b0b;--foreground:#f5f5f5;--muted:#a0a0a0;--primary:#c38aff;--primary-strong:#c38aff;--primary-foreground:#ffffff;--brand-on-accent:#24102b;--cyan:#c38aff;--card:#181818;--border:#303030;--paper-deep:#111111;--input:#414141;--accent:#30203d;--accent-foreground:#e3c5ff;--brand-gradient:linear-gradient(100deg,#b864f5,#e9a9d8);--stage-gradient:radial-gradient(70% 60% at 50% 0,#24172c 0,transparent 85%),#0b0b0b;--surface-inverse:#101010;--surface-inverse-muted:#a0a0a0;--success:#6ad49b;--destructive:#ff8c9b}
 *{box-sizing:border-box}

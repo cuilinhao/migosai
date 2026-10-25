@@ -9,6 +9,8 @@ import { useEffect, useRef, useState } from "react";
 import { CircleHelp, Clapperboard, ListChecks, Menu, Music2, Newspaper, X, Zap } from "lucide-react";
 import { useAuth } from "./auth-provider";
 import { GeneratorMenu, GeneratorSpotlight } from "./generator-menu";
+import { CampaignBar } from "./campaign-bar";
+import type { CampaignBarData } from "@/content/home-discovery";
 
 const links = [
   { label: "How It Works", href: "/#how-it-works", icon: ListChecks },
@@ -21,7 +23,7 @@ const links = [
 
 const isActive = (pathname: string, href: string) => pathname === href || (href.endsWith("/blog") && pathname.startsWith(`${href}/`));
 
-export function SiteHeader() {
+export function SiteHeader({ campaignBar = null, onDismissCampaign = () => undefined }: { campaignBar?: CampaignBarData | null; onDismissCampaign?: () => void } = {}) {
   const pathname = stripLocale(usePathname());
   const isOzil = pathname === "/ozil-goal-generator" || pathname.startsWith("/ozil-goal-generator/");
   const isOzilBlog = /^\/ozil-goal-generator\/blog(?:\/|$)/.test(pathname);
@@ -30,7 +32,16 @@ export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const header = useRef<HTMLElement>(null);
   const mobileTrigger = useRef<HTMLButtonElement>(null);
+  const [condensed, setCondensed] = useState(false);
   const close = () => setMenuOpen(false);
+  useEffect(() => {
+    // The campaign bar scrolls away with the page; the navigation row stays pinned.
+    if (!campaignBar) return;
+    const update = () => setCondensed(window.scrollY > 12);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, [campaignBar]);
   useEffect(() => {
     if (!menuOpen) return;
     const escape = (event: KeyboardEvent) => {
@@ -48,7 +59,8 @@ export function SiteHeader() {
     ? <GeneratorMenu key={href} pathname={pathname} mobile={mobile} onNavigate={close}/>
     : <Link className={isActive(pathname, href) ? "active" : ""} aria-current={isActive(pathname, href) ? "page" : undefined} href={href} key={href} onClick={close}><Icon size={mobile ? 17 : 15} strokeWidth={1.8}/>{t(label)}</Link>);
   return (
-    <header className="site-header" ref={header}>
+    <header className="site-header" ref={header} data-campaign={campaignBar ? "" : undefined} data-condensed={campaignBar && condensed ? "" : undefined}>
+      {campaignBar && <CampaignBar bar={campaignBar} onDismiss={onDismissCampaign}/>}
       <div className="site-header-inner">
         <Link className="brand" href="/" onClick={close} aria-label={t("LobbyDuo home")}>
           <span className="brand-logo" aria-hidden="true">M</span><span>MigosAI</span>

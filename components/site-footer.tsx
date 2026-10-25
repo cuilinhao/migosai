@@ -1,13 +1,19 @@
 "use client";
 
 import Link from "@/components/i18n/localized-link";
-import { useTranslations } from "@/components/i18n/locale-provider";
+import { useLocale, useTranslations } from "@/components/i18n/locale-provider";
 import { Mail } from "lucide-react";
 import { SUPPORT_EMAIL, SUPPORT_MAILTO } from "@/content/support";
 import { hotelLobbyPages } from "@/content/public-pages";
+import { getFooterDiscoveryColumns } from "@/content/home-discovery";
+import { translateHomeDiscoveryTitle } from "@/lib/i18n/messages/home-discovery";
+
+// Static (date-independent) so campaign and seasonal pages stay linked after they end.
+const discoveryColumns = getFooterDiscoveryColumns();
 
 export function SiteFooter() {
   const t = useTranslations();
+  const locale = useLocale();
   return <footer className="site-footer">
     <div className="footer-inner">
       <div className="footer-top">
@@ -20,6 +26,9 @@ export function SiteFooter() {
         <div className="footer-col"><h3>Hotel Lobby AI</h3>{hotelLobbyPages.map((page) => <Link key={page.path} href={page.path}>{t(page.label)}</Link>)}</div>
         <div className="footer-col"><h3>{t("Link")}</h3><Link href="/#faq">{t("FAQ")}</Link><Link href="/privacy-policy">{t("Privacy Policy")}</Link><Link href="/terms-of-service">{t("Terms of Service")}</Link><Link href="/refund-policy">{t("Refund Policy")}</Link><Link href="/acceptable-use-policy">{t("Acceptable Use Policy")}</Link><Link href="/landing">{t("About MigosAI")}</Link><Link href="/contact">{t("Contact")}</Link><a href={SUPPORT_MAILTO}>{SUPPORT_EMAIL}</a></div>
       </div>
+      <nav className="footer-more" aria-label={t("More from MigosAI")}>
+        {discoveryColumns.map(column => <div className="footer-col" key={column.group}><p className="footer-col-title">{t(column.title)}</p>{column.links.map(link => <Link key={link.path} href={link.path}>{translateHomeDiscoveryTitle(link.label, locale, t)}</Link>)}</div>)}
+      </nav>
       <p className="footer-bottom">{t("LobbyDuo (migosai.design) is an independent AI creation service. It is not affiliated with or endorsed by Migos, Quavo, Takeoff, COLORS, or the website migosai.com.")}</p>
       <div className="footer-bottom">© {new Date().getFullYear()} · MigosAI. {t("All rights reserved.")}</div>
     </div>
