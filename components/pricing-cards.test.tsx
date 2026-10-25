@@ -2,7 +2,7 @@ import { isValidElement, type ReactElement, type ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { PricingCards } from "./pricing-cards";
 
-const state = vi.hoisted(() => ({ cells: [] as unknown[], cursor: 0, cleanups: [] as (() => void)[], user: { id: "buyer-1" } as { id: string } | null, openSignIn: vi.fn() }));
+const state = vi.hoisted(() => ({ cells: [] as unknown[], cursor: 0, cleanups: [] as (() => void)[], user: { id: "buyer-1" } as { id: string; isGuest?: boolean } | null, openSignIn: vi.fn(), ensureGuest: vi.fn() }));
 vi.mock("react", async original => ({
   ...await original<typeof import("react")>(),
   useState(initial: unknown) { const index = state.cursor++; if (!(index in state.cells)) state.cells[index] = typeof initial === "function" ? initial() : initial; return [state.cells[index], (value: unknown) => { state.cells[index] = typeof value === "function" ? value(state.cells[index]) : value; }]; },
@@ -10,7 +10,7 @@ vi.mock("react", async original => ({
   useEffect(effect: () => (() => void) | undefined) { const index = state.cursor++; if (!(index in state.cells)) { state.cells[index] = true; const cleanup = effect(); if (cleanup) state.cleanups.push(cleanup); } },
   useId: () => "pricing-test",
 }));
-vi.mock("./auth-provider", () => ({ useAuth: () => ({ user: state.user, loading: false, openSignIn: state.openSignIn }) }));
+vi.mock("./auth-provider", () => ({ useAuth: () => ({ user: state.user, loading: false, openSignIn: state.openSignIn, ensureGuest: state.ensureGuest }) }));
 vi.mock("@/components/i18n/locale-provider", () => ({ useLocale: () => "en", useTranslations: () => (source: string, values?: Record<string, string | number>) => source.replace(/\{(\w+)\}/g, (match, key) => values?.[key] === undefined ? match : String(values[key])) }));
 
 type Element = ReactElement<Record<string, unknown>>;
@@ -25,7 +25,7 @@ function textOf(node: ReactNode): string {
   if (Array.isArray(node)) return node.map(textOf).join("");
   return isValidElement(node) ? textOf((node.props as {children?: ReactNode}).children) : "";
 }
-function render(props?: Parameters<typeof PricingCards>[0]) { state.cursor = 0; return PricingCards(props); }
+function render(props: Parameters<typeof PricingCards>[0] = { initialPurchaseType: "subscription" }) { state.cursor = 0; return PricingCards(props); }
 function button(tree: ReactNode, label: string) {
   const result = elements(tree).find(element => element.type === "button" && (element.props["aria-label"] === label || textOf(element.props.children as ReactNode) === label));
   if (!result) throw new Error(`Missing button: ${label}`);
@@ -44,12 +44,50 @@ const checkout = "https://checkout.stripe.com/c/pay/cs_test_reference";
 
 beforeEach(() => {
   state.cells = []; state.cursor = 0; state.cleanups = []; state.user = { id: "buyer-1" }; state.openSignIn.mockReset();
+  state.ensureGuest.mockReset().mockImplementation(async () => { state.user = { id: "guest-1", isGuest: true }; return state.user; });
   vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify({ checkoutUrl: checkout, orderId: "order-1" }))));
   vi.stubGlobal("window", { open: vi.fn() });
 });
 afterEach(() => vi.unstubAllGlobals());
 
 describe("pricing purchase choices", () => {
+  it("defaults to Credit packs without displaying subscription prices", () => {
+    const tree = render({});
+    expect(button(tree, "Credit packs").props["aria-selected"]).toBe(true);
+    expect(button(tree, "Subscription").props["aria-selected"]).toBe(false);
+    expect(textOf(tree)).toContain("$9.90");
+    expect(textOf(tree)).toContain("300 credits");
+    expect(textOf(tree)).not.toContain("Billed monthly");
+  });
+  it("creates a guest wallet and buys a pack without a sign-in prompt", async () => {
+    state.user = null;
+    await click(render({}), "Buy 300 credit pack");
+    expect(state.ensureGuest).toHaveBeenCalledOnce();
+    expect(state.openSignIn).not.toHaveBeenCalled();
+    expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ packId: "starter", locale: "en", expectedCredits: 300, expectedUserId: "guest-1" }) }));
+    expect(window.open).toHaveBeenCalledWith(checkout, "_blank", "noopener,noreferrer");
+    expect(elements(render({})).some(element => element.type === "a" && element.props.href === checkout)).toBe(true);
+  });
+  it("requires a registered account for subscriptions even with a guest wallet", async () => {
+    state.user = { id: "guest-1", isGuest: true };
+    await click(render(), "Subscribe to Lite");
+    expect(state.openSignIn).toHaveBeenCalledOnce();
+    expect(state.ensureGuest).not.toHaveBeenCalled();
+    expect(fetch).not.toHaveBeenCalled();
+  });
+  it("does not open a checkout belonging to another wallet", async () => {
+    vi.mocked(fetch).mockResolvedValue(Response.json({ checkoutUrl: checkout, buyerId: "another-wallet" }));
+    await click(render({}), "Buy 300 credit pack");
+    expect(window.open).not.toHaveBeenCalled();
+    expect(textOf(render({}))).toContain("Your wallet changed");
+  });
+  it("keeps the failure visible when creating a guest wallet fails", async () => {
+    state.user = null;
+    state.ensureGuest.mockRejectedValue(new Error("Could not open your guest wallet."));
+    await click(render({}), "Buy 300 credit pack");
+    expect(fetch).not.toHaveBeenCalled();
+    expect(textOf(render({}))).toContain("Could not open your guest wallet.");
+  });
   it("moves the selected credit-pack highlight when clicking card content without opening checkout", () => {
     const props = { initialPurchaseType: "packs" as const };
     const before = render(props);
@@ -94,7 +132,7 @@ describe("pricing purchase choices", () => {
     await click(render(props), "Buy 300 credit pack");
     clickCard(render(props), "300 credit pack", true);
     expect(fetch).toHaveBeenCalledOnce();
-    expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ packId: "starter", locale: "en", expectedCredits: 300 }) }));
+    expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ packId: "starter", locale: "en", expectedCredits: 300, expectedUserId: "buyer-1" }) }));
     const tree = render(props);
     expect(button(tree, "300 credit pack").props["aria-pressed"]).toBe(true);
     expect(elements(tree).some(element => element.type === "a" && element.props.href === checkout)).toBe(true);
@@ -104,7 +142,7 @@ describe("pricing purchase choices", () => {
     expect(elements(tree).filter(element => element.props.role === "tab")).toHaveLength(2);
     expect(button(tree, "Subscription").props["aria-selected"]).toBe(true);
     await click(tree, "Subscribe to Lite");
-    expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ purchaseType: "subscription", planId: "lite", billingInterval: "month", locale: "en", expectedCredits: 550, expectedAmountCents: 1490 }) }));
+    expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ purchaseType: "subscription", planId: "lite", billingInterval: "month", locale: "en", expectedCredits: 550, expectedAmountCents: 1490, expectedUserId: "buyer-1" }) }));
   });
   it.each([
     ["Lite", "$14.90", "550", "$13.41", "$160.92"],
@@ -125,7 +163,7 @@ describe("pricing purchase choices", () => {
   it("sends the new Elite plan with its annual billing interval", async () => {
     await click(render(), "Yearly");
     await click(render(), "Subscribe to Elite");
-    expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ purchaseType: "subscription", planId: "elite-4000", billingInterval: "year", locale: "en", expectedCredits: 4000, expectedAmountCents: 107892 }) }));
+    expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ purchaseType: "subscription", planId: "elite-4000", billingInterval: "year", locale: "en", expectedCredits: 4000, expectedAmountCents: 107892, expectedUserId: "buyer-1" }) }));
   });
   it.each([
     ["starter", "300", 300, "$0.0330 / credit"],
@@ -140,7 +178,7 @@ describe("pricing purchase choices", () => {
     expect(packCard).toContain(unitPrice);
     expect(packCard).toContain("Credits never expire");
     await click(tree, `Buy ${formatted} credit pack`);
-    expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ packId, locale: "en", expectedCredits: credits }) }));
+    expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ packId, locale: "en", expectedCredits: credits, expectedUserId: "buyer-1" }) }));
   });
   it("keeps one-time packs as a separate non-recurring checkout", async () => {
     await click(render(), "Credit packs");
@@ -149,14 +187,14 @@ describe("pricing purchase choices", () => {
     expect(textOf(tree)).not.toContain("billed yearly");
     for (const price of ["$9.90", "$29.90", "$49.90", "$99.90"]) expect(textOf(tree)).toContain(price);
     await click(tree, "Buy 300 credit pack");
-    expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ packId: "starter", locale: "en", expectedCredits: 300 }) }));
+    expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ packId: "starter", locale: "en", expectedCredits: 300, expectedUserId: "buyer-1" }) }));
   });
   it("sends the displayed promotional total so the server can reject an expired offer", async () => {
     const props = { initialPurchaseType: "packs" as const, offerTime: Date.parse("2026-11-27T12:00:00Z") };
     const tree = render(props);
     expect(textOf(tree)).toContain("360 credits");
     await click(tree, "Buy 300 credit pack");
-    expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ packId: "starter", locale: "en", expectedCredits: 360 }) }));
+    expect(fetch).toHaveBeenCalledWith("/api/checkout", expect.objectContaining({ body: JSON.stringify({ packId: "starter", locale: "en", expectedCredits: 360, expectedUserId: "buyer-1" }) }));
   });
   it("keeps an expired-quote response on the page without opening checkout", async () => {
     const message = "This credit pack offer has changed. Refresh pricing before you check out.";

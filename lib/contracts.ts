@@ -9,7 +9,7 @@ export type VideoSettings = {
   aspect: AspectRatio; duration: VideoDuration; resolution: VideoResolution;
   model: VideoModel; scene: VideoScene; motion: VideoMotion; soundtrack: VideoSoundtrack; topic: string;
 };
-export type User = { id: string; name: string; email: string; picture?: string };
+export type User = { id: string; name: string; email: string; picture?: string; isGuest?: boolean };
 export type MeResponse = { user: User | null; credits: number; authConfigured: boolean; googleClientId?: string | null; emailAuthConfigured?: boolean };
 export type UploadedPhoto = { key: string };
 export type GenerationStatus = "queued" | "reviewing" | "processing" | "completed" | "failed" | "cancelled";

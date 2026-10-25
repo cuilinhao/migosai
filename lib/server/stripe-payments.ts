@@ -68,7 +68,7 @@ export async function createStripeCheckout(env: Env, user: User, packId: unknown
     session = await client.checkout.sessions.create({
       mode: 'payment', currency: 'usd', adaptive_pricing: { enabled: false },
       line_items: [{ price: priceId, quantity: 1 }],
-      client_reference_id: orderId, customer_email: user.email, metadata,
+      client_reference_id: orderId, ...(user.isGuest ? {} : { customer_email: user.email }), metadata,
       payment_intent_data: { metadata }, locale,
       ...(offer.bonusCredits > 0 ? { custom_text: { submit: { message: `You will receive ${offer.credits} credits, including ${offer.bonusCredits} Black Friday bonus credits. One-time purchase; credits do not expire.` } } } : {}),
       success_url: `${returnPath}?checkout=completed&orderId=${encodeURIComponent(orderId)}`,

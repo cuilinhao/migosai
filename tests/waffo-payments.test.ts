@@ -37,6 +37,14 @@ function graphql(paymentCents = '990') { return vi.spyOn(globalThis, 'fetch').mo
 }); }
 
 describe('Waffo payment accounting', () => {
+  it('rejects guest checkout before recording an order or sending a placeholder email to Waffo', async () => {
+    const { db, sqlite } = database();
+    const fetcher = vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('Unexpected provider request'));
+    const guest = { id: 'u', email: 'guest-id@guest.invalid', name: 'Guest', isGuest: true };
+    await expect(createCheckout(env(db), guest, 'starter')).rejects.toMatchObject({ status: 503, message: 'Guest checkout requires Stripe.' });
+    expect(sqlite.prepare('SELECT count(*) AS n FROM orders').get()).toEqual({ n: 0 });
+    expect(fetcher).not.toHaveBeenCalled();
+  });
   it('freezes the promotional total at the unchanged price and retains the offer metadata', async () => {
     vi.setSystemTime(new Date('2026-11-27T12:00:00Z'));
     const { db, sqlite } = database(); let sent: any;

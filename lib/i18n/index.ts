@@ -1,4 +1,5 @@
 import { subscriptionAccountMessages } from "./messages/subscription-account";
+import { guestWalletMessages } from "./messages/guest-wallet";
 import { blackFridayMessages } from "./messages/black-friday";
 import { pricingMessages } from "./messages/pricing";
 import { assetsMessages } from "./messages/assets";
@@ -29,6 +30,6 @@ const rootMessages: Record<Exclude<Locale, "en">, Messages> = {
 };
 export function getMessages(locale: Locale): Messages {
   // Homepage discovery copy is merged first so it can never override an existing translation.
-  return locale === "en" ? {} : { ...homeDiscoveryMessages[locale], ...rootMessages[locale], ...pageMessages[locale], ...sharedMessages[locale], ...interactiveMessages[locale], ...videoExampleMessages[locale], ...videoCustomizationMessages[locale], ...authMessages[locale], ...homeHeroMessages[locale], ...imageMessages[locale], ...portalMessages[locale], ...landingMessages[locale], ...publicContentMessages[locale], ...videoWorkspaceMessages[locale], ...effectsMessages[locale], ...assetsMessages[locale], ...pricingMessages[locale], ...subscriptionAccountMessages[locale], ...blackFridayMessages[locale] };
+  return locale === "en" ? {} : { ...homeDiscoveryMessages[locale], ...rootMessages[locale], ...pageMessages[locale], ...sharedMessages[locale], ...interactiveMessages[locale], ...videoExampleMessages[locale], ...videoCustomizationMessages[locale], ...authMessages[locale], ...homeHeroMessages[locale], ...imageMessages[locale], ...portalMessages[locale], ...landingMessages[locale], ...publicContentMessages[locale], ...videoWorkspaceMessages[locale], ...effectsMessages[locale], ...assetsMessages[locale], ...pricingMessages[locale], ...subscriptionAccountMessages[locale], ...blackFridayMessages[locale], ...guestWalletMessages[locale] };
 }
 export function translate(locale: Locale, source: string, values?: Values) { return createTranslator(getMessages(locale))(source, values); }

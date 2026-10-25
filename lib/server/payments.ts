@@ -62,6 +62,7 @@ function validatedCheckoutUrl(value: unknown, sessionId: unknown): string {
 
 export async function createCheckout(env: Env, user: User, packId: unknown, requestedLocale: unknown = "en", expectedCredits?: unknown) {
   if (env.PAYMENT_PROVIDER === 'stripe') return createStripeCheckout(env, user, packId, requestedLocale, expectedCredits);
+  if (user.isGuest) throw new ApiError(503, 'Guest checkout requires Stripe.');
   if (env.PAYMENT_PROVIDER && env.PAYMENT_PROVIDER !== 'waffo') throw new ApiError(503, 'Payment provider is not configured.');
   const locale = typeof requestedLocale === "string" && isLocale(requestedLocale) ? requestedLocale : "en";
   const pack = creditPacks.find(item => item.id === packId);

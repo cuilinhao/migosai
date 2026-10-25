@@ -121,6 +121,48 @@ describe('Stripe Black Friday credit packs', () => {
 });
 
 describe('Stripe Checkout creation', () => {
+  it('omits the guest placeholder email and keeps the wallet ownership and immutable credit quote', async () => {
+    const { db, sqlite } = database();
+    sqlite.prepare('UPDATE users SET credits=0 WHERE id=?').run('u');
+    const api = checkoutApi();
+    const guest = { ...user, email: 'guest-id@guest.invalid', isGuest: true };
+    const result = await createCheckout(env(db), guest, 'starter', 'en', 300);
+    expect(api.sent().has('customer_email')).toBe(false);
+    expect(api.sent().has('customer')).toBe(false);
+    expect(api.sent().get('metadata[userId]')).toBe('u');
+    expect(api.sent().get('payment_intent_data[metadata][userId]')).toBe('u');
+    expect(api.sent().get('metadata[credits]')).toBe('300');
+    expect(api.sent().get('metadata[amount]')).toBe('990');
+    expect(sqlite.prepare('SELECT user_id,amount,credits,status FROM orders WHERE id=?').get(result.orderId))
+      .toEqual({ user_id: 'u', amount: 990, credits: 300, status: 'pending' });
+    expect(balance(sqlite)).toEqual({ credits: 0 });
+    expect(sqlite.prepare('SELECT count(*) AS n FROM credit_ledger').get()).toEqual({ n: 0 });
+  });
+
+  it('credits a guest only after verified payment and preserves ownership through duplicate callbacks and spending', async () => {
+    const { db, sqlite } = database();
+    sqlite.prepare('UPDATE users SET credits=0 WHERE id=?').run('u');
+    const api = checkoutApi();
+    const guest = { ...user, email: 'guest-id@guest.invalid', isGuest: true };
+    const order = await createCheckout(env(db), guest, 'starter', 'en', 300);
+    const snapshot = Object.fromEntries([...api.sent()].filter(([key]) => key.startsWith('metadata[')).map(([key, value]) => [key.slice(9, -1), value]));
+    api.fetcher.mockRestore();
+    const paid = paidSession({ client_reference_id: order.orderId, metadata: snapshot, customer_details: { email: 'existing-account@example.test' } });
+    await applyEvent(env(db), event({ ...paid, payment_status: 'unpaid' }));
+    expect(balance(sqlite)).toEqual({ credits: 0 });
+    expect(sqlite.prepare('SELECT count(*) AS n FROM credit_ledger').get()).toEqual({ n: 0 });
+    confirmApi(confirmedSession({ ...paid, payment_intent: { ...confirmedSession().payment_intent, metadata: snapshot } }));
+    await applyEvent(env(db), event(paid));
+    expect(balance(sqlite)).toEqual({ credits: 300 });
+    await reserveGeneration(db, 'u', 'guest-generation', 'video', {}, 15);
+    await applyEvent(env(db), event(paid));
+    await applyEvent(env(db), event(paid, { id: 'evt_guestRetry123', type: 'checkout.session.async_payment_succeeded' }));
+    expect(balance(sqlite)).toEqual({ credits: 285 });
+    expect(sqlite.prepare("SELECT user_id,amount FROM credit_ledger WHERE kind='payment'").all()).toEqual([{ user_id: 'u', amount: 300 }]);
+    expect(sqlite.prepare('SELECT user_id,amount,credits,status FROM orders WHERE id=?').get(order.orderId))
+      .toEqual({ user_id: 'u', amount: 990, credits: 300, status: 'paid' });
+  });
+
   it.each([
     ['starter', 990, 300], ['creator', 2990, 950], ['pro', 4990, 1600], ['business', 9990, 3300],
   ] as const)('freezes the approved %s pack credits and amount for a new purchase', async (packId, amount, credits) => {

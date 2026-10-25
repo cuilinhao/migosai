@@ -313,6 +313,18 @@ async function setup(options: Parameters<typeof stripeApi>[0] = {}) {
   return { db, sqlite, api, env, checkout };
 }
 
+describe("guest subscription boundary", () => {
+  it("requires a registered account before accessing Stripe or storing a recurring order", async () => {
+    const { db, sqlite } = database();
+    const fetcher = vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("Unexpected Stripe request"));
+    const guest = { id: "u", email: "guest-id@guest.invalid", name: "Guest", isGuest: true };
+    await expect(createSubscriptionCheckout(baseEnv(db), guest, "lite", "month")).rejects.toMatchObject({ status: 401, message: "Please sign in to subscribe." });
+    expect(fetcher).not.toHaveBeenCalled();
+    expect(sqlite.prepare("SELECT count(*) AS n FROM subscriptions").get()).toEqual({ n: 0 });
+    expect(sqlite.prepare("SELECT count(*) AS n FROM orders").get()).toEqual({ n: 0 });
+  });
+});
+
 describe("Stripe subscriptions", () => {
   it.each([
     { amount: 759, credits: 550, storedPrice: priceId },

@@ -16,6 +16,10 @@ export const POST = api(async (request) => {
     body.purchaseType !== "subscription"
   )
     throw new ApiError(400, "Unknown purchase type.");
+  if (body.purchaseType === "subscription" && user.isGuest)
+    throw new ApiError(401, "Please sign in to subscribe.");
+  if ((user.isGuest || body.expectedUserId !== undefined) && body.expectedUserId !== user.id)
+    throw new ApiError(409, "Your wallet changed. Refresh this page before checking out.");
   if (body.purchaseType === "subscription") {
     const plan = subscriptionPlans.find((item) => item.id === body.planId);
     if (!plan || (body.billingInterval !== "month" && body.billingInterval !== "year"))
@@ -24,8 +28,7 @@ export const POST = api(async (request) => {
     if (body.expectedCredits !== plan.credits || body.expectedAmountCents !== amount)
       throw new ApiError(409, "This subscription offer has changed. Refresh pricing before you check out.");
   }
-  return Response.json(
-    body.purchaseType === "subscription"
+  const checkout = body.purchaseType === "subscription"
       ? await createSubscriptionCheckout(
           env,
           user,
@@ -33,6 +36,8 @@ export const POST = api(async (request) => {
           body.billingInterval,
           body.locale,
         )
-      : await createCheckout(env, user, body.packId, body.locale, body.expectedCredits),
-  );
+      : await createCheckout(env, user, body.packId, body.locale, body.expectedCredits);
+  return Response.json({ ...checkout, buyerId: user.id }, {
+    headers: { "Cache-Control": "no-store" },
+  });
 });

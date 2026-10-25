@@ -8,21 +8,22 @@ import { useLocale, useTranslations } from "@/components/i18n/locale-provider";
 import { trustedCheckoutUrl } from "./ui/checkout-url";
 import { blackFridayCampaign, getCreditPackOffer } from "@/content/black-friday-offer";
 import styles from "./pricing-cards.module.css";
+import { GuestWalletPanel } from "./guest-wallet-panel";
 
 type Purchase = { packId: PackId } | { purchaseType: "subscription"; planId: SubscriptionPlanId; billingInterval: BillingInterval };
 type PurchaseTab = "subscription" | "packs";
 
-export function PricingCards({ initialPurchaseType = "subscription", offerTime = 0 }: { initialPurchaseType?: PurchaseTab; offerTime?: number } = {}) {
+export function PricingCards({ initialPurchaseType = "packs", offerTime = 0 }: { initialPurchaseType?: PurchaseTab; offerTime?: number } = {}) {
   const t = useTranslations();
   const locale = useLocale();
-  const { user, openSignIn } = useAuth();
+  const { user, openSignIn, ensureGuest } = useAuth();
   const id = useId();
   const [tab, setTab] = useState<PurchaseTab>(initialPurchaseType);
   const [interval, setInterval] = useState<BillingInterval>("month");
   const [selectedPack, setSelectedPack] = useState<PackId>("creator");
   const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlanId>("standard");
   const [busy, setBusy] = useState<string | null>(null);
-  const [error, setError] = useState<{ userId: string; message: string } | null>(null);
+  const [error, setError] = useState<{ userId: string | undefined; message: string } | null>(null);
   const [checkout, setCheckout] = useState<{ userId: string; url: string } | null>(null);
   const inFlight = useRef(false);
   const currentUserId = useRef(user?.id);
@@ -59,20 +60,25 @@ export function PricingCards({ initialPurchaseType = "subscription", offerTime =
   async function buy(purchase: Purchase) {
     if (inFlight.current) return;
     selectPurchase(purchase);
-    if (!user) { openSignIn(); return; }
-    const userId = user.id;
+    if (!("packId" in purchase) && (!user || user.isGuest)) { openSignIn(); return; }
+    let userId = user?.id;
     const key = "packId" in purchase ? `pack-${purchase.packId}` : `plan-${purchase.planId}`;
     inFlight.current = true;
     setBusy(key);
     try {
+      const buyer = user ?? await ensureGuest();
+      if (!mounted.current || (currentUserId.current !== userId && currentUserId.current !== buyer.id)) return;
+      userId = buyer.id;
+      currentUserId.current = userId;
       const pack = "packId" in purchase ? creditPacks.find(item => item.id === purchase.packId) : undefined;
       const plan = "planId" in purchase ? subscriptionPlans.find(item => item.id === purchase.planId) : undefined;
       const quote = pack ? { expectedCredits: getCreditPackOffer(pack, offerTime).credits }
         : plan && "billingInterval" in purchase ? { expectedCredits: plan.credits, expectedAmountCents: purchase.billingInterval === "year" ? plan.yearlyPriceCents : plan.monthlyPriceCents } : {};
-      const response = await fetch("/api/checkout", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...purchase, locale, ...quote }) });
-      const data: { checkoutUrl?: string; error?: string } = await response.json();
+      const response = await fetch("/api/checkout", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...purchase, locale, ...quote, expectedUserId: userId }) });
+      const data: { checkoutUrl?: string; buyerId?: string; error?: string } = await response.json();
       if (!mounted.current || currentUserId.current !== userId) return;
       if (!response.ok || !data.checkoutUrl) throw new Error(data.error || "Checkout is unavailable right now. Please try again later.");
+      if (data.buyerId && data.buyerId !== userId) throw new Error("Your wallet changed. Refresh this page before checking out.");
       const url = trustedCheckoutUrl(data.checkoutUrl);
       if (!url) throw new Error("The payment service returned an invalid checkout address. Please try again later.");
       setCheckout({ userId, url });
@@ -139,7 +145,8 @@ export function PricingCards({ initialPurchaseType = "subscription", offerTime =
           <ul className={styles.benefits}>{["No automatic renewal", "Credits never expire", ...benefits].map(benefit => <li key={benefit}><Check size={16} aria-hidden="true"/>{t(benefit)}</li>)}</ul>
           <p className={styles.cardFooter}>{t(pack.description)}</p>
         </article>; })}</div>
-        <p className={styles.explanation}>{t("Credit packs are one-time purchases. You can buy a pack with or without an active subscription.")}</p>
+        <p className={styles.explanation}>{t("Credit packs are one-time purchases. You can buy a pack with or without an active subscription.")}<br/>{t("Buy and use credits without signing in or registering.")}</p>
+        <GuestWalletPanel compact/>
       </>}
     </div>
 

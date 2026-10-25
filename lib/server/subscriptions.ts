@@ -318,6 +318,7 @@ export async function createSubscriptionCheckout(
   interval: unknown,
   requestedLocale: unknown = "en",
 ): Promise<{ checkoutUrl: string; orderId: string }> {
+  if (user.isGuest) throw new ApiError(401, "Please sign in to subscribe.");
   if (env.PAYMENT_PROVIDER !== "stripe")
     throw new ApiError(503, "Stripe subscriptions are not configured.");
   const plan = subscriptionPlans.find((plan) => plan.id === planId);

@@ -62,6 +62,46 @@ beforeEach(() => {
   vi.mocked(requireUser).mockResolvedValue(state.user);
 });
 describe("subscription HTTP routes", () => {
+  it("creates credit checkout for the confirmed guest wallet without requiring registration", async () => {
+    const guest = { ...state.user, id: "guest-wallet", email: "", isGuest: true };
+    vi.mocked(requireUser).mockResolvedValue(guest);
+    const response = await checkout(request("/api/checkout", { packId: "starter", expectedCredits: 300, expectedUserId: guest.id }), {});
+    expect(response.status).toBe(200);
+    expect(await response.json()).toMatchObject({ orderId: "credit-local", buyerId: guest.id });
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(backend.credits).toHaveBeenCalledWith(state.env, guest, "starter", undefined, 300);
+  });
+
+  it.each([undefined, "another-wallet", null, 42])("rejects a guest checkout whose wallet precondition is %j", async expectedUserId => {
+    vi.mocked(requireUser).mockResolvedValue({ ...state.user, isGuest: true });
+    const response = await checkout(request("/api/checkout", { packId: "starter", expectedUserId }), {});
+    expect(response.status).toBe(409);
+    expect(await response.json()).toMatchObject({ error: "Your wallet changed. Refresh this page before checking out." });
+    expect(backend.credits).not.toHaveBeenCalled();
+  });
+
+  it("rejects a changed registered account when the client supplied an ownership precondition", async () => {
+    const response = await checkout(request("/api/checkout", { packId: "starter", expectedUserId: "previous-user" }), {});
+    expect(response.status).toBe(409);
+    expect(backend.credits).not.toHaveBeenCalled();
+  });
+
+  it("requires a registered account for a guest subscription or billing portal", async () => {
+    vi.mocked(requireUser).mockResolvedValue({ ...state.user, isGuest: true });
+    const response = await checkout(request("/api/checkout", { purchaseType: "subscription", planId: "lite", billingInterval: "month", expectedAmountCents: 1490, expectedCredits: 550, expectedUserId: state.user.id }), {});
+    expect(response.status).toBe(401);
+    expect(await response.json()).toMatchObject({ error: "Please sign in to subscribe." });
+    expect((await portal(request("/api/subscription/portal"), {})).status).toBe(401);
+    expect(backend.checkout).not.toHaveBeenCalled();
+    expect(backend.portal).not.toHaveBeenCalled();
+  });
+
+  it("does not create checkout without either a registered or guest session", async () => {
+    vi.mocked(requireUser).mockRejectedValue(new ApiError(401, "Please sign in to continue."));
+    expect((await checkout(request("/api/checkout", { packId: "starter" }), {})).status).toBe(401);
+    expect(backend.credits).not.toHaveBeenCalled();
+  });
+
   it.each([
     ["lite", "month", 1490, 550], ["lite", "year", 16092, 550],
     ["standard", "month", 2990, 1150], ["standard", "year", 32292, 1150],

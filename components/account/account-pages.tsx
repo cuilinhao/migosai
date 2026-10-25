@@ -12,6 +12,7 @@ import { accountView, type AccountSnapshot } from "./account-view";
 import { CreditBalances, SubscriptionDetails, type AccountSubscription } from "./subscription-management";
 import { requestBillingPortal } from "./subscription-portal";
 import subscriptionStyles from "./subscription-management.module.css";
+import { GuestWalletPanel } from "@/components/guest-wallet-panel";
 
 type Generation = GenerationResponse & { kind: "video" | "music"; cost: number; createdAt: string };
 type Order = { purchaseType?:"credits"|"subscription"; id: string; packId: string; amountCents: number; currency: string; credits: number; status: string; createdAt: string };
@@ -112,7 +113,7 @@ function SubscriptionManagementForOwner() {
 }
 function SubscriptionManagement() {
   const {user}=useAuth();
-  return <SubscriptionManagementForOwner key={user?.id??"signed-out"}/>;
+  return user?.isGuest ? null : <SubscriptionManagementForOwner key={user?.id??"signed-out"}/>;
 }
 
 export function MyOrders() {
@@ -130,9 +131,10 @@ export function MyCredits() {
   const t = useGenerationTranslations();
   const locale = useLocale();
   const { data, loading, error, signedIn, retry } = useAccountData<{balance:number;permanentCredits:number|null;subscriptionCredits:number|null;subscriptionCreditsExpireAt:string|null;ledger:CreditTransaction[]}>("/api/credits", (body) => ({ balance: Number(body.balance ?? 0), permanentCredits:typeof body.permanentCredits==="number"?body.permanentCredits:null, subscriptionCredits:typeof body.subscriptionCredits==="number"?body.subscriptionCredits:null, subscriptionCreditsExpireAt:typeof body.subscriptionCreditsExpireAt==="string"?body.subscriptionCreditsExpireAt:null, ledger: Array.isArray(body.ledger) ? body.ledger as CreditTransaction[] : [] }));
-  const { credits } = useAuth();
+  const { credits, user } = useAuth();
   return <div className="account-page"><div className="account-page-heading account-page-heading-lined"><h1>{t('My Credits')}</h1><p>{t("Remaining credits: {credits}", { credits: (data?.balance ?? credits).toLocaleString(locale) })}</p><Link className="account-buy-credits" href="/pricing"><Coins size={16}/> {t("Buy Credits")}</Link></div>
     <AccountMessage loading={loading} error={error} signedIn={signedIn} onRetry={retry}/>
+    {user?.isGuest && <GuestWalletPanel compact/>}
     {signedIn&&!loading&&!error&&data&&data.permanentCredits!==null&&data.subscriptionCredits!==null&&<CreditBalances permanentCredits={data.permanentCredits} subscriptionCredits={data.subscriptionCredits} subscriptionCreditsExpireAt={data.subscriptionCreditsExpireAt}/>}
     {signedIn && !loading && !error && <div className="account-table-scroll"><table className="account-table credits-table"><thead><tr><th>{t('Trans No')}</th><th>{t('Trans Type')}</th><th>{t('Credits')}</th><th>{t('Updated At')}</th></tr></thead><tbody>{data?.ledger.length ? data.ledger.map((item) => <tr key={item.id}><td className="account-code">{item.id}</td><td>{t(item.kind)}</td><td className={item.amount >= 0 ? "positive-credits" : "negative-credits"}>{new Intl.NumberFormat(locale, { signDisplay: "always" }).format(item.amount)}</td><td>{dateTime(item.createdAt, locale)}</td></tr>) : <tr><td colSpan={4} className="account-table-empty">{t('No credit transactions yet')}</td></tr>}</tbody></table></div>}
   </div>;

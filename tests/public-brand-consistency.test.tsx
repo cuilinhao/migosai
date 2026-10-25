@@ -93,7 +93,8 @@ describe('current public product brand without losing existing translations', ()
     expect(html).toContain('Use across image, video and music tools');
     expect(html.match(/role="tab"/g)).toHaveLength(2);
     expect(html).toContain('Credit packs');
-    expect(html).toContain('Subscriptions renew automatically.');
+    expect(html).toContain('Credit packs are one-time purchases.');
+    expect(html).toContain('Buy and use credits without signing in or registering.');
   });
   it.each([
     ['ko', '사용 가능한 로그인 방법'], ['ja', '利用可能なログイン方法'], ['fr', 'méthode de connexion disponible'],

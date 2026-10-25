@@ -13,6 +13,7 @@ const routes = {
   "/explore": () => import("@/app/explore/page"),
   "/app/assets": () => import("@/app/app/assets/page"),
   "/pricing": () => import("@/app/pricing/page"),
+  "/guest-wallet": () => import("@/app/guest-wallet/page"),
   "/black-friday": () => import("@/app/black-friday/page"),
   "/showcases": () => import("@/app/showcases/page"),
   "/ai-rap-song-generator": () => import("@/app/ai-rap-song-generator/page"),

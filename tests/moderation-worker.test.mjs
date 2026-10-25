@@ -90,7 +90,7 @@ beforeAll(async () => {
   db = await worker.getD1Database('DB');
   bucket = await worker.getR2Bucket('MEDIA');
   await db.exec(`
-    CREATE TABLE users(id TEXT PRIMARY KEY,name TEXT,email TEXT,picture TEXT,credits INTEGER);
+    CREATE TABLE users(id TEXT PRIMARY KEY,name TEXT,email TEXT,picture TEXT,credits INTEGER,is_guest INTEGER NOT NULL DEFAULT 0);
     CREATE TABLE subscription_credit_periods(user_id TEXT,starts_at INTEGER,ends_at INTEGER,remaining INTEGER);
     CREATE TABLE sessions(token_hash TEXT PRIMARY KEY,user_id TEXT,expires_at INTEGER);
     CREATE TABLE generations(id TEXT PRIMARY KEY,user_id TEXT,kind TEXT,status TEXT,stage TEXT,result_keys TEXT);

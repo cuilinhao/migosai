@@ -12,7 +12,7 @@ export function AuthPage({ kind }: { kind: "sign-in" | "sign-up" }) {
   const { authConfigured, emailAuthConfigured, user, loading, refresh } = useAuth();
   const t = useTranslations();
   useEffect(() => {
-    if (!loading && user) window.location.replace(authReturnTo(window.location));
+    if (!loading && user && !user.isGuest) window.location.replace(authReturnTo(window.location));
   }, [loading, user]);
   return <main className="mi-auth-page">
     <header className="mi-auth-header">
@@ -20,6 +20,7 @@ export function AuthPage({ kind }: { kind: "sign-in" | "sign-up" }) {
       <LanguageSwitcher className="mi-language" />
     </header>
     <div className="mi-auth-page-content">
+      {user?.isGuest && <p className="mi-guest-signin-note">{t("Your guest credits stay in this wallet when you sign in to another account. Save your recovery code to return to it.")} <Link href="/guest-wallet">{t("Save or restore wallet")}</Link></p>}
       <AuthCard kind={kind} authConfigured={authConfigured} emailAuthConfigured={emailAuthConfigured} loading={loading} onSuccess={refresh} />
       <Link href="/" className="mi-auth-back"><ArrowLeft size={15} aria-hidden="true" />{t("Back to home")}</Link>
     </div>

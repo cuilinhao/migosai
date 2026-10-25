@@ -50,14 +50,15 @@ describe('Black Friday pricing handoff', () => {
     expect(renderToStaticMarkup(<AuthProvider>{pricing}</AuthProvider>)).toContain('300 + 60 bonus credits');
   });
 
-  it('selects packs for the Black Friday link and preserves the normal subscription entry', async () => {
+  it('selects packs for both Black Friday links and the normal pricing entry', async () => {
     const { PricingEntry } = await import('../components/black-friday/pricing-entry');
     navigation.search = 'promo=blackfriday';
     const campaign = renderToStaticMarkup(<AuthProvider><PricingEntry offerTime={Date.parse('2026-11-27T12:00:00Z')}/></AuthProvider>);
     expect(campaign).toContain('300 + 60 bonus credits');
     navigation.search = '';
     const regular = renderToStaticMarkup(<AuthProvider><PricingEntry offerTime={Date.parse('2026-11-27T12:00:00Z')}/></AuthProvider>);
-    expect(regular).toContain('550 credits per month');
+    expect(regular).toContain('300 + 60 bonus credits');
+    expect(regular).not.toContain('550 credits per month');
   });
 
   it('localizes the campaign entry without adding internal acquisition UTM tags', async () => {
