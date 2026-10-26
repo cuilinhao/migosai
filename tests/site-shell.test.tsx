@@ -65,7 +65,7 @@ const publicRoutes=[
   {path:'/flying-car-ai-video-generator/how-to-make-a-tesla-roadster-flying-car-video',page:FlyingCarGuide,active:'/ai-video-generator'},
   {path:'/ozil-goal-generator',page:OzilPage,active:'/ai-video-generator'},
   {path:'/ozil-goal-generator/ozil-goal-ai-prompt',page:OzilGuide,active:'/ai-video-generator'},
-  {path:'/ai-rap-song-generator',page:AudioPage,active:'/ai-rap-song-generator'},
+  {path:'/ai-rap-song-generator',page:AudioPage,active:null},
   {path:'/pricing',page:PricingPage,active:'/pricing'},
   {path:'/blog',page:BlogPage,active:'/blog'},
   {path:'/ozil-goal-generator/blog',page:OzilBlogPage,active:'/blog'},

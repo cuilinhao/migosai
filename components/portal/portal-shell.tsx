@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
-import { AudioLines, BookOpen, ChevronDown, Clapperboard, Compass, FolderOpen, Gem, Home, ImageIcon, LogOut, Menu, Sparkles, Sun, Trophy, WandSparkles, X } from "lucide-react";
+import { BookOpen, ChevronDown, Clapperboard, Compass, FolderOpen, Gem, Home, ImageIcon, LogOut, Menu, Sparkles, Sun, Trophy, WandSparkles, X } from "lucide-react";
 import * as Dialog from "@radix-ui/react-dialog";
 import Link from "@/components/i18n/localized-link";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
@@ -15,7 +15,7 @@ import "./portal.css";
 const groups = [
   { label: "", items: [{ label: "Home", href: "/", Icon: Home }] },
   { label: "STUDIO", items: [{ label: "Tools", href: "/tools", Icon: WandSparkles }, { label: "Effects", href: "/effects", Icon: Sparkles }] },
-  { label: "MODELS", items: [{ label: "Video", href: "/ai-video-generator", Icon: Clapperboard }, { label: "Image", href: "/ai-image-generator", Icon: ImageIcon }, { label: "Audio", href: "/ai-rap-song-generator", Icon: AudioLines }] },
+  { label: "MODELS", items: [{ label: "Video", href: "/ai-video-generator", Icon: Clapperboard }, { label: "Image", href: "/ai-image-generator", Icon: ImageIcon }] },
   { label: "ASSETS", items: [{ label: "Assets", href: "/app/assets", Icon: FolderOpen }] },
   { label: "COMMUNITY", items: [{ label: "Explore", href: "/explore", Icon: Compass }, { label: "Hub", href: "/blog", Icon: BookOpen }] },
 ];
