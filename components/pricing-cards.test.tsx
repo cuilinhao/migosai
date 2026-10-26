@@ -2,7 +2,7 @@ import { isValidElement, type ReactElement, type ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { PricingCards } from "./pricing-cards";
 
-const state = vi.hoisted(() => ({ cells: [] as unknown[], cursor: 0, cleanups: [] as (() => void)[], user: { id: "buyer-1" } as { id: string; isGuest?: boolean } | null, openSignIn: vi.fn(), ensureGuest: vi.fn() }));
+const state = vi.hoisted(() => ({ cells: [] as unknown[], cursor: 0, cleanups: [] as (() => void)[], user: { id: "buyer-1" } as { id: string; isGuest?: boolean } | null, openSignIn: vi.fn(), ensureGuest: vi.fn(), reloadSubscription: vi.fn() }));
 vi.mock("react", async original => ({
   ...await original<typeof import("react")>(),
   useState(initial: unknown) { const index = state.cursor++; if (!(index in state.cells)) state.cells[index] = typeof initial === "function" ? initial() : initial; return [state.cells[index], (value: unknown) => { state.cells[index] = typeof value === "function" ? value(state.cells[index]) : value; }]; },
@@ -10,6 +10,7 @@ vi.mock("react", async original => ({
   useEffect(effect: () => (() => void) | undefined) { const index = state.cursor++; if (!(index in state.cells)) { state.cells[index] = true; const cleanup = effect(); if (cleanup) state.cleanups.push(cleanup); } },
   useId: () => "pricing-test",
 }));
+vi.mock("./pricing-subscription", () => ({ usePricingSubscription: () => ({ subscription: null, loading: false, error: false, reload: state.reloadSubscription, canSubscribe: () => true }) }));
 vi.mock("./auth-provider", () => ({ useAuth: () => ({ user: state.user, loading: false, openSignIn: state.openSignIn, ensureGuest: state.ensureGuest }) }));
 vi.mock("@/components/i18n/locale-provider", () => ({ useLocale: () => "en", useTranslations: () => (source: string, values?: Record<string, string | number>) => source.replace(/\{(\w+)\}/g, (match, key) => values?.[key] === undefined ? match : String(values[key])) }));
 
@@ -43,7 +44,7 @@ function clickCard(tree: ReactNode, name: string, interactiveChild = false) {
 const checkout = "https://checkout.stripe.com/c/pay/cs_test_reference";
 
 beforeEach(() => {
-  state.cells = []; state.cursor = 0; state.cleanups = []; state.user = { id: "buyer-1" }; state.openSignIn.mockReset();
+  state.cells = []; state.cursor = 0; state.cleanups = []; state.user = { id: "buyer-1" }; state.openSignIn.mockReset(); state.reloadSubscription.mockReset();
   state.ensureGuest.mockReset().mockImplementation(async () => { state.user = { id: "guest-1", isGuest: true }; return state.user; });
   vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify({ checkoutUrl: checkout, orderId: "order-1" }))));
   vi.stubGlobal("window", { open: vi.fn() });
@@ -220,6 +221,13 @@ describe("pricing purchase choices", () => {
     await click(render(), "Subscribe to Lite");
     expect(window.open).not.toHaveBeenCalled();
     expect(elements(render()).some(element => element.props.role === "alert")).toBe(true);
+  });
+  it.each(["network", "invalid JSON"])("rechecks subscription state when the checkout result is unknown after %s failure", async failure => {
+    if (failure === "network") vi.mocked(fetch).mockRejectedValue(new Error("Connection lost"));
+    else vi.mocked(fetch).mockResolvedValue(new Response("{incomplete"));
+    await click(render(), "Subscribe to Lite");
+    expect(state.reloadSubscription).toHaveBeenCalledOnce();
+    expect(window.open).not.toHaveBeenCalled();
   });
   it("does not open a pending checkout after the signed-in account changes", async () => {
     let resolve!: (response: Response) => void;

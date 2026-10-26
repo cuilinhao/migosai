@@ -26,7 +26,11 @@
 .price del { font-size:17px;color:#737078;margin-right:3px; }
 .billingNote { margin:6px 0 22px;font-size:12px;line-height:1.5;color:#9c98a4; }
 .subscribe { min-height:44px;width:100%;border-radius:100px;border:1px solid #9570ee;background:#8056da;color:#fff;font-size:14px;font-weight:600;transition:background .15s; }
-.subscribe:hover { background:#9468f0; }
+.subscribe:not(:disabled):hover { background:#9468f0; }
+.pricing .subscribe[data-subscription-blocked]:disabled { background:#34323a;border-color:#504c59;color:#b9b4c2;opacity:1;cursor:not-allowed; }
+.subscriptionNotice { margin:22px auto 0;max-width:880px;text-align:center;color:#c6c0d0;font-size:13px;line-height:1.8; }
+.subscriptionNotice a,.subscriptionNotice button { color:#d2baff;text-decoration:underline;text-underline-offset:3px; }
+.subscriptionNotice button { border:0;padding:0;background:transparent;font:inherit;cursor:pointer; }
 .creditBox { display:flex;align-items:flex-start;gap:9px;min-height:74px;border-radius:12px;background:#ffffff06;border:1px solid #ffffff0a;padding:13px 12px;margin:22px 0; }
 .creditBox>svg { flex-shrink:0;margin-top:1px;color:#d7c7f2; }
 .creditBox strong { display:block;font-size:14px;line-height:1.4;font-weight:600; }

@@ -9,6 +9,9 @@ import { trustedCheckoutUrl } from "./ui/checkout-url";
 import { blackFridayCampaign, getCreditPackOffer } from "@/content/black-friday-offer";
 import styles from "./pricing-cards.module.css";
 import { GuestWalletPanel } from "./guest-wallet-panel";
+import Link from "@/components/i18n/localized-link";
+import { usePricingSubscription } from "./pricing-subscription";
+import { isCurrentPricingPlan } from "./pricing-subscription-state";
 
 type Purchase = { packId: PackId } | { purchaseType: "subscription"; planId: SubscriptionPlanId; billingInterval: BillingInterval };
 type PurchaseTab = "subscription" | "packs";
@@ -16,7 +19,12 @@ type PurchaseTab = "subscription" | "packs";
 export function PricingCards({ initialPurchaseType = "packs", offerTime = 0 }: { initialPurchaseType?: PurchaseTab; offerTime?: number } = {}) {
   const t = useTranslations();
   const locale = useLocale();
-  const { user, openSignIn, ensureGuest } = useAuth();
+  const { user, loading: authLoading, openSignIn, ensureGuest } = useAuth();
+  const subscriptionState = usePricingSubscription(user);
+  const subscription = subscriptionState.subscription;
+  const checkingSubscription = authLoading || subscriptionState.loading;
+  const subscriptionBlocked = checkingSubscription || subscriptionState.error || !!subscription;
+  const pendingSubscription = subscription?.status === "pending" || subscription?.status === "incomplete";
   const id = useId();
   const [tab, setTab] = useState<PurchaseTab>(initialPurchaseType);
   const [interval, setInterval] = useState<BillingInterval>("month");
@@ -58,10 +66,12 @@ export function PricingCards({ initialPurchaseType = "packs", offerTime = 0 }: {
   }
 
   async function buy(purchase: Purchase) {
-    if (inFlight.current) return;
+    if (inFlight.current || authLoading) return;
+    if (!("packId" in purchase) && user && !user.isGuest && !subscriptionState.canSubscribe()) return;
     selectPurchase(purchase);
     if (!("packId" in purchase) && (!user || user.isGuest)) { openSignIn(); return; }
     let userId = user?.id;
+    let checkoutRequested = false;
     const key = "packId" in purchase ? `pack-${purchase.packId}` : `plan-${purchase.planId}`;
     inFlight.current = true;
     setBusy(key);
@@ -74,6 +84,7 @@ export function PricingCards({ initialPurchaseType = "packs", offerTime = 0 }: {
       const plan = "planId" in purchase ? subscriptionPlans.find(item => item.id === purchase.planId) : undefined;
       const quote = pack ? { expectedCredits: getCreditPackOffer(pack, offerTime).credits }
         : plan && "billingInterval" in purchase ? { expectedCredits: plan.credits, expectedAmountCents: purchase.billingInterval === "year" ? plan.yearlyPriceCents : plan.monthlyPriceCents } : {};
+      checkoutRequested = true;
       const response = await fetch("/api/checkout", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...purchase, locale, ...quote, expectedUserId: userId }) });
       const data: { checkoutUrl?: string; buyerId?: string; error?: string } = await response.json();
       if (!mounted.current || currentUserId.current !== userId) return;
@@ -87,6 +98,9 @@ export function PricingCards({ initialPurchaseType = "packs", offerTime = 0 }: {
     } catch (cause) {
       if (mounted.current && currentUserId.current === userId) setError({ userId, message: cause instanceof Error ? cause.message : "Checkout is unavailable right now. Please try again later." });
     } finally {
+      // A lost response can still mean Stripe checkout was created. Recheck
+      // before unlocking subscriptions even when fetch or JSON decoding fails.
+      if (checkoutRequested && !("packId" in purchase) && mounted.current && currentUserId.current === userId) subscriptionState.reload();
       inFlight.current = false;
       if (mounted.current) setBusy(null);
     }
@@ -112,6 +126,8 @@ export function PricingCards({ initialPurchaseType = "packs", offerTime = 0 }: {
         <div className={styles.grid}>{subscriptionPlans.map(plan => {
           const monthlyCents = interval === "year" ? plan.yearlyPriceCents / 12 : plan.monthlyPriceCents;
           const selected = selectedPlan === plan.id;
+          const currentPlan = isCurrentPricingPlan(subscription, plan.id, interval);
+          const label = currentPlan ? t("Current plan") : checkingSubscription ? t("Checking subscription…") : subscriptionBlocked ? t("Subscription unavailable") : busy === `plan-${plan.id}` ? t("Opening checkout…") : t("Subscribe");
           const purchase = { purchaseType: "subscription" as const, planId: plan.id, billingInterval: interval };
           return <article key={plan.id} className={`${styles.card} ${selected ? styles.featured : ""}`} data-selected={selected} onClick={event => cardClick(event, purchase)}>
             {interval !== "year" && plan.id === "standard" && <span className={styles.discount}>{t("Recommended")}</span>}
@@ -119,12 +135,14 @@ export function PricingCards({ initialPurchaseType = "packs", offerTime = 0 }: {
             <h3 className={styles.planTitle}><button type="button" className={styles.cardSelect} aria-pressed={selected} disabled={busy !== null} onClick={() => selectPurchase(purchase)}><Diamond size={23} aria-hidden="true"/>{t(plan.name)}</button></h3>
             <div className={styles.price}>{interval === "year" && <del>{money(plan.monthlyPriceCents)}</del>}<strong>{money(monthlyCents)}</strong><span>{t("/mo")}</span></div>
             <p className={styles.billingNote}>{interval === "year" ? t("{amount} billed yearly", { amount: money(plan.yearlyPriceCents) }) : t("Billed monthly")}</p>
-            <button type="button" className={styles.subscribe} aria-label={t("Subscribe to {plan}", { plan: t(plan.name) })} disabled={busy !== null} onClick={() => buy(purchase)}>{busy === `plan-${plan.id}` ? t("Opening checkout…") : t("Subscribe")}</button>
+            <button type="button" className={styles.subscribe} data-subscription-blocked={subscriptionBlocked || undefined} aria-label={subscriptionBlocked ? `${t(plan.name)}: ${label}` : t("Subscribe to {plan}", { plan: t(plan.name) })} disabled={busy !== null || subscriptionBlocked} onClick={() => buy(purchase)}>{label}</button>
             <div className={styles.creditBox}><Zap size={19} aria-hidden="true"/><div><strong>{t("{credits} credits per month", { credits: plan.credits.toLocaleString(locale) })}</strong><span>{t("Up to {images} images at 1K", { images: Math.floor(plan.credits / 5).toLocaleString(locale) })}</span></div></div>
             <ul className={styles.benefits}>{["New credits every month", "Unused subscription credits expire monthly", ...benefits].map(benefit => <li key={benefit}><Check size={16} aria-hidden="true"/>{t(benefit)}</li>)}</ul>
             <p className={styles.cardFooter}>{t("Cancel renewal anytime. Access continues through your paid term.")}</p>
           </article>;
         })}</div>
+        {subscription && <p className={styles.subscriptionNotice} role="status">{pendingSubscription ? t("You have a pending subscription payment. Check its status before starting another subscription.") : t("You already have a subscription. Manage it before choosing another plan.")} <Link href="/app/my-orders#subscription">{pendingSubscription ? t("Manage pending payment") : t("Manage subscription")}</Link></p>}
+        {subscriptionState.error && <p className={styles.subscriptionNotice} role="alert">{t("Could not check your subscription. Please try again.")} <button type="button" onClick={subscriptionState.reload}>{t("Retry")}</button></p>}
         <p className={styles.explanation}>{t("Subscriptions renew automatically. Annual plans are billed once per year and credits are issued monthly, not all at once.")}<br/>{t("Subscription credits are used first and expire each month. Your one-time credit balance is kept separately.")}</p>
       </>}
     </div>
