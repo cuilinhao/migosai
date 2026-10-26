@@ -5,7 +5,7 @@ import { reserveGeneration, refundGeneration } from '../lib/server/billing';
 function fixture() {
  const d=database();
  d.sqlite.exec("INSERT INTO subscriptions(id,user_id,provider_mode,plan_id,billing_interval,price_id,amount_cents,monthly_credits) VALUES('sub','u','test','creator','month','price_test',2990,60)");
- d.sqlite.exec("INSERT INTO subscription_invoices(id,subscription_id,user_id,provider_mode,invoice_id,period_start,period_end,billing_interval,monthly_credits) VALUES('invoice','sub','u','test','in_test',unixepoch()-100,unixepoch()+100,'month',60)");
+ d.sqlite.exec("INSERT INTO subscription_invoices(id,subscription_id,user_id,provider_mode,invoice_id,period_start,period_end,billing_interval,monthly_credits,price_id) VALUES('invoice','sub','u','test','in_test',unixepoch()-100,unixepoch()+100,'month',60,'price_test')");
  d.sqlite.exec("INSERT INTO subscription_credit_periods(id,invoice_id,subscription_id,user_id,starts_at,ends_at,granted,remaining) VALUES('bucket','invoice','sub','u',unixepoch()-100,unixepoch()+100,60,60)");
  return d;
 }

@@ -5,7 +5,7 @@ import { isLocale, localizeHref } from "../i18n/routing";
 import { appOrigin, database, type Env } from "./env";
 import { ApiError } from "./errors";
 import { stripeClient, stripeMode, stripeWebhookSecret } from "./stripe";
-import { grantSubscriptionInvoice } from "./subscription-credits";
+import { grantSubscriptionInvoice, grantSubscriptionChange } from "./subscription-credits";
 
 type SubscriptionRow = {
   id: string;
@@ -146,7 +146,15 @@ function verifyPrice(
   )
     reject();
 }
-function validateSubscription(sub: Stripe.Subscription, row: SubscriptionRow) {
+type PlanTerms = Pick<SubscriptionRow, "plan_id" | "price_id" | "billing_interval" | "amount_cents" | "monthly_credits" | "provider_mode">;
+async function termsForPrice(env: Env, row: SubscriptionRow, priceId: string): Promise<PlanTerms> {
+  if (priceId === row.price_id) return row;
+  const terms = await database(env).prepare("SELECT plan_id,price_id,billing_interval,amount_cents,monthly_credits FROM subscription_plan_prices WHERE subscription_id=? AND price_id=?")
+    .bind(row.id, priceId).first<Omit<PlanTerms, "provider_mode">>();
+  if (!terms) reject();
+  return { ...terms, provider_mode: row.provider_mode };
+}
+function validateSubscription(sub: Stripe.Subscription, row: SubscriptionRow, terms: PlanTerms = row) {
   if (
     sub.livemode !== (row.provider_mode === "live") ||
     !/^sub_[A-Za-z0-9]+$/.test(sub.id) ||
@@ -160,7 +168,7 @@ function validateSubscription(sub: Stripe.Subscription, row: SubscriptionRow) {
     reject();
   const item = sub.items.data[0];
   if (item.quantity !== 1) reject();
-  verifyPrice(item.price, row, false);
+  verifyPrice(item.price, { ...row, ...terms }, false);
   if (
     !Number.isSafeInteger(item.current_period_start) ||
     !Number.isSafeInteger(item.current_period_end) ||
@@ -173,6 +181,7 @@ type SubscriptionSync = {
   row: SubscriptionRow;
   sub: Stripe.Subscription;
   syncVersion: number;
+  terms: PlanTerms;
 };
 async function readForSync(
   env: Env,
@@ -191,14 +200,15 @@ async function readForSync(
   const sub = await stripeRequest(() =>
     stripeClient(env).subscriptions.retrieve(id),
   );
-  validateSubscription(sub, row);
-  return { row, sub, syncVersion: reserved.sync_version };
+  const terms = await termsForPrice(env, row, sub.items?.data?.[0]?.price?.id ?? "");
+  validateSubscription(sub, row, terms);
+  return { row, sub, terms, syncVersion: reserved.sync_version };
 }
 async function bindAndSync(
   env: Env,
-  { row, sub, syncVersion }: SubscriptionSync,
+  { row, sub, terms, syncVersion }: SubscriptionSync,
 ) {
-  const item = validateSubscription(sub, row);
+  const item = validateSubscription(sub, row, terms);
   // Portal can schedule period-end cancellation with cancel_at while leaving
   // cancel_at_period_end false. Both shapes mean the next renewal is canceled.
   const cancelAtPeriodEnd =
@@ -528,122 +538,130 @@ async function ownedSubscription(
   }
   return readForSync(env, row, id);
 }
+async function verifyInvoicePayment(env: Env, row: SubscriptionRow, invoice: Stripe.Invoice) {
+  const amount = invoice.amount_paid, client = stripeClient(env);
+  const startingBalance = invoice.starting_balance ?? 0, endingBalance = invoice.ending_balance ?? 0;
+  if (![startingBalance, endingBalance].every(value => Number.isSafeInteger(value) && value >= 0)
+    || endingBalance >= 50 || invoice.total + startingBalance !== amount + endingBalance) reject();
+  // Stripe carries sub-minimum USD charges forward as debt. Require its
+  // invoice-linked balance transactions; a credit or out-of-band payment is
+  // never treated as cash merely because an invoice says "paid".
+  if (startingBalance || endingBalance) {
+    let cursor: string | undefined, applied = !startingBalance, deferred = !endingBalance;
+    for (let page = 0; page < 10 && (!applied || !deferred); page++) {
+      const transactions = await stripeRequest(() => client.customers.listBalanceTransactions(row.customer_id!, { limit: 100, ...(cursor ? { starting_after: cursor } : {}) }));
+      for (const transaction of transactions.data) {
+        if (idOf(transaction.invoice) !== invoice.id) continue;
+        if (transaction.livemode !== (row.provider_mode === "live") || transaction.currency !== "usd" || idOf(transaction.customer) !== row.customer_id) reject();
+        if (transaction.type === "applied_to_invoice" && transaction.amount === -startingBalance) applied = true;
+        if (transaction.type === "invoice_too_small" && transaction.amount === endingBalance && transaction.ending_balance === endingBalance) deferred = true;
+      }
+      if (!transactions.has_more) break;
+      cursor = transactions.data.at(-1)?.id;
+      if (!cursor) reject();
+    }
+    if (!applied || !deferred) reject();
+  }
+  const payments = await stripeRequest(() => client.invoicePayments.list({ invoice: invoice.id, status: "paid", limit: 100 }));
+  if (payments.has_more) reject();
+  if (amount === 0) {
+    if (payments.data.length) reject();
+    return;
+  }
+  if (payments.data.length !== 1) reject();
+  const payment = payments.data[0];
+  if (idOf(payment.invoice) !== invoice.id || payment.livemode !== (row.provider_mode === "live") || payment.status !== "paid"
+    || payment.currency !== "usd" || payment.amount_paid !== amount || payment.payment.type !== "payment_intent") reject();
+  const intentId = idOf(payment.payment.payment_intent);
+  if (!intentId) reject();
+  const intent = await stripeRequest(() => client.paymentIntents.retrieve(intentId));
+  if (intent.id !== intentId || intent.status !== "succeeded" || intent.livemode !== (row.provider_mode === "live")
+    || idOf(intent.customer) !== row.customer_id || intent.currency !== "usd" || intent.amount !== amount || intent.amount_received !== amount) reject();
+}
 async function paidInvoice(env: Env, event: Stripe.Event) {
   const invoiceId = idOf(event.data.object);
   if (!invoiceId || !/^in_[A-Za-z0-9]+$/.test(invoiceId)) reject();
-  const client = stripeClient(env),
-    invoice = await stripeRequest(() => client.invoices.retrieve(invoiceId));
-  const subscriptionId = idOf(
-    invoice.parent?.subscription_details?.subscription,
-  );
+  const client = stripeClient(env), invoice = await stripeRequest(() => client.invoices.retrieve(invoiceId));
+  const subscriptionId = idOf(invoice.parent?.subscription_details?.subscription);
   if (!subscriptionId) return;
   const owned = await ownedSubscription(env, subscriptionId);
   if (!owned) return;
   const { row, sub } = owned;
-  if (
-    invoice.id !== invoiceId ||
-    invoice.livemode !== (row.provider_mode === "live") ||
-    idOf(invoice.customer) !== row.customer_id ||
-    invoice.status !== "paid" ||
-    invoice.currency !== "usd" ||
-    invoice.amount_paid !== row.amount_cents ||
-    invoice.amount_due !== row.amount_cents ||
-    invoice.total !== row.amount_cents ||
-    invoice.subtotal !== row.amount_cents ||
-    invoice.amount_remaining !== 0 ||
-    (invoice.amount_paid_off_stripe ?? 0) !== 0 ||
-    invoice.discounts.length ||
-    (invoice.total_discount_amounts ?? []).some((v) => v.amount !== 0) ||
-    !["subscription_create", "subscription_cycle"].includes(
-      invoice.billing_reason ?? "",
-    )
-  )
-    reject();
-  const lines = await stripeRequest(() =>
-    client.invoices.listLineItems(invoiceId, { limit: 100 }),
-  );
-  if (lines.has_more || lines.data.length !== 1) reject();
-  const line = lines.data[0];
-  if (
-    line.livemode !== (row.provider_mode === "live") ||
-    line.currency !== "usd" ||
-    line.quantity !== 1 ||
-    line.amount !== row.amount_cents ||
-    line.subtotal !== row.amount_cents ||
-    idOf(line.pricing?.price_details?.price) !== row.price_id ||
-    line.parent?.type !== "subscription_item_details" ||
-    line.parent.subscription_item_details?.subscription !== sub.id ||
-    line.parent.subscription_item_details.subscription_item !==
-      sub.items.data[0].id ||
-    line.parent.subscription_item_details.proration ||
-    (line.discount_amounts ?? []).some((v) => v.amount !== 0) ||
-    !Number.isSafeInteger(line.period.start) ||
-    !Number.isSafeInteger(line.period.end) ||
-    line.period.end <= line.period.start
-  )
-    reject();
-  const payments = await stripeRequest(() =>
-    client.invoicePayments.list({
-      invoice: invoiceId,
-      status: "paid",
-      limit: 100,
-    }),
-  );
-  if (payments.has_more || payments.data.length !== 1) reject();
-  const payment = payments.data[0];
-  if (
-    idOf(payment.invoice) !== invoiceId ||
-    payment.livemode !== (row.provider_mode === "live") ||
-    payment.status !== "paid" ||
-    payment.currency !== "usd" ||
-    payment.amount_paid !== row.amount_cents ||
-    payment.payment.type !== "payment_intent"
-  )
-    reject();
-  const intentId = idOf(payment.payment.payment_intent);
-  if (!intentId) reject();
-  const intent = await stripeRequest(() =>
-    client.paymentIntents.retrieve(intentId),
-  );
-  if (
-    intent.id !== intentId ||
-    intent.status !== "succeeded" ||
-    intent.livemode !== (row.provider_mode === "live") ||
-    idOf(intent.customer) !== row.customer_id ||
-    intent.currency !== "usd" ||
-    intent.amount !== row.amount_cents ||
-    intent.amount_received !== row.amount_cents
-  )
-    reject();
-  await bindAndSync(env, owned);
-  await grantSubscriptionInvoice(database(env), {
-    subscriptionId: row.id,
-    userId: row.user_id,
-    providerMode: row.provider_mode,
-    invoiceId,
-    periodStart: line.period.start,
-    periodEnd: line.period.end,
-    interval: row.billing_interval,
-    monthlyCredits: row.monthly_credits,
-    allowanceCredits: renewalAllowance(row, sub.metadata, invoice.billing_reason, line.period.start),
-  });
-  // The first Checkout order becomes paid only after the durable invoice grant.
+  if (invoice.id !== invoiceId || invoice.livemode !== (row.provider_mode === "live") || idOf(invoice.customer) !== row.customer_id
+    || invoice.status !== "paid" || invoice.currency !== "usd" || !Number.isSafeInteger(invoice.amount_paid) || invoice.amount_paid < 0
+    || invoice.amount_due !== invoice.amount_paid || invoice.total !== invoice.subtotal
+    || invoice.amount_remaining !== 0 || (invoice.amount_paid_off_stripe ?? 0) !== 0 || invoice.discounts.length
+    || (invoice.total_discount_amounts ?? []).some(v => v.amount !== 0)
+    || !["subscription_create", "subscription_cycle", "subscription_update"].includes(invoice.billing_reason ?? "")) reject();
+  const lines = await stripeRequest(() => client.invoices.listLineItems(invoiceId, { limit: 100 }));
+  if (lines.has_more || !lines.data.length || lines.data.length > 2) reject();
+  const verified: { line: Stripe.InvoiceLineItem; terms: PlanTerms }[] = [];
+  for (const line of lines.data) {
+    if (line.livemode !== (row.provider_mode === "live") || line.currency !== "usd" || line.quantity !== 1
+      || !Number.isSafeInteger(line.amount) || line.subtotal !== line.amount
+      || line.parent?.type !== "subscription_item_details" || line.parent.subscription_item_details?.subscription !== sub.id
+      || line.parent.subscription_item_details.subscription_item !== sub.items.data[0].id
+      || (line.discount_amounts ?? []).some(v => v.amount !== 0)
+      || !Number.isSafeInteger(line.period.start) || !Number.isSafeInteger(line.period.end) || line.period.end <= line.period.start) reject();
+    const terms = await termsForPrice(env, row, idOf(line.pricing?.price_details?.price) ?? "");
+    if (Math.abs(line.amount) > terms.amount_cents) reject();
+    verified.push({ line, terms });
+  }
+  if (verified.reduce((sum, value) => sum + value.line.amount, 0) !== invoice.total) reject();
+  await verifyInvoicePayment(env, row, invoice);
   const db = database(env);
+  let orderTerms: PlanTerms;
+  let orderCredits: number;
+  if (invoice.billing_reason === "subscription_update") {
+    // Stripe can round a valid unused-time credit to zero. Its credited-items
+    // reference, rather than its numeric sign alone, identifies that line.
+    const isCredit = (value: typeof verified[number]) => value.line.amount < 0 || (value.line.amount === 0 && !!value.line.parent?.subscription_item_details?.proration_details?.credited_items);
+    const charge = verified.find(v => !isCredit(v));
+    const credit = verified.find(isCredit);
+    if (!charge || (verified.length === 2 && !credit)) reject();
+    const { line, terms } = charge;
+    const resetPeriod = !line.parent!.subscription_item_details!.proration;
+    const previous = credit?.terms ?? row;
+    if (previous.price_id === terms.price_id) reject();
+    if (credit && (!credit.line.parent!.subscription_item_details!.proration || credit.line.period.start !== line.period.start
+      || credit.terms.price_id === terms.price_id)) reject();
+    if (!resetPeriod) {
+      if (!credit || credit.line.period.end !== line.period.end || previous.billing_interval !== terms.billing_interval
+        || previous.monthly_credits > terms.monthly_credits || previous.amount_cents >= terms.amount_cents) reject();
+    } else if (line.amount !== terms.amount_cents || (credit && credit.line.period.end > line.period.end)) reject();
+    await grantSubscriptionChange(db, {
+      subscriptionId: row.id, userId: row.user_id, providerMode: row.provider_mode, invoiceId,
+      periodStart: line.period.start, periodEnd: line.period.end, fromPriceId: previous.price_id, toPriceId: terms.price_id,
+      fromMonthlyCredits: previous.monthly_credits, toMonthlyCredits: terms.monthly_credits, interval: terms.billing_interval, resetPeriod,
+    });
+    orderTerms = terms;
+    const prefix = `${row.provider_mode}:${invoiceId}:change:`;
+    const added = await db.prepare("SELECT COALESCE(SUM(amount),0) AS credits FROM credit_ledger WHERE kind='subscription_grant' AND user_id=? AND substr(reference_id,1,?)=?")
+      .bind(row.user_id, prefix.length, prefix).first<{ credits: number }>();
+    orderCredits = resetPeriod ? terms.monthly_credits : (added?.credits ?? 0);
+  } else {
+    if (verified.length !== 1) reject();
+    const { line, terms } = verified[0];
+    if (line.parent!.subscription_item_details!.proration || line.amount !== terms.amount_cents) reject();
+    await grantSubscriptionInvoice(db, {
+      subscriptionId: row.id, userId: row.user_id, providerMode: row.provider_mode, invoiceId,
+      periodStart: line.period.start, periodEnd: line.period.end, interval: terms.billing_interval,
+      monthlyCredits: terms.monthly_credits, priceId: terms.price_id,
+      allowanceCredits: terms.price_id === row.price_id ? renewalAllowance(row, sub.metadata, invoice.billing_reason, line.period.start) : undefined,
+    });
+    orderTerms = terms;
+    const granted = await db.prepare("SELECT monthly_credits FROM subscription_invoices WHERE provider_mode=? AND invoice_id=?")
+      .bind(row.provider_mode, invoiceId).first<{ monthly_credits: number }>();
+    orderCredits = granted?.monthly_credits ?? terms.monthly_credits;
+  }
+  await bindAndSync(env, owned);
   await db.batch([
-    db
-      .prepare(
-        "UPDATE orders SET status='paid',provider_order_id=? WHERE id=? AND purchase_type='subscription' AND status='pending'",
-      )
-      .bind(invoiceId, row.id),
-    db
-      .prepare(
-        `INSERT INTO orders(id,user_id,pack_id,product_id,amount,currency,credits,provider,provider_mode,purchase_type,provider_order_id,status) SELECT ?,o.user_id,o.pack_id,o.product_id,o.amount,o.currency,i.monthly_credits,o.provider,o.provider_mode,'subscription',?,'paid' FROM orders o JOIN subscription_invoices i ON i.subscription_id=o.id AND i.user_id=o.user_id AND i.provider_mode=o.provider_mode AND i.invoice_id=? WHERE o.id=? AND o.status='paid' AND o.provider_order_id!=? ON CONFLICT(id) DO NOTHING`,
-      )
-      .bind(`${row.id}:${invoiceId}`, invoiceId, invoiceId, row.id, invoiceId),
-    db
-      .prepare(
-        `INSERT INTO webhook_events(id,event_type,order_id) VALUES(?,?,?) ON CONFLICT(id) DO NOTHING`,
-      )
+    db.prepare("UPDATE orders SET status='paid',provider_order_id=? WHERE id=? AND purchase_type='subscription' AND status='pending' AND product_id=? AND ?='subscription_create'")
+      .bind(invoiceId, row.id, orderTerms.price_id, invoice.billing_reason),
+    db.prepare(`INSERT INTO orders(id,user_id,pack_id,product_id,amount,currency,credits,provider,provider_mode,purchase_type,provider_order_id,status)
+      SELECT ?,?,?,?,?, 'USD',?,'stripe',?,'subscription',?,'paid' WHERE NOT EXISTS(SELECT 1 FROM orders WHERE id=? AND provider_order_id=?) ON CONFLICT(id) DO NOTHING`)
+      .bind(`${row.id}:${invoiceId}`, row.user_id, orderTerms.plan_id, orderTerms.price_id, invoice.amount_paid, orderCredits, row.provider_mode, invoiceId, row.id, invoiceId),
+    db.prepare("INSERT INTO webhook_events(id,event_type,order_id) VALUES(?,?,?) ON CONFLICT(id) DO NOTHING")
       .bind(`stripe:${row.provider_mode}:${event.id}`, event.type, row.id),
   ]);
 }
@@ -814,8 +832,10 @@ async function reloadSubscription(env: Env, row: SubscriptionRow) {
 /** Account refreshes reconcile lifecycle only. Credits still require invoice.paid. */
 async function refreshSubscription(env: Env, row: SubscriptionRow) {
   let checkoutUrl: string | null = null;
+  let synced: SubscriptionSync | null = null;
   if (row.subscription_id) {
-    await bindAndSync(env, await readForSync(env, row, row.subscription_id));
+    synced = await readForSync(env, row, row.subscription_id);
+    await bindAndSync(env, synced);
   } else if (row.status === "pending" && row.checkout_id) {
     const session = await stripeRequest(() =>
       stripeClient(env).checkout.sessions.retrieve(row.checkout_id!),
@@ -823,7 +843,7 @@ async function refreshSubscription(env: Env, row: SubscriptionRow) {
     validateSession(session, row);
     if (session.status === "complete") {
       const id = idOf(session.subscription);
-      if (id) await bindAndSync(env, await readForSync(env, row, id));
+      if (id) { synced = await readForSync(env, row, id); await bindAndSync(env, synced); }
     } else if (session.status === "expired") {
       try {
         await retireExpiredCheckout(database(env), row, session);
@@ -838,7 +858,7 @@ async function refreshSubscription(env: Env, row: SubscriptionRow) {
     } else reject();
   }
   const current = await reloadSubscription(env, row);
-  return { row: current, checkoutUrl: current.status === "pending" && !current.subscription_id ? checkoutUrl : null };
+  return { row: current, synced, checkoutUrl: current.status === "pending" && !current.subscription_id ? checkoutUrl : null };
 }
 const cancellableStates = ["active", "trialing", "past_due"];
 function canCancelRenewal(row: SubscriptionRow) {
@@ -847,15 +867,21 @@ function canCancelRenewal(row: SubscriptionRow) {
 export async function subscriptionStatus(env: Env, userId: string) {
   const latest = await latestSubscription(env, userId);
   if (!latest) return { subscription: null };
-  const { row, checkoutUrl } = await refreshSubscription(env, latest);
+  const { row, checkoutUrl, synced } = await refreshSubscription(env, latest);
+  const latestInvoice = idOf(synced?.sub.latest_invoice);
+  const creditsPending = !!latestInvoice && !(await database(env).prepare(
+    "SELECT 1 AS granted FROM subscription_invoices WHERE subscription_id=? AND provider_mode=? AND invoice_id=? UNION ALL SELECT 1 AS granted FROM subscription_change_invoices WHERE subscription_id=? AND provider_mode=? AND invoice_id=? LIMIT 1",
+  ).bind(row.id, row.provider_mode, latestInvoice, row.id, row.provider_mode, latestInvoice).first());
   return {
     subscription: {
       id: row.id,
-      planId: row.plan_id,
-      billingInterval: row.billing_interval,
+      planId: synced?.terms.plan_id ?? row.plan_id,
+      billingInterval: synced?.terms.billing_interval ?? row.billing_interval,
       status: row.status,
       canManage: !!row.subscription_id && !!row.customer_id,
       canCancel: !!checkoutUrl || canCancelRenewal(row),
+      canChange: !!env.STRIPE_SUBSCRIPTION_CHANGE_CONFIGURATION && !!synced && canChangePlan(row, synced.sub),
+      creditsPending,
       checkoutUrl,
       cancelAtPeriodEnd: !!row.cancel_at_period_end,
       currentPeriodStart: row.current_period_start
@@ -910,6 +936,53 @@ export async function createSubscriptionPortal(env: Env, userId: string, locale?
   if (!latest) throw new ApiError(404, "No subscription is available to manage.");
   const { row } = await refreshSubscription(env, latest);
   return portalForSubscription(env, row, locale);
+}
+function canChangePlan(row: SubscriptionRow, sub: Stripe.Subscription) {
+  return !!row.subscription_id && !!row.customer_id && !row.cancel_at_period_end
+    && row.status === "active" && !sub.pending_update && !sub.schedule
+    && sub.metadata.renewalCredits === undefined && sub.metadata.renewalCreditsEffectiveAt === undefined;
+}
+/** A confirmation URL only: Stripe performs the change after the customer confirms. */
+export async function createSubscriptionChange(env: Env, userId: string, subscriptionId: string, planId: unknown, interval: unknown, locale?: unknown) {
+  const plan = subscriptionPlans.find(plan => plan.id === planId);
+  if (!plan || (interval !== "month" && interval !== "year")) throw new ApiError(400, "Unknown subscription plan.");
+  const latest = await latestSubscription(env, userId);
+  if (!latest || latest.id !== subscriptionId) throw new ApiError(409, "The subscription has changed. Refresh and try again.");
+  const { row, synced } = await refreshSubscription(env, latest);
+  if (!synced || !canChangePlan(row, synced.sub)) throw new ApiError(409, "Manage your existing payment or scheduled change before changing plans.");
+  if (synced.terms.plan_id === plan.id && synced.terms.billing_interval === interval) throw new ApiError(409, "This is already your current plan.");
+  const key = `STRIPE_PRICE_${interval === "month" ? "MONTHLY" : "YEARLY"}_${plan.id.replaceAll("-", "_").toUpperCase()}`;
+  const priceId = env[key as keyof Env];
+  if (typeof priceId !== "string" || !/^price_[A-Za-z0-9]+$/.test(priceId)) throw new ApiError(503, "This subscription plan is not configured.");
+  const client = stripeClient(env);
+  const target: PlanTerms = { plan_id: plan.id, billing_interval: interval, price_id: priceId, amount_cents: interval === "month" ? plan.monthlyPriceCents : plan.yearlyPriceCents, monthly_credits: plan.credits, provider_mode: row.provider_mode };
+  // Legacy plans with more credits at a lower price cannot use immediate credit reductions.
+  if (interval === synced.terms.billing_interval && target.amount_cents >= synced.terms.amount_cents && target.monthly_credits < synced.terms.monthly_credits)
+    throw new ApiError(409, "This legacy plan change requires support.");
+  const targetPrice = await stripeRequest(() => client.prices.retrieve(priceId));
+  verifyPrice(targetPrice, { ...row, ...target });
+  const configId = env.STRIPE_SUBSCRIPTION_CHANGE_CONFIGURATION;
+  if (!configId || !/^bpc_[A-Za-z0-9]+$/.test(configId)) throw new ApiError(503, "Subscription changes are not configured.");
+  const config = await stripeRequest(() => client.billingPortal.configurations.retrieve(configId, { expand: ["features.subscription_update.products"] }));
+  const update = config.features.subscription_update;
+  const conditions = update.schedule_at_period_end?.conditions?.map(condition => condition.type) ?? [];
+  if (config.id !== configId || !config.active || config.livemode !== (row.provider_mode === "live") || !update.enabled
+    || update.default_allowed_updates.length !== 1 || update.default_allowed_updates[0] !== "price"
+    || update.proration_behavior !== "always_invoice" || update.billing_cycle_anchor !== "unchanged"
+    || conditions.length !== 2 || !conditions.includes("decreasing_item_amount") || !conditions.includes("shortening_interval")
+    || !update.products?.some(product => product.product === idOf(targetPrice.product) && product.prices.includes(priceId) && !product.adjustable_quantity?.enabled))
+    throw new ApiError(503, "Subscription change configuration is not supported.");
+  await database(env).prepare("INSERT INTO subscription_plan_prices(subscription_id,price_id,plan_id,billing_interval,amount_cents,monthly_credits) VALUES(?,?,?,?,?,?) ON CONFLICT(subscription_id,price_id) DO NOTHING")
+    .bind(row.id, priceId, target.plan_id, target.billing_interval, target.amount_cents, target.monthly_credits).run();
+  const saved = await termsForPrice(env, row, priceId);
+  if (saved.plan_id !== target.plan_id || saved.billing_interval !== target.billing_interval || saved.amount_cents !== target.amount_cents || saved.monthly_credits !== target.monthly_credits) reject();
+  const returnUrl = paymentOrigin(env) + localizeHref("/pricing", typeof locale === "string" && isLocale(locale) ? locale : "en") + "?subscription=updated";
+  const session = await stripeRequest(() => client.billingPortal.sessions.create({
+    customer: row.customer_id!, configuration: configId, return_url: returnUrl,
+    flow_data: { type: "subscription_update_confirm", subscription_update_confirm: { subscription: row.subscription_id!, items: [{ id: synced.sub.items.data[0].id, price: priceId, quantity: 1 }] }, after_completion: { type: "redirect", redirect: { return_url: returnUrl } } },
+  }));
+  if (session.customer !== row.customer_id || session.livemode !== (row.provider_mode === "live") || idOf(session.configuration) !== configId) reject();
+  return { url: hostedUrl(session.url, "billing.stripe.com") };
 }
 export async function cancelSubscription(env: Env, userId: string, subscriptionId: string, locale?: unknown) {
   const latest = await latestSubscription(env, userId);

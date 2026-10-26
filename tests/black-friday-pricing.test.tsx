@@ -61,6 +61,25 @@ describe('Black Friday pricing handoff', () => {
     expect(regular).not.toContain('550 credits per month');
   });
 
+  it.each(['subscription=updated', 'promo=blackfriday&subscription=updated'])('returns to subscription pricing after a confirmed plan change: %s', async search => {
+    const { PricingEntry } = await import('../components/black-friday/pricing-entry');
+    navigation.search = search;
+    const html = renderToStaticMarkup(<AuthProvider><PricingEntry offerTime={Date.parse('2026-11-27T12:00:00Z')}/></AuthProvider>);
+    expect(html).toContain('550 credits per month');
+    expect(html).not.toContain('300 + 60 bonus credits');
+    expect(html).toContain('Checking your subscription update…');
+    expect(html).not.toContain('Subscription status updated');
+  });
+
+  it('does not select subscriptions for an unrelated or unconfirmed query', async () => {
+    const { PricingEntry } = await import('../components/black-friday/pricing-entry');
+    navigation.search = 'subscription=pending&checkout=completed&promo=blackfriday';
+    const html = renderToStaticMarkup(<AuthProvider><PricingEntry offerTime={Date.parse('2026-11-27T12:00:00Z')}/></AuthProvider>);
+    expect(html).toContain('300 + 60 bonus credits');
+    expect(html).not.toContain('550 credits per month');
+    expect(html).not.toContain('Checking your subscription update…');
+  });
+
   it('localizes the campaign entry without adding internal acquisition UTM tags', async () => {
     const { CampaignBanner } = await import('../components/black-friday/campaign-banner');
     const html = renderToStaticMarkup(<LocaleProvider locale="zh-TW" messages={getMessages('zh-TW')}><CampaignBanner placement="home"/></LocaleProvider>);

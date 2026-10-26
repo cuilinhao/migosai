@@ -16,6 +16,7 @@ const backend = vi.hoisted(() => ({
   status: vi.fn(),
   portal: vi.fn(),
   cancel: vi.fn(),
+  change: vi.fn(),
   credits: vi.fn(),
 }));
 vi.mock("../lib/server/env", async (original) => ({
@@ -30,12 +31,14 @@ vi.mock("../lib/server/subscriptions", () => ({
   subscriptionStatus: backend.status,
   createSubscriptionPortal: backend.portal,
   cancelSubscription: backend.cancel,
+  createSubscriptionChange: backend.change,
 }));
 vi.mock("../lib/server/payments", () => ({ createCheckout: backend.credits }));
 import { POST as checkout } from "../app/api/checkout/route";
 import { GET as status } from "../app/api/subscription/route";
 import { POST as portal } from "../app/api/subscription/portal/route";
 import { POST as cancel } from "../app/api/subscription/cancel/route";
+import { POST as change } from "../app/api/subscription/change/route";
 import { requireUser } from "../lib/server/auth";
 import { ApiError } from "../lib/server/errors";
 const request = (
@@ -63,6 +66,7 @@ beforeEach(() => {
     url: "https://billing.stripe.com/p/session/fixture",
   });
   backend.cancel.mockResolvedValue({ cancelled: true });
+  backend.change.mockResolvedValue({ url: "https://billing.stripe.com/p/session/change-fixture" });
   vi.mocked(requireUser).mockResolvedValue(state.user);
 });
 describe("subscription HTTP routes", () => {
@@ -248,10 +252,13 @@ const rawSubscriptionRequest = (path: string, body?: string, origin = "https://e
     body,
   });
 
+const changeRequest = { subscriptionId: "sub-local", expectedUserId: "u", planId: "standard", billingInterval: "month", expectedAmountCents: 2990, expectedCredits: 1150 };
+
 describe.each([
-  { path: "/api/subscription/portal", handler: portal, operation: backend.portal },
-  { path: "/api/subscription/cancel", handler: cancel, operation: backend.cancel },
-])("subscription management boundary: $path", ({ path, handler, operation }) => {
+  { path: "/api/subscription/portal", handler: portal, operation: backend.portal, body: { subscriptionId: "sub-local" } },
+  { path: "/api/subscription/cancel", handler: cancel, operation: backend.cancel, body: { subscriptionId: "sub-local" } },
+  { path: "/api/subscription/change", handler: change, operation: backend.change, body: changeRequest },
+])("subscription management boundary: $path", ({ path, handler, operation, body: validBody }) => {
   it("rejects cross-origin requests before checking authentication or parsing JSON", async () => {
     const response = await handler(rawSubscriptionRequest(path, "{", "https://evil.test"), {});
     expect(response.status).toBe(403);
@@ -295,7 +302,7 @@ describe.each([
 
   it("preserves billing errors in an uncached response", async () => {
     operation.mockRejectedValueOnce(new ApiError(404, "The subscription was not found."));
-    const response = await handler(request(path, { subscriptionId: "sub-local" }), {});
+    const response = await handler(request(path, validBody), {});
     expect(response.status).toBe(404);
     expect(await response.json()).toEqual({ error: "The subscription was not found." });
     expect(response.headers.get("cache-control")).toBe("no-store");
@@ -356,5 +363,55 @@ describe("localized subscription billing portal", () => {
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual({ url: "https://billing.stripe.com/p/session/fixture" });
     expect(backend.portal).toHaveBeenCalledWith(state.env, "u", "fr");
+  });
+});
+
+
+describe("subscription plan-change HTTP route", () => {
+  it.each([undefined, null, "", " ", 42, [], {}, "x".repeat(201)])("requires a bounded subscription identifier: %j", async subscriptionId => {
+    const response = await change(request("/api/subscription/change", { ...changeRequest, subscriptionId }), {});
+    expect(response.status).toBe(400);
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(backend.change).not.toHaveBeenCalled();
+  });
+  it.each([undefined, null, "other", 42])("rejects a missing or different signed-in account precondition: %j", async expectedUserId => {
+    const response = await change(request("/api/subscription/change", { ...changeRequest, expectedUserId }), {});
+    expect(response.status).toBe(409);
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(backend.change).not.toHaveBeenCalled();
+  });
+  it.each([
+    { planId: "unknown" }, { planId: "elite-15000" }, { planId: undefined },
+    { billingInterval: "week" }, { billingInterval: null }, { billingInterval: undefined },
+  ])("rejects unavailable plans and billing intervals: %j", async input => {
+    const response = await change(request("/api/subscription/change", { ...changeRequest, ...input }), {});
+    expect(response.status).toBe(400);
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(backend.change).not.toHaveBeenCalled();
+  });
+  it.each([
+    { expectedCredits: undefined }, { expectedAmountCents: undefined },
+    { expectedCredits: 2500 }, { expectedAmountCents: 2499 },
+    { expectedCredits: "1150" }, { expectedAmountCents: "2990" },
+    { billingInterval: "year" },
+  ])("rejects stale or malformed plan-change quotes: %j", async quote => {
+    const response = await change(request("/api/subscription/change", { ...changeRequest, ...quote }), {});
+    expect(response.status).toBe(409);
+    expect(await response.json()).toEqual({ error: "This subscription offer has changed. Refresh pricing before you check out." });
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(backend.change).not.toHaveBeenCalled();
+  });
+  it.each([
+    ["standard", "month", 2990, 1150], ["standard", "year", 32292, 1150],
+    ["pro", "month", 4990, 1950], ["pro", "year", 53892, 1950],
+    ["elite-4000", "month", 9990, 4000], ["elite-4000", "year", 107892, 4000],
+    ["lite", "month", 1490, 550], ["lite", "year", 16092, 550],
+  ])("forwards authenticated ownership and the current quote for %s/%s", async (planId, billingInterval, expectedAmountCents, expectedCredits) => {
+    const response = await change(request("/api/subscription/change", { ...changeRequest, planId, billingInterval, expectedAmountCents, expectedCredits, locale: "ja", userId: "forged", priceId: "price_forged", amount: 1, customerId: "cus_forged" }), {});
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ url: "https://billing.stripe.com/p/session/change-fixture" });
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(backend.change).toHaveBeenCalledWith(state.env, "u", "sub-local", planId, billingInterval, "ja");
+    expect(backend.checkout).not.toHaveBeenCalled();
   });
 });

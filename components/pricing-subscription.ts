@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { pricingSubscriptionView, readPricingSubscription, type Subscriber, type PricingSubscriptionSnapshot } from "./pricing-subscription-state";
+import { isCurrentPricingPlan, pricingSubscriptionView, readPricingSubscription, type Subscriber, type PricingSubscriptionSnapshot } from "./pricing-subscription-state";
 
 export function usePricingSubscription(user: Subscriber | null) {
   const [revision, setRevision] = useState(0);
@@ -41,6 +41,10 @@ export function usePricingSubscription(user: Subscriber | null) {
   function canSubscribe() {
     return pricingSubscriptionView(currentOwner.current, currentRevision.current, currentSnapshot.current).canSubscribe;
   }
+  function canChangePlan(planId: string, billingInterval: "month" | "year") {
+    const view = pricingSubscriptionView(currentOwner.current, currentRevision.current, currentSnapshot.current);
+    return view.canChange && !isCurrentPricingPlan(view.subscription, planId, billingInterval);
+  }
 
-  return { ...pricingSubscriptionView(user, revision, snapshot), reload, canSubscribe };
+  return { ...pricingSubscriptionView(user, revision, snapshot), reload, canSubscribe, canChangePlan };
 }

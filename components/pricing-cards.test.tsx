@@ -1,8 +1,9 @@
 import { isValidElement, type ReactElement, type ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { PricingCards } from "./pricing-cards";
+import type { PricingSubscription } from "./pricing-subscription-state";
 
-const state = vi.hoisted(() => ({ cells: [] as unknown[], cursor: 0, cleanups: [] as (() => void)[], user: { id: "buyer-1" } as { id: string; isGuest?: boolean } | null, openSignIn: vi.fn(), ensureGuest: vi.fn(), reloadSubscription: vi.fn() }));
+const state = vi.hoisted(() => ({ cells: [] as unknown[], cursor: 0, cleanups: [] as (() => void)[], user: { id: "buyer-1" } as { id: string; isGuest?: boolean } | null, openSignIn: vi.fn(), ensureGuest: vi.fn(), reloadSubscription: vi.fn(), subscription: null as PricingSubscription | null, subscriptionFresh: true }));
 vi.mock("react", async original => ({
   ...await original<typeof import("react")>(),
   useState(initial: unknown) { const index = state.cursor++; if (!(index in state.cells)) state.cells[index] = typeof initial === "function" ? initial() : initial; return [state.cells[index], (value: unknown) => { state.cells[index] = typeof value === "function" ? value(state.cells[index]) : value; }]; },
@@ -10,7 +11,7 @@ vi.mock("react", async original => ({
   useEffect(effect: () => (() => void) | undefined) { const index = state.cursor++; if (!(index in state.cells)) { state.cells[index] = true; const cleanup = effect(); if (cleanup) state.cleanups.push(cleanup); } },
   useId: () => "pricing-test",
 }));
-vi.mock("./pricing-subscription", () => ({ usePricingSubscription: () => ({ subscription: null, loading: false, error: false, reload: state.reloadSubscription, canSubscribe: () => true }) }));
+vi.mock("./pricing-subscription", () => ({ usePricingSubscription: () => ({ subscription: state.subscription, loading: !state.subscriptionFresh, error: false, canChange: state.subscriptionFresh && state.subscription?.canChange === true, reload: state.reloadSubscription, canSubscribe: () => state.subscriptionFresh && !state.subscription, canChangePlan: (planId: string, interval: string) => state.subscriptionFresh && state.subscription?.canChange === true && !(state.subscription.planId === planId && state.subscription.billingInterval === interval) }) }));
 vi.mock("./auth-provider", () => ({ useAuth: () => ({ user: state.user, loading: false, openSignIn: state.openSignIn, ensureGuest: state.ensureGuest }) }));
 vi.mock("@/components/i18n/locale-provider", () => ({ useLocale: () => "en", useTranslations: () => (source: string, values?: Record<string, string | number>) => source.replace(/\{(\w+)\}/g, (match, key) => values?.[key] === undefined ? match : String(values[key])) }));
 
@@ -44,7 +45,7 @@ function clickCard(tree: ReactNode, name: string, interactiveChild = false) {
 const checkout = "https://checkout.stripe.com/c/pay/cs_test_reference";
 
 beforeEach(() => {
-  state.cells = []; state.cursor = 0; state.cleanups = []; state.user = { id: "buyer-1" }; state.openSignIn.mockReset(); state.reloadSubscription.mockReset();
+  state.cells = []; state.cursor = 0; state.subscription = null; state.subscriptionFresh = true; state.cleanups = []; state.user = { id: "buyer-1" }; state.openSignIn.mockReset(); state.reloadSubscription.mockReset();
   state.ensureGuest.mockReset().mockImplementation(async () => { state.user = { id: "guest-1", isGuest: true }; return state.user; });
   vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify({ checkoutUrl: checkout, orderId: "order-1" }))));
   vi.stubGlobal("window", { open: vi.fn() });
@@ -264,5 +265,68 @@ describe("pricing purchase choices", () => {
     resolve(new Response(JSON.stringify({ checkoutUrl: checkout })));
     await pending;
     expect(window.open).not.toHaveBeenCalled();
+  });
+});
+
+
+describe("existing subscription changes", () => {
+  const portal = "https://billing.stripe.com/p/session/test_reference";
+  beforeEach(() => {
+    state.subscription = { id: "subscription-1", planId: "lite", billingInterval: "month", status: "active", canChange: true };
+    vi.mocked(fetch).mockResolvedValue(Response.json({ url: portal }));
+  });
+  it("opens a plan change confirmation for the existing subscription without creating another checkout", async () => {
+    await click(render(), "Upgrade to Standard");
+    expect(fetch).toHaveBeenCalledOnce();
+    expect(fetch).toHaveBeenCalledWith("/api/subscription/change", expect.objectContaining({ body: JSON.stringify({ subscriptionId: "subscription-1", planId: "standard", billingInterval: "month", locale: "en", expectedCredits: 1150, expectedAmountCents: 2990, expectedUserId: "buyer-1" }) }));
+    expect(window.open).toHaveBeenCalledWith(portal, "_blank", "noopener,noreferrer");
+    expect(elements(render()).some(element => element.type === "a" && element.props.href === portal)).toBe(true);
+    expect(state.reloadSubscription).toHaveBeenCalledOnce();
+  });
+  it("will not submit the current plan even if its click handler is invoked", async () => {
+    const tree = render();
+    expect(button(tree, "Lite: Current plan").props.disabled).toBe(true);
+    await click(tree, "Lite: Current plan");
+    expect(fetch).not.toHaveBeenCalled();
+  });
+  it("rechecks capability when an older handler is clicked after status invalidation", async () => {
+    const tree = render();
+    state.subscriptionFresh = false;
+    await click(tree, "Upgrade to Standard");
+    expect(fetch).not.toHaveBeenCalled();
+  });
+  it("opens only one confirmation for a double click", async () => {
+    let resolve!: (response: Response) => void;
+    vi.mocked(fetch).mockImplementation(() => new Promise<Response>(done => { resolve = done; }));
+    const tree = render();
+    const pending = click(tree, "Upgrade to Standard");
+    await click(tree, "Upgrade to Standard");
+    expect(fetch).toHaveBeenCalledOnce();
+    resolve(Response.json({ url: portal }));
+    await pending;
+    expect(window.open).toHaveBeenCalledOnce();
+  });
+  it.each(["https://checkout.stripe.com/c/pay/incorrect", "https://billing.stripe.com.evil.test/p/session/test", "javascript:alert(1)"])("rejects an unsafe or incorrect billing portal address %s", async url => {
+    vi.mocked(fetch).mockResolvedValue(Response.json({ url }));
+    await click(render(), "Upgrade to Standard");
+    expect(window.open).not.toHaveBeenCalled();
+    expect(textOf(render())).toContain("invalid billing address");
+  });
+  it("discards a change response after the account switches", async () => {
+    let resolve!: (response: Response) => void;
+    vi.mocked(fetch).mockImplementation(() => new Promise<Response>(done => { resolve = done; }));
+    const pending = click(render(), "Upgrade to Standard");
+    state.user = { id: "buyer-2" }; render();
+    resolve(Response.json({ url: portal }));
+    await pending;
+    expect(window.open).not.toHaveBeenCalled();
+    expect(elements(render()).some(element => element.type === "a" && element.props.href === portal)).toBe(false);
+  });
+  it("keeps an error visible and refreshes state after a failed change request", async () => {
+    vi.mocked(fetch).mockRejectedValue(new Error("Subscription service could not be confirmed. Please try again later."));
+    await click(render(), "Upgrade to Standard");
+    expect(window.open).not.toHaveBeenCalled();
+    expect(textOf(render())).toContain("Subscription service could not be confirmed");
+    expect(state.reloadSubscription).toHaveBeenCalledOnce();
   });
 });

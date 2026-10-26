@@ -6,6 +6,7 @@ export type PricingSubscription = {
   planId: string;
   billingInterval: "month" | "year";
   status: string;
+  canChange?: boolean;
 };
 export type PricingSubscriptionSnapshot = {
   owner: Subscriber;
@@ -23,7 +24,7 @@ export function readPricingSubscription(body: unknown): PricingSubscription | nu
     !("planId" in subscription) || typeof subscription.planId !== "string" ||
     !("billingInterval" in subscription) || !["month", "year"].includes(String(subscription.billingInterval)) ||
     !("status" in subscription) || typeof subscription.status !== "string") throw new Error("Invalid subscription response");
-  // Closed subscriptions can be purchased again; all other states stay blocked.
+  // Closed subscriptions can be purchased again; open states cannot create a second subscription.
   // In particular, canceling renewal does not close an active paid subscription.
   return ["canceled", "expired", "incomplete_expired"].includes(subscription.status) ? null : subscription as PricingSubscription;
 }
@@ -37,6 +38,8 @@ export function pricingSubscriptionView(user: Subscriber | null, revision: numbe
     loading,
     error: !loading && !!ownSnapshot?.error,
     canSubscribe: registered && !loading && !!ownSnapshot && !ownSnapshot.error && !ownSnapshot.subscription,
+    canChange: registered && !loading && !!ownSnapshot && !ownSnapshot.error
+      && ownSnapshot.subscription?.canChange === true && ["active", "trialing"].includes(ownSnapshot.subscription.status),
   };
 }
 

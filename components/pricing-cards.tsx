@@ -6,6 +6,7 @@ import { creditPacks, subscriptionPlans, type PackId, type SubscriptionPlanId, t
 import { useAuth } from "./auth-provider";
 import { useLocale, useTranslations } from "@/components/i18n/locale-provider";
 import { trustedCheckoutUrl } from "./ui/checkout-url";
+import { trustedBillingPortalUrl } from "./account/subscription-portal";
 import { blackFridayCampaign, getCreditPackOffer } from "@/content/black-friday-offer";
 import styles from "./pricing-cards.module.css";
 import { GuestWalletPanel } from "./guest-wallet-panel";
@@ -23,7 +24,7 @@ export function PricingCards({ initialPurchaseType = "packs", offerTime = 0 }: {
   const subscriptionState = usePricingSubscription(user);
   const subscription = subscriptionState.subscription;
   const checkingSubscription = authLoading || subscriptionState.loading;
-  const subscriptionBlocked = checkingSubscription || subscriptionState.error || !!subscription;
+  const subscriptionBlocked = checkingSubscription || subscriptionState.error || (!!subscription && !subscriptionState.canChange);
   const pendingSubscription = subscription?.status === "pending" || subscription?.status === "incomplete";
   const id = useId();
   const [tab, setTab] = useState<PurchaseTab>(initialPurchaseType);
@@ -32,7 +33,7 @@ export function PricingCards({ initialPurchaseType = "packs", offerTime = 0 }: {
   const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlanId>("standard");
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<{ userId: string | undefined; message: string } | null>(null);
-  const [checkout, setCheckout] = useState<{ userId: string; url: string } | null>(null);
+  const [checkout, setCheckout] = useState<{ userId: string; url: string; changingPlan: boolean } | null>(null);
   const inFlight = useRef(false);
   const currentUserId = useRef(user?.id);
   const mounted = useRef(true);
@@ -67,7 +68,10 @@ export function PricingCards({ initialPurchaseType = "packs", offerTime = 0 }: {
 
   async function buy(purchase: Purchase) {
     if (inFlight.current || authLoading) return;
-    if (!("packId" in purchase) && user && !user.isGuest && !subscriptionState.canSubscribe()) return;
+    const changingPlan = !("packId" in purchase) && !!subscription;
+    if (!("packId" in purchase) && user && !user.isGuest && !(changingPlan
+      ? subscriptionState.canChangePlan(purchase.planId, purchase.billingInterval)
+      : subscriptionState.canSubscribe())) return;
     selectPurchase(purchase);
     if (!("packId" in purchase) && (!user || user.isGuest)) { openSignIn(); return; }
     let userId = user?.id;
@@ -85,14 +89,17 @@ export function PricingCards({ initialPurchaseType = "packs", offerTime = 0 }: {
       const quote = pack ? { expectedCredits: getCreditPackOffer(pack, offerTime).credits }
         : plan && "billingInterval" in purchase ? { expectedCredits: plan.credits, expectedAmountCents: purchase.billingInterval === "year" ? plan.yearlyPriceCents : plan.monthlyPriceCents } : {};
       checkoutRequested = true;
-      const response = await fetch("/api/checkout", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...purchase, locale, ...quote, expectedUserId: userId }) });
-      const data: { checkoutUrl?: string; buyerId?: string; error?: string } = await response.json();
+      const request = changingPlan && "planId" in purchase
+        ? { subscriptionId: subscription!.id, planId: purchase.planId, billingInterval: purchase.billingInterval, locale, ...quote, expectedUserId: userId }
+        : { ...purchase, locale, ...quote, expectedUserId: userId };
+      const response = await fetch(changingPlan ? "/api/subscription/change" : "/api/checkout", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify(request) });
+      const data: { checkoutUrl?: string; url?: string; buyerId?: string; error?: string } = await response.json();
       if (!mounted.current || currentUserId.current !== userId) return;
-      if (!response.ok || !data.checkoutUrl) throw new Error(data.error || "Checkout is unavailable right now. Please try again later.");
+      if (!response.ok || !(changingPlan ? data.url : data.checkoutUrl)) throw new Error(data.error || (changingPlan ? "Could not open the plan change confirmation. Please try again." : "Checkout is unavailable right now. Please try again later."));
       if (data.buyerId && data.buyerId !== userId) throw new Error("Your wallet changed. Refresh this page before checking out.");
-      const url = trustedCheckoutUrl(data.checkoutUrl);
-      if (!url) throw new Error("The payment service returned an invalid checkout address. Please try again later.");
-      setCheckout({ userId, url });
+      const url = changingPlan ? trustedBillingPortalUrl(data.url) : trustedCheckoutUrl(data.checkoutUrl);
+      if (!url) throw new Error(changingPlan ? "The payment service returned an invalid billing address. Please try again." : "The payment service returned an invalid checkout address. Please try again later.");
+      setCheckout({ userId, url, changingPlan });
       // Keep a direct link even if the browser blocks the asynchronous popup.
       try { window.open(url, "_blank", "noopener,noreferrer"); } catch { /* The link below remains available. */ }
     } catch (cause) {
@@ -127,7 +134,10 @@ export function PricingCards({ initialPurchaseType = "packs", offerTime = 0 }: {
           const monthlyCents = interval === "year" ? plan.yearlyPriceCents / 12 : plan.monthlyPriceCents;
           const selected = selectedPlan === plan.id;
           const currentPlan = isCurrentPricingPlan(subscription, plan.id, interval);
-          const label = currentPlan ? t("Current plan") : checkingSubscription ? t("Checking subscription…") : subscriptionBlocked ? t("Subscription unavailable") : busy === `plan-${plan.id}` ? t("Opening checkout…") : t("Subscribe");
+          const upgrade = !!subscription && plan.credits > (subscriptionPlans.find(item => item.id === subscription.planId)?.credits ?? plan.credits);
+          const blocked = subscriptionBlocked || currentPlan;
+          const label = currentPlan ? t("Current plan") : checkingSubscription ? t("Checking subscription…") : subscriptionBlocked ? t("Subscription unavailable") : busy === `plan-${plan.id}` ? t(subscription ? "Opening confirmation…" : "Opening checkout…") : subscription ? t(upgrade ? "Upgrade" : "Change plan") : t("Subscribe");
+          const actionLabel = blocked ? `${t(plan.name)}: ${label}` : t(subscription ? upgrade ? "Upgrade to {plan}" : "Change to {plan}" : "Subscribe to {plan}", { plan: t(plan.name) });
           const purchase = { purchaseType: "subscription" as const, planId: plan.id, billingInterval: interval };
           return <article key={plan.id} className={`${styles.card} ${selected ? styles.featured : ""}`} data-selected={selected} onClick={event => cardClick(event, purchase)}>
             {interval !== "year" && plan.id === "standard" && <span className={styles.discount}>{t("Recommended")}</span>}
@@ -135,13 +145,13 @@ export function PricingCards({ initialPurchaseType = "packs", offerTime = 0 }: {
             <h3 className={styles.planTitle}><button type="button" className={styles.cardSelect} aria-pressed={selected} disabled={busy !== null} onClick={() => selectPurchase(purchase)}><Diamond size={23} aria-hidden="true"/>{t(plan.name)}</button></h3>
             <div className={styles.price}>{interval === "year" && <del>{money(plan.monthlyPriceCents)}</del>}<strong>{money(monthlyCents)}</strong><span>{t("/mo")}</span></div>
             <p className={styles.billingNote}>{interval === "year" ? t("{amount} billed yearly", { amount: money(plan.yearlyPriceCents) }) : t("Billed monthly")}</p>
-            <button type="button" className={styles.subscribe} data-subscription-blocked={subscriptionBlocked || undefined} aria-label={subscriptionBlocked ? `${t(plan.name)}: ${label}` : t("Subscribe to {plan}", { plan: t(plan.name) })} disabled={busy !== null || subscriptionBlocked} onClick={() => buy(purchase)}>{label}</button>
+            <button type="button" className={styles.subscribe} data-subscription-blocked={blocked || undefined} aria-label={actionLabel} disabled={busy !== null || blocked} onClick={() => buy(purchase)}>{label}</button>
             <div className={styles.creditBox}><Zap size={19} aria-hidden="true"/><div><strong>{t("{credits} credits per month", { credits: plan.credits.toLocaleString(locale) })}</strong><span>{t("Up to {images} images at 1K", { images: Math.floor(plan.credits / 5).toLocaleString(locale) })}</span></div></div>
             <ul className={styles.benefits}>{["New credits every month", "Unused subscription credits expire monthly", ...benefits].map(benefit => <li key={benefit}><Check size={16} aria-hidden="true"/>{t(benefit)}</li>)}</ul>
             <p className={styles.cardFooter}>{t("Cancel renewal anytime. Access continues through your paid term.")}</p>
           </article>;
         })}</div>
-        {subscription && <p className={styles.subscriptionNotice} role="status">{pendingSubscription ? t("You have a pending subscription payment. Check its status before starting another subscription.") : t("You already have a subscription. Manage it before choosing another plan.")} <Link href="/app/my-orders#subscription">{pendingSubscription ? t("Manage pending payment") : t("Manage subscription")}</Link></p>}
+        {subscription && <p className={styles.subscriptionNotice} role="status">{pendingSubscription ? t("You have a pending subscription payment. Check its status before starting another subscription.") : subscriptionState.canChange ? t("Choose another plan to review and confirm the change in Stripe.") : t("You already have a subscription. Manage it before choosing another plan.")} <Link href="/app/my-orders#subscription">{pendingSubscription ? t("Manage pending payment") : t("Manage subscription")}</Link></p>}
         {subscriptionState.error && <p className={styles.subscriptionNotice} role="alert">{t("Could not check your subscription. Please try again.")} <button type="button" onClick={subscriptionState.reload}>{t("Retry")}</button></p>}
         <p className={styles.explanation}>{t("Subscriptions renew automatically. Annual plans are billed once per year and credits are issued monthly, not all at once.")}<br/>{t("Subscription credits are used first and expire each month. Your one-time credit balance is kept separately.")}</p>
       </>}
@@ -170,7 +180,7 @@ export function PricingCards({ initialPurchaseType = "packs", offerTime = 0 }: {
 
     <div className={styles.secure}><ShieldCheck size={17} aria-hidden="true"/>{t("Secure checkout by Stripe")}</div>
     <p className={styles.costNote}>{t("USD prices. Any applicable taxes are shown at checkout.")}<br/>{t("Nano Banana 2: 1K uses 5 credits, 2K uses 8, and 4K uses 12. Video and music costs depend on your generation settings.")}</p>
-    {checkout?.userId === user?.id && checkout && <div className="mi-checkout-return" role="status"><strong>{t("Checkout ready")}</strong><p>{t("If a new tab did not open, use the secure link below to continue your purchase.")}</p><a href={checkout.url} target="_blank" rel="noopener noreferrer">{t("Continue to Stripe checkout (opens in a new tab)")}</a></div>}
+    {checkout?.userId === user?.id && checkout && <div className="mi-checkout-return" role="status"><strong>{t(checkout.changingPlan ? "Plan change confirmation ready" : "Checkout ready")}</strong><p>{t(checkout.changingPlan ? "Review the plan and any charges in Stripe before confirming the change." : "If a new tab did not open, use the secure link below to continue your purchase.")}</p><a href={checkout.url} target="_blank" rel="noopener noreferrer">{t(checkout.changingPlan ? "Review plan change in Stripe (opens in a new tab)" : "Continue to Stripe checkout (opens in a new tab)")}</a></div>}
     {error?.userId === user?.id && error && <p className="pricing-error" role="alert">{t(error.message)}</p>}
   </div>;
 }

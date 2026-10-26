@@ -7,13 +7,13 @@ import { isCurrentPricingPlan, pricingSubscriptionView, readPricingSubscription,
 
 const state = vi.hoisted(() => ({
   user: { id: "buyer-1" } as { id: string; isGuest?: boolean } | null,
-  subscription: null as { id: string; planId: string; billingInterval: "month" | "year"; status: string } | null,
+  subscription: null as PricingSubscription | null,
   loading: false, error: false,
 }));
 vi.mock("./auth-provider", () => ({ useAuth: () => ({ user: state.user, loading: false, openSignIn: vi.fn(), ensureGuest: vi.fn() }) }));
-vi.mock("./pricing-subscription", () => ({ usePricingSubscription: () => ({ subscription: state.subscription, loading: state.loading, error: state.error, reload: vi.fn(), canSubscribe: () => !state.loading && !state.error && !state.subscription }) }));
+vi.mock("./pricing-subscription", () => ({ usePricingSubscription: () => ({ subscription: state.subscription, loading: state.loading, error: state.error, reload: vi.fn(), canChange: !state.loading && !state.error && state.subscription?.canChange === true && ["active", "trialing"].includes(state.subscription.status), canSubscribe: () => !state.loading && !state.error && !state.subscription, canChangePlan: () => false }) }));
 
-const active = { id: "subscription-1", planId: "lite", billingInterval: "month", status: "active", cancelAtPeriodEnd: false, currentPeriodStart: "2026-10-01T00:00:00Z", currentPeriodEnd: "2026-11-01T00:00:00Z", canManage: true, canCancel: true, checkoutUrl: null } as const;
+const active = { id: "subscription-1", planId: "lite", billingInterval: "month", status: "active", cancelAtPeriodEnd: false, currentPeriodStart: "2026-10-01T00:00:00Z", currentPeriodEnd: "2026-11-01T00:00:00Z", canManage: true, canCancel: true, canChange: true, checkoutUrl: null } as const;
 const buyer = { id: "buyer-1" };
 function snapshot(subscription: PricingSubscription | null = active, owner: Subscriber = buyer, revision = 0, error = false) { return { owner, revision, subscription, error }; }
 function render(purchaseType: "subscription" | "packs" = "subscription", locale: "en" | "zh-TW" | "ko" | "ja" | "fr" | "es" = "en") {
@@ -53,6 +53,14 @@ describe("pricing subscription response and state", () => {
   it.each([null, {}, { subscription: {} }, { subscription: { ...active, billingInterval: "week" } }, { subscription: { ...active, status: null } }])("rejects a malformed status response instead of treating it as no subscription: %j", body => {
     expect(() => readPricingSubscription(body)).toThrow();
   });
+  it("requires the current account and revision before allowing a plan change", () => {
+    expect(pricingSubscriptionView(buyer, 0, snapshot())).toMatchObject({ canChange: true });
+    expect(pricingSubscriptionView({ ...buyer }, 0, snapshot())).toMatchObject({ canChange: false });
+    expect(pricingSubscriptionView(buyer, 1, snapshot())).toMatchObject({ canChange: false });
+    expect(pricingSubscriptionView(buyer, 0, snapshot(active, buyer, 0, true))).toMatchObject({ canChange: false });
+    expect(pricingSubscriptionView(buyer, 0, snapshot({ ...active, status: "pending" }))).toMatchObject({ canChange: false });
+    expect(pricingSubscriptionView(buyer, 0, snapshot({ ...active, canChange: false }))).toMatchObject({ canChange: false });
+  });
   it("accepts an explicit server-confirmed absence of subscription", () => {
     expect(readPricingSubscription({ subscription: null })).toBeNull();
     expect(pricingSubscriptionView(buyer, 0, snapshot(null)).canSubscribe).toBe(true);
@@ -76,19 +84,22 @@ describe("pricing subscription response and state", () => {
 });
 
 describe("pricing subscribed controls with real React rendering", () => {
-  it("renders the paid plan as a disabled Current plan and routes other plans to management", () => {
+  it("disables only the paid plan and offers higher plans as upgrades", () => {
     const html = render();
     expect(planAction(html, "Lite")).toContain("disabled");
     expect(planAction(html, "Lite")).toContain(">Current plan</button>");
-    expect(planAction(html, "Standard")).toContain("disabled");
-    expect(planAction(html, "Standard")).toContain(">Subscription unavailable</button>");
+    expect(planAction(html, "Standard")).not.toContain("disabled");
+    expect(planAction(html, "Standard")).toContain(">Upgrade</button>");
+    expect(planAction(html, "Pro")).not.toContain("disabled");
+    expect(planAction(html, "Elite")).not.toContain("disabled");
     expect(html).toContain('href="/app/my-orders#subscription"');
     expect(html).toContain("Manage subscription");
   });
   it("does not mark the monthly price as the current annual plan", () => {
     state.subscription = { ...active, billingInterval: "year" };
     const html = render();
-    expect(planAction(html, "Lite")).toContain("disabled");
+    expect(planAction(html, "Lite")).not.toContain("disabled");
+    expect(planAction(html, "Lite")).toContain(">Change plan</button>");
     expect(html).not.toContain("Current plan");
   });
   it("renders status checking and read errors as disabled subscription actions", () => {
@@ -106,6 +117,20 @@ describe("pricing subscribed controls with real React rendering", () => {
     expect(planAction(html, "Lite")).toContain("disabled");
     expect(html).not.toContain("Current plan");
     expect(html).toContain("Manage pending payment");
+  });
+  it("does not offer changes without an explicit server capability", () => {
+    state.subscription = { ...active, canChange: undefined };
+    expect(planAction(render(), "Standard")).toContain("disabled");
+    state.subscription = { ...active, canChange: false };
+    expect(planAction(render(), "Standard")).toContain("disabled");
+  });
+  it("offers lower tiers as a plan change rather than an upgrade", () => {
+    state.subscription = { ...active, planId: "pro" };
+    const html = render();
+    expect(planAction(html, "Lite")).not.toContain("disabled");
+    expect(planAction(html, "Lite")).toContain(">Change plan</button>");
+    expect(planAction(html, "Pro")).toContain(">Current plan</button>");
+    expect(planAction(html, "Elite")).toContain(">Upgrade</button>");
   });
   it("keeps one-time packs available to subscribed users", () => {
     const html = render("packs");
