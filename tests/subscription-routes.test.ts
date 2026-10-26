@@ -15,6 +15,7 @@ const backend = vi.hoisted(() => ({
   checkout: vi.fn(),
   status: vi.fn(),
   portal: vi.fn(),
+  cancel: vi.fn(),
   credits: vi.fn(),
 }));
 vi.mock("../lib/server/env", async (original) => ({
@@ -28,11 +29,13 @@ vi.mock("../lib/server/subscriptions", () => ({
   createSubscriptionCheckout: backend.checkout,
   subscriptionStatus: backend.status,
   createSubscriptionPortal: backend.portal,
+  cancelSubscription: backend.cancel,
 }));
 vi.mock("../lib/server/payments", () => ({ createCheckout: backend.credits }));
 import { POST as checkout } from "../app/api/checkout/route";
 import { GET as status } from "../app/api/subscription/route";
 import { POST as portal } from "../app/api/subscription/portal/route";
+import { POST as cancel } from "../app/api/subscription/cancel/route";
 import { requireUser } from "../lib/server/auth";
 import { ApiError } from "../lib/server/errors";
 const request = (
@@ -59,6 +62,7 @@ beforeEach(() => {
   backend.portal.mockResolvedValue({
     url: "https://billing.stripe.com/p/session/fixture",
   });
+  backend.cancel.mockResolvedValue({ cancelled: true });
   vi.mocked(requireUser).mockResolvedValue(state.user);
 });
 describe("subscription HTTP routes", () => {
@@ -233,6 +237,124 @@ describe("subscription HTTP routes", () => {
         )
       ).status,
     ).toBe(200);
-    expect(backend.portal).toHaveBeenCalledWith(state.env, "u");
+    expect(backend.portal).toHaveBeenCalledWith(state.env, "u", undefined);
+  });
+});
+
+const rawSubscriptionRequest = (path: string, body?: string, origin = "https://example.test") =>
+  new Request("https://example.test" + path, {
+    method: "POST",
+    headers: { origin, "content-type": "application/json" },
+    body,
+  });
+
+describe.each([
+  { path: "/api/subscription/portal", handler: portal, operation: backend.portal },
+  { path: "/api/subscription/cancel", handler: cancel, operation: backend.cancel },
+])("subscription management boundary: $path", ({ path, handler, operation }) => {
+  it("rejects cross-origin requests before checking authentication or parsing JSON", async () => {
+    const response = await handler(rawSubscriptionRequest(path, "{", "https://evil.test"), {});
+    expect(response.status).toBe(403);
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(requireUser).not.toHaveBeenCalled();
+    expect(operation).not.toHaveBeenCalled();
+  });
+
+  it("requires authentication before parsing JSON", async () => {
+    vi.mocked(requireUser).mockRejectedValue(new ApiError(401, "Sign in required."));
+    const response = await handler(rawSubscriptionRequest(path, "{"), {});
+    expect(response.status).toBe(401);
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(operation).not.toHaveBeenCalled();
+  });
+
+  it("rejects guest wallets before parsing JSON", async () => {
+    vi.mocked(requireUser).mockResolvedValue({ ...state.user, isGuest: true });
+    const response = await handler(rawSubscriptionRequest(path, "{"), {});
+    expect(response.status).toBe(401);
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(operation).not.toHaveBeenCalled();
+  });
+
+  it.each(["{", "null", "[]", '"subscription"', "42", "true", " "])(
+    "rejects invalid JSON or a non-object body: %s",
+    async body => {
+      const response = await handler(rawSubscriptionRequest(path, body), {});
+      expect(response.status).toBe(400);
+      expect(response.headers.get("cache-control")).toBe("no-store");
+      expect(operation).not.toHaveBeenCalled();
+    },
+  );
+
+  it("rejects bodies above 32 KiB without calling billing", async () => {
+    const response = await handler(request(path, { subscriptionId: "sub-local", extra: "x".repeat(32 * 1024) }), {});
+    expect(response.status).toBe(413);
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(operation).not.toHaveBeenCalled();
+  });
+
+  it("preserves billing errors in an uncached response", async () => {
+    operation.mockRejectedValueOnce(new ApiError(404, "The subscription was not found."));
+    const response = await handler(request(path, { subscriptionId: "sub-local" }), {});
+    expect(response.status).toBe(404);
+    expect(await response.json()).toEqual({ error: "The subscription was not found." });
+    expect(response.headers.get("cache-control")).toBe("no-store");
+  });
+});
+
+describe("subscription cancellation HTTP route", () => {
+  it.each([undefined, ""])("rejects an absent or empty request body: %j", async body => {
+    const response = await cancel(rawSubscriptionRequest("/api/subscription/cancel", body), {});
+    expect(response.status).toBe(400);
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(backend.cancel).not.toHaveBeenCalled();
+  });
+
+  it.each([undefined, null, "", "   ", 42, true, [], {}, "x".repeat(201)].map(subscriptionId => ({ subscriptionId })))(
+    "rejects a missing or invalid subscription identifier: $subscriptionId",
+    async ({ subscriptionId }) => {
+      const response = await cancel(request("/api/subscription/cancel", { subscriptionId }), {});
+      expect(response.status).toBe(400);
+      expect(response.headers.get("cache-control")).toBe("no-store");
+      expect(backend.cancel).not.toHaveBeenCalled();
+    },
+  );
+
+  it("uses the signed-in owner and selected subscription, forwarding the locale", async () => {
+    const response = await cancel(request("/api/subscription/cancel", {
+      subscriptionId: "sub-local",
+      userId: "another-user",
+      locale: "ja",
+    }), {});
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ cancelled: true });
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(backend.cancel).toHaveBeenCalledWith(state.env, "u", "sub-local", "ja");
+  });
+
+  it("returns the secure cancellation confirmation destination for an existing subscription", async () => {
+    backend.cancel.mockResolvedValueOnce({ url: "https://billing.stripe.com/p/session/cancel-fixture" });
+    const response = await cancel(request("/api/subscription/cancel", { subscriptionId: "sub-local" }), {});
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ url: "https://billing.stripe.com/p/session/cancel-fixture" });
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(backend.cancel).toHaveBeenCalledWith(state.env, "u", "sub-local", undefined);
+  });
+});
+
+describe("localized subscription billing portal", () => {
+  it.each([undefined, "{}"])("preserves no-argument portal requests: %j", async body => {
+    const response = await portal(rawSubscriptionRequest("/api/subscription/portal", body), {});
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ url: "https://billing.stripe.com/p/session/fixture" });
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(backend.portal).toHaveBeenCalledWith(state.env, "u", undefined);
+  });
+
+  it("forwards the locale while ignoring a client-supplied account owner", async () => {
+    const response = await portal(request("/api/subscription/portal", { locale: "fr", userId: "another-user" }), {});
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ url: "https://billing.stripe.com/p/session/fixture" });
+    expect(backend.portal).toHaveBeenCalledWith(state.env, "u", "fr");
   });
 });

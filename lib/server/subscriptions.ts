@@ -795,46 +795,86 @@ export async function applySubscriptionEvent(
   // Failed invoices never grant a period. State is synchronized independently.
   return event.type.startsWith("invoice.");
 }
-export async function subscriptionStatus(env: Env, userId: string) {
-  const row = await database(env)
+async function latestSubscription(env: Env, userId: string) {
+  return database(env)
     .prepare(
-      "SELECT * FROM subscriptions WHERE user_id=? AND provider_mode=? ORDER BY created_at DESC,rowid DESC LIMIT 1",
+      `SELECT * FROM subscriptions WHERE user_id=? AND provider_mode=? ORDER BY CASE WHEN status IN (${openStates}) THEN 0 ELSE 1 END,created_at DESC,rowid DESC LIMIT 1`,
     )
     .bind(userId, stripeMode(env))
     .first<SubscriptionRow>();
+}
+async function reloadSubscription(env: Env, row: SubscriptionRow) {
+  const current = await database(env)
+    .prepare("SELECT * FROM subscriptions WHERE id=? AND user_id=? AND provider_mode=?")
+    .bind(row.id, row.user_id, row.provider_mode)
+    .first<SubscriptionRow>();
+  if (!current) throw new ApiError(404, "No subscription is available to manage.");
+  return current;
+}
+/** Account refreshes reconcile lifecycle only. Credits still require invoice.paid. */
+async function refreshSubscription(env: Env, row: SubscriptionRow) {
+  let checkoutUrl: string | null = null;
+  if (row.subscription_id) {
+    await bindAndSync(env, await readForSync(env, row, row.subscription_id));
+  } else if (row.status === "pending" && row.checkout_id) {
+    const session = await stripeRequest(() =>
+      stripeClient(env).checkout.sessions.retrieve(row.checkout_id!),
+    );
+    validateSession(session, row);
+    if (session.status === "complete") {
+      const id = idOf(session.subscription);
+      if (id) await bindAndSync(env, await readForSync(env, row, id));
+    } else if (session.status === "expired") {
+      try {
+        await retireExpiredCheckout(database(env), row, session);
+      } catch (error) {
+        // Another refresh or a webhook may have already advanced this purchase.
+        // Never retire over a newly bound subscription or a confirmed payment.
+        const current = await reloadSubscription(env, row);
+        if (!(error instanceof ApiError) || error.status !== 409 || current.status === "pending") throw error;
+      }
+    } else if (session.status === "open" && session.payment_status === "unpaid" && !session.subscription) {
+      checkoutUrl = hostedUrl(session.url, "checkout.stripe.com");
+    } else reject();
+  }
+  const current = await reloadSubscription(env, row);
+  return { row: current, checkoutUrl: current.status === "pending" && !current.subscription_id ? checkoutUrl : null };
+}
+const cancellableStates = ["active", "trialing", "past_due"];
+function canCancelRenewal(row: SubscriptionRow) {
+  return !!row.subscription_id && !row.cancel_at_period_end && cancellableStates.includes(row.status);
+}
+export async function subscriptionStatus(env: Env, userId: string) {
+  const latest = await latestSubscription(env, userId);
+  if (!latest) return { subscription: null };
+  const { row, checkoutUrl } = await refreshSubscription(env, latest);
   return {
-    subscription: row
-      ? {
-          planId: row.plan_id,
-          billingInterval: row.billing_interval,
-          status: row.status,
-          cancelAtPeriodEnd: !!row.cancel_at_period_end,
-          currentPeriodStart: row.current_period_start
-            ? new Date(row.current_period_start * 1000).toISOString()
-            : null,
-          currentPeriodEnd: row.current_period_end
-            ? new Date(row.current_period_end * 1000).toISOString()
-            : null,
-        }
-      : null,
+    subscription: {
+      id: row.id,
+      planId: row.plan_id,
+      billingInterval: row.billing_interval,
+      status: row.status,
+      canManage: !!row.subscription_id && !!row.customer_id,
+      canCancel: !!checkoutUrl || canCancelRenewal(row),
+      checkoutUrl,
+      cancelAtPeriodEnd: !!row.cancel_at_period_end,
+      currentPeriodStart: row.current_period_start
+        ? new Date(row.current_period_start * 1000).toISOString()
+        : null,
+      currentPeriodEnd: row.current_period_end
+        ? new Date(row.current_period_end * 1000).toISOString()
+        : null,
+    },
   };
 }
-export async function createSubscriptionPortal(env: Env, userId: string) {
-  const row = await database(env)
-    .prepare(
-      "SELECT * FROM subscriptions WHERE user_id=? AND provider_mode=? AND subscription_id IS NOT NULL ORDER BY created_at DESC,rowid DESC LIMIT 1",
-    )
-    .bind(userId, stripeMode(env))
-    .first<SubscriptionRow>();
-  if (!row?.customer_id)
-    throw new ApiError(404, "No subscription is available to manage.");
+async function portalForSubscription(env: Env, row: SubscriptionRow, locale?: unknown, cancel = false) {
+  if (!row.subscription_id || !row.customer_id)
+    throw new ApiError(409, "Your subscription payment is being confirmed.");
   const configId = env.STRIPE_PORTAL_CONFIGURATION;
   if (!configId || !/^bpc_[A-Za-z0-9]+$/.test(configId))
     throw new ApiError(503, "Subscription management is not configured.");
   const client = stripeClient(env),
-    config = await stripeRequest(() =>
-      client.billingPortal.configurations.retrieve(configId),
-    );
+    config = await stripeRequest(() => client.billingPortal.configurations.retrieve(configId));
   if (
     config.id !== configId ||
     !config.active ||
@@ -844,22 +884,59 @@ export async function createSubscriptionPortal(env: Env, userId: string) {
     config.features.subscription_cancel.mode !== "at_period_end" ||
     config.features.subscription_cancel.proration_behavior !== "none"
   )
-    throw new ApiError(
-      503,
-      "Subscription management configuration is not supported.",
-    );
+    throw new ApiError(503, "Subscription management configuration is not supported.");
+  const returnUrl = paymentOrigin(env) + localizeHref("/app/my-orders", typeof locale === "string" && isLocale(locale) ? locale : "en") + "#subscription";
   const session = await stripeRequest(() =>
     client.billingPortal.sessions.create({
       customer: row.customer_id!,
       configuration: configId,
-      return_url: paymentOrigin(env) + "/pricing",
+      return_url: returnUrl,
+      ...(cancel ? { flow_data: {
+        type: "subscription_cancel" as const,
+        subscription_cancel: { subscription: row.subscription_id! },
+        after_completion: { type: "redirect" as const, redirect: { return_url: returnUrl } },
+      } } : {}),
     }),
   );
   if (
     session.customer !== row.customer_id ||
     session.livemode !== (row.provider_mode === "live") ||
     idOf(session.configuration) !== configId
-  )
-    reject();
+  ) reject();
   return { url: hostedUrl(session.url, "billing.stripe.com") };
+}
+export async function createSubscriptionPortal(env: Env, userId: string, locale?: unknown) {
+  const latest = await latestSubscription(env, userId);
+  if (!latest) throw new ApiError(404, "No subscription is available to manage.");
+  const { row } = await refreshSubscription(env, latest);
+  return portalForSubscription(env, row, locale);
+}
+export async function cancelSubscription(env: Env, userId: string, subscriptionId: string, locale?: unknown) {
+  const latest = await latestSubscription(env, userId);
+  if (!latest) throw new ApiError(404, "No subscription is available to manage.");
+  if (latest.id !== subscriptionId)
+    throw new ApiError(409, "The subscription has changed. Refresh and try again.");
+  const { row, checkoutUrl } = await refreshSubscription(env, latest);
+  if (row.subscription_id) {
+    // Closing an unpaid checkout must not silently become canceling a purchase
+    // that completed while the account page was open.
+    if (!latest.subscription_id)
+      throw new ApiError(409, "The subscription has changed. Refresh and try again.");
+    if (row.cancel_at_period_end || ["canceled", "incomplete_expired"].includes(row.status))
+      return { cancelled: true as const };
+    if (!canCancelRenewal(row))
+      throw new ApiError(409, "The subscription has changed. Refresh and try again.");
+    return portalForSubscription(env, row, locale, true);
+  }
+  if (row.status === "expired") return { cancelled: true as const };
+  if (!row.checkout_id)
+    throw new ApiError(409, "Subscription checkout is still being prepared. Please try again.");
+  if (!checkoutUrl)
+    throw new ApiError(409, "Your subscription payment is being confirmed.");
+  const session = await stripeRequest(() => stripeClient(env).checkout.sessions.expire(
+    row.checkout_id!, {},
+    { idempotencyKey: `migosai:subscription-expire:${row.provider_mode}:${row.id}` },
+  ));
+  await retireExpiredCheckout(database(env), row, session);
+  return { cancelled: true as const };
 }

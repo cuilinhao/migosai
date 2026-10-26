@@ -10,7 +10,7 @@ import { creditPacks, getSubscriptionPlanName } from "@/content/pricing";
 import type { GenerationResponse } from "@/lib/contracts";
 import { accountView, type AccountSnapshot } from "./account-view";
 import { CreditBalances, SubscriptionDetails, type AccountSubscription } from "./subscription-management";
-import { requestBillingPortal } from "./subscription-portal";
+import { requestBillingPortal, requestSubscriptionCancellation } from "./subscription-portal";
 import subscriptionStyles from "./subscription-management.module.css";
 import { GuestWalletPanel } from "@/components/guest-wallet-panel";
 
@@ -85,35 +85,67 @@ export function MyVideos() {
   </div>;
 }
 
-function SubscriptionManagementForOwner() {
+function SubscriptionManagementForOwner({onOrdersRefresh}: {onOrdersRefresh:()=>void}) {
   const t = useGenerationTranslations();
+  const locale = useLocale();
   const {data, loading, error, signedIn, retry} = useAccountData<AccountSubscription | null>("/api/subscription", body => body.subscription && typeof body.subscription === "object" ? body.subscription as AccountSubscription : null);
-  const [busy,setBusy] = useState(false);
-  const [portalUrl,setPortalUrl] = useState<string|null>(null);
+  const [pendingAction,setPendingAction] = useState<"manage"|"cancel"|null>(null);
+  const [portal,setPortal] = useState<{url:string;kind:"manage"|"cancel"}|null>(null);
   const [portalError,setPortalError] = useState("");
   const active = useRef(true);
+  const actionInFlight = useRef(false);
+  const actionVersion = useRef(0);
   useEffect(() => { active.current=true; return () => {active.current=false;}; }, []);
-  async function manage() {
-    setBusy(true);setPortalUrl(null);setPortalError("");
+  const refresh = useCallback(() => {
+    actionVersion.current += 1;
+    setPortal(null);
+    setPortalError("");
+    retry();
+    onOrdersRefresh();
+  }, [retry,onOrdersRefresh]);
+  useEffect(() => {
+    if (!signedIn) return;
+    const onVisible = () => { if (document.visibilityState === "visible") refresh(); };
+    window.addEventListener("focus", onVisible);
+    window.addEventListener("pageshow", onVisible);
+    document.addEventListener("visibilitychange", onVisible);
+    return () => {
+      window.removeEventListener("focus", onVisible);
+      window.removeEventListener("pageshow", onVisible);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
+  }, [signedIn,refresh]);
+  useEffect(() => { setPortal(null); }, [data?.id,data?.status,data?.cancelAtPeriodEnd]);
+  async function runAction(kind: "manage"|"cancel") {
+    if (actionInFlight.current || !data || loading || (kind === "manage" ? !data.canManage || data.status === "pending" : !data.canCancel)) return;
+    if (kind === "cancel" && data.status === "pending" && !window.confirm(t("Cancel this pending payment? The payment link will stop working and your subscription will not start."))) return;
+    actionInFlight.current = true;
+    const version = ++actionVersion.current;
+    setPendingAction(kind);setPortal(null);setPortalError("");
     try {
-      const url=await requestBillingPortal();
-      if(!active.current)return;
-      setPortalUrl(url);
-      try { window.open(url,"_blank","noopener,noreferrer"); } catch { /* Keep the validated direct link visible. */ }
+      const result = kind === "cancel" ? await requestSubscriptionCancellation(data.id, locale) : {url:await requestBillingPortal(fetch, locale)};
+      if (!active.current) return;
+      if ("cancelled" in result) { refresh(); return; }
+      if (version !== actionVersion.current) return;
+      setPortal({url:result.url,kind});
+      try { window.open(result.url,"_blank","noopener,noreferrer"); } catch { /* Keep the validated direct link visible. */ }
     } catch(cause) {
-      if(active.current)setPortalError(cause instanceof Error?cause.message:"Could not open subscription management. Please try again.");
-    } finally { if(active.current)setBusy(false); }
+      if(active.current && version === actionVersion.current)setPortalError(cause instanceof Error?cause.message:kind==="cancel"?"Could not cancel your subscription. Please try again.":"Could not open subscription management. Please try again.");
+    } finally {
+      actionInFlight.current = false;
+      if(active.current)setPendingAction(null);
+    }
   }
   return <section id="subscription" className={subscriptionStyles.card}><h2>{t("Your subscription")}</h2>
-    <AccountMessage loading={loading} error={error} signedIn={signedIn} onRetry={retry}/>
-    {signedIn&&!loading&&!error&&<SubscriptionDetails subscription={data} busy={busy} onManage={()=>void manage()}/>}
-    {portalError&&<p role="alert" className={subscriptionStyles.error}>{t(portalError)}</p>}
-    {portalUrl&&<div role="status" className={subscriptionStyles.portalLink}><p>{t("If a new tab did not open, use the secure link below to manage your subscription.")}</p><a href={portalUrl} target="_blank" rel="noopener noreferrer">{t("Continue to Stripe billing (opens in a new tab)")}</a></div>}
+    <AccountMessage loading={loading} error={error} signedIn={signedIn} onRetry={refresh}/>
+    {signedIn&&!loading&&!error&&<SubscriptionDetails subscription={data} busy={pendingAction!==null} pendingAction={pendingAction} onManage={()=>void runAction("manage")} onCancel={()=>void runAction("cancel")} onRefresh={refresh}/>}
+    {portalError&&<p role="alert" className={subscriptionStyles.error}>{t(portalError)} <button type="button" className={subscriptionStyles.refresh} disabled={pendingAction!==null} onClick={refresh}>{t("Refresh status")}</button></p>}
+    {portal&&<div role="status" className={subscriptionStyles.portalLink}><p>{t(portal.kind==="cancel"?"Your subscription is not canceled yet. Confirm cancellation on the secure Stripe page.":"If a new tab did not open, use the secure link below to manage your subscription.")}</p><a href={portal.url} target="_blank" rel="noopener noreferrer">{t(portal.kind==="cancel"?"Continue to cancellation confirmation (opens in a new tab)":"Continue to Stripe billing (opens in a new tab)")}</a></div>}
   </section>;
 }
-function SubscriptionManagement() {
+function SubscriptionManagement({onOrdersRefresh}: {onOrdersRefresh:()=>void}) {
   const {user}=useAuth();
-  return user?.isGuest ? null : <SubscriptionManagementForOwner key={user?.id??"signed-out"}/>;
+  return user?.isGuest ? null : <SubscriptionManagementForOwner key={user?.id??"signed-out"} onOrdersRefresh={onOrdersRefresh}/>;
 }
 
 export function MyOrders() {
@@ -121,7 +153,7 @@ export function MyOrders() {
   const locale = useLocale();
   const { data, loading, error, signedIn, retry } = useAccountData<Order[]>("/api/orders", (body) => Array.isArray(body.orders) ? body.orders as Order[] : []);
   return <div className="account-page"><div className="account-page-heading account-page-heading-lined"><h1>{t('My Orders')}</h1><p>{t('Your credit purchases and subscription billing.')}</p></div>
-    <SubscriptionManagement/>
+    <SubscriptionManagement onOrdersRefresh={retry}/>
     <AccountMessage loading={loading} error={error} signedIn={signedIn} onRetry={retry}/>
     {signedIn && !loading && !error && <div className="account-table-scroll"><table className="account-table orders-table"><thead><tr><th>{t('Order No')}</th><th>{t('Product Name')}</th><th>{t('Amount')}</th><th>{t('Status')}</th><th>{t('Paid At')}</th></tr></thead><tbody>{data?.length ? data.map((order) => <tr key={order.id}><td className="account-code">{order.id}</td><td>{order.purchaseType === "subscription" ? t("{plan} subscription", { plan: t(getSubscriptionPlanName(order.packId)) }) : t("{pack} Credits", { pack: t(creditPacks.find((pack) => pack.id === order.packId)?.name ?? order.packId) })}</td><td>{new Intl.NumberFormat(locale, { style: "currency", currency: order.currency || "USD" }).format(order.amountCents/100)}</td><td>{t(order.status)}</td><td>{dateTime(order.createdAt, locale)}</td></tr>) : <tr><td colSpan={5} className="account-table-empty">{t('No orders found')}</td></tr>}</tbody></table></div>}
   </div>;

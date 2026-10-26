@@ -5,6 +5,7 @@ import {
   applySubscriptionEvent,
   subscriptionStatus,
   createSubscriptionPortal,
+  cancelSubscription,
 } from "../lib/server/subscriptions";
 import type { Env } from "../lib/server/env";
 const user = { id: "u", email: "a@b.c", name: "Test" };
@@ -128,6 +129,7 @@ function stripeApi(
 ) {
   let sent = new URLSearchParams();
   const checkoutRequests: string[] = [];
+  const portalRequests: URLSearchParams[] = [];
   const expireRequests: { id: string; idempotencyKey: string | null }[] = [];
   vi.spyOn(globalThis, "fetch").mockImplementation(async (input, init) => {
     const url = new URL(String(input));
@@ -270,7 +272,8 @@ function stripeApi(
         },
         ...options.config,
       });
-    if (url.pathname === "/v1/billing_portal/sessions")
+    if (url.pathname === "/v1/billing_portal/sessions") {
+      portalRequests.push(body);
       return Response.json({
         id: "bps_fixture123",
         customer: customerId,
@@ -279,9 +282,10 @@ function stripeApi(
         url: "https://billing.stripe.com/p/session/fixture",
         ...options.portal,
       });
+    }
     throw Error(`Unexpected Stripe path ${url.pathname}`);
   });
-  return { sent: () => sent, checkoutRequests, expireRequests };
+  return { sent: () => sent, checkoutRequests, expireRequests, portalRequests };
 }
 afterEach(() => {
   vi.restoreAllMocks();
@@ -550,7 +554,7 @@ describe("Stripe subscriptions", () => {
   });
 
   it("allows a webhook retry to sync after its earlier Stripe read failed", async () => {
-    const { env } = await setup();
+    const { env, sqlite } = await setup();
     await applySubscriptionEvent(
       env,
       event("customer.subscription.created", { id: subId }),
@@ -561,9 +565,8 @@ describe("Stripe subscriptions", () => {
     await expect(applySubscriptionEvent(env, update)).rejects.toMatchObject({
       status: 502,
     });
-    expect(await subscriptionStatus(env, "u")).toMatchObject({
-      subscription: { cancelAtPeriodEnd: false },
-    });
+    // Inspect the persisted webhook result without initiating an account refresh.
+    expect(sqlite.prepare("SELECT cancel_at_period_end FROM subscriptions").get()).toEqual({ cancel_at_period_end: 0 });
     await applySubscriptionEvent(env, update);
     expect(await subscriptionStatus(env, "u")).toMatchObject({
       subscription: { cancelAtPeriodEnd: true },
@@ -1162,5 +1165,173 @@ describe('scheduled allowance for an existing monthly subscriber', () => {
     stripeApi({ ...apiOptions, sub: { ...apiOptions.sub, status: 'canceled', cancel_at_period_end: true } });
     await applySubscriptionEvent(env, event(type, { id: type.startsWith('customer.') ? subId : invoiceId }));
     expect(sqlite.prepare('SELECT count(*) AS n FROM subscription_credit_periods').get()).toEqual({ n: 0 });
+  });
+});
+
+
+describe("account subscription recovery and cancellation", () => {
+  it("shows an open checkout as pending with checkout actions instead of a billing portal", async () => {
+    const { env, checkout } = await setup();
+    expect(await subscriptionStatus(env, "u")).toMatchObject({ subscription: {
+      id: checkout.orderId, status: "pending", canManage: false, canCancel: true,
+      checkoutUrl: `https://checkout.stripe.com/c/pay/${sessionId}`, currentPeriodEnd: null,
+    } });
+    await expect(createSubscriptionPortal(env, "u")).rejects.toMatchObject({ status: 409 });
+  });
+  it("recovers completed checkout without waiting for webhook and never grants credits from status", async () => {
+    const { env, sqlite } = await setup();
+    stripeApi({ session: { status: "complete", payment_status: "paid", subscription: subId } });
+    expect(await subscriptionStatus(env, "u")).toMatchObject({ subscription: {
+      status: "active", canManage: true, canCancel: true, checkoutUrl: null,
+      currentPeriodEnd: new Date(end * 1000).toISOString(),
+    } });
+    expect(sqlite.prepare("SELECT status FROM orders").get()).toEqual({ status: "pending" });
+    expect(sqlite.prepare("SELECT count(*) AS n FROM subscription_invoices").get()).toEqual({ n: 0 });
+    expect(sqlite.prepare("SELECT credits FROM users").get()).toEqual({ credits: 100 });
+  });
+  it("recovers the subscription before opening management and returns to localized orders", async () => {
+    const { env } = await setup();
+    const api = stripeApi({ session: { status: "complete", subscription: subId } });
+    expect(await createSubscriptionPortal(env, "u", "ja")).toEqual({ url: "https://billing.stripe.com/p/session/fixture" });
+    expect(api.portalRequests[0].get("return_url")).toBe("https://example.test/ja/app/my-orders#subscription");
+  });
+  it("retires an expired unpaid checkout when reading status", async () => {
+    const { env, sqlite } = await setup();
+    stripeApi({ session: { status: "expired", url: null } });
+    expect(await subscriptionStatus(env, "u")).toMatchObject({ subscription: {
+      status: "expired", canManage: false, canCancel: false, checkoutUrl: null,
+    } });
+    expect(sqlite.prepare("SELECT status FROM orders").get()).toEqual({ status: "cancelled" });
+  });
+  it("refreshes cancellation on return from Stripe and preserves paid credits", async () => {
+    const { env, sqlite } = await setup();
+    await applySubscriptionEvent(env, event());
+    stripeApi({ sub: { cancel_at: end } });
+    expect(await subscriptionStatus(env, "u")).toMatchObject({ subscription: { cancelAtPeriodEnd: true, canCancel: false } });
+    expect(sqlite.prepare("SELECT remaining FROM subscription_credit_periods").get()).toEqual({ remaining: 550 });
+  });
+  it.each([{ customer: "cus_foreign" }, { livemode: true }, { metadata: { app: "foreign" } }])("rejects foreign checkout evidence during recovery: %j", async (session) => {
+    const { env, sqlite } = await setup();
+    stripeApi({ session: { status: "complete", subscription: subId, ...session } });
+    await expect(subscriptionStatus(env, "u")).rejects.toMatchObject({ status: 400 });
+    expect(sqlite.prepare("SELECT subscription_id FROM subscriptions").get()).toEqual({ subscription_id: null });
+  });
+  it("closes only a verified unpaid checkout and is safe to retry", async () => {
+    const { env, sqlite, checkout, api } = await setup();
+    expect(await cancelSubscription(env, "u", checkout.orderId)).toEqual({ cancelled: true });
+    expect(await cancelSubscription(env, "u", checkout.orderId)).toEqual({ cancelled: true });
+    expect(api.expireRequests).toHaveLength(1);
+    expect(sqlite.prepare("SELECT status,subscription_id FROM subscriptions").get()).toEqual({ status: "expired", subscription_id: null });
+    expect(sqlite.prepare("SELECT status FROM orders").get()).toEqual({ status: "cancelled" });
+    expect(sqlite.prepare("SELECT credits FROM users").get()).toEqual({ credits: 100 });
+  });
+  it("does not turn a pending-checkout cancel into canceling a newly paid subscription", async () => {
+    const { env, sqlite, checkout } = await setup();
+    const api = stripeApi({ session: { status: "complete", payment_status: "paid", subscription: subId } });
+    await expect(cancelSubscription(env, "u", checkout.orderId)).rejects.toMatchObject({ status: 409 });
+    expect(api.expireRequests).toHaveLength(0);
+    expect(api.portalRequests).toHaveLength(0);
+    expect(sqlite.prepare("SELECT status FROM subscriptions").get()).toEqual({ status: "active" });
+  });
+  it.each([
+    { failExpire: true },
+    { expireSession: { status: "complete", payment_status: "paid", subscription: subId } },
+    { expireSession: { customer: "cus_foreign" } },
+  ])("keeps the pending purchase when closing Checkout cannot be verified: %j", async (options) => {
+    const { env, sqlite, checkout } = await setup();
+    stripeApi(options);
+    await expect(cancelSubscription(env, "u", checkout.orderId)).rejects.toBeInstanceOf(Error);
+    expect(sqlite.prepare("SELECT status FROM subscriptions").get()).toEqual({ status: "pending" });
+    expect(sqlite.prepare("SELECT status FROM orders").get()).toEqual({ status: "pending" });
+  });
+  it("never cancels another owner's or another mode's record", async () => {
+    const { env, checkout, api } = await setup();
+    await expect(cancelSubscription(env, "other", checkout.orderId)).rejects.toMatchObject({ status: 404 });
+    await expect(cancelSubscription({ ...env, STRIPE_MODE: "live" }, "u", checkout.orderId)).rejects.toMatchObject({ status: 404 });
+    expect(api.expireRequests).toHaveLength(0);
+    expect(api.portalRequests).toHaveLength(0);
+  });
+  it("opens an explicit period-end cancellation confirmation without changing paid balances", async () => {
+    const { env, sqlite, checkout } = await setup();
+    await applySubscriptionEvent(env, event());
+    const api = stripeApi();
+    expect(await cancelSubscription(env, "u", checkout.orderId, "ja")).toEqual({ url: "https://billing.stripe.com/p/session/fixture" });
+    expect(api.portalRequests[0].get("flow_data[type]")).toBe("subscription_cancel");
+    expect(api.portalRequests[0].get("flow_data[subscription_cancel][subscription]")).toBe(subId);
+    expect(api.portalRequests[0].get("flow_data[after_completion][redirect][return_url]")).toBe("https://example.test/ja/app/my-orders#subscription");
+    expect(sqlite.prepare("SELECT cancel_at_period_end FROM subscriptions").get()).toEqual({ cancel_at_period_end: 0 });
+    expect(sqlite.prepare("SELECT remaining FROM subscription_credit_periods").get()).toEqual({ remaining: 550 });
+  });
+  it("does not reopen cancellation confirmation for a renewal already canceled", async () => {
+    const { env, checkout } = await setup();
+    await applySubscriptionEvent(env, event());
+    const api = stripeApi({ sub: { cancel_at_period_end: true } });
+    expect(await cancelSubscription(env, "u", checkout.orderId)).toEqual({ cancelled: true });
+    expect(api.portalRequests).toHaveLength(0);
+  });
+});
+
+
+describe("subscription account cancellation boundaries", () => {
+  it("does not cancel a different checkout created since the page loaded", async () => {
+    const { env, api } = await setup();
+    await expect(cancelSubscription(env, "u", "stale-order")).rejects.toMatchObject({ status: 409 });
+    expect(api.expireRequests).toHaveLength(0);
+  });
+  it("does not expose an older canceled subscription's portal for a new pending checkout", async () => {
+    const { env, sqlite, api } = await setup();
+    sqlite.prepare("INSERT INTO subscriptions(id,user_id,provider_mode,plan_id,billing_interval,price_id,amount_cents,monthly_credits,customer_id,subscription_id,status,created_at) VALUES('older','u','test','lite','month',?,1490,550,?,'sub_old','canceled',1)").run(priceId, customerId);
+    await expect(createSubscriptionPortal(env, "u")).rejects.toMatchObject({ status: 409 });
+    expect(api.portalRequests).toHaveLength(0);
+  });
+  it("keeps a checkout without a Stripe ID unavailable for cancellation while creation is in flight", async () => {
+    const { env, sqlite, checkout, api } = await setup();
+    sqlite.prepare("UPDATE subscriptions SET checkout_id=NULL,checkout_url=NULL").run();
+    expect(await subscriptionStatus(env, "u")).toMatchObject({ subscription: { status: "pending", canManage: false, canCancel: false, checkoutUrl: null } });
+    await expect(cancelSubscription(env, "u", checkout.orderId)).rejects.toMatchObject({ status: 409, message: "Subscription checkout is still being prepared. Please try again." });
+    expect(api.expireRequests).toHaveLength(0);
+  });
+  it("keeps a completed checkout without a subscription ID in confirmation state", async () => {
+    const { env, checkout } = await setup();
+    const api = stripeApi({ session: { status: "complete", subscription: null } });
+    expect(await subscriptionStatus(env, "u")).toMatchObject({ subscription: { status: "pending", canManage: false, canCancel: false, checkoutUrl: null } });
+    await expect(cancelSubscription(env, "u", checkout.orderId)).rejects.toMatchObject({ status: 409 });
+    expect(api.expireRequests).toHaveLength(0);
+  });
+  it("does not retire a checkout if its payment is confirmed while expiration is in flight", async () => {
+    const { env, sqlite, checkout } = await setup();
+    stripeApi({ beforeExpireResponse: () => { sqlite.prepare("UPDATE orders SET status='paid'").run(); } });
+    await expect(cancelSubscription(env, "u", checkout.orderId)).rejects.toMatchObject({ status: 409 });
+    expect(sqlite.prepare("SELECT status FROM orders").get()).toEqual({ status: "paid" });
+    expect(sqlite.prepare("SELECT status FROM subscriptions").get()).toEqual({ status: "pending" });
+  });
+  it("does not let a delayed account refresh overwrite a newer cancellation webhook", async () => {
+    const { env, sqlite } = await setup();
+    await applySubscriptionEvent(env, event());
+    const originalFetch = vi.mocked(globalThis.fetch).getMockImplementation()!;
+    let release!: (response: Response) => void;
+    let started!: () => void;
+    const firstStarted = new Promise<void>(resolve => { started = resolve; });
+    let reads = 0;
+    vi.spyOn(globalThis, "fetch").mockImplementation(async (input, init) => {
+      if (new URL(String(input)).pathname === `/v1/subscriptions/${subId}`) {
+        if (++reads === 1) { started(); return new Promise<Response>(resolve => { release = resolve; }); }
+        return Response.json(subscription({ cancel_at_period_end: true }));
+      }
+      return originalFetch(input, init);
+    });
+    const delayed = subscriptionStatus(env, "u");
+    await firstStarted;
+    await applySubscriptionEvent(env, event("customer.subscription.updated", { id: subId }));
+    release(Response.json(subscription({ cancel_at_period_end: false })));
+    expect(await delayed).toMatchObject({ subscription: { cancelAtPeriodEnd: true, canCancel: false } });
+    expect(sqlite.prepare("SELECT cancel_at_period_end FROM subscriptions").get()).toEqual({ cancel_at_period_end: 1 });
+  });
+  it("blocks cancellation portals with unsafe immediate-cancel configuration", async () => {
+    const { env, checkout } = await setup();
+    await applySubscriptionEvent(env, event());
+    const api = stripeApi({ config: { features: { subscription_update: { enabled: false }, subscription_cancel: { enabled: true, mode: "immediately", proration_behavior: "none" } } } });
+    await expect(cancelSubscription(env, "u", checkout.orderId)).rejects.toMatchObject({ status: 503 });
+    expect(api.portalRequests).toHaveLength(0);
   });
 });
