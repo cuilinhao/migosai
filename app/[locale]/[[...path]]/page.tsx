@@ -18,6 +18,7 @@ const routes = {
   "/showcases": () => import("@/app/showcases/page"),
   "/ai-rap-song-generator": () => import("@/app/ai-rap-song-generator/page"),
   "/flying-car-ai-video-generator": () => import("@/app/flying-car-ai-video-generator/page"),
+  "/gangnam-style-ai-video-generator": () => import("@/app/gangnam-style-ai-video-generator/page"),
   "/window-peeper-ai-video-generator": () => import("@/app/window-peeper-ai-video-generator/page"),
   "/flying-car-ai-video-generator/how-to-make-a-tesla-roadster-flying-car-video": () => import("@/app/flying-car-ai-video-generator/how-to-make-a-tesla-roadster-flying-car-video/page"),
   "/flying-car-ai-video-generator/tesla-flying-car-ai-video-trend": () => import("@/app/flying-car-ai-video-generator/tesla-flying-car-ai-video-trend/page"),
