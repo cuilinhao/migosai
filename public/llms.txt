@@ -59,3 +59,5 @@
 - Q: Is LobbyDuo the same as migosai.com? A: No. LobbyDuo runs at migosai.design and is operated independently of migosai.com and any other similarly named service.
 
 Content reviewed: 2026-10-15. Check the linked pages and generator for current settings and costs.
+
+- Gangnam Style AI Video Generator: https://migosai.design/gangnam-style-ai-video-generator — Friends, one-selfie and pet trio templates; three reference photos or one selfie; 15-second silent MP4, 480p or 720p, shared MigosAI credits. Third-party sample videos are attributed to gangnamstyle.io.

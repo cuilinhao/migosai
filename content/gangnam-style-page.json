@@ -1,0 +1,1141 @@
+{
+  "source": "https://gangnamstyle.io/",
+  "retrievedAt": "2026-10-27",
+  "title": "Gangnam Style AI Video Generator & Trio Templates",
+  "description": "Make the Gangnam Style AI trio trend from three photos or one selfie. Explore friends, selfie and pet video templates, photo tips and step-by-step guides.",
+  "content": {
+    "tag": "div",
+    "attrs": {
+      "class": "gns-content"
+    },
+    "children": [
+      {
+        "tag": "section",
+        "attrs": {
+          "class": "gns-hero"
+        },
+        "children": [
+          {
+            "tag": "div",
+            "attrs": {},
+            "children": [
+              {
+                "tag": "p",
+                "attrs": {
+                  "class": "gns-eyebrow"
+                },
+                "children": [
+                  "● THE TRIO TREND, REMIXED"
+                ]
+              },
+              {
+                "tag": "h1",
+                "attrs": {},
+                "children": [
+                  {
+                    "tag": "span",
+                    "attrs": {
+                      "class": "gns-hero-title-line"
+                    },
+                    "children": [
+                      "Gangnam Style AI"
+                    ]
+                  },
+                  " ",
+                  {
+                    "tag": "em",
+                    "attrs": {
+                      "class": "gns-hero-title-line"
+                    },
+                    "children": [
+                      "Video Generator"
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "p",
+                "attrs": {
+                  "class": "gns-intro"
+                },
+                "children": [
+                  "Your group chat deserves a video. Turn three portraits into a Gangnam Style AI trio, remix one selfie into three versions of you, or give your pets the spotlight. Choose your format and create a 15-second clip without editing a timeline."
+                ]
+              },
+              {
+                "tag": "div",
+                "attrs": {
+                  "class": "gns-actions"
+                },
+                "children": [
+                  {
+                    "tag": "a",
+                    "attrs": {
+                      "class": "gns-primary",
+                      "href": "#studio"
+                    },
+                    "children": [
+                      "Make your trio ↗"
+                    ]
+                  },
+                  {
+                    "tag": "a",
+                    "attrs": {
+                      "href": "#examples"
+                    },
+                    "children": [
+                      "See it in motion ↓"
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "p",
+                "attrs": {
+                  "class": "gns-small"
+                },
+                "children": [
+                  "Three creative templates · No editing skills needed"
+                ]
+              }
+            ]
+          },
+          {
+            "slot": "hero-media"
+          }
+        ]
+      },
+      {
+        "tag": "div",
+        "attrs": {
+          "class": "gns-ticker"
+        },
+        "children": [
+          "ONE PHOTO. THREE PERSONALITIES.   ✳   GOOD FRIENDS. GREAT ENERGY.   ✳   MAKE IT YOURS."
+        ]
+      },
+      {
+        "tag": "section",
+        "attrs": {
+          "id": "examples"
+        },
+        "children": [
+          {
+            "tag": "p",
+            "attrs": {
+              "class": "gns-eyebrow"
+            },
+            "children": [
+              "01 / PICK YOUR ENERGY"
+            ]
+          },
+          {
+            "tag": "h2",
+            "attrs": {},
+            "children": [
+              "Gangnam Style AI video examples"
+            ]
+          },
+          {
+            "slot": "examples"
+          }
+        ]
+      },
+      {
+        "tag": "section",
+        "attrs": {
+          "id": "studio",
+          "class": "gns-studio"
+        },
+        "children": [
+          {
+            "tag": "div",
+            "attrs": {},
+            "children": [
+              {
+                "tag": "p",
+                "attrs": {
+                  "class": "gns-eyebrow"
+                },
+                "children": [
+                  "02 / THE GROOVE STUDIO"
+                ]
+              },
+              {
+                "tag": "h2",
+                "attrs": {},
+                "children": [
+                  "Pick what you want to make"
+                ]
+              },
+              {
+                "tag": "p",
+                "attrs": {},
+                "children": [
+                  "Clear faces make the difference. Use a front-facing individual photo for every role, with good lighting and no sunglasses."
+                ]
+              },
+              {
+                "tag": "p",
+                "attrs": {
+                  "class": "gns-small"
+                },
+                "children": [
+                  "New generations are silent. Add music you have permission to use in your publishing app. AI likeness and motion may vary."
+                ]
+              }
+            ]
+          },
+          {
+            "slot": "generator"
+          }
+        ]
+      },
+      {
+        "tag": "section",
+        "attrs": {
+          "id": "photo-tips"
+        },
+        "children": [
+          {
+            "tag": "p",
+            "attrs": {
+              "class": "gns-eyebrow"
+            },
+            "children": [
+              "BETTER PHOTOS. BETTER STARTING POINT."
+            ]
+          },
+          {
+            "tag": "h2",
+            "attrs": {},
+            "children": [
+              "Tips for a better clip"
+            ]
+          },
+          {
+            "tag": "p",
+            "attrs": {
+              "class": "gns-intro"
+            },
+            "children": [
+              "Upload a separate photo for each person. Our example portraits show the sharp faces and natural light to look for."
+            ]
+          },
+          {
+            "tag": "div",
+            "attrs": {
+              "class": "gns-photo-tips"
+            },
+            "children": [
+              {
+                "tag": "article",
+                "attrs": {},
+                "children": [
+                  {
+                    "tag": "img",
+                    "attrs": {
+                      "src": "/gangnam-style/photo-example-middle.webp",
+                      "alt": "Example of a clear front-facing portrait for the middle role",
+                      "loading": "lazy",
+                      "width": "400",
+                      "height": "500"
+                    },
+                    "children": []
+                  },
+                  {
+                    "tag": "h3",
+                    "attrs": {},
+                    "children": [
+                      "One person per photo"
+                    ]
+                  },
+                  {
+                    "tag": "p",
+                    "attrs": {},
+                    "children": [
+                      "Use a separate portrait for each friend. Group photos make it harder to tell which face belongs in each role."
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "article",
+                "attrs": {},
+                "children": [
+                  {
+                    "tag": "img",
+                    "attrs": {
+                      "src": "/gangnam-style/photo-example-right.webp",
+                      "alt": "Example of a clear front-facing portrait for the right role",
+                      "loading": "lazy",
+                      "width": "400",
+                      "height": "500"
+                    },
+                    "children": []
+                  },
+                  {
+                    "tag": "h3",
+                    "attrs": {},
+                    "children": [
+                      "Face the camera"
+                    ]
+                  },
+                  {
+                    "tag": "p",
+                    "attrs": {},
+                    "children": [
+                      "Choose an eye-level photo with even light and a sharp face. Skip heavy filters and distant full-body shots."
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "article",
+                "attrs": {},
+                "children": [
+                  {
+                    "tag": "img",
+                    "attrs": {
+                      "src": "/gangnam-style/photo-example-left.webp",
+                      "alt": "Example of a clear front-facing portrait for the left role",
+                      "loading": "lazy",
+                      "width": "400",
+                      "height": "500"
+                    },
+                    "children": []
+                  },
+                  {
+                    "tag": "h3",
+                    "attrs": {},
+                    "children": [
+                      "No sunglasses, no mask"
+                    ]
+                  },
+                  {
+                    "tag": "p",
+                    "attrs": {},
+                    "children": [
+                      "Keep eyes, mouth and facial features visible. Only upload photos you own or have permission to use."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "section",
+        "attrs": {
+          "id": "how",
+          "class": "gns-how-guide"
+        },
+        "children": [
+          {
+            "tag": "div",
+            "attrs": {
+              "class": "gns-how-heading"
+            },
+            "children": [
+              {
+                "tag": "div",
+                "attrs": {},
+                "children": [
+                  {
+                    "tag": "p",
+                    "attrs": {
+                      "class": "gns-eyebrow"
+                    },
+                    "children": [
+                      "FROM PHOTO TO FIRST PLAY"
+                    ]
+                  },
+                  {
+                    "tag": "h2",
+                    "attrs": {},
+                    "children": [
+                      "How to make your Gangnam Style AI video"
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "p",
+                "attrs": {},
+                "children": [
+                  "Bring the photos. Choose your format.",
+                  {
+                    "tag": "br",
+                    "attrs": {},
+                    "children": []
+                  },
+                  "We handle the AI generation."
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "ol",
+            "attrs": {
+              "class": "gns-how-cards"
+            },
+            "children": [
+              {
+                "tag": "li",
+                "attrs": {},
+                "children": [
+                  {
+                    "tag": "div",
+                    "attrs": {
+                      "class": "gns-how-demo gns-how-portraits",
+                      "aria-hidden": "true"
+                    },
+                    "children": [
+                      {
+                        "tag": "div",
+                        "attrs": {},
+                        "children": [
+                          {
+                            "tag": "img",
+                            "attrs": {
+                              "src": "/gangnam-style/photo-example-middle.webp",
+                              "alt": "",
+                              "loading": "lazy",
+                              "width": "100",
+                              "height": "120"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "span",
+                            "attrs": {},
+                            "children": [
+                              "Middle"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "div",
+                        "attrs": {},
+                        "children": [
+                          {
+                            "tag": "img",
+                            "attrs": {
+                              "src": "/gangnam-style/photo-example-right.webp",
+                              "alt": "",
+                              "loading": "lazy",
+                              "width": "100",
+                              "height": "120"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "span",
+                            "attrs": {},
+                            "children": [
+                              "Right"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "div",
+                        "attrs": {},
+                        "children": [
+                          {
+                            "tag": "img",
+                            "attrs": {
+                              "src": "/gangnam-style/photo-example-left.webp",
+                              "alt": "",
+                              "loading": "lazy",
+                              "width": "100",
+                              "height": "120"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "span",
+                            "attrs": {},
+                            "children": [
+                              "Left"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "attrs": {
+                      "class": "gns-how-copy"
+                    },
+                    "children": [
+                      {
+                        "tag": "span",
+                        "attrs": {
+                          "class": "gns-how-number"
+                        },
+                        "children": [
+                          "01"
+                        ]
+                      },
+                      {
+                        "tag": "h3",
+                        "attrs": {},
+                        "children": [
+                          "Pick who is in it"
+                        ]
+                      },
+                      {
+                        "tag": "p",
+                        "attrs": {},
+                        "children": [
+                          "Pick Gangnam Style trio for three friends, Three of you for one selfie, or Pet trio for three pets. Upload one clear image per role."
+                        ]
+                      },
+                      {
+                        "tag": "span",
+                        "attrs": {
+                          "class": "gns-how-tip"
+                        },
+                        "children": [
+                          "Middle → Right → Left is the solo order."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "li",
+                "attrs": {},
+                "children": [
+                  {
+                    "tag": "div",
+                    "attrs": {
+                      "class": "gns-how-demo gns-how-settings",
+                      "aria-hidden": "true"
+                    },
+                    "children": [
+                      {
+                        "tag": "div",
+                        "attrs": {},
+                        "children": [
+                          {
+                            "tag": "span",
+                            "attrs": {},
+                            "children": [
+                              "ASPECT RATIO"
+                            ]
+                          },
+                          {
+                            "tag": "div",
+                            "attrs": {
+                              "class": "gns-how-chips"
+                            },
+                            "children": [
+                              {
+                                "tag": "b",
+                                "attrs": {},
+                                "children": [
+                                  "16:9"
+                                ]
+                              },
+                              {
+                                "tag": "span",
+                                "attrs": {},
+                                "children": [
+                                  "9:16"
+                                ]
+                              },
+                              {
+                                "tag": "span",
+                                "attrs": {},
+                                "children": [
+                                  "1:1"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "div",
+                        "attrs": {},
+                        "children": [
+                          {
+                            "tag": "span",
+                            "attrs": {},
+                            "children": [
+                              "RESOLUTION"
+                            ]
+                          },
+                          {
+                            "tag": "div",
+                            "attrs": {
+                              "class": "gns-how-chips"
+                            },
+                            "children": [
+                              {
+                                "tag": "span",
+                                "attrs": {},
+                                "children": [
+                                  "480p"
+                                ]
+                              },
+                              {
+                                "tag": "b",
+                                "attrs": {},
+                                "children": [
+                                  "720p HD"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "attrs": {
+                      "class": "gns-how-copy"
+                    },
+                    "children": [
+                      {
+                        "tag": "span",
+                        "attrs": {
+                          "class": "gns-how-number"
+                        },
+                        "children": [
+                          "02"
+                        ]
+                      },
+                      {
+                        "tag": "h3",
+                        "attrs": {},
+                        "children": [
+                          "Add the photos and tap make"
+                        ]
+                      },
+                      {
+                        "tag": "p",
+                        "attrs": {},
+                        "children": [
+                          "Choose an aspect ratio and 480p or 720p quality. Check your photo previews, confirm you have permission, and sign in with Google to generate."
+                        ]
+                      },
+                      {
+                        "tag": "span",
+                        "attrs": {
+                          "class": "gns-how-tip"
+                        },
+                        "children": [
+                          "16:9 is recommended for the trio scene."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "li",
+                "attrs": {},
+                "children": [
+                  {
+                    "tag": "div",
+                    "attrs": {
+                      "class": "gns-how-demo gns-how-finished",
+                      "aria-hidden": "true"
+                    },
+                    "children": [
+                      {
+                        "tag": "div",
+                        "attrs": {
+                          "class": "gns-how-video-mark"
+                        },
+                        "children": [
+                          "▷"
+                        ]
+                      },
+                      {
+                        "tag": "span",
+                        "attrs": {},
+                        "children": [
+                          "YOUR NEXT GROUP CHAT MOMENT"
+                        ]
+                      },
+                      {
+                        "tag": "div",
+                        "attrs": {
+                          "class": "gns-how-download"
+                        },
+                        "children": [
+                          "↓   Save your MP4"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "attrs": {
+                      "class": "gns-how-copy"
+                    },
+                    "children": [
+                      {
+                        "tag": "span",
+                        "attrs": {
+                          "class": "gns-how-number"
+                        },
+                        "children": [
+                          "03"
+                        ]
+                      },
+                      {
+                        "tag": "h3",
+                        "attrs": {},
+                        "children": [
+                          "Download and post"
+                        ]
+                      },
+                      {
+                        "tag": "p",
+                        "attrs": {},
+                        "children": [
+                          "Follow your render in My videos, then preview and download the finished MP4. Add music you have permission to use in your preferred editing app."
+                        ]
+                      },
+                      {
+                        "tag": "span",
+                        "attrs": {
+                          "class": "gns-how-tip"
+                        },
+                        "children": [
+                          "Processing time varies. Download before links expire."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "div",
+            "attrs": {
+              "class": "gns-how-bottom"
+            },
+            "children": [
+              {
+                "tag": "p",
+                "attrs": {},
+                "children": [
+                  {
+                    "tag": "strong",
+                    "attrs": {},
+                    "children": [
+                      "A better starting photo makes a difference."
+                    ]
+                  },
+                  " One subject, good light, face fully visible. AI likeness and motion may vary."
+                ]
+              },
+              {
+                "tag": "div",
+                "attrs": {},
+                "children": [
+                  {
+                    "tag": "a",
+                    "attrs": {
+                      "href": "https://gangnamstyle.io/guides/gangnam-style-ai-trio-tutorial",
+                      "target": "_blank",
+                      "rel": "noreferrer"
+                    },
+                    "children": [
+                      "Read the full guide"
+                    ]
+                  },
+                  {
+                    "tag": "a",
+                    "attrs": {
+                      "class": "gns-primary",
+                      "href": "#studio"
+                    },
+                    "children": [
+                      "Make my video"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "section",
+        "attrs": {
+          "class": "gns-editorial"
+        },
+        "children": [
+          {
+            "tag": "p",
+            "attrs": {
+              "class": "gns-eyebrow"
+            },
+            "children": [
+              "MADE FOR THE MOMENTS BETWEEN"
+            ]
+          },
+          {
+            "tag": "h2",
+            "attrs": {},
+            "children": [
+              "Who to put in the",
+              {
+                "tag": "br",
+                "attrs": {},
+                "children": []
+              },
+              {
+                "tag": "em",
+                "attrs": {},
+                "children": [
+                  "Gangnam Style trio"
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "p",
+            "attrs": {},
+            "children": [
+              "Start with the friends who always say “we should do this.” Make a birthday surprise for the group chat, try three alter egos from a single selfie, or cast your cats and dogs in a pet trio. Each template is a different starting point; the example gallery shows AI dance samples rather than a guaranteed result for every template."
+            ]
+          },
+          {
+            "tag": "div",
+            "attrs": {
+              "class": "gns-template-links"
+            },
+            "children": [
+              {
+                "tag": "a",
+                "attrs": {
+                  "href": "#studio-selfie"
+                },
+                "children": [
+                  "Try the single-selfie generator ↗"
+                ]
+              },
+              {
+                "tag": "a",
+                "attrs": {
+                  "href": "#studio-pets"
+                },
+                "children": [
+                  "Explore the pet trio generator ↗"
+                ]
+              },
+              {
+                "tag": "a",
+                "attrs": {
+                  "href": "https://gangnamstyle.io/guides",
+                  "target": "_blank",
+                  "rel": "noreferrer"
+                },
+                "children": [
+                  "Read the photo preparation guides ↗"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "slot": "pricing"
+      },
+      {
+        "tag": "section",
+        "attrs": {
+          "id": "faq",
+          "class": "gns-faq"
+        },
+        "children": [
+          {
+            "tag": "p",
+            "attrs": {
+              "class": "gns-eyebrow"
+            },
+            "children": [
+              "THE DETAILS"
+            ]
+          },
+          {
+            "tag": "h2",
+            "attrs": {},
+            "children": [
+              "Gangnam Style AI FAQ"
+            ]
+          },
+          {
+            "tag": "details",
+            "attrs": {},
+            "children": [
+              {
+                "tag": "summary",
+                "attrs": {},
+                "children": [
+                  "What is Gangnam Style AI?"
+                ]
+              },
+              {
+                "tag": "p",
+                "attrs": {},
+                "children": [
+                  "Gangnam Style AI turns still portraits into a short AI-generated trio video inspired by the street-selfie trend. Choose friends, one selfie or pets as your starting point. It is not a recreation of the original music video."
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "details",
+            "attrs": {},
+            "children": [
+              {
+                "tag": "summary",
+                "attrs": {},
+                "children": [
+                  "Can I use only one photo?"
+                ]
+              },
+              {
+                "tag": "p",
+                "attrs": {},
+                "children": [
+                  "Yes. Choose Three of you to use the same selfie for all three roles."
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "details",
+            "attrs": {},
+            "children": [
+              {
+                "tag": "summary",
+                "attrs": {},
+                "children": [
+                  "Can I generate a Gangnam Style AI pet video?"
+                ]
+              },
+              {
+                "tag": "p",
+                "attrs": {},
+                "children": [
+                  "Choose Pet trio and upload three individual pet photos. Results and identity fidelity vary."
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "details",
+            "attrs": {},
+            "children": [
+              {
+                "tag": "summary",
+                "attrs": {},
+                "children": [
+                  "Does my video include the original song?"
+                ]
+              },
+              {
+                "tag": "p",
+                "attrs": {},
+                "children": [
+                  "New generations are silent. Add a track you have permission to use through your preferred publishing platform."
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "details",
+            "attrs": {},
+            "children": [
+              {
+                "tag": "summary",
+                "attrs": {},
+                "children": [
+                  "Which aspect ratios and resolutions can I choose?"
+                ]
+              },
+              {
+                "tag": "p",
+                "attrs": {},
+                "children": [
+                  "Choose landscape 16:9, portrait 9:16, square 1:1, 4:3, 3:4, cinema 21:9 or Auto. Output quality is 480p or 720p. The trio scene is best suited to 16:9; other formats can change the framing."
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "details",
+            "attrs": {},
+            "children": [
+              {
+                "tag": "summary",
+                "attrs": {},
+                "children": [
+                  "How long is a Gangnam Style AI video?"
+                ]
+              },
+              {
+                "tag": "p",
+                "attrs": {},
+                "children": [
+                  "New generations are 15-second MP4 clips. Rendering time varies. Open My videos to check progress and download the completed file before its provider link expires."
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "details",
+            "attrs": {},
+            "children": [
+              {
+                "tag": "summary",
+                "attrs": {},
+                "children": [
+                  "Is there a subscription?"
+                ]
+              },
+              {
+                "tag": "p",
+                "attrs": {},
+                "children": [
+                  "Use your existing MigosAI credits. One-time credit packs and subscriptions are available on the MigosAI pricing page. The generator shows the cost before submission."
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "details",
+            "attrs": {},
+            "children": [
+              {
+                "tag": "summary",
+                "attrs": {},
+                "children": [
+                  "Will the faces look exactly like the photos?"
+                ]
+              },
+              {
+                "tag": "p",
+                "attrs": {},
+                "children": [
+                  "AI results are unpredictable. Identity, anatomy and movement can vary; exact likeness is not guaranteed."
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "details",
+            "attrs": {},
+            "children": [
+              {
+                "tag": "summary",
+                "attrs": {},
+                "children": [
+                  "What happens if generation fails?"
+                ]
+              },
+              {
+                "tag": "p",
+                "attrs": {},
+                "children": [
+                  "A failed generation returns its reserved credits. We show the error and do not automatically submit another paid attempt. Purchase refunds follow the refund policy."
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "details",
+            "attrs": {},
+            "children": [
+              {
+                "tag": "summary",
+                "attrs": {},
+                "children": [
+                  "Do I need an account?"
+                ]
+              },
+              {
+                "tag": "p",
+                "attrs": {},
+                "children": [
+                  "Yes. Sign in with your MigosAI account to create videos and access your account."
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "details",
+            "attrs": {},
+            "children": [
+              {
+                "tag": "summary",
+                "attrs": {},
+                "children": [
+                  "Is this an official Gangnam Style product?"
+                ]
+              },
+              {
+                "tag": "p",
+                "attrs": {},
+                "children": [
+                  "No. MigosAI is an independent AI creative service and is not affiliated with or endorsed by the artist, labels or social platforms."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "section",
+        "attrs": {
+          "class": "gns-journal"
+        },
+        "children": [
+          {
+            "tag": "p",
+            "attrs": {
+              "class": "gns-eyebrow"
+            },
+            "children": [
+              "FIELD NOTES"
+            ]
+          },
+          {
+            "tag": "h2",
+            "attrs": {},
+            "children": [
+              "Guides"
+            ]
+          },
+          {
+            "tag": "a",
+            "attrs": {
+              "href": "https://gangnamstyle.io/guides",
+              "target": "_blank",
+              "rel": "noreferrer"
+            },
+            "children": [
+              "Explore Gangnam Style AI guides, selfie tips and pet video ideas ↗"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,4 +1,5 @@
 import type { CreateImageRequest, CreateVideoRequest, VideoModel } from '../contracts';
+import type { GangnamStylePayload } from '../gangnam-style';
 import type { FlyingCarPayload } from '../flyingcar';
 import { videoPrompt } from '../prompts/video';
 import { ozilGoalPrompt } from '../prompts/ozil-goal';
@@ -172,6 +173,21 @@ export async function createKieFlyingCarVideo(env: Env, payload: FlyingCarPayloa
       generate_audio: false,
       nsfw_checker: true,
       ...(imageUrl ? { reference_image_urls: [imageUrl] } : {}),
+    },
+  });
+  if (!validTaskId(data.taskId)) invalidResponse();
+  return data.taskId;
+}
+
+/** Ordered references are middle, right, left; one selfie is repeated by the prompt. */
+export async function createKieGangnamStyleVideo(env: Env, payload: GangnamStylePayload, imageUrls: string[]): Promise<string> {
+  const data = await request(env, '/createTask', {
+    model: MODELS[payload.model],
+    input: {
+      prompt: payload.prompt, reference_image_urls: imageUrls,
+      duration: payload.duration, resolution: payload.resolution,
+      aspect_ratio: payload.aspect === 'auto' ? 'adaptive' : payload.aspect,
+      generate_audio: false, output_format: 'mp4', nsfw_checker: true,
     },
   });
   if (!validTaskId(data.taskId)) invalidResponse();

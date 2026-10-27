@@ -15,7 +15,7 @@ export type UploadedPhoto = { key: string };
 export type GenerationStatus = "queued" | "reviewing" | "processing" | "completed" | "failed" | "cancelled";
 export type GenerationResponse = {
   id: string; status: GenerationStatus; progress: number;
-  template?: "ozil-goal" | "flyingcar" | "window-peeper";
+  template?: "ozil-goal" | "flyingcar" | "window-peeper" | "gangnam-style";
   videoUrl?: string; audioUrls?: string[]; imageUrls?: string[]; error?: string;
   statusMessage?: string;
 };

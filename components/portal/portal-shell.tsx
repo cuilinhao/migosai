@@ -24,7 +24,7 @@ function navigationIsActive(pathname: string, href: string) {
   const isArticle = pathname === "/ozil-goal-generator/blog" || pathname.startsWith("/ozil-goal-generator/blog/");
   if (href === "/blog" && isArticle) return true;
   if (href === "/explore" && pathname === "/showcases") return true;
-  if (href === "/ai-video-generator") return !isArticle && (pathname.startsWith("/hotel-lobby-ai-") || ["/ai-video-generator", "/hotel-lobby-ai-video-generator", "/flying-car-ai-video-generator", "/ozil-goal-generator", "/window-peeper-ai-video-generator"].some(route => pathname === route || pathname.startsWith(`${route}/`)));
+  if (href === "/ai-video-generator") return !isArticle && (pathname.startsWith("/hotel-lobby-ai-") || ["/ai-video-generator", "/hotel-lobby-ai-video-generator", "/flying-car-ai-video-generator", "/ozil-goal-generator", "/window-peeper-ai-video-generator", "/gangnam-style-ai-video-generator"].some(route => pathname === route || pathname.startsWith(`${route}/`)));
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(`${href}/`);
 }
@@ -62,7 +62,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
 
 function PortalFooter() {
   const t = useTranslations();
-  return <footer className="portal-footer"><div><PortalBrand/><p>{t("A little inspiration. Endless possibilities.")}</p><span>© {new Date().getFullYear()} MigosAI</span></div><div><b>{t("Create")}</b><Link href="/ai-image-generator">{t("AI Image Generator")}</Link><Link href="/hotel-lobby-ai-video-generator">Hotel Lobby</Link><Link href="/ai-rap-song-generator">{t("AI Music")}</Link></div><div><b>{t("Discover")}</b><Link href="/landing">{t("About MigosAI")}</Link><Link href="/explore">{t("Explore")}</Link><Link href="/blog">{t("Inspiration Hub")}</Link><Link href="/pricing">{t("Pricing")}</Link><Link href="/black-friday">{t("Black Friday 2026")}</Link></div><div><b>{t("Support")}</b><a href={SUPPORT_MAILTO}>{SUPPORT_EMAIL}</a><Link href="/contact">{t("Contact")}</Link><Link href="/privacy-policy">{t("Privacy Policy")}</Link><Link href="/terms-of-service">{t("Terms of Service")}</Link><Link href="/refund-policy">{t("Refund Policy")}</Link><Link href="/acceptable-use-policy">{t("Acceptable Use Policy")}</Link></div></footer>;
+  return <footer className="portal-footer"><div><PortalBrand/><p>{t("A little inspiration. Endless possibilities.")}</p><span>© {new Date().getFullYear()} MigosAI</span></div><div><b>{t("Create")}</b><Link href="/ai-image-generator">{t("AI Image Generator")}</Link><Link href="/hotel-lobby-ai-video-generator">Hotel Lobby</Link><Link href="/gangnam-style-ai-video-generator">Gangnam Style AI</Link><Link href="/ai-rap-song-generator">{t("AI Music")}</Link></div><div><b>{t("Discover")}</b><Link href="/landing">{t("About MigosAI")}</Link><Link href="/explore">{t("Explore")}</Link><Link href="/blog">{t("Inspiration Hub")}</Link><Link href="/pricing">{t("Pricing")}</Link><Link href="/black-friday">{t("Black Friday 2026")}</Link></div><div><b>{t("Support")}</b><a href={SUPPORT_MAILTO}>{SUPPORT_EMAIL}</a><Link href="/contact">{t("Contact")}</Link><Link href="/privacy-policy">{t("Privacy Policy")}</Link><Link href="/terms-of-service">{t("Terms of Service")}</Link><Link href="/refund-policy">{t("Refund Policy")}</Link><Link href="/acceptable-use-policy">{t("Acceptable Use Policy")}</Link></div></footer>;
 }
 
 export function SupportFooter() {

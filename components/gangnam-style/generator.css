@@ -1,0 +1,18 @@
+.gangnam-page .gns-cast-upload.gns-dragging { border-color: #a78bfa; outline: 3px solid #a78bfa40; }
+.gangnam-page .gns-cast-upload:has(input:disabled) { cursor: wait; }
+.gangnam-page .gns-cast-upload input:disabled { cursor: wait; }
+.gangnam-page .gns-remove-photo { display: inline-flex; align-items: center; gap: 4px; margin-top: 7px; padding: 3px 0; border: 0; background: transparent; color: #a9a2b5; font-size: 11px; }
+.gangnam-page .gns-remove-photo:hover { color: #f5f1fa; }
+.gangnam-page .gns-account-note a, .gangnam-page .gns-error a, .gangnam-page .gns-generation-progress a { text-decoration: underline; text-underline-offset: 3px; }
+.gangnam-page .gns-consent input { accent-color: #a78bfa; vertical-align: middle; }
+.gangnam-page .gns-generation-progress { padding: 16px; margin-top: 18px; border: 1px solid #a78bfa35; border-radius: 12px; background: #a78bfa0a; }
+.gangnam-page .gns-generation-progress p { display: flex; justify-content: space-between; gap: 14px; margin: 0 0 10px; font-size: 13px; }
+.gangnam-page .gns-generation-progress small { display: block; margin-top: 10px; color: #a9a2b5; font-size: 11px; }
+.gangnam-page .gns-progress-track { height: 5px; border-radius: 8px; background: #ffffff12; overflow: hidden; }
+.gangnam-page .gns-progress-track > span { display: block; height: 100%; border-radius: inherit; background: #a78bfa; transition: width .25s ease; }
+.gangnam-page .gns-result-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 15px; font-size: 12px; }
+.gangnam-page .gns-result-actions p, .gangnam-page .gns-result-actions a { display: inline-flex; align-items: center; gap: 6px; margin: 0; }
+.gangnam-page .gns-result-actions a { color: #c4b5fd; text-decoration: underline; text-underline-offset: 4px; }
+.gangnam-page .gns-busy-icon { flex-shrink: 0; animation: gns-generator-spin 1s linear infinite; }
+@keyframes gns-generator-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .gangnam-page .gns-busy-icon { animation: none; } .gangnam-page .gns-progress-track > span { transition: none; } }

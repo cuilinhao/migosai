@@ -1,6 +1,6 @@
 import type { GenerationResponse } from '@/lib/contracts';
 
-export type VideoTemplate = 'ozil-goal' | 'flyingcar' | 'window-peeper';
+export type VideoTemplate = 'ozil-goal' | 'flyingcar' | 'window-peeper' | 'gangnam-style';
 export type VideoHistoryItem = GenerationResponse & { kind: string; template?: VideoTemplate };
 
 export function getResumableVideo(generations: readonly VideoHistoryItem[], template?: VideoTemplate): GenerationResponse | null {

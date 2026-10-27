@@ -18,6 +18,8 @@ const rows: readonly Row[] = [
   ["Get the offer", "立即領取優惠", "혜택 받기", "特典を受け取る", "Profiter de l’offre", "Aprovechar la oferta"],
   ["Dismiss announcement", "關閉公告", "공지 닫기", "お知らせを閉じる", "Fermer l’annonce", "Cerrar el aviso"],
   // Homepage cards
+  ["Gangnam Style AI Video Generator", "江南 Style AI 影片產生器", "강남스타일 AI 동영상 생성기", "江南スタイルAI動画生成ツール", "Générateur vidéo IA Gangnam Style", "Generador de vídeos IA Gangnam Style"],
+  ["Three friends, one selfie or your pets. Make your trio.", "三位朋友、一張自拍或你的寵物，組成你的三人組。", "친구 셋, 셀카 한 장 또는 반려동물로 트리오를 만드세요.", "3人の友達、1枚の自撮り、ペットでトリオを作成。", "Trois amis, un selfie ou vos animaux. Créez votre trio.", "Tres amigos, un selfi o tus mascotas. Crea tu trío."],
   ["More from MigosAI", "更多 MigosAI 工具", "MigosAI 더 보기", "MigosAIのその他のツール", "Plus d’outils MigosAI", "Más de MigosAI"],
   ["Explore more AI video tools", "探索更多 AI 影片工具", "더 많은 AI 영상 도구 살펴보기", "その他のAI動画ツール", "Découvrez d’autres outils vidéo IA", "Descubre más herramientas de vídeo con IA"],
   ["View all tools", "查看所有工具", "모든 도구 보기", "すべてのツールを見る", "Voir tous les outils", "Ver todas las herramientas"],

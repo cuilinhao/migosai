@@ -36,6 +36,7 @@ export const publicPages: PublicPage[] = [
   { path: "/showcases", label: "Reference Examples", priority: 0.7, changeFrequency: "monthly" },
   { path: "/ai-rap-song-generator", label: "AI Rap Song Generator", priority: 0.7, changeFrequency: "monthly" },
   { path: "/flying-car-ai-video-generator", label: "Flying Car AI Generator", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-10-17" },
+  { path: "/gangnam-style-ai-video-generator", label: "Gangnam Style AI Video Generator", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-10-27" },
   { path: "/window-peeper-ai-video-generator", label: "Window Peeper AI Video Generator", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-10-25" },
   { path: "/flying-car-ai-video-generator/how-to-make-a-tesla-roadster-flying-car-video", label: "How to Make a Flying Car Video", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-10-17" },
   { path: "/flying-car-ai-video-generator/tesla-flying-car-ai-video-trend", label: "Tesla Flying Car AI Video Trend", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-10-17" },

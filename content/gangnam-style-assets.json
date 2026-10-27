@@ -1,0 +1,76 @@
+{
+  "source": "https://gangnamstyle.io/",
+  "retrievedAt": "2026-10-27",
+  "assets": [
+    {
+      "url": "https://gangnamstyle.io/assets/photo-trio-seoul-with-audio.mp4",
+      "bytes": 10323518,
+      "type": "video/mp4",
+      "path": "/gangnam-style/photo-trio-seoul-with-audio.mp4",
+      "sha256": "81fe17b9f26289ca973520efc2fa237df14b94df5656ef97bd00f4a97a310461"
+    },
+    {
+      "url": "https://gangnamstyle.io/assets/seedance-studio.mp4",
+      "bytes": 3426733,
+      "type": "video/mp4",
+      "path": "/gangnam-style/seedance-studio.mp4",
+      "sha256": "d54536de3078fb8c130cde3993748780864a2ed3630a6f1fbfe78c7157be654a"
+    },
+    {
+      "url": "https://gangnamstyle.io/assets/seedance-square.mp4",
+      "bytes": 4827318,
+      "type": "video/mp4",
+      "path": "/gangnam-style/seedance-square.mp4",
+      "sha256": "78e5e42ac2a77681538c571068a8ac849e3b900ce52828752ff158bb71aa3e59"
+    },
+    {
+      "url": "https://gangnamstyle.io/assets/photo-trio-seoul.jpg",
+      "bytes": 45879,
+      "type": "image/jpeg",
+      "path": "/gangnam-style/photo-trio-seoul.jpg",
+      "sha256": "52b264bfe641cdaa644232f566f8f3042173014edfe6724c02dd40af744e0e9a"
+    },
+    {
+      "url": "https://gangnamstyle.io/assets/seedance-studio.jpg",
+      "bytes": 26263,
+      "type": "image/jpeg",
+      "path": "/gangnam-style/seedance-studio.jpg",
+      "sha256": "ce4a8e359a248ddce47ddb080140f81a77d6fdf77bddb89b3f97c779d54cd287"
+    },
+    {
+      "url": "https://gangnamstyle.io/assets/seedance-square.jpg",
+      "bytes": 57357,
+      "type": "image/jpeg",
+      "path": "/gangnam-style/seedance-square.jpg",
+      "sha256": "85bffe1e3016599484a9b49862195775b353d4396d865ab11215cd09ce9c1f98"
+    },
+    {
+      "url": "https://gangnamstyle.io/assets/photo-example-middle.webp",
+      "bytes": 53478,
+      "type": "image/webp",
+      "path": "/gangnam-style/photo-example-middle.webp",
+      "sha256": "fe0a6c327d48e635d9460f50ad54b92a55cb5b7b4c18204712006dc0dd262905"
+    },
+    {
+      "url": "https://gangnamstyle.io/assets/photo-example-right.webp",
+      "bytes": 54756,
+      "type": "image/webp",
+      "path": "/gangnam-style/photo-example-right.webp",
+      "sha256": "ea1ba5c8150b459be84e4b493a4e3e140fb4b27810d4ffb39e020e66f9ecca31"
+    },
+    {
+      "url": "https://gangnamstyle.io/assets/photo-example-left.webp",
+      "bytes": 47678,
+      "type": "image/webp",
+      "path": "/gangnam-style/photo-example-left.webp",
+      "sha256": "c246231232038dc892cb4bb60b1e7002ac7d8f243b46156a49cf5ffe3903094d"
+    },
+    {
+      "url": "https://gangnamstyle.io/groove-icon.svg",
+      "type": "image/svg+xml",
+      "path": "/gangnam-style/groove-icon.svg",
+      "sha256": "211f4b56d9419fe66fb83ee76d0f17ea4b004c72f7b141703a66dc7ad6eb6d82",
+      "bytes": 302
+    }
+  ]
+}

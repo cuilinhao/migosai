@@ -5,6 +5,7 @@ import { ownExamples, seedanceExamples, type OwnExample } from "./own-examples";
 export const portalTools = [
   { title: "AI Image Generator", description: "Your ideas, brought to life in stunning detail.", href: "/ai-image-generator", icon: "image", tag: "Nano Banana 2" },
   { title: "Hotel Lobby", description: "Two photos. One unforgettable rap duo.", href: "/hotel-lobby-ai-video-generator", icon: "video", tag: "Popular" },
+  { title: "Gangnam Style AI", description: "Three friends, one selfie or your pets. Make your trio.", href: "/gangnam-style-ai-video-generator", icon: "video", tag: "Video" },
   { title: "Flying Car", description: "Take your car from the street to the sky.", href: "/flying-car-ai-video-generator", icon: "sparkles", tag: "Video" },
   { title: "Özil Goal", description: "Put yourself in an iconic football moment.", href: "/ozil-goal-generator", icon: "video", tag: "Video" },
   { title: "Window Peeper", description: "One photo. Your own awkward window moment.", href: "/window-peeper-ai-video-generator", icon: "video", tag: "Video" },

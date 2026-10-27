@@ -4,6 +4,8 @@ LobbyDuo 是运行于 [migosai.design](https://migosai.design) 的双图视频�
 
 ## 当前功能
 
+- Gangnam Style 新内页 `/gangnam-style-ai-video-generator`：原站全部首页展示区块与3条视频，保持当前暗紫主题；支持朋友/自拍/宠物三模式，15秒静音、7画幅、480p/720p，沿用本站账户和共享积分，加入首页、工具、导航与sitemap。实现与验收见 [Gangnam Style 记录](docs/gangnam-style/NOTES.md)。
+
 - FlyingCar 内页 `/flying-car-ai-video-generator` 已上线，含原站两篇文章、23 条 FAQ、全部公开媒体和提示词校验，使用项目主色与共享积分。支持文本或可选单图、5–30 秒竖屏静音视频；发布测试及正式四档 Stripe 收银台验收见 [FlyingCar 上线记录](docs/flyingcar-release.md)。真实付费生成与实际付款未在本轮执行。
 - 英文、韩文、日文、法文、西班牙文、繁体中文六种语言；英文使用无语言前缀路径。
 - 登录与注册共用新版品牌卡片，支持 Google OAuth、Google One Tap 和邮箱密码注册/登录；密码使用带随机盐的 scrypt 保存。
