@@ -170,3 +170,11 @@ GEO_HTTP_CLIENT=curl python3 scripts/check-geo.py https://migosai.design QA/geo-
 - 六语言定价页、Tab、Elite 档位、登录门禁、账户管理、条款退款及390px移动布局通过。
 - 独立代码审查修复跨语言幂等重试、自动换币拒绝到账、归档Price续费、并发旧状态覆盖取消；并发扣款与过期退款使用真实SQLite/workerd验证。
 - 证据位于Git忽略目录 `.local-evidence/stripe-runtime/`，包含合成测试账号及安全配置，不得发布原始凭据或本地状态。生产实际收款未测试；生产配置、迁移与部署结果后续另记。
+
+## 2026-10-27 Gangnam Style 内页上线
+
+新增 `/gangnam-style-ai-video-generator`，复刻 gangnamstyle.io 首页展示结构、标题、说明、11条FAQ及全部首页媒体，保持现有深色紫色主题；账户、积分和套餐沿用本站。支持朋友/单自拍/宠物三模式及三图Kie生成管线。
+
+最终代码提交 `473b349`（功能提交 `9286e3f`），Cloudflare版本 `f6f2e33e-8558-48df-a146-9ee1aa3cb798`。131个测试文件、2510项测试、类型检查及Cloudflare构建通过。发布后六语言页面、10个素材、693项sitemap（新增6项）、六语言首页SEO和三断点浏览器验收通过。初次发布发现缺少多语言路由注册，已补充并通过5项回归测试后发布修正版。未执行真实付费生成或付款。
+
+详细范围与验证证据见 [记录](../docs/gangnam-style/NOTES.md)。
