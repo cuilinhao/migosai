@@ -5,7 +5,7 @@ import { advanceJob, generationResponse } from '../lib/server/jobs';
 import { verifyMediaSignature } from '../lib/server/media';
 
 afterEach(() => vi.restoreAllMocks());
-const prompt = 'Three dancers perform a synchronized horse-riding dance.';
+const prompt = 'Remake @Video1 as a silent handheld selfie relay with the uploaded cast.';
 async function setup(selfie = false, polling = false, aspect = '16:9') {
   const d = database();
   d.sqlite.prepare("UPDATE users SET credits=1000 WHERE id='u'").run();
@@ -33,8 +33,10 @@ describe('Gangnam Style jobs share the existing video pipeline', () => {
     expect(body).toMatchObject({ model: 'bytedance/seedance-2-5', input: {
       prompt, duration: 15, resolution: '720p', aspect_ratio: '16:9', generate_audio: false, nsfw_checker: true,
     } });
-    expect(body.input.reference_video_urls).toBeUndefined();
+    expect(body.input.reference_video_urls).toEqual(['https://example.test/gangnam-style/photo-trio-seoul-with-audio.mp4']);
     expect(body.input.reference_audio_urls).toBeUndefined();
+    expect(body.input.first_frame_url).toBeUndefined();
+    expect(body.input.last_frame_url).toBeUndefined();
     const keys = selfie ? ['users/u/uploads/middle'] : ['users/u/uploads/middle', 'users/u/uploads/right', 'users/u/uploads/left'];
     expect(body.input.reference_image_urls).toHaveLength(keys.length);
     for (const [index, key] of keys.entries()) expect(await verifyMediaSignature(d.env, key, new URL(body.input.reference_image_urls[index]))).toBe(true);

@@ -1,5 +1,5 @@
 import type { CreateImageRequest, CreateVideoRequest, VideoModel } from '../contracts';
-import type { GangnamStylePayload } from '../gangnam-style';
+import { GANGNAM_STYLE_REFERENCE_PATH, type GangnamStylePayload } from '../gangnam-style';
 import type { FlyingCarPayload } from '../flyingcar';
 import { videoPrompt } from '../prompts/video';
 import { ozilGoalPrompt } from '../prompts/ozil-goal';
@@ -185,6 +185,7 @@ export async function createKieGangnamStyleVideo(env: Env, payload: GangnamStyle
     model: MODELS[payload.model],
     input: {
       prompt: payload.prompt, reference_image_urls: imageUrls,
+      reference_video_urls: [`${appOrigin(env)}${GANGNAM_STYLE_REFERENCE_PATH}`],
       duration: payload.duration, resolution: payload.resolution,
       aspect_ratio: payload.aspect === 'auto' ? 'adaptive' : payload.aspect,
       generate_audio: false, output_format: 'mp4', nsfw_checker: true,
