@@ -5,6 +5,8 @@ import { GangnamBlogArticle, GangnamBlogIndex } from '../components/gangnam-styl
 import { gangnamBlogMetadata, gangnamBlogText } from '../components/gangnam-style/blog-metadata';
 import { publicPages, SITE_URL } from '../content/public-pages';
 import { getGangnamStyleCost } from '../lib/gangnam-style';
+import { gangnamStylePrompt } from '../lib/prompts/gangnam-style';
+import { BlogBlocks } from '../components/blog/blog-shared';
 import { locales, localizeHref } from '../lib/i18n/routing';
 import sitemap from '../app/sitemap';
 
@@ -46,6 +48,29 @@ describe('Gangnam Style question-led blog', () => {
 
   it('uses live template prices in editorial copy', () => {
     expect(gangnamBlogText('{standardCredits}/{hdCredits}')).toBe(`${getGangnamStyleCost('480p')}/${getGangnamStyleCost('720p')}`);
+  });
+
+  it('publishes all three complete production prompts as readable text', () => {
+    const post = getGangnamBlogPost('gangnam-style-ai-video-prompt')!;
+    const html = renderToStaticMarkup(<GangnamBlogArticle post={post}/>);
+    const blocks = post.sections.flatMap(section => section.blocks).filter(block => block.type === 'code');
+    expect(blocks.map(block => block.text)).toEqual(['friends', 'selfie', 'pets'].map(mode => gangnamStylePrompt(mode as 'friends' | 'selfie' | 'pets')));
+    for (const block of blocks) {
+      expect(html).toContain(renderToStaticMarkup(<code>{block.text}</code>));
+      expect(html).toContain(`aria-label="${block.label}"`);
+    }
+    expect(html.match(/<pre\b/g)).toHaveLength(3);
+    expect(html).toContain('FFmpeg');
+  });
+
+  it('keeps code blocks literal, escaped and independent of prose translation', () => {
+    const code = 'Edit @Video1.\n<script>alert(1)</script> **literal** {standardCredits}';
+    const html = renderToStaticMarkup(<BlogBlocks blocks={[{ type: 'code', label: 'Prompt', text: code }]} t={value => value === 'Prompt' ? 'Video prompt' : 'changed'}/>);
+    expect(html).toContain('aria-label="Video prompt"');
+    expect(html).toContain('role="region"');
+    expect(html).toContain('tabindex="0"');
+    expect(html).toContain(renderToStaticMarkup(<code>{code}</code>));
+    expect(html).not.toContain('<script>');
   });
 
   it.each(expectedSlugs)('renders a complete, linked, crawlable article: %s', slug => {

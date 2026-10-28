@@ -10,7 +10,7 @@
 4. [Best Photos for a Gangnam Style AI Video: A Practical Upload Guide](https://migosai.design/gangnam-style-ai-video-generator/blog/best-photos-for-gangnam-style-ai-video)
 5. [How to Make a Gangnam Style AI Video from One Selfie](https://migosai.design/gangnam-style-ai-video-generator/blog/gangnam-style-ai-video-from-one-selfie)
 6. [How to Make a Gangnam Style AI Pet Video with Three Photos](https://migosai.design/gangnam-style-ai-video-generator/blog/gangnam-style-ai-pet-video)
-7. [Gangnam Style AI Video Prompt: Use a Reference, Not Just More Words](https://migosai.design/gangnam-style-ai-video-generator/blog/gangnam-style-ai-video-prompt)
+7. [Gangnam Style AI Video Prompts: Three Friends, One Selfie and Pets](https://migosai.design/gangnam-style-ai-video-generator/blog/gangnam-style-ai-video-prompt)
 8. [Gangnam Style AI Video Music: What Sound Is Included?](https://migosai.design/gangnam-style-ai-video-generator/blog/gangnam-style-ai-video-music)
 9. [Gangnam Style AI Video Format and Resolution: 480p or 720p?](https://migosai.design/gangnam-style-ai-video-generator/blog/gangnam-style-ai-video-format-resolution)
 10. [Gangnam Style AI Video Cost, Failed Jobs and Common Fixes](https://migosai.design/gangnam-style-ai-video-generator/blog/gangnam-style-ai-video-cost-and-fixes)
@@ -40,3 +40,15 @@
 - sitemap返回200，704个去重URL，新增11个博客地址的lastmod均为2026-10-28。
 - 六语言首页标题、描述、H1与原基线一致；更新前后均通过。
 - 浏览器确认正式索引及10张文章卡片，原主题保留，Hub选中，控制台无error。生产截图已保存。
+
+## 完整视频提示词教程（2026-10-28）
+
+用户要求把视频提示词加入博客。将第7篇提示词文章扩充为完整教程，保留原URL：
+
+- 三人、单人自拍、宠物三套完整提示词，直接读取生产使用的 `gangnamStylePrompt()`，避免文本漂移。
+- 解释 `@Video1`、三张照片的角色映射、每个镜头时间段、外部编辑器的参考素材要求及本站自动应用流程。
+- 解释模型生成阶段静音、随后由FFmpeg合入参考音轨；未声称获得原站私有提示词。
+- 增加可选择复制的原文代码块，自动换行，支持键盘聚焦和辅助阅读名称。代码正文不进行翻译或内联标记解析。
+- 更新文章标题、摘要、FAQ与结构化数据；sitemap保留该正式地址，10篇文章与索引共11个地址，总URL仍为704，lastmod为同日2026-10-28。
+- 验证证据：`.local-evidence/gangnamstyle/prompt-blog-20261028/`。
+- 发布前验证：137文件/2618项测试、类型检查、差异格式检查及Cloudflare正式构建全部通过；本地20项HTTP检查通过，浏览器确认三套原文完整显示且无横向溢出。

@@ -1,4 +1,5 @@
 import type { BlogPost } from '../blog';
+import { gangnamStylePrompt } from '../../lib/prompts/gangnam-style';
 import { gangnamBlogPath, GANGNAM_BLOG_UPDATED } from './shared';
 
 const studio = '/gangnam-style-ai-video-generator#studio';
@@ -180,53 +181,99 @@ export const explainerPosts: BlogPost[] = [
   {
     slug: 'gangnam-style-ai-video-prompt',
     path: gangnamBlogPath('gangnam-style-ai-video-prompt'),
-    title: 'Gangnam Style AI Video Prompt: Use a Reference, Not Just More Words',
-    metaTitle: 'Gangnam Style AI Video Prompt: Reference Editing Guide',
-    description: 'Learn what a useful Gangnam Style AI prompt should control, why a reference clip matters, and how MigosAI handles the prompt without a text input.',
-    label: 'Gangnam Style AI Prompt Guide',
-    excerpt: 'Separate the motion reference, identity references and role assignments. A generic editing example explains the workflow without promising an exact result.',
+    title: 'Gangnam Style AI Video Prompts: Three Friends, One Selfie and Pets',
+    metaTitle: 'Gangnam Style AI Video Prompt: 3 Complete Examples',
+    description: 'Copy MigosAI’s full Gangnam Style video prompts for three friends, one selfie and pets. Learn the reference inputs, shot timing and soundtrack workflow.',
+    label: '3 Complete Gangnam Style Video Prompts',
+    excerpt: 'The complete prompts used by MigosAI for friends, a repeated selfie and pets, with a role map, shot timings and an explanation of the final soundtrack.',
     eyebrow: 'GANGNAM STYLE · PROMPT GUIDE',
     datePublished: GANGNAM_BLOG_UPDATED,
     dateModified: GANGNAM_BLOG_UPDATED,
-    intro: 'A useful **Gangnam Style AI video prompt** tells an editor which reference clip controls the scene, which photos identify the subjects and what should remain consistent. More adjectives cannot replace those inputs. On MigosAI, you do not paste a prompt: the Gangnam Style template supplies the editing instructions for you.',
+    intro: 'Here are the **complete Gangnam Style AI video prompts currently used by MigosAI**, with versions for three friends, one selfie and three pets. Each works with a reference video and uploaded photos to assign the cast across group shots and solos. MigosAI supplies these instructions automatically; you can also copy them for an editor that supports the same reference-editing workflow.',
     sections: [
       {
-        id: 'reference-first', title: 'The reference clip carries the sequence', blocks: [
-          { type: 'p', text: 'A text description such as “three friends performing a funny dance” leaves many choices open: camera distance, timing, the order of solos and the return to a group shot. If your goal is a particular existing sequence, a reference clip supplies information that a broad scene description does not. The prompt then explains the changes you want within it.' },
-          { type: 'p', text: 'Seedance’s provider documentation distinguishes text-based creation from workflows that use image and video references. These are different starting points, not interchangeable settings with identical results. For the MigosAI trio, the reference scene is already selected. Your main creative decisions are the casting mode and which clear images represent each role.' },
+        id: 'reference-first', title: 'Start with the video and photo references', blocks: [
+          { type: 'p', text: `These are MigosAI’s own reference-editing directions, not a disclosure of gangnamstyle.io’s private prompt. The template uses Seedance 2.5 with a supplied trio clip. Preview the scene in the [Gangnam Style studio](${studio}) before reading the time map: the sequence is a group shot, three solos and a final group shot.` },
+          { type: 'p', text: 'The prompts below use @Video1 for that reference clip. It supplies the background, camera, framing, actions and shot sequence. The uploaded images supply the new performers’ appearance. Merely pasting the words into a text-to-video tool does not attach those assets or reproduce the reference scene.' },
+          { type: 'table', caption: 'Reference labels and MigosAI upload roles', headings: ['Reference', 'What to attach', 'Role in the template'], rows: [
+            ['@Video1', 'The trio reference video', 'Scene, movement and shot timing'],
+            ['@Image1', 'The Middle photo', 'Center performer and first solo'],
+            ['@Image2', 'The Right photo', 'Viewer’s right and second solo'],
+            ['@Image3', 'The Left photo', 'Viewer’s left and third solo'],
+          ] },
+          { type: 'p', text: 'Friends and pet modes use three separate photos. The selfie mode uses only @Image1, repeated across all three roles. In another editor, attach the assets in the matching order and check its supported reference syntax and editing mode before submitting.' },
         ],
       },
       {
-        id: 'identity-map', title: 'Assign identities before describing style', blocks: [
-          { type: 'p', text: 'Make a small role map before writing a custom prompt in another editor. Specify the center performer, the viewer’s right and the viewer’s left, then describe which subject appears in each solo. This removes an ambiguity that phrases such as “the first person” can introduce when the camera cuts or the characters move.' },
-          { type: 'p', text: 'Keep appearance references and motion references conceptually separate. A portrait identifies the subject; a reference video demonstrates the intended sequence. Adding incompatible camera directions, extra characters or a new setting creates a different creative request. That may be worthwhile for an original scene, but it is less suitable when you want to preserve an existing trio composition.' },
+        id: 'identity-map', title: 'The position and timing map', blocks: [
+          { type: 'p', text: 'The instructions identify performers by screen position and time, rather than by the original cast’s clothes. This matters when a solo fills the frame or someone returns after a cut. Left and right always mean the viewer’s left and right.' },
+          { type: 'table', caption: 'Shot assignments for this reference clip', headings: ['Time in the reference', 'Intended assignment'], rows: [
+            ['0–2 seconds', 'Group: left @Image3, center @Image1, right @Image2'],
+            ['2–4.9 seconds', 'First solo: @Image1'],
+            ['4.9–8.4 seconds', 'Second solo: @Image2'],
+            ['8.4–12.3 seconds', 'Third solo: @Image3'],
+            ['12.3 seconds to the final frame', 'Group: left @Image3, center/front @Image1, right @Image2'],
+          ] },
+          { type: 'note', text: 'These time codes belong to this particular reference clip. If you use another video, watch it and rewrite the shot boundaries and role assignments. For the selfie version, every @Image2 and @Image3 assignment becomes @Image1.' },
         ],
       },
       {
-        id: 'generic-example', title: 'A generic reference-editing example', blocks: [
-          { type: 'p', text: 'The following is an original example for an editor that accepts a video reference and three image references. Replace its descriptive labels with that editor’s supported reference names. It is not MigosAI’s exact internal prompt, a guaranteed recipe, or text you need to paste into our studio.' },
-          { type: 'note', text: 'Use the supplied trio clip as the guide for shot order and movement. Cast portrait A in the center role, portrait B on the viewer’s right and portrait C on the viewer’s left. Follow A, B and C through their respective solo moments. Retain those identities when the group returns. Preserve the setting and camera sequence. Avoid adding another foreground performer.' },
-          { type: 'p', text: 'The example intentionally concentrates on observable assignments. Extend it only when a real problem needs clarification, such as a subject changing clothes between shots. An instruction can express that preference, but it cannot guarantee the model will satisfy every frame.' },
+        id: 'generic-example', title: '1. Full prompt for three friends', blocks: [
+          { type: 'p', text: 'Use this version with one photo per person. Upload the center performer first, the viewer’s right performer second and the viewer’s left performer third. Each photo is the reference for that person’s face, hair and clothes throughout the clip. Select and copy the complete text below when using a compatible editor.' },
+          { type: 'code', label: 'Complete three-friends video prompt', text: gangnamStylePrompt('friends') },
+          { type: 'p', text: `For MigosAI, select Gangnam Style trio and put each image into its labeled slot; the prompt is already configured. Use the [photo preparation guide](${gangnamBlogPath('best-photos-for-gangnam-style-ai-video')}) to avoid unclear faces, group photos and unsuitable crops.` },
         ],
       },
       {
-        id: 'selfie-pets', title: 'Adapt the cast without changing the whole scene', blocks: [
-          { type: 'p', text: `For a selfie version, the important change is that all three roles share one appearance reference. They still need to read as three separate performers in the composition. Do not provide three contradictory descriptions of the same person. The [single-selfie guide](${gangnamBlogPath('gangnam-style-ai-video-from-one-selfie')}) explains the simpler MigosAI workflow.` },
-          { type: 'p', text: `For animals, identify the species and visible markings rather than asking for a human face with animal decoration. Gestures may need an animal interpretation, and anatomy can still fail. Choose Pet trio in the [studio](${studio}) when that is your intended cast, then use the [pet guide](${gangnamBlogPath('gangnam-style-ai-pet-video')}) to prepare individual references.` },
+        id: 'selfie-pets', title: '2. Full prompt for one selfie in all three roles', blocks: [
+          { type: 'p', text: 'Use one clear adult portrait as @Image1. This version asks for three separate copies of the same person, so all group positions and every solo use the same identity. It also explicitly preserves that person’s face, hair and clothes across the copies.' },
+          { type: 'code', label: 'Complete single-selfie video prompt', text: gangnamStylePrompt('selfie') },
+          { type: 'p', text: `In MigosAI, choose Three of you and upload one selfie. You do not need to upload the same file three times. The [single-selfie guide](${gangnamBlogPath('gangnam-style-ai-video-from-one-selfie')}) explains the photo selection and review steps.` },
         ],
       },
       {
-        id: 'evaluate-prompt', title: 'Evaluate changes instead of endlessly expanding the prompt', blocks: [
-          { type: 'p', text: 'Watch the failed moment and name the problem precisely: the wrong person appears in a solo, a face becomes unclear during motion, or the side subject is lost in a crop. Those failures call for different responses. More camera language will not repair an undersized portrait, and higher output resolution does not resolve a confused identity map.' },
-          { type: 'p', text: `For MigosAI, review the mode and images rather than looking for a hidden text field. The [photo guide](${gangnamBlogPath('best-photos-for-gangnam-style-ai-video')}) and [making a video walkthrough](${gangnamBlogPath('how-to-make-gangnam-style-ai-video')}) cover the controls actually available. If you publish a realistic edited performance, follow the platform’s AI disclosure guidance and describe it honestly.` },
+        id: 'pet-prompt', title: '3. Full prompt for three pets', blocks: [
+          { type: 'p', text: 'Attach one individual animal photo to each image reference, using the same Middle, Right and Left order. The pet version preserves species, face, fur markings and size. It asks the model to interpret human expressions and hand gestures as head and front-paw movements with coherent animal anatomy.' },
+          { type: 'code', label: 'Complete three-pet video prompt', text: gangnamStylePrompt('pets') },
+          { type: 'p', text: `Choose Pet trio in MigosAI to apply this version automatically. Review paws, limbs and species consistency in the result; the instruction expresses the intended behavior but does not guarantee perfect anatomy. See the [pet video guide](${gangnamBlogPath('gangnam-style-ai-pet-video')}) for suitable reference photos.` },
+        ],
+      },
+      {
+        id: 'settings-and-audio', title: 'Settings and why the prompts say to remove audio', blocks: [
+          { type: 'p', text: 'The current MigosAI template uses Seedance 2.5 reference editing, fixed 16:9 landscape framing and a roughly 15-second reference. You choose 480p or 720p. The reference provides the composition and timing; higher resolution changes output size, not the identity map or the intended shot order.' },
+          { type: 'p', text: '“Remove all audio tracks” applies to the model’s video-generation stage. MigosAI requests a silent visual edit and then uses an FFmpeg processing step to merge the reference clip’s soundtrack into the finished video. New completed MigosAI results therefore include sound. The prompt does not ask the model to recreate the music.' },
+          { type: 'p', text: `If you copy these prompts into another tool, that tool will not automatically run MigosAI’s soundtrack step. Add the intended audio separately using its editing controls or your own post-production workflow. The [soundtrack guide](${gangnamBlogPath('gangnam-style-ai-video-music')}) explains playback and the audio included in this template.` },
+        ],
+      },
+      {
+        id: 'use-the-prompts', title: 'How to use the prompts', blocks: [
+          { type: 'ol', items: [
+            'Choose the version that matches your cast: three people, one repeated adult selfie or three pets.',
+            'In a compatible video editor, attach the reference clip and photos. Use its reference-editing workflow and match the asset labels to the prompt.',
+            'Keep the time map only if you are using this exact reference. For a different clip, update the positions and solo timings after watching it.',
+            'Generate the visual edit, review the entire clip and add the desired soundtrack separately if your tool does not do that for you.',
+          ] },
+          { type: 'p', text: `In the [MigosAI studio](${studio}), the reference, matching prompt and soundtrack processing are already set up. Choose your mode, photos and quality, review the displayed credits and generate. There is no prompt text box. The [step-by-step walkthrough](${gangnamBlogPath('how-to-make-gangnam-style-ai-video')}) covers the available controls.` },
+        ],
+      },
+      {
+        id: 'evaluate-prompt', title: 'What to check before sharing the result', blocks: [
+          { type: 'ul', items: [
+            'Opening and closing groups: are all three foreground performers replaced in the intended positions?',
+            'Each solo: does the correct person or pet appear, including immediately after a camera transition?',
+            'Appearance: do faces, hair, clothing or fur markings stay recognizable throughout?',
+            'Scene and sound: does the clip retain the reference sequence, and does the downloaded final file play with its soundtrack?',
+          ] },
+          { type: 'p', text: 'An instruction is a target, not a guarantee for every generated frame. If a solo has the wrong person, inspect the image order and role map. If a face is unclear, improve the source photo. If using another editor, confirm it actually received the video reference. Adding more adjectives does not resolve those input problems.' },
         ],
       },
     ],
     faqs: [
-      { question: 'Where is the prompt box in MigosAI?', answer: 'This template has no prompt box. Its editing instructions are supplied automatically; users choose a mode, photos and resolution.' },
-      { question: 'Will the same prompt work in every video tool?', answer: 'No. Tools differ in reference support, naming conventions and editing modes. Adapt the idea to the controls documented by the tool you use.' },
-      { question: 'Can a longer prompt guarantee the exact choreography?', answer: 'No. A reference can guide timing and movement, but generated results still vary. Inspect the actual clip rather than judging reliability by prompt length.' },
-      { question: 'Is this the original PSY music-video prompt?', answer: 'No. The 2012 music video is a real production. This article explains an AI reference-editing task and does not claim access to an original or official production prompt.' },
+      { question: 'Are these the actual prompts used by MigosAI?', answer: 'Yes. The three full prompt blocks are generated from the same prompt function used by the current MigosAI template. They are our reference-editing directions; we do not have gangnamstyle.io’s private prompt.' },
+      { question: 'Where do I paste a prompt in MigosAI?', answer: 'You do not need to paste one. This template automatically selects the matching instructions when you choose Gangnam Style trio, Three of you or Pet trio. Upload your photos and choose the output quality.' },
+      { question: 'What do @Video1 and @Image1 mean?', answer: '@Video1 identifies the supplied reference video. @Image1 identifies the first uploaded photo, assigned to the center and first solo. In friends and pet modes, @Image2 is the viewer’s right and @Image3 is the viewer’s left.' },
+      { question: 'Why does the prompt remove audio if the final video has sound?', answer: 'The prompt controls the visual generation stage. MigosAI subsequently merges the reference soundtrack with the generated video using FFmpeg. Another tool needs its own audio step when using the same prompt.' },
+      { question: 'Will these prompts work with any clip or video tool?', answer: 'No. The editor must support video reference editing and the relevant image references. The time codes match this specific trio clip; adapt the shot map and asset labels when using another reference or tool. Results can still vary.' },
     ],
     sources: [
       { label: 'Kie: Seedance 2.5 reference workflow documentation', url: 'https://docs.kie.ai/market/bytedance/seedance-2-5' },

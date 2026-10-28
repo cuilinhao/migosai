@@ -57,6 +57,7 @@ export function BlogBlocks({ blocks, t }: { blocks: BlogBlock[]; t: BlogTranslat
       case "p": return <p key={index}>{renderInline(t(block.text))}</p>;
       case "note": return <p key={index} className="geo-note">{renderInline(t(block.text))}</p>;
       case "h3": return <h3 key={index}>{t(block.text)}</h3>;
+      case "code": return <pre key={index} className="blog-code" role="region" aria-label={t(block.label)} tabIndex={0}><code>{block.text}</code></pre>;
       case "ul": return <ul key={index} className="blog-list">{block.items.map((item) => <li key={item}>{renderInline(t(item))}</li>)}</ul>;
       case "ol": return <ol key={index} className="geo-steps">{block.items.map((item) => <li key={item}>{renderInline(t(item))}</li>)}</ol>;
       case "table": {

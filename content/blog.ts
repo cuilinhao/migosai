@@ -8,6 +8,7 @@ export type BlogBlock =
   | { type: "p"; text: string }
   | { type: "note"; text: string }
   | { type: "h3"; text: string }
+  | { type: "code"; label: string; text: string }
   | { type: "ul"; items: string[] }
   | { type: "ol"; items: string[] }
   | { type: "table"; caption: string; headings: string[]; rows: string[][] };
@@ -554,6 +555,7 @@ export function blogSourceStrings(): string[] {
       strings.add(section.title);
       for (const block of section.blocks) {
         if (block.type === "p" || block.type === "note" || block.type === "h3") strings.add(block.text);
+        else if (block.type === "code") strings.add(block.label);
         else if (block.type === "ul" || block.type === "ol") block.items.forEach((item) => strings.add(item));
         else {
           strings.add(block.caption);
