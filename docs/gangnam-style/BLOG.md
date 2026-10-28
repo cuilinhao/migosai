@@ -31,3 +31,12 @@
 - 浏览器确认索引卡片、正文、目录与Hub选中状态。
 - 证据保存于Git忽略目录.local-evidence/gangnamstyle/blog-20261028/。
 - OpenNext/Cloudflare正式构建完成。
+
+## 上线验收
+
+代码提交 `76c183d`；Cloudflare生产版本 `7274a0da-84f2-4d8f-951b-f2163d1e4a5b`。
+
+- 生产20项HTTP检查全部通过：10篇文章及索引、canonical/hreflang、BlogPosting结构化数据、未知slug404、5语言别名308、生成器及总博客入口。
+- sitemap返回200，704个去重URL，新增11个博客地址的lastmod均为2026-10-28。
+- 六语言首页标题、描述、H1与原基线一致；更新前后均通过。
+- 浏览器确认正式索引及10张文章卡片，原主题保留，Hub选中，控制台无error。生产截图已保存。
