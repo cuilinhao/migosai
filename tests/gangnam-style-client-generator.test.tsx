@@ -15,6 +15,16 @@ vi.mock('@/components/generator/use-generation', async importOriginal => ({
 beforeEach(() => { state.generation = null; state.loading = false; state.user = { id: 'alice', name: 'Alice', email: 'alice@example.test' }; });
 
 describe('Gangnam Style generator submission states', () => {
+  it('fixes the trio framing to landscape while retaining both resolution choices', () => {
+    const html = renderToStaticMarkup(<GangnamStyleGenerator />);
+    const selects = html.match(/<select\b[^>]*>[\s\S]*?<\/select>/g) ?? [];
+    expect(selects).toHaveLength(1);
+    expect([...selects[0]!.matchAll(/<option[^>]*value="([^"]+)"/g)].map(match => match[1])).toEqual(['480p', '720p']);
+    const framing = html.match(/<input[^>]*value="16:9 · Landscape"[^>]*>/)?.[0];
+    expect(framing).toBeDefined();
+    expect(framing).toContain('readOnly');
+  });
+
   it.each(['queued', 'reviewing', 'processing'] as const)('locks photo inputs, settings, mode and submission while a job is %s', status => {
     state.generation = { id: 'trio-1', status, progress: 42 };
     const html = renderToStaticMarkup(<GangnamStyleGenerator />);

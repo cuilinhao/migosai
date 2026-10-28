@@ -59,7 +59,7 @@
                   "class": "gns-intro"
                 },
                 "children": [
-                  "Your group chat deserves a video. Turn three portraits into a Gangnam Style AI trio, remix one selfie into three versions of you, or give your pets the spotlight. Choose your format and create a 15-second clip without editing a timeline."
+                  "Your group chat deserves a video. Turn three portraits into a Gangnam Style AI trio, remix one selfie into three versions of you, or give your pets the spotlight. Choose your video quality and create a clip from the 15-second template without editing a timeline."
                 ]
               },
               {
@@ -364,7 +364,7 @@
                 "tag": "p",
                 "attrs": {},
                 "children": [
-                  "Bring the photos. Choose your format.",
+                  "Bring the photos. Choose your video quality.",
                   {
                     "tag": "br",
                     "attrs": {},
@@ -540,21 +540,7 @@
                                 "tag": "b",
                                 "attrs": {},
                                 "children": [
-                                  "16:9"
-                                ]
-                              },
-                              {
-                                "tag": "span",
-                                "attrs": {},
-                                "children": [
-                                  "9:16"
-                                ]
-                              },
-                              {
-                                "tag": "span",
-                                "attrs": {},
-                                "children": [
-                                  "1:1"
+                                  "16:9 · Landscape"
                                 ]
                               }
                             ]
@@ -624,7 +610,7 @@
                         "tag": "p",
                         "attrs": {},
                         "children": [
-                          "Choose an aspect ratio and 480p or 720p quality. Check your photo previews, confirm you have permission, and sign in with Google to generate."
+                          "Choose 480p or 720p quality. The video uses fixed 16:9 landscape framing. Check your photo previews, confirm you have permission, and sign in with Google to generate."
                         ]
                       },
                       {
@@ -633,7 +619,7 @@
                           "class": "gns-how-tip"
                         },
                         "children": [
-                          "16:9 is recommended for the trio scene."
+                          "Fixed 16:9 landscape preserves the trio scene framing."
                         ]
                       }
                     ]
@@ -967,14 +953,14 @@
                 "tag": "summary",
                 "attrs": {},
                 "children": [
-                  "Which aspect ratios and resolutions can I choose?"
+                  "What aspect ratio and resolutions are available?"
                 ]
               },
               {
                 "tag": "p",
                 "attrs": {},
                 "children": [
-                  "Choose landscape 16:9, portrait 9:16, square 1:1, 4:3, 3:4, cinema 21:9 or Auto. Output quality is 480p or 720p. The trio scene is best suited to 16:9; other formats can change the framing."
+                  "This template uses fixed 16:9 landscape framing to preserve the trio scene. Choose 480p or 720p output quality."
                 ]
               }
             ]
@@ -994,7 +980,7 @@
                 "tag": "p",
                 "attrs": {},
                 "children": [
-                  "New generations are 15-second MP4 clips. Rendering time varies. Open My videos to check progress and download the completed file before its provider link expires."
+                  "The template is approximately 15 seconds; the final MP4 duration may vary slightly. Rendering time varies. Open My videos to check progress and download the completed file before its provider link expires."
                 ]
               }
             ]

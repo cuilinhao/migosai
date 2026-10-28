@@ -5,6 +5,7 @@ import { sha256 } from '../lib/server/security';
 import { POST } from '../app/api/gangnam-style/generations/route';
 import { GET } from '../app/api/generations/route';
 import { getGangnamStyleCost } from '../lib/gangnam-style';
+import { reserveGeneration } from '../lib/server/billing';
 
 const routeEnv = vi.hoisted(() => ({ value: {} as any }));
 vi.mock('../lib/server/env', async () => ({ ...await vi.importActual('../lib/server/env'), getEnv: async () => routeEnv.value }));
@@ -30,6 +31,12 @@ async function setup() {
   const payload = () => JSON.parse(String(d.sqlite.prepare('SELECT payload FROM generations').get()?.payload));
   return { ...d, objects, request, head, get, credits, jobs, payload };
 }
+async function reserveLegacy(d: Awaited<ReturnType<typeof setup>>, aspect = '16:9', userId = 'u', template = 'gangnam-style', kind = 'video') {
+  return reserveGeneration(d.db, userId, 'gangnam-generation-once', kind, {
+    template, provider: 'kie', model: 'seedance-2-5', prompt: 'Previously reserved direction.', duration: 15,
+    mode: 'friends', photos, aspect, resolution: '480p', consent: true, generateAudio: false,
+  }, 150);
+}
 
 describe('Gangnam Style reservations', () => {
   it.each([['480p', 150], ['720p', 300]] as const)('quotes and charges %s at %s shared credits', async (resolution, cost) => {
@@ -39,15 +46,18 @@ describe('Gangnam Style reservations', () => {
     expect(response.headers.get('Cache-Control')).toBe('no-store');
     expect(getGangnamStyleCost(resolution)).toBe(cost);
     expect(d.credits()).toBe(1000 - cost);
-    expect(d.payload()).toMatchObject({ template: 'gangnam-style', provider: 'kie', model: 'seedance-2-5', duration: 15, generateAudio: false, photos, consent: true, mode: 'friends', resolution });
+    expect(d.payload()).toMatchObject({ template: 'gangnam-style', workflow: 'reference-edit-v1', provider: 'kie', model: 'seedance-2-5', duration: 15, aspect: '16:9', generateAudio: false, photos, consent: true, mode: 'friends', resolution });
     expect(d.payload().prompt).not.toContain('malicious override');
-    expect(d.payload().prompt).toMatch(/@Image1.*middle/i);
-    expect(d.payload().prompt).toMatch(/@Image2.*right/i);
-    expect(d.payload().prompt).toMatch(/@Image3.*left/i);
-    expect(d.payload().prompt).toMatch(/middle.*first solo.*right.*second solo.*left.*third solo/i);
+    expect(d.payload().prompt).toContain('screen-left is @Image3, center is @Image1, screen-right is @Image2');
+    expect(d.payload().prompt).toContain('2-4.9 seconds is @Image1; 4.9-8.4 seconds is @Image2; 8.4-12.3 seconds is @Image3');
   });
-  it.each(['16:9', '9:16', '1:1', '4:3', '3:4', '21:9', 'auto'])('accepts the public aspect %s', async aspect => {
-    const d = await setup(); expect((await POST(d.request({ aspect }), undefined)).status).toBe(202); expect(d.payload().aspect).toBe(aspect);
+  it.each(['9:16', '1:1', '4:3', '3:4', '21:9', 'auto', 'adaptive', '', null])('rejects unsupported aspect %s before uploads or charging', async aspect => {
+    const d = await setup(); expect((await POST(d.request({ aspect }), undefined)).status).toBe(400);
+    expect(d.jobs()).toBe(0); expect(d.credits()).toBe(1000); expect(d.head).not.toHaveBeenCalled();
+  });
+  it.each(['reference-edit-v1', 'legacy', '', null, {}])('rejects a client-owned workflow %# before uploads or charging', async workflow => {
+    const d = await setup(); expect((await POST(d.request({ workflow }), undefined)).status).toBe(400);
+    expect(d.jobs()).toBe(0); expect(d.credits()).toBe(1000); expect(d.head).not.toHaveBeenCalled();
   });
   it('uses one selfie as all three identities without fabricating extra upload keys', async () => {
     const d = await setup(); expect((await POST(d.request({ mode: 'selfie', photos: photos.slice(0, 1) }), undefined)).status).toBe(202);
@@ -92,7 +102,70 @@ describe('Gangnam Style reservations', () => {
     expect(first.status).toBe(202); expect(await second.json()).toEqual(await first.json()); expect(d.credits()).toBe(850); expect(d.jobs()).toBe(1);
     expect(d.sqlite.prepare("SELECT count(*) n FROM credit_ledger WHERE kind='generation'").get()?.n).toBe(1);
   });
-  it.each([{ mode: 'pets' }, { photos: [...photos].reverse() }, { aspect: '9:16' }, { resolution: '720p' }])('rejects changed options on an existing idempotency key %#', async patch => {
+  it.each(['16:9', '9:16', 'auto'])('recovers an old %s reservation despite changed server workflow and prompt', async aspect => {
+    const d = await setup(), previous = await reserveLegacy(d, aspect);
+    const response = await POST(d.request({ aspect }), undefined);
+    expect(response.status).toBe(202);
+    expect(response.headers.get('Cache-Control')).toBe('no-store');
+    expect(await response.json()).toMatchObject({ id: previous.id, template: 'gangnam-style', status: 'queued', progress: 0 });
+    expect(d.head).not.toHaveBeenCalled(); expect(d.get).not.toHaveBeenCalled();
+    expect(d.credits()).toBe(850); expect(d.jobs()).toBe(1);
+    expect(d.sqlite.prepare('SELECT payload FROM generations WHERE id=?').get(previous.id)?.payload).toBe(previous.payload);
+    expect(d.sqlite.prepare("SELECT count(*) n FROM credit_ledger WHERE kind='generation'").get()?.n).toBe(1);
+  });
+  it('recovers an existing task after uploads and generation configuration become unavailable', async () => {
+    const d = await setup(), previous = await reserveLegacy(d);
+    d.objects.clear();
+    for (const key of ['KIE_API_KEY', 'KIE_MEDIA_HOSTS', 'MEDIA_SIGNING_SECRET', 'SEEAPI_API_KEY', 'MEDIA']) delete routeEnv.value[key];
+    const response = await POST(d.request(), undefined);
+    expect(response.status).toBe(202); expect(await response.json()).toMatchObject({ id: previous.id });
+    expect(d.head).not.toHaveBeenCalled(); expect(d.credits()).toBe(850); expect(d.jobs()).toBe(1);
+  });
+  it.each([{ mode: 'pets' }, { photos: [...photos].reverse() }, { photos: [] }, { aspect: '9:16' }, { resolution: '720p' }, { consent: false }])('rejects changed public parameters for an old reservation %#', async patch => {
+    const d = await setup(); await reserveLegacy(d);
+    expect((await POST(d.request(patch), undefined)).status).toBe(409);
+    expect(d.head).not.toHaveBeenCalled(); expect(d.credits()).toBe(850); expect(d.jobs()).toBe(1);
+  });
+  it('does not recover another user\'s job with the same key', async () => {
+    const d = await setup();
+    d.sqlite.prepare("INSERT INTO users(id,email,name,credits) VALUES('other','other@example.test','Other',1000)").run();
+    const previous = await reserveLegacy(d, '16:9', 'other');
+    const response = await POST(d.request(), undefined), body = await response.json() as { id: string };
+    expect(response.status).toBe(202); expect(body.id).not.toBe(previous.id);
+    expect(d.credits()).toBe(850); expect(d.jobs()).toBe(2);
+    expect(d.sqlite.prepare("SELECT credits FROM users WHERE id='other'").get()?.credits).toBe(850);
+  });
+  it.each([['ozil-goal', 'video'], ['gangnam-style', 'image']])('rejects the same key owned by %s/%s', async (template, kind) => {
+    const d = await setup(); await reserveLegacy(d, '16:9', 'u', template, kind);
+    expect((await POST(d.request(), undefined)).status).toBe(409);
+    expect(d.head).not.toHaveBeenCalled(); expect(d.credits()).toBe(850); expect(d.jobs()).toBe(1);
+  });
+  it.each([false, true])('handles a legacy reservation appearing after both early reads, changed=%s', async changed => {
+    const d = await setup(), previous = await reserveLegacy(d);
+    const original = d.db.prepare.bind(d.db); let hiddenReads = 2;
+    vi.spyOn(d.db, 'prepare').mockImplementation(sql => {
+      const statement = original(sql);
+      if (sql === 'SELECT * FROM generations WHERE user_id=? AND idempotency_key=?' && hiddenReads-- > 0) {
+        return { ...statement, bind: (...args: unknown[]) => ({ ...statement.bind(...args), first: async () => null }) } as D1PreparedStatement;
+      }
+      return statement;
+    });
+    const response = await POST(d.request(changed ? { mode: 'pets' } : {}), undefined);
+    expect(response.status).toBe(changed ? 409 : 202);
+    if (!changed) expect(await response.json()).toMatchObject({ id: previous.id });
+    expect(d.credits()).toBe(850); expect(d.jobs()).toBe(1);
+    expect(d.sqlite.prepare('SELECT payload FROM generations WHERE id=?').get(previous.id)?.payload).toBe(previous.payload);
+    expect(d.sqlite.prepare("SELECT count(*) n FROM credit_ledger WHERE kind='generation'").get()?.n).toBe(1);
+  });
+  it('does not let retry recovery bypass origin, authentication, workflow or key checks', async () => {
+    const d = await setup(); await reserveLegacy(d);
+    expect((await POST(d.request({}, { origin: 'https://evil.test' }), undefined)).status).toBe(403);
+    expect((await POST(d.request({}, { cookie: '' }), undefined)).status).toBe(401);
+    expect((await POST(d.request({ workflow: 'reference-edit-v1' }), undefined)).status).toBe(400);
+    expect((await POST(d.request({}, { 'Idempotency-Key': '' }), undefined)).status).toBe(400);
+    expect(d.credits()).toBe(850); expect(d.jobs()).toBe(1);
+  });
+  it.each([{ mode: 'pets' }, { photos: [...photos].reverse() }, { resolution: '720p' }])('rejects changed options on an existing idempotency key %#', async patch => {
     const d = await setup(); await POST(d.request(), undefined); expect((await POST(d.request(patch), undefined)).status).toBe(409); expect(d.credits()).toBe(850);
   });
   it('enforces balance and returns an existing reservation despite a missing provider', async () => {

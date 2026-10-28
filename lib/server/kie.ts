@@ -181,13 +181,14 @@ export async function createKieFlyingCarVideo(env: Env, payload: FlyingCarPayloa
 
 /** Ordered references are middle, right, left; one selfie is repeated by the prompt. */
 export async function createKieGangnamStyleVideo(env: Env, payload: GangnamStylePayload, imageUrls: string[]): Promise<string> {
+  const editing = payload.workflow === 'reference-edit-v1';
   const data = await request(env, '/createTask', {
     model: MODELS[payload.model],
     input: {
       prompt: payload.prompt, reference_image_urls: imageUrls,
-      reference_video_urls: [`${appOrigin(env)}${GANGNAM_STYLE_REFERENCE_PATH}`],
-      duration: payload.duration, resolution: payload.resolution,
-      aspect_ratio: payload.aspect === 'auto' ? 'adaptive' : payload.aspect,
+      ...(editing ? { reference_video_urls: [`${appOrigin(env)}${GANGNAM_STYLE_REFERENCE_PATH}`] } : {}),
+      duration: editing ? -1 : payload.duration, resolution: payload.resolution,
+      aspect_ratio: editing || payload.aspect === 'auto' ? 'adaptive' : payload.aspect,
       generate_audio: false, output_format: 'mp4', nsfw_checker: true,
     },
   });

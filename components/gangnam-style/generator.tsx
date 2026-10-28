@@ -9,8 +9,8 @@ import { getResumableVideo, type VideoHistoryItem } from '@/components/generator
 import { uploadPhoto, type PhotoUploadProgress } from '@/components/generator/photo-upload';
 import { readApi, useGeneration, useGenerationTranslations } from '@/components/generator/use-generation';
 import type { GenerationResponse } from '@/lib/contracts';
-import { GANGNAM_STYLE_ASPECTS, GANGNAM_STYLE_CONFIG, GANGNAM_STYLE_RESOLUTIONS, getGangnamStyleCost,
-  type GangnamStyleAspect, type GangnamStyleMode, type GangnamStyleResolution } from '@/lib/gangnam-style';
+import { GANGNAM_STYLE_CONFIG, GANGNAM_STYLE_RESOLUTIONS, getGangnamStyleCost,
+  type GangnamStyleMode, type GangnamStyleResolution } from '@/lib/gangnam-style';
 import { captureGangnamStyleSubmission, executeGangnamStyleSubmission, type UploadedGangnamStylePhoto } from './submission';
 import './generator.css';
 
@@ -24,10 +24,6 @@ const modes = [
   { value: 'pets', label: 'Pet trio', sample: 'seedance-square.mp4', poster: 'seedance-square.jpg' },
 ] as const;
 const roles = [{ name: 'Middle', solo: 'First solo' }, { name: 'Right', solo: 'Second solo' }, { name: 'Left', solo: 'Third solo' }];
-const aspectLabels: Record<GangnamStyleAspect, string> = {
-  '16:9': '16:9 · Landscape', '9:16': '9:16 · Portrait', '1:1': '1:1 · Square',
-  '4:3': '4:3 · Classic landscape', '3:4': '3:4 · Classic portrait', '21:9': '21:9 · Ultrawide', auto: 'Auto · Match photo',
-};
 
 export function GangnamStyleGenerator() {
   const { user, credits, loading: authLoading, openSignIn, refresh } = useAuth();
@@ -35,7 +31,6 @@ export function GangnamStyleGenerator() {
   const owner = user?.id ?? null;
   const [mode, setMode] = useState<GangnamStyleMode>('friends');
   const [selections, setSelections] = useState<(Photo | null)[]>([null, null, null]);
-  const [aspect, setAspect] = useState<GangnamStyleAspect>('16:9');
   const [resolution, setResolution] = useState<GangnamStyleResolution>('720p');
   const [consent, setConsent] = useState(false);
   const [dragging, setDragging] = useState<number | null>(null);
@@ -157,13 +152,13 @@ export function GangnamStyleGenerator() {
     }
     if (!consent) { setError('Please confirm photo consent before generating.'); consentRef.current?.focus(); return; }
     const chosen = selected as Photo[];
-    const fingerprint = JSON.stringify([user.id, mode, chosen.map(photo => photo.id), aspect, resolution]);
+    const fingerprint = JSON.stringify([user.id, mode, chosen.map(photo => photo.id), '16:9', resolution]);
     // A lost response may already have reserved credits; an identical retry must reach the endpoint.
     if (credits < cost && idempotency.current?.fingerprint !== fingerprint) {
       setError(`You need ${cost} credits to create this video.`); return;
     }
     if (idempotency.current?.fingerprint !== fingerprint) idempotency.current = { fingerprint, key: crypto.randomUUID() };
-    const submission = captureGangnamStyleSubmission({ key: idempotency.current.key, mode, aspect, resolution, consent,
+    const submission = captureGangnamStyleSubmission({ key: idempotency.current.key, mode, aspect: '16:9', resolution, consent,
       photos: chosen.map(photo => ({ file: photo.file, fingerprint: `${user.id}:${photo.id}` })) });
     const controller = new AbortController();
     const submittingOwner = user.id;
@@ -223,7 +218,7 @@ export function GangnamStyleGenerator() {
         }}>{item.label}</button>)}
     </div>
     <div id={`${id}-panel`} role="tabpanel" aria-labelledby={`${id}-${mode}`}>
-      <div className="gns-studio-specs"><span>{GANGNAM_STYLE_CONFIG.duration} seconds</span><span>{aspect === 'auto' ? 'Auto' : aspect}</span><span>{resolution}</span>MP4<span>Silent</span></div>
+      <div className="gns-studio-specs"><span>{GANGNAM_STYLE_CONFIG.duration}-second template</span><span>16:9 · Landscape</span><span>{resolution}</span>MP4<span>Silent</span></div>
       <h3 className="gns-upload-heading">1 · Add your {mode === 'selfie' ? 'photo' : 'photos'}</h3>
       <div className={`gns-cast-uploads${mode === 'selfie' ? ' gns-single' : ''}`}>
         {roles.slice(0, photoCount).map((role, index) => <div className="gns-cast-slot" key={`${mode}-${index}`}>
@@ -244,16 +239,14 @@ export function GangnamStyleGenerator() {
       <fieldset className="gns-output-settings" disabled={locked}>
         <legend>2 · Output settings</legend>
         <div className="gns-output-field"><label htmlFor={`${id}-ratio`}>Aspect ratio</label>
-          <select id={`${id}-ratio`} value={aspect} disabled={locked} className="gns-groove-select-trigger" onChange={event => { setAspect(event.target.value as GangnamStyleAspect); idempotency.current = null; setError(''); }}>
-            {GANGNAM_STYLE_ASPECTS.map(value => <option key={value} value={value}>{aspectLabels[value]}</option>)}
-          </select>
+          <input id={`${id}-ratio`} value="16:9 · Landscape" readOnly className="gns-groove-select-trigger" />
         </div>
         <div className="gns-output-field"><label htmlFor={`${id}-resolution`}>Resolution</label>
           <select id={`${id}-resolution`} value={resolution} disabled={locked} className="gns-groove-select-trigger" onChange={event => { setResolution(event.target.value as GangnamStyleResolution); idempotency.current = null; setError(''); }}>
             {GANGNAM_STYLE_RESOLUTIONS.map(value => <option key={value} value={value}>{value} · {value === '720p' ? 'HD' : 'Standard'}</option>)}
           </select>
         </div>
-        <p>15-second video. Landscape 16:9 is recommended for this trio scene; other ratios may change the framing. Each generation uses {cost} MigosAI credits.</p>
+        <p>15-second template. Fixed 16:9 landscape preserves the trio scene framing. Each generation uses {cost} MigosAI credits.</p>
       </fieldset>
       <label className="gns-consent"><input ref={consentRef} type="checkbox" checked={consent} disabled={locked} onChange={event => setConsent(event.target.checked)} />{' '}
         I own these photos or have permission from everyone pictured, and agree to the <Link href="/terms-of-service">Terms</Link> and <Link href="/privacy-policy">Privacy Policy</Link>.

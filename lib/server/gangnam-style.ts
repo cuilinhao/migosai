@@ -2,7 +2,7 @@ import { GANGNAM_STYLE_CONFIG, GANGNAM_STYLE_ASPECTS, GANGNAM_STYLE_RESOLUTIONS,
 import { gangnamStylePrompt } from '../prompts/gangnam-style';
 import { readImageDimensions, validateFlyingCarPhotoDimensions } from '../flyingcar-photo';
 import { requireUser } from './auth';
-import { reserveGeneration } from './billing';
+import { matchesGangnamStyleOptions, reserveGeneration, type Job } from './billing';
 import { appOrigin, database, getEnv, media, moderationConfigured, providerConfigured, type Env } from './env';
 import { ApiError } from './errors';
 import { generationResponse } from './jobs';
@@ -43,28 +43,40 @@ export async function createGangnamStyleGeneration(request: Request): Promise<Re
   const env = await getEnv();
   sameOrigin(request, appOrigin(env));
   const user = await requireUser(request, env);
+  const input: unknown = await jsonBody(request);
+  if (!input || typeof input !== 'object' || Array.isArray(input)) throw new ApiError(400, 'Invalid Gangnam Style options.');
+  const options = input as Record<string, unknown>;
+  const header = request.headers.get('Idempotency-Key');
+  if (header !== null && !/^[\w-]{8,128}$/.test(header)) throw new ApiError(400, 'Invalid request identifier.');
+  if ('workflow' in options) throw new ApiError(400, 'The generation workflow is managed by the server.');
+  if (header) {
+    const previous = await database(env).prepare('SELECT * FROM generations WHERE user_id=? AND idempotency_key=?').bind(user.id, header).first<Job>();
+    if (previous) {
+      let saved: unknown;
+      try { saved = JSON.parse(previous.payload); } catch { /* Invalid saved options cannot match a retry. */ }
+      if (previous.kind !== 'video' || !matchesGangnamStyleOptions(saved, { ...options, template: 'gangnam-style' })) {
+        throw new ApiError(409, 'This request identifier was already used for different options.');
+      }
+      return Response.json(generationResponse(previous), { status: 202, headers: { 'Cache-Control': 'no-store' } });
+    }
+  }
   let unavailableReason: string | undefined;
   try { providerConfigured(env, 'kie'); }
   catch (error) { if (error instanceof ApiError && error.status === 503) unavailableReason = error.message; else throw error; }
   moderationConfigured(env);
-  const input: unknown = await jsonBody(request);
-  if (!input || typeof input !== 'object' || Array.isArray(input)) throw new ApiError(400, 'Invalid Gangnam Style options.');
-  const options = input as Record<string, unknown>;
   if (typeof options.mode !== 'string' || !GANGNAM_STYLE_MODES.includes(options.mode as GangnamStyleMode)) throw new ApiError(400, 'Choose friends, selfie or pets.');
-  if (typeof options.aspect !== 'string' || !GANGNAM_STYLE_ASPECTS.includes(options.aspect as GangnamStyleAspect)) throw new ApiError(400, 'Choose a supported video aspect ratio.');
+  if (typeof options.aspect !== 'string' || !GANGNAM_STYLE_ASPECTS.includes(options.aspect as GangnamStyleAspect)) throw new ApiError(400, 'Gangnam Style videos use the reference video\'s 16:9 aspect ratio.');
   if (typeof options.resolution !== 'string' || !GANGNAM_STYLE_RESOLUTIONS.includes(options.resolution as GangnamStyleResolution)) throw new ApiError(400, 'Choose 480p or 720p.');
   if (options.consent !== true) throw new ApiError(400, 'Please confirm that you have permission to use these photos and agree to the photo terms.');
   const mode = options.mode as GangnamStyleMode;
   if (!Array.isArray(options.photos) || options.photos.length !== (mode === 'selfie' ? 1 : 3)) throw new ApiError(400, mode === 'selfie' ? 'Upload one selfie.' : 'Upload three photos in middle, right, left order.');
-  const header = request.headers.get('Idempotency-Key');
-  if (header && !/^[\w-]{8,128}$/.test(header)) throw new ApiError(400, 'Invalid request identifier.');
   // Validate sequentially so at most one 10 MiB image is read into Worker memory.
   const photos: string[] = [];
   for (const value of options.photos) photos.push(await validatePhoto(env, user.id, value));
   const resolution = options.resolution as GangnamStyleResolution;
   // The request cannot choose a provider, model, prompt, duration, audio or price.
   const payload: GangnamStylePayload = {
-    template: 'gangnam-style', ...GANGNAM_STYLE_CONFIG,
+    template: 'gangnam-style', workflow: 'reference-edit-v1', ...GANGNAM_STYLE_CONFIG,
     mode, photos, aspect: options.aspect as GangnamStyleAspect, resolution, consent: true,
     prompt: gangnamStylePrompt(mode),
   };

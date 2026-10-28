@@ -4,7 +4,7 @@ export const GANGNAM_STYLE_REFERENCE_PATH = '/gangnam-style/photo-trio-seoul-wit
 export const GANGNAM_STYLE_CONFIG = {
   provider: 'kie', model: 'seedance-2-5', duration: 15, generateAudio: false,
 } as const;
-export const GANGNAM_STYLE_ASPECTS = ['16:9', '9:16', '1:1', '4:3', '3:4', '21:9', 'auto'] as const;
+export const GANGNAM_STYLE_ASPECTS = ['16:9'] as const;
 export const GANGNAM_STYLE_RESOLUTIONS = ['480p', '720p'] as const;
 export const GANGNAM_STYLE_MODES = ['friends', 'selfie', 'pets'] as const;
 export type GangnamStyleMode = typeof GANGNAM_STYLE_MODES[number];
@@ -18,10 +18,15 @@ export type GangnamStyleRequest = {
   resolution: GangnamStyleResolution;
   consent: true;
 };
-export type GangnamStylePayload = GangnamStyleRequest & typeof GANGNAM_STYLE_CONFIG & {
+type LegacyGangnamStyleAspect = '16:9' | '9:16' | '1:1' | '4:3' | '3:4' | '21:9' | 'auto';
+export type GangnamStylePayload = Omit<GangnamStyleRequest, 'aspect'> & typeof GANGNAM_STYLE_CONFIG & {
   template: 'gangnam-style';
   prompt: string;
-};
+} & (
+  | { workflow: 'reference-edit-v1'; aspect: GangnamStyleAspect }
+  // Previously reserved jobs retain their original image-only generation settings.
+  | { workflow?: undefined; aspect: LegacyGangnamStyleAspect }
+);
 export function getGangnamStyleCost(resolution: GangnamStyleResolution): number {
   if (!GANGNAM_STYLE_RESOLUTIONS.includes(resolution)) throw new Error('Choose 480p or 720p.');
   // Preserve the established site Seedance quote: FlyingCar already uses this

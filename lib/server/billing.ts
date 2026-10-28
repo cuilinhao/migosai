@@ -1,10 +1,20 @@
 import { ApiError } from './errors';
 export type Job={id:string;user_id:string;idempotency_key:string;kind:'video'|'music'|'image';payload:string;cost:number;status:string;stage:string;provider_id:string|null;assets:string|null;result_keys:string|null;error:string|null;progress:number;provider_cost:number|null;lease_until:number;lease_owner:string|null;next_poll:number;created_at:number;moderation_state:string|null;moderation_verdict:string|null;moderation_key:string|null;moderation_etag:string|null};
+/** Server-owned prompt/workflow changes must not invalidate a user's retry. */
+export function matchesGangnamStyleOptions(previous:unknown,next:unknown):boolean{
+ if(!previous||typeof previous!=='object'||Array.isArray(previous)||!next||typeof next!=='object'||Array.isArray(next))return false;
+ const a=previous as Record<string,unknown>,b=next as Record<string,unknown>,left=a.photos,right=b.photos;
+ return a.template==='gangnam-style'&&b.template==='gangnam-style'&&a.consent===true&&b.consent===true
+  &&a.mode===b.mode&&a.aspect===b.aspect&&a.resolution===b.resolution
+  &&Array.isArray(left)&&Array.isArray(right)&&left.length===right.length&&left.every((photo,index)=>typeof photo==='string'&&photo===right[index]);
+}
 function matchesReservation(job:Job,kind:string,serialized:string):boolean{
  if(job.kind!==kind)return false;
  if(job.payload===serialized)return true;
  if(kind!=='video')return false;
  const previous=JSON.parse(job.payload),next=JSON.parse(serialized);
+ // Applies to both the initial read and a concurrent reservation winning INSERT.
+ if(previous.template==='gangnam-style'||next.template==='gangnam-style')return matchesGangnamStyleOptions(previous,next);
  // Ozil's model, provider and reference settings are server-owned. A retry
  // keeps its original reservation even after those defaults change.
  if(previous.template==='ozil-goal'||next.template==='ozil-goal')return previous.template==='ozil-goal'&&next.template==='ozil-goal'&&previous.photo===next.photo&&previous.consent===true&&next.consent===true;

@@ -6,12 +6,12 @@ import { verifyMediaSignature } from '../lib/server/media';
 
 afterEach(() => vi.restoreAllMocks());
 const prompt = 'Remake @Video1 as a silent handheld selfie relay with the uploaded cast.';
-async function setup(selfie = false, polling = false, aspect = '16:9') {
+async function setup(selfie = false, polling = false, aspect = '16:9', legacy = false) {
   const d = database();
   d.sqlite.prepare("UPDATE users SET credits=1000 WHERE id='u'").run();
   const env = { ...jobEnv(d.db), KIE_API_KEY: 'test-key', KIE_MEDIA_HOSTS: 'tempfile.aiquickdraw.com' };
   const job = await reserveGeneration(d.db, 'u', 'gangnam-once', 'video', {
-    template: 'gangnam-style', provider: 'kie', model: 'seedance-2-5', prompt, duration: 15, mode: selfie ? 'selfie' : 'friends',
+    template: 'gangnam-style', ...(legacy ? {} : { workflow: 'reference-edit-v1' }), provider: 'kie', model: 'seedance-2-5', prompt, duration: 15, mode: selfie ? 'selfie' : 'friends',
     aspect, resolution: '720p', generateAudio: false, consent: true,
     photos: selfie ? ['users/u/uploads/middle'] : ['users/u/uploads/middle', 'users/u/uploads/right', 'users/u/uploads/left'],
   }, 300);
@@ -22,16 +22,18 @@ async function setup(selfie = false, polling = false, aspect = '16:9') {
 }
 
 describe('Gangnam Style jobs share the existing video pipeline', () => {
-  it.each([false, true])('submits a silent 15-second job preserving ordered private references, selfie=%s', async selfie => {
+  it.each([false, true])('submits a silent reference edit preserving the 15-second quote and ordered photos, selfie=%s', async selfie => {
     const d = await setup(selfie);
     const fetcher = vi.spyOn(globalThis, 'fetch')
       .mockResolvedValueOnce(Response.json({ code: 200, data: { taskId: 'gangnam_task' } }))
       .mockResolvedValueOnce(Response.json({ code: 200, data: { taskId: 'gangnam_task', model: 'bytedance/seedance-2-5', state: 'generating' } }));
     await d.tick();
     expect(d.row()).toMatchObject({ stage: 'polling', provider_id: 'gangnam_task' });
+    expect(JSON.parse(d.row().payload)).toMatchObject({ workflow: 'reference-edit-v1', duration: 15, aspect: '16:9' });
+    expect(d.row().cost).toBe(300);
     const body = JSON.parse(String(fetcher.mock.calls[0][1]?.body));
     expect(body).toMatchObject({ model: 'bytedance/seedance-2-5', input: {
-      prompt, duration: 15, resolution: '720p', aspect_ratio: '16:9', generate_audio: false, nsfw_checker: true,
+      prompt, duration: -1, resolution: '720p', aspect_ratio: 'adaptive', generate_audio: false, nsfw_checker: true,
     } });
     expect(body.input.reference_video_urls).toEqual(['https://example.test/gangnam-style/photo-trio-seoul-with-audio.mp4']);
     expect(body.input.reference_audio_urls).toBeUndefined();
@@ -100,13 +102,16 @@ describe('Gangnam Style jobs share the existing video pipeline', () => {
     expect(d.sqlite.prepare("SELECT count(*) n FROM credit_ledger WHERE kind='refund'").get()?.n).toBe(blocked ? 1 : 0);
   });
 
-  it('maps auto to the provider adaptive enum and preserves ultrawide', async () => {
+  it('keeps legacy queued jobs image-only with their original duration and aspect', async () => {
     for (const aspect of ['auto', '21:9']) {
-      const d = await setup(false, false, aspect);
+      const d = await setup(false, false, aspect, true);
       const fetcher = vi.spyOn(globalThis, 'fetch').mockResolvedValue(Response.json({ code: 200, data: { taskId: 'gangnam_task' } }));
       await d.tick();
       expect(d.row().stage).toBe('polling');
-      expect(JSON.parse(String(fetcher.mock.calls[0][1]?.body)).input.aspect_ratio).toBe(aspect === 'auto' ? 'adaptive' : '21:9');
+      const input = JSON.parse(String(fetcher.mock.calls[0][1]?.body)).input;
+      expect(input.aspect_ratio).toBe(aspect === 'auto' ? 'adaptive' : '21:9');
+      expect(input.duration).toBe(15);
+      expect(input.reference_video_urls).toBeUndefined();
       fetcher.mockRestore();
     }
   });

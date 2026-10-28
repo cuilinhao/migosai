@@ -1,29 +1,20 @@
 import { describe, expect, it } from 'vitest';
 import { gangnamStylePrompt } from '../lib/prompts/gangnam-style';
 
-describe('Gangnam Style selfie relay direction', () => {
-  it.each(['friends', 'selfie', 'pets'] as const)('uses the actual reference camera and solo sequence for %s', mode => {
+describe('Gangnam Style reference identities', () => {
+  it.each(['friends', 'pets'] as const)('uses all three uploaded identities and one video for %s', mode => {
     const prompt = gangnamStylePrompt(mode);
-    expect(prompt).toContain('@Video1');
-    expect(prompt).toMatch(/handheld.*selfie/i);
-    expect(prompt).toContain('0–2');
-    expect(prompt).toContain('4.9–8.4');
-    expect(prompt).toContain('8.4–12.3');
-    expect(prompt).not.toMatch(/stable frontal wide shot|head to foot throughout|perform the playful horse-riding dance/i);
+    expect([...new Set(prompt.match(/@Image\d+/g))].sort()).toEqual(['@Image1', '@Image2', '@Image3']);
+    expect([...new Set(prompt.match(/@Video\d+/g))]).toEqual(['@Video1']);
   });
 
-  it('assigns uploaded people to the existing middle, right, left slots', () => {
-    const prompt = gangnamStylePrompt('friends');
-    expect(prompt).toMatch(/@Image1[^.]*middle/);
-    expect(prompt).toMatch(/@Image2[^.]*right/);
-    expect(prompt).toMatch(/@Image3[^.]*left/);
-    expect(prompt).toMatch(/every.*solo.*close-up/i);
-  });
-
-  it('keeps one selfie as all three identities without referencing missing uploads', () => {
+  it('does not reference nonexistent second or third uploads in selfie mode', () => {
     const prompt = gangnamStylePrompt('selfie');
-    expect(prompt).toContain('@Image1');
-    expect(prompt).not.toMatch(/@Image[23]/);
-    expect(prompt).toMatch(/three.*copies/i);
+    expect([...new Set(prompt.match(/@Image\d+/g))]).toEqual(['@Image1']);
+    expect(prompt).toMatch(/three separate copies of the same adult/);
+  });
+
+  it('uses animal appearance and anatomy for pets', () => {
+    expect(gangnamStylePrompt('pets')).toMatch(/species.*fur.*front-paw.*animal anatomy/);
   });
 });
