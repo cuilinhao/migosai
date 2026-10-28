@@ -1,6 +1,9 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { GangnamStyleGenerator } from '@/components/gangnam-style/generator';
+import { LocaleProvider } from '@/components/i18n/locale-provider';
+import { getMessages, locales, localizeHref } from '@/lib/i18n';
+import { getGangnamTranslator } from '@/lib/i18n/gangnam-style';
 
 const state = vi.hoisted(() => ({
   generation: null as import('@/lib/contracts').GenerationResponse | null,
@@ -15,6 +18,18 @@ vi.mock('@/components/generator/use-generation', async importOriginal => ({
 beforeEach(() => { state.generation = null; state.loading = false; state.user = { id: 'alice', name: 'Alice', email: 'alice@example.test' }; });
 
 describe('Gangnam Style generator submission states', () => {
+  it.each(locales.filter(locale => locale !== 'en'))('%s localizes controls and live soundtrack status while keeping fixed output values', locale => {
+    state.generation = { id: 'trio-1', status: 'processing', progress: 85, statusMessage: 'Adding the template soundtrack…' };
+    const html = renderToStaticMarkup(<LocaleProvider locale={locale} messages={getMessages(locale)}><GangnamStyleGenerator /></LocaleProvider>);
+    const t = getGangnamTranslator(locale);
+    expect(html).toContain(t('Adding the template soundtrack…'));
+    expect(html).not.toContain('Adding the template soundtrack…');
+    expect(html).toContain(renderToStaticMarkup(<h3 className="gns-upload-heading">{t('1 · Add your photos')}</h3>));
+    expect(html).toContain('value="480p"');
+    expect(html).toContain('value="720p"');
+    expect(html).toContain(`href="${localizeHref('/app/my-videos', locale)}"`);
+    expect(html).not.toContain('{credits}');
+  });
   it('fixes the trio framing to landscape while retaining both resolution choices', () => {
     const html = renderToStaticMarkup(<GangnamStyleGenerator />);
     const selects = html.match(/<select\b[^>]*>[\s\S]*?<\/select>/g) ?? [];

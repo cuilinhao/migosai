@@ -46,25 +46,28 @@ describe('Gangnam blog navigation boundaries', () => {
     ['fr', '/fr/gangnam-style-ai-video-generator#studio'],
     ['es', '/es/gangnam-style-ai-video-generator#studio'],
     ['zh-TW', '/zh-TW/gangnam-style-ai-video-generator#studio'],
-  ] as const)('keeps native articles canonical during a %s language switch without changing generator routing', (locale, generatorHref) => {
+  ] as const)('localizes articles and generator during a %s language switch', (locale, generatorHref) => {
     expect(localizeHref('/fr/gangnam-style-ai-video-generator/blog/what-is-gangnam-style?from=nav#faq', locale))
-      .toBe('/gangnam-style-ai-video-generator/blog/what-is-gangnam-style?from=nav#faq');
+      .toBe(`${locale === 'en' ? '' : '/' + locale}/gangnam-style-ai-video-generator/blog/what-is-gangnam-style?from=nav#faq`);
     expect(localizeHref('/gangnam-style-ai-video-generator/blog?from=nav#articles', locale))
-      .toBe('/gangnam-style-ai-video-generator/blog?from=nav#articles');
+      .toBe(`${locale === 'en' ? '' : '/' + locale}/gangnam-style-ai-video-generator/blog?from=nav#articles`);
     expect(localizeHref('/gangnam-style-ai-video-generator#studio', locale)).toBe(generatorHref);
   });
 });
 
-describe('localized aliases of native English articles', () => {
-  it.each(['ko', 'ja', 'fr', 'es', 'zh-TW'])('redirects the %s index and article before rendering duplicate metadata or content', async locale => {
+describe('localized Gangnam blog routes', () => {
+  it.each(['ko', 'ja', 'fr', 'es', 'zh-TW'])('resolves the %s index and article with their own canonical metadata', async locale => {
     for (const path of [
       ['gangnam-style-ai-video-generator', 'blog'],
       ['gangnam-style-ai-video-generator', 'blog', 'what-is-gangnam-style'],
     ]) {
+      request.locale = locale;
+      request.sourcePath = `/${path.join('/')}`;
       const props = { params: Promise.resolve({ locale, path }) };
-      const error = { message: 'PERMANENT_REDIRECT', destination: `/${path.join('/')}` };
-      await expect(LocalizedPage(props)).rejects.toMatchObject(error);
-      await expect(localizedMetadata(props)).rejects.toMatchObject(error);
+      expect(await LocalizedPage(props)).toBeTruthy();
+      const metadata = await localizedMetadata(props);
+      expect(metadata.alternates?.canonical).toBe(`https://migosai.design/${locale}/${path.join('/')}`);
+      expect(Object.keys(metadata.alternates?.languages ?? {})).toHaveLength(7);
     }
   });
 

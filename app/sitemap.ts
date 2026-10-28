@@ -19,12 +19,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency,
     ...(lastModified ? { lastModified } : {}),
   })));
-  // Dedicated blogs index only their authored languages, not synthetic UI-locale copies.
+  // Gangnam has complete translations; Ozil keeps its independently authored variants.
   return [...translatedPages,
-    ...[{ path: GANGNAM_BLOG_PATH, dateModified: GANGNAM_BLOG_UPDATED }, ...gangnamBlogPosts].map(({ path, dateModified }) => ({
-      url: `${SITE_URL}${path}`, priority: 0.7, changeFrequency: path === GANGNAM_BLOG_PATH ? "weekly" as const : "monthly" as const, lastModified: dateModified,
-      alternates: { languages: { en: `${SITE_URL}${path}`, "x-default": `${SITE_URL}${path}` } },
-    })),
+    ...[{ path: GANGNAM_BLOG_PATH, dateModified: GANGNAM_BLOG_UPDATED }, ...gangnamBlogPosts].flatMap(({ path, dateModified }) => locales.map(locale => ({
+      url: `${SITE_URL}${localizeHref(path, locale)}`, priority: 0.7, changeFrequency: path === GANGNAM_BLOG_PATH ? "weekly" as const : "monthly" as const, lastModified: dateModified,
+      alternates: { languages: Object.fromEntries([...locales.map(language => [language, `${SITE_URL}${localizeHref(path, language)}`]), ['x-default', `${SITE_URL}${path}`]]) },
+    }))),
     { url: `${SITE_URL}${OZIL_BLOG_PATH}`, priority: 0.7, changeFrequency: "weekly", lastModified: OZIL_BLOG_UPDATED },
     ...ozilBlogPosts.map(post => ({
       url: `${SITE_URL}${post.path}`, priority: 0.7, changeFrequency: "monthly" as const, lastModified: post.dateModified,

@@ -19,6 +19,7 @@ const routes = {
   "/ai-rap-song-generator": () => import("@/app/ai-rap-song-generator/page"),
   "/flying-car-ai-video-generator": () => import("@/app/flying-car-ai-video-generator/page"),
   "/gangnam-style-ai-video-generator": () => import("@/app/gangnam-style-ai-video-generator/page"),
+  "/gangnam-style-ai-video-generator/blog": () => import("@/app/gangnam-style-ai-video-generator/blog/page"),
   "/window-peeper-ai-video-generator": () => import("@/app/window-peeper-ai-video-generator/page"),
   "/flying-car-ai-video-generator/how-to-make-a-tesla-roadster-flying-car-video": () => import("@/app/flying-car-ai-video-generator/how-to-make-a-tesla-roadster-flying-car-video/page"),
   "/flying-car-ai-video-generator/tesla-flying-car-ai-video-trend": () => import("@/app/flying-car-ai-video-generator/tesla-flying-car-ai-video-trend/page"),
@@ -57,7 +58,9 @@ async function resolvePage(params: Props["params"]) {
   const { locale, path = [] } = await params;
   const pathname = `/${path.join("/")}`;
   if (!isLocale(locale)) notFound();
-  if (/^\/(?:ozil-goal-generator|gangnam-style-ai-video-generator)\/blog(?:\/|$)/.test(pathname)) permanentRedirect(pathname);
+  if (/^\/ozil-goal-generator\/blog(?:\/|$)/.test(pathname)) permanentRedirect(pathname);
+  const gangnamArticle = pathname.match(/^\/gangnam-style-ai-video-generator\/blog\/([^/]+)$/);
+  if (gangnamArticle) return { kind: "article" as const, page: await import("@/app/gangnam-style-ai-video-generator/blog/[slug]/page"), pathname, params: Promise.resolve({ slug: gangnamArticle[1] }) };
   const effect = pathname.match(/^\/effects\/([^/]+)$/);
   if (effect) return { kind: "effect" as const, page: await import("@/app/effects/[slug]/page"), pathname, params: Promise.resolve({ slug: effect[1] }) };
   if (!Object.hasOwn(routes, pathname)) notFound();
@@ -65,11 +68,11 @@ async function resolvePage(params: Props["params"]) {
 }
 export async function generateMetadata({ params }: Props) {
   const resolved = await resolvePage(params);
-  return resolved.kind === "effect" ? resolved.page.generateMetadata({ params: resolved.params }) : resolved.page.generateMetadata();
+  return resolved.kind !== "static" ? resolved.page.generateMetadata({ params: resolved.params }) : resolved.page.generateMetadata();
 }
 export default async function LocalizedPage({ params }: Props) {
   const resolved = await resolvePage(params);
-  if (resolved.kind === "effect") {
+  if (resolved.kind !== "static") {
     const Page = resolved.page.default;
     return <Page params={resolved.params}/>;
   }

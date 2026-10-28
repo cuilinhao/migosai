@@ -64,7 +64,7 @@ export default async function BlogIndexPage() {
       </div>
     </section>
 
-    <GangnamBlogPreview/>
+    <GangnamBlogPreview locale={locale}/>
     <div className="section-container"><CampaignBanner placement="blog"/></div>
     <GeoCta />
     <GeoRelatedLinks current={BLOG_PATH} />

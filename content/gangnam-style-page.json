@@ -610,7 +610,7 @@
                         "tag": "p",
                         "attrs": {},
                         "children": [
-                          "Choose 480p or 720p quality. The video uses fixed 16:9 landscape framing. Check your photo previews, confirm you have permission, and sign in with Google to generate."
+                          "Choose 480p or 720p quality. The video uses fixed 16:9 landscape framing. Check your photo previews, confirm you have permission, and continue with your MigosAI account or guest wallet."
                         ]
                       },
                       {
@@ -1056,7 +1056,7 @@
                 "tag": "p",
                 "attrs": {},
                 "children": [
-                  "Yes. Sign in with your MigosAI account to create videos and access your account."
+                  "You can use your MigosAI account or guest wallet. Make sure the active balance covers the displayed generation cost."
                 ]
               }
             ]

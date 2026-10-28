@@ -29,14 +29,16 @@ describe('Gangnam Style question-led blog', () => {
     for (const post of gangnamBlogPosts) expect(getGangnamBlogPost(post.slug)).toBe(post);
   });
 
-  it('indexes eleven canonical English pages without duplicate translated copies', () => {
+  it('indexes all sixty-six canonical localized blog pages with reciprocal alternates', () => {
     const entries = sitemap();
     expect(new Set(entries.map(entry => entry.url)).size).toBe(entries.length);
     for (const path of [GANGNAM_BLOG_PATH, ...gangnamBlogPosts.map(post => post.path)]) {
       const matches = entries.filter(entry => new URL(entry.url).pathname.endsWith(path));
-      expect(matches.map(entry => entry.url)).toEqual([`${SITE_URL}${path}`]);
-      expect(matches[0].lastModified).toBe(GANGNAM_BLOG_UPDATED);
-      for (const locale of locales) expect(localizeHref(`${path}#faq`, locale)).toBe(`${path}#faq`);
+      expect(matches.map(entry => entry.url)).toEqual(locales.map(locale => `${SITE_URL}${localizeHref(path, locale)}`));
+      for (const match of matches) {
+        expect(match.lastModified).toBe(GANGNAM_BLOG_UPDATED);
+        expect(Object.keys(match.alternates?.languages ?? {})).toHaveLength(7);
+      }
     }
   });
 
@@ -99,7 +101,7 @@ describe('Gangnam Style question-led blog', () => {
     expect(article.inLanguage).toBe('en');
     const metadata = gangnamBlogMetadata(post);
     expect(metadata.alternates?.canonical).toBe(`${SITE_URL}${post.path}`);
-    expect(metadata.alternates?.languages).toEqual({ en: `${SITE_URL}${post.path}`, 'x-default': `${SITE_URL}${post.path}` });
+    expect(metadata.alternates?.languages).toEqual(Object.fromEntries([...locales.map(locale => [locale, `${SITE_URL}${localizeHref(post.path, locale)}`]), ['x-default', `${SITE_URL}${post.path}`]]));
     expect(metadata.openGraph?.siteName).toBe('MigosAI');
   });
 

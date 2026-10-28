@@ -7,11 +7,14 @@ import { useAuth } from '@/components/auth-provider';
 import { prepareFlyingCarPhoto } from '@/components/flyingcar/photo-submission';
 import { getResumableVideo, type VideoHistoryItem } from '@/components/generator/generation-history';
 import { uploadPhoto, type PhotoUploadProgress } from '@/components/generator/photo-upload';
-import { readApi, useGeneration, useGenerationTranslations } from '@/components/generator/use-generation';
+import { readApi, useGeneration } from '@/components/generator/use-generation';
 import type { GenerationResponse } from '@/lib/contracts';
 import { GANGNAM_STYLE_CONFIG, GANGNAM_STYLE_RESOLUTIONS, getGangnamStyleCost,
   type GangnamStyleMode, type GangnamStyleResolution } from '@/lib/gangnam-style';
 import { captureGangnamStyleSubmission, executeGangnamStyleSubmission, type UploadedGangnamStylePhoto } from './submission';
+import { useGangnamTranslations } from './use-translations';
+import { useLocale } from '@/components/i18n/locale-provider';
+import { localeTags } from '@/lib/i18n/routing';
 import './generator.css';
 
 type Photo = { id: string; file: File; url: string; owner: string | null };
@@ -27,7 +30,8 @@ const roles = [{ name: 'Middle', solo: 'First solo' }, { name: 'Right', solo: 'S
 
 export function GangnamStyleGenerator() {
   const { user, credits, loading: authLoading, openSignIn, refresh } = useAuth();
-  const t = useGenerationTranslations();
+  const t = useGangnamTranslations();
+  const locale = useLocale();
   const owner = user?.id ?? null;
   const [mode, setMode] = useState<GangnamStyleMode>('friends');
   const [selections, setSelections] = useState<(Photo | null)[]>([null, null, null]);
@@ -200,13 +204,13 @@ export function GangnamStyleGenerator() {
 
   const uploadFraction = uploadProgress ? uploadProgress.phase === 'complete' ? 1 : Math.min(.99, uploadProgress.loaded / Math.max(1, uploadProgress.total)) : 0;
   const progress = uploadProgress ? Math.floor((uploadIndex + uploadFraction) / photoCount * 100) : Math.min(99, Math.max(0, Math.round(generation?.progress ?? 0)));
-  const status = busy ? stage === 'preparing' ? `Preparing photo ${uploadIndex + 1} of ${photoCount}…`
-    : stage === 'uploading' ? `Uploading photo ${uploadIndex + 1} of ${photoCount}…` : 'Starting your video…'
+  const status = busy ? stage === 'preparing' ? t('Preparing photo {current} of {total}…', { current: uploadIndex + 1, total: photoCount })
+    : stage === 'uploading' ? t('Uploading photo {current} of {total}…', { current: uploadIndex + 1, total: photoCount }) : 'Starting your video…'
     : generation?.error ?? generation?.statusMessage ?? (generation?.status === 'queued' ? 'Your video is queued.' : generation?.status === 'reviewing' ? 'Checking your photos…' : 'Creating your video…');
   const resultUrl = generation?.status === 'completed' ? generation.videoUrl : undefined;
 
   return <div className="gns-form">
-    <div className="gns-tabs" role="tablist" aria-label="Choose a trio">
+    <div className="gns-tabs" role="tablist" aria-label={t("Choose a trio")}>
       {modes.map((item, index) => <button key={item.value} type="button" role="tab" id={`${id}-${item.value}`}
         ref={node => { tabRefs.current[index] = node; }} aria-controls={`${id}-panel`} aria-selected={mode === item.value}
         tabIndex={mode === item.value ? 0 : -1} className={mode === item.value ? 'gns-active' : ''} disabled={locked}
@@ -215,64 +219,63 @@ export function GangnamStyleGenerator() {
           event.preventDefault();
           const next = event.key === 'Home' ? 0 : event.key === 'End' ? 2 : (index + (event.key === 'ArrowRight' ? 1 : 2)) % modes.length;
           changeMode(modes[next].value); tabRefs.current[next]?.focus();
-        }}>{item.label}</button>)}
+        }}>{t(item.label)}</button>)}
     </div>
     <div id={`${id}-panel`} role="tabpanel" aria-labelledby={`${id}-${mode}`}>
-      <div className="gns-studio-specs"><span>{GANGNAM_STYLE_CONFIG.duration}-second template</span><span>16:9 · Landscape</span><span>{resolution}</span>MP4<span>Original soundtrack</span></div>
-      <h3 className="gns-upload-heading">1 · Add your {mode === 'selfie' ? 'photo' : 'photos'}</h3>
+      <div className="gns-studio-specs"><span>{t('{seconds}-second template', { seconds: GANGNAM_STYLE_CONFIG.duration })}</span><span>{t("16:9 · Landscape")}</span><span>{resolution}</span>{t("MP4")}<span>{t("Original soundtrack")}</span></div>
+      <h3 className="gns-upload-heading">{t(mode === 'selfie' ? '1 · Add your photo' : '1 · Add your photos')}</h3>
       <div className={`gns-cast-uploads${mode === 'selfie' ? ' gns-single' : ''}`}>
         {roles.slice(0, photoCount).map((role, index) => <div className="gns-cast-slot" key={`${mode}-${index}`}>
-          <div className="gns-cast-role"><strong>{mode === 'selfie' ? 'You' : role.name}</strong><small>{mode === 'selfie' ? 'All three dancers' : role.solo}</small></div>
+          <div className="gns-cast-role"><strong>{t(mode === 'selfie' ? 'You' : role.name)}</strong><small>{t(mode === 'selfie' ? 'All three dancers' : role.solo)}</small></div>
           <label className={`gns-cast-upload${photos[index] ? ' gns-has-photo' : ''}${dragging === index ? ' gns-dragging' : ''}`}
             onDragOver={event => { event.preventDefault(); if (!locked) setDragging(index); }} onDragLeave={() => setDragging(null)}
             onDrop={event => { event.preventDefault(); setDragging(null); changePhoto(index, event.dataTransfer.files[0]); }}>
-            {photos[index] ? <><img src={photos[index]!.url} alt={`${mode === 'selfie' ? 'Your' : role.name} reference photo`} /><span className="gns-replace-photo">Replace photo</span></>
-              : <span className="gns-cast-placeholder"><span aria-hidden="true">＋</span>Add a clear photo</span>}
+            {photos[index] ? <><img src={photos[index]!.url} alt={mode === 'selfie' ? t('Your reference photo') : t('{role} reference photo', { role: t(role.name) })} /><span className="gns-replace-photo">{t("Replace photo")}</span></>
+              : <span className="gns-cast-placeholder"><span aria-hidden="true">＋</span>{t("Add a clear photo")}</span>}
             <input ref={node => { inputRefs.current[index] = node; }} type="file" accept="image/jpeg,image/png,image/webp"
-              aria-label={mode === 'selfie' ? 'Upload your photo' : `Upload ${role.name.toLowerCase()} photo`} disabled={locked}
+              aria-label={mode === 'selfie' ? t('Upload your photo') : t('Upload {role} photo', { role: t(role.name) })} disabled={locked}
               onChange={event => { changePhoto(index, event.target.files?.[0]); event.target.value = ''; }} />
           </label>
-          {photos[index] && <button className="gns-remove-photo" type="button" disabled={locked} aria-label={`Remove ${mode === 'selfie' ? 'your' : role.name.toLowerCase()} photo`} onClick={() => removePhoto(index)}><X size={13} />Remove</button>}
+          {photos[index] && <button className="gns-remove-photo" type="button" disabled={locked} aria-label={mode === 'selfie' ? t('Remove your photo') : t('Remove {role} photo', { role: t(role.name) })} onClick={() => removePhoto(index)}><X size={13} />{t("Remove")}</button>}
         </div>)}
       </div>
-      <p className="gns-studio-photo-note">One subject per photo, facing the camera. No sunglasses. JPEG, PNG or WebP · up to 10 MB each.</p>
+      <p className="gns-studio-photo-note">{t("One subject per photo, facing the camera. No sunglasses. JPEG, PNG or WebP · up to 10 MB each.")}</p>
       <fieldset className="gns-output-settings" disabled={locked}>
-        <legend>2 · Output settings</legend>
-        <div className="gns-output-field"><label htmlFor={`${id}-ratio`}>Aspect ratio</label>
-          <input id={`${id}-ratio`} value="16:9 · Landscape" readOnly className="gns-groove-select-trigger" />
+        <legend>{t("2 · Output settings")}</legend>
+        <div className="gns-output-field"><label htmlFor={`${id}-ratio`}>{t("Aspect ratio")}</label>
+          <input id={`${id}-ratio`} value={t("16:9 · Landscape")} readOnly className="gns-groove-select-trigger" />
         </div>
-        <div className="gns-output-field"><label htmlFor={`${id}-resolution`}>Resolution</label>
+        <div className="gns-output-field"><label htmlFor={`${id}-resolution`}>{t("Resolution")}</label>
           <select id={`${id}-resolution`} value={resolution} disabled={locked} className="gns-groove-select-trigger" onChange={event => { setResolution(event.target.value as GangnamStyleResolution); idempotency.current = null; setError(''); }}>
-            {GANGNAM_STYLE_RESOLUTIONS.map(value => <option key={value} value={value}>{value} · {value === '720p' ? 'HD' : 'Standard'}</option>)}
+            {GANGNAM_STYLE_RESOLUTIONS.map(value => <option key={value} value={value}>{value} · {t(value === '720p' ? 'HD' : 'Standard')}</option>)}
           </select>
         </div>
-        <p>15-second template. Fixed 16:9 landscape preserves the trio scene framing. Each generation uses {cost} MigosAI credits.</p>
+        <p>{t('15-second template. Fixed 16:9 landscape preserves the trio scene framing. Each generation uses {credits} MigosAI credits.', { credits: cost })}</p>
       </fieldset>
-      <label className="gns-consent"><input ref={consentRef} type="checkbox" checked={consent} disabled={locked} onChange={event => setConsent(event.target.checked)} />{' '}
-        I own these photos or have permission from everyone pictured, and agree to the <Link href="/terms-of-service">Terms</Link> and <Link href="/privacy-policy">Privacy Policy</Link>.
+      <label className="gns-consent"><input ref={consentRef} type="checkbox" checked={consent} disabled={locked} onChange={event => setConsent(event.target.checked)} />{' '}{t(" I own these photos or have permission from everyone pictured, and agree to the ")}<Link href="/terms-of-service">{t("Terms")}</Link>{t(" and ")}<Link href="/privacy-policy">{t("Privacy Policy")}</Link>.
       </label>
       <button type="button" className="gns-primary gns-generate" disabled={locked || authLoading} onClick={() => void submit()}>
         {locked && <LoaderCircle size={16} className="gns-busy-icon" />}
-        {authLoading ? 'Checking account…' : busy ? status : activeJob ? `Creating your video · ${progress}%` : !user ? 'Sign in to create ↗' : error && idempotency.current ? 'Retry generation ↗' : 'Create my video ↗'}
+        {authLoading ? t('Checking account…') : busy ? t(status) : activeJob ? t('Creating your video · {progress}%', { progress }) : !user ? t('Sign in to create ↗') : error && idempotency.current ? t('Retry generation ↗') : t('Create my video ↗')}
       </button>
-      <p className="gns-generation-credit-note">1 video = {cost} MigosAI credits · Failed generations return your credits.</p>
-      {user && <p className="gns-small gns-account-note">{credits.toLocaleString()} credits available · <Link href="/pricing">Buy credits</Link></p>}
-      <p className="gns-small">Generation availability and credits are checked before submission. Paid retries are never automatic.</p>
+      <p className="gns-generation-credit-note">{t('1 video = {credits} MigosAI credits · Failed generations return your credits.', { credits: cost })}</p>
+      {user && <p className="gns-small gns-account-note">{t('{credits} credits available · ', { credits: credits.toLocaleString(localeTags[locale]) })}<Link href="/pricing">{t("Buy credits")}</Link></p>}
+      <p className="gns-small">{t("Generation availability and credits are checked before submission. Paid retries are never automatic.")}</p>
       {(busy || activeJob) && <div className="gns-generation-progress" role="status" aria-live="polite">
         <p>{t(status)}{(uploadProgress || activeJob) && <span>{progress}%</span>}</p>
-        {(uploadProgress || activeJob) && <div className="gns-progress-track" role="progressbar" aria-label={busy ? 'Photo upload progress' : 'Video generation progress'} aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress}><span style={{ width: `${progress}%` }} /></div>}
-        {activeJob && <small>You can leave this page. Your video will be saved in <Link href="/app/my-videos">My videos ↗</Link>.</small>}
+        {(uploadProgress || activeJob) && <div className="gns-progress-track" role="progressbar" aria-label={t(busy ? 'Photo upload progress' : 'Video generation progress')} aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress}><span style={{ width: `${progress}%` }} /></div>}
+        {activeJob && <small>{t("You can leave this page. Your video will be saved in ")}<Link href="/app/my-videos">{t("My videos ↗")}</Link>.</small>}
       </div>}
-      {error && <p className="gns-error" role="alert">{t(error)}{' '}{user && credits < cost && <Link href="/pricing">Buy credits</Link>}</p>}
-      {generation && pollError && <p className="gns-error" role="alert">{t(pollError)} Status checks will retry automatically. <Link href="/app/my-videos">My videos</Link></p>}
-      {generation && ['failed', 'cancelled'].includes(generation.status) && <p className="gns-error" role="alert">{t(generation.error ?? generation.statusMessage ?? 'Your video could not be completed.')} <Link href="/app/my-videos">View record</Link></p>}
+      {error && <p className="gns-error" role="alert">{t(error)}{' '}{user && credits < cost && <Link href="/pricing">{t("Buy credits")}</Link>}</p>}
+      {generation && pollError && <p className="gns-error" role="alert">{t(pollError)}{t(" Status checks will retry automatically. ")}<Link href="/app/my-videos">{t("My videos")}</Link></p>}
+      {generation && ['failed', 'cancelled'].includes(generation.status) && <p className="gns-error" role="alert">{t(generation.error ?? generation.statusMessage ?? 'Your video could not be completed.')} <Link href="/app/my-videos">{t("View record")}</Link></p>}
       <div className="gns-studio-sample">
-        <h3>{resultUrl ? 'Your video' : `Preview · ${selectedMode.label}`}</h3>
-        <video key={resultUrl ?? selectedMode.sample} src={resultUrl ?? `/gangnam-style/${selectedMode.sample}`} poster={resultUrl ? undefined : `/gangnam-style/${selectedMode.poster}`} controls playsInline preload="metadata" aria-label={resultUrl ? 'Your generated Gangnam Style video' : `${selectedMode.label} sample video`} />
+        <h3>{resultUrl ? t('Your video') : t('Preview · {mode}', { mode: t(selectedMode.label) })}</h3>
+        <video key={resultUrl ?? selectedMode.sample} src={resultUrl ?? `/gangnam-style/${selectedMode.sample}`} poster={resultUrl ? undefined : `/gangnam-style/${selectedMode.poster}`} controls playsInline preload="metadata" aria-label={resultUrl ? t('Your generated Gangnam Style video') : t('{mode} sample video', { mode: t(selectedMode.label) })} />
         {resultUrl ? <>
-          <div className="gns-result-actions"><p role="status"><Check size={15} />Your video is ready</p><a href={resultUrl} download="migosai-gangnam-style.mp4"><Download size={16} />Download MP4</a><Link href="/app/my-videos">My videos<ArrowUpRight size={14} /></Link></div>
-          <p className="gns-small">Preview and download your finished MP4.</p>
-        </> : <p className="gns-small">AI-generated sample. Your completed video will appear here.</p>}
+          <div className="gns-result-actions"><p role="status"><Check size={15} />{t("Your video is ready")}</p><a href={resultUrl} download="migosai-gangnam-style.mp4"><Download size={16} />{t("Download MP4")}</a><Link href="/app/my-videos">{t("My videos")}<ArrowUpRight size={14} /></Link></div>
+          <p className="gns-small">{t("Preview and download your finished MP4.")}</p>
+        </> : <p className="gns-small">{t("AI-generated sample. Your completed video will appear here.")}</p>}
       </div>
     </div>
   </div>;

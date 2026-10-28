@@ -1,4 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
+import { getGangnamTranslator } from '@/lib/i18n/gangnam-style';
+import type { Locale } from '@/lib/i18n/routing';
 import LocalizedPage, { generateMetadata } from '@/app/[locale]/[[...path]]/page';
 
 const request = vi.hoisted(() => ({ locale: 'ko' }));
@@ -12,7 +14,8 @@ describe('localized Gangnam Style route resolution', () => {
     const page = await LocalizedPage(props);
     expect(page).toBeTruthy();
     const metadata = await generateMetadata(props);
-    expect(metadata.title).toBe('Gangnam Style AI Video Generator & Trio Templates');
+    expect(metadata.title).toBe(getGangnamTranslator(locale as Locale)('Gangnam Style AI Video Generator & Trio Templates'));
+    expect(metadata.title).not.toBe('Gangnam Style AI Video Generator & Trio Templates');
     expect(metadata.alternates?.canonical).toBe(`https://migosai.design/${locale}/gangnam-style-ai-video-generator`);
   });
 });

@@ -2,6 +2,8 @@
 
 2026-10-28：用户要求新增10篇针对Gangnam Style用户问题的博客并更新sitemap。文章按现有站点英文内容撰写，使用独立专题博客结构。
 
+当前版本已补齐六语言：英文、韩语、日语、法语、西班牙语、繁体中文；10篇文章与索引共66个实际页面。语言前缀直接显示译文，不再重定向英文。下面保留首次发布及提示词扩充记录；多语言实现和最新验收见 `LOCALIZATION.md`。
+
 ## 文章
 
 1. [What Is Gangnam Style? The Song, Dance and AI Trio Explained](https://migosai.design/gangnam-style-ai-video-generator/blog/what-is-gangnam-style)

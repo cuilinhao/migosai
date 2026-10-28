@@ -37,3 +37,7 @@
 @media(max-width:380px){.gangnam-page.gangnam-page h1{font-size:44px}.gangnam-page.gangnam-page .gns-actions{align-items:flex-start;flex-direction:column}}
 
 .gangnam-page.gangnam-page .gns-local-pricing section h2{font-size:1.2rem;line-height:1.35;letter-spacing:normal;margin:0}
+.gangnam-page:not([lang="en"]) .gns-hero-title-line{white-space:normal;max-width:100%;overflow-wrap:anywhere}
+.gangnam-page:not([lang="en"]) .gns-hero h1{font-size:clamp(28px,8cqi,68px)}
+.gangnam-page:not([lang="en"]) .gns-page-nav>div{flex-wrap:wrap}
+@media(max-width:1000px){.gangnam-page:not([lang="en"]) .gns-hero{grid-template-columns:1fr}}

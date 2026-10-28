@@ -21,8 +21,8 @@ export function localizeHref(href: string, locale: Locale): string {
   if (!isPagePath(href)) return href;
   const base = stripLocale(href);
   if (!isPagePath(base)) return href;
-  // Dedicated blogs retain their authored language rather than creating UI-locale copies.
-  if (/^\/(?:ozil-goal-generator|gangnam-style-ai-video-generator)\/blog(?:[/?#]|$)/.test(base)) return base;
+  // Ozil articles retain their authored language; Gangnam has complete locale catalogs.
+  if (/^\/ozil-goal-generator\/blog(?:[/?#]|$)/.test(base)) return base;
   if (locale === "en") return base;
   return `/${locale}${base === "/" ? "" : base.startsWith("/?") || base.startsWith("/#") ? base.slice(1) : base}`;
 }
