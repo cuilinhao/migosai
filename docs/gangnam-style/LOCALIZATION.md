@@ -28,4 +28,10 @@
 - 验证脚本、HTTP结果和浏览器截图保存在忽略目录 `.local-evidence/gangnamstyle/i18n-20261028/`。
 - 个人skill `insetpage-ai-video-generator`已加入完整语言范围、正文/状态/SEO清单、语言内链和上线矩阵要求；skill格式校验与23项HTTP辅助脚本测试通过。
 
-生产构建与发布后的实际页面验收将在下方记录。
+## 正式发布与验收
+
+- 功能提交`1543cb2`已推送`origin/main`，主项目已切回并同步`main`；用户原有`next-env.d.ts`修改保留且未提交。
+- Cloudflare Worker版本`7a813ba5-95ef-4876-aeaa-d1d4f0cf0eeb`，部署退出0，正式域名与原触发器保持正常。
+- 正式域名72页全部完成内容、语言、SEO及提示词检查：首轮70页通过；韩语提示词文章遇到curl SSL连接错误、繁中音乐文章遇到本地Python解析超时，定向复测两页均通过。原始失败与复测报告分别保留，未重新部署或重新生成视频。
+- 生产sitemap返回200，759个去重地址，72个目标页面齐全；六语言未知slug均404。六语言旧首页title/description/H1与基线逐字一致。
+- 正式浏览器确认完整繁中内页、10张博客卡片、示例视频readyState=4、中文声音状态与muted值一致；控制台error为0。截图`production-zh-TW.png`保存在本地证据目录。
