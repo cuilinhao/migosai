@@ -22,6 +22,8 @@ type LegacyGangnamStyleAspect = '16:9' | '9:16' | '1:1' | '4:3' | '3:4' | '21:9'
 export type GangnamStylePayload = Omit<GangnamStyleRequest, 'aspect'> & typeof GANGNAM_STYLE_CONFIG & {
   template: 'gangnam-style';
   prompt: string;
+  /** Only new reservations opt into adding the fixed source soundtrack. */
+  soundtrack?: 'gangnam-style-v1';
 } & (
   | { workflow: 'reference-edit-v1'; aspect: GangnamStyleAspect }
   // Previously reserved jobs retain their original image-only generation settings.

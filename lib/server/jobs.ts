@@ -9,8 +9,7 @@ import { createVideoModeration, getVideoModeration, SeeApiError } from './seeapi
 import { createKieVideo, createKieOzilGoalVideo, createKieFlyingCarVideo, createKieGangnamStyleVideo, getKieVideo, createKieImage, getKieImage } from './kie';
 import type { ImagePayload } from './image-generations';
 import { createFalOzilGoalVideo, createFalWindowPeeperVideo, getFalVideo } from './fal';
-import { createFalWindowPeeperAudio, getFalWindowPeeperAudio } from './fal-ffmpeg';
-import { validMediaUrl } from './security';
+import { createFalGangnamStyleAudio, createFalWindowPeeperAudio, getFalWindowPeeperAudio, isSoundtrackMediaUrl } from './fal-ffmpeg';
 import { ApiError } from './errors';
 import type { OzilGoalPayload } from '../ozil-goal';
 import type { WindowPeeperPayload } from '../window-peeper';
@@ -26,7 +25,7 @@ export function generationResponse(job:Job):GenerationResponse{
  if(job.kind==='video')try{const saved=JSON.parse(job.payload)?.template;if(saved==='ozil-goal'||saved==='flyingcar'||saved==='window-peeper'||saved==='gangnam-style')template=saved;}catch{/* Malformed old metadata must not hide the job. */}
  const approved=job.kind==='video'&&job.moderation_verdict==='passed'&&keys.length===1&&keys[0]===job.moderation_key&&!!job.moderation_etag;
  const unreviewed=job.kind==='video'&&job.status==='completed'&&!approved;
- const statusMessage=job.moderation_verdict==='manual'?'Safety review needs attention. Your video remains unavailable.':job.stage==='manual_review'?'This request needs support review. It will not be retried automatically.':job.stage.startsWith('moderation_')?'Checking video safety before delivery…':template==='window-peeper'&&(['audio_ready','submitting_audio','audio_polling','audio_storing'].includes(job.stage))?'Adding the template soundtrack…':undefined;
+ const statusMessage=job.moderation_verdict==='manual'?'Safety review needs attention. Your video remains unavailable.':job.stage==='manual_review'?'This request needs support review. It will not be retried automatically.':job.stage.startsWith('moderation_')?'Checking video safety before delivery…':(template==='window-peeper'||template==='gangnam-style')&&(['audio_ready','submitting_audio','audio_polling','audio_storing'].includes(job.stage))?'Adding the template soundtrack…':undefined;
  return {id:job.id,...(template?{template}:{}),status:job.status as GenerationStatus,progress:job.progress,...(job.error||unreviewed?{error:job.error??'This video is unavailable until its safety review is completed.'}:{}),...(statusMessage?{statusMessage}:{}),...(job.status==='completed'?(job.kind==='music'?{audioUrls:keys.map(key=>`/api/media/${key}`)}:job.kind==='image'?{imageUrls:keys.map(key=>`/api/media/${key}`)}:approved?{videoUrl:`/api/media/${keys[0]}`}:{ }):{})};
 }
 class LostLease extends Error {}
@@ -140,23 +139,24 @@ async function quarantineVideo(env:Env,job:Job,fence:JobFence,url:string,cost:nu
   throw error;
  }
 }
-type WindowPeeperAudioState={version:1;kind:'window-peeper-audio';sourceUrl:string;handle?:string;outputUrl?:string};
-function windowPeeperAudioState(env:Env,job:Job):WindowPeeperAudioState{
- let state:WindowPeeperAudioState|null;
+type SoundtrackTemplate='window-peeper'|'gangnam-style';
+type TemplateAudioState={version:1;kind:'window-peeper-audio'|'gangnam-style-audio';sourceUrl:string;handle?:string;outputUrl?:string};
+function templateAudioState(env:Env,job:Job,template:SoundtrackTemplate):TemplateAudioState{
+ let state:TemplateAudioState|null;
  try{state=JSON.parse(job.assets??'null');}catch{state=null;}
- const validUrl=(value:unknown):value is string=>typeof value==='string'&&!/\s/.test(value)&&validMediaUrl(value,env.FAL_MEDIA_HOSTS??'');
- if(!state||state.version!==1||state.kind!=='window-peeper-audio'||!validUrl(state.sourceUrl)
+ const sourceHosts=template==='gangnam-style'?env.KIE_MEDIA_HOSTS:env.FAL_MEDIA_HOSTS;
+ if(!state||state.version!==1||state.kind!==`${template}-audio`||!isSoundtrackMediaUrl(state.sourceUrl,sourceHosts??'')
   ||((job.stage==='audio_polling'||job.stage==='audio_storing')&&(typeof state.handle!=='string'||!state.handle))
-  ||(job.stage==='audio_storing'&&!validUrl(state.outputUrl)))throw new ProviderError('The saved soundtrack preparation state needs support review.',true);
+  ||(job.stage==='audio_storing'&&!isSoundtrackMediaUrl(state.outputUrl,env.FAL_MEDIA_HOSTS??'')))throw new ProviderError('The saved soundtrack preparation state needs support review.',true);
  return state;
 }
-async function advanceWindowPeeperAudio(env:Env,job:Job,fence:JobFence){
- const db=database(env),state=windowPeeperAudioState(env,job);
+async function advanceTemplateAudio(env:Env,job:Job,fence:JobFence,template:SoundtrackTemplate){
+ const db=database(env),state=templateAudioState(env,job,template);
  if(job.stage==='audio_ready'){
   // This checkpoint precedes the external POST. An interrupted submission is
   // reconciled manually instead of creating a second FFmpeg task.
   await patch(db,job.id,fence,{stage:'submitting_audio',status:'processing',progress:87,error:null});
-  state.handle=await createFalWindowPeeperAudio(env,state.sourceUrl);
+  state.handle=await (template==='gangnam-style'?createFalGangnamStyleAudio:createFalWindowPeeperAudio)(env,state.sourceUrl);
   await patch(db,job.id,fence,{stage:'audio_polling',assets:JSON.stringify(state),error:null});return;
  }
  if(job.stage==='audio_polling'){
@@ -164,7 +164,7 @@ async function advanceWindowPeeperAudio(env:Env,job:Job,fence:JobFence){
   if(result.status==='failed'){await refundGeneration(db,job.id,'failed','The video soundtrack could not be prepared. Your credits have been returned.',fence);return;}
   if(result.status!=='completed'){await patch(db,job.id,fence,{progress:90,error:null});return;}
   const output=result.result?.videos?.[0]?.url?.[0];
-  if(typeof output!=='string'||/\s/.test(output)||!validMediaUrl(output,env.FAL_MEDIA_HOSTS??''))throw new ProviderError('The prepared video could not be verified. Support must review this request.',true);
+  if(!isSoundtrackMediaUrl(output,env.FAL_MEDIA_HOSTS??''))throw new ProviderError('The prepared video could not be verified. Support must review this request.',true);
   state.outputUrl=output;
   // Saving is its own durable stage: R2 retries read this result rather than
   // resubmitting either the original video model or the audio preparation job.
@@ -215,13 +215,15 @@ export async function advanceJob(env:Env,id:string):Promise<void>{const db=datab
   // existing APIMart task through Kie. Historical payloads remain APIMart jobs.
   const payload=JSON.parse(job.payload) as (CreateVideoRequest&{provider?:'kie';template?:undefined})|OzilGoalPayload|WindowPeeperPayload|FlyingCarPayload|GangnamStylePayload;
   const provider=job.kind==='video'&&payload.provider==='fal'?'fal':job.kind==='video'&&payload.provider==='kie'?'kie':'apimart';
+  const audioTemplate=payload.template==='window-peeper'?'window-peeper':payload.template==='gangnam-style'&&payload.soundtrack==='gangnam-style-v1'?'gangnam-style':undefined;
   if(payload.provider==='kie'&&payload.template!=='flyingcar'&&payload.template!=='gangnam-style'&&(job.stage==='new'||job.stage==='ready')){
    const unavailableReason=getVideoModelUnavailableReason(payload.model);
    if(unavailableReason)throw new ProviderError(unavailableReason);
   }
+  if(job.kind==='video'&&audioTemplate&&['audio_ready','audio_polling','audio_storing'].includes(job.stage)){providerConfigured(env,'fal');await advanceTemplateAudio(env,job,fence,audioTemplate);return;}
   providerConfigured(env,provider);
   if(job.kind==='video'&&(job.stage==='new'||job.stage==='ready'))moderationConfigured(env);
-  if(job.kind==='video'&&payload.template==='window-peeper'&&['audio_ready','audio_polling','audio_storing'].includes(job.stage)){await advanceWindowPeeperAudio(env,job,fence);return;}
+  if(job.kind==='video'&&audioTemplate==='gangnam-style'&&(job.stage==='new'||job.stage==='ready'))providerConfigured(env,'fal');
   if(job.stage.startsWith('submitting')){await patch(db,id,fence,{stage:'manual_review',error:'The provider submission could not be confirmed. Support is reviewing this request; it will not be resubmitted automatically.'});return;}
   if(job.kind==='video'&&payload.template==='ozil-goal'&&(job.stage==='new'||job.stage==='ready')){
    const portrait=await signedMediaUrl(env,payload.photo);
@@ -283,8 +285,9 @@ export async function advanceJob(env:Env,id:string):Promise<void>{const db=datab
    if(status!=='completed'){await patch(db,id,fence,{progress:Math.max(45,Math.min(95,Number(data?.progress)||45)),error:null});return;}
    const urls=job.kind==='video'?[data?.result?.videos?.[0]?.url?.[0]]:data?.result?.music?.map((m:{audio_url?:string})=>m.audio_url);
    if(!Array.isArray(urls)||!urls.length||urls.length>4||urls.some(u=>typeof u!=='string'))throw new ProviderError('The provider returned an incomplete result. Support must review this generation.',true);
-   if(job.kind==='video'&&payload.template==='window-peeper'){
-    const state:WindowPeeperAudioState={version:1,kind:'window-peeper-audio',sourceUrl:urls[0]};
+   if(job.kind==='video'&&audioTemplate){
+    if(!isSoundtrackMediaUrl(urls[0],(audioTemplate==='gangnam-style'?env.KIE_MEDIA_HOSTS:env.FAL_MEDIA_HOSTS)??''))throw new ProviderError('The source video could not be verified. Support must review this request.',true);
+    const state:TemplateAudioState={version:1,kind:`${audioTemplate}-audio`,sourceUrl:urls[0]};
     await patch(db,id,fence,{stage:'audio_ready',status:'processing',assets:JSON.stringify(state),progress:85,provider_cost:typeof data.cost==='number'?data.cost:null,result_keys:null,moderation_state:null,moderation_verdict:null,moderation_key:null,moderation_etag:null,error:null});return;
    }
    if(job.kind==='video'){await quarantineVideo(env,job,fence,urls[0],typeof data.cost==='number'?data.cost:null,provider);return;}

@@ -19,10 +19,10 @@ function failed(value: RecordValue): boolean {
   }
   return !!(value.error || value.error_type);
 }
-function mediaUrl(value: unknown, env: Env): value is string {
+export function isSoundtrackMediaUrl(value: unknown, hosts: string): value is string {
   return typeof value === 'string' && /^https:\/\//.test(value)
     && !/[\s\\#\u0000-\u001f\u007f]/.test(value) && !/^https:\/\/[^/?#]*@/.test(value)
-    && validMediaUrl(value, env.FAL_MEDIA_HOSTS ?? '');
+    && validMediaUrl(value, hosts);
 }
 
 // Keep the provider's returned namespace. Never guess a replacement after a
@@ -74,14 +74,20 @@ async function request(env: Env, url: string, mode: 'submit' | 'status' | 'resul
   return body;
 }
 
-export async function createFalWindowPeeperAudio(env: Env, videoUrl: string): Promise<string> {
-  if (!mediaUrl(videoUrl, env)) throw new ProviderError('The source video URL could not be verified.');
+async function createFalSoundtrack(env: Env, videoUrl: string, sourceHosts: string, soundtrackPath: string): Promise<string> {
+  if (!isSoundtrackMediaUrl(videoUrl, sourceHosts)) throw new ProviderError('The source video URL could not be verified.');
   const data = await request(env, `${QUEUE_ORIGIN}/${ENDPOINT}`, 'submit', {
     video_url: videoUrl,
-    audio_url: `${appOrigin(env)}/templates/window-peeper/soundtrack.m4a`,
+    audio_url: `${appOrigin(env)}${soundtrackPath}`,
     start_offset: 0,
   });
   return JSON.stringify(validateHandle({ version: 1, requestId: data.request_id, statusUrl: data.status_url, resultUrl: data.response_url }));
+}
+export function createFalWindowPeeperAudio(env: Env, videoUrl: string): Promise<string> {
+  return createFalSoundtrack(env, videoUrl, env.FAL_MEDIA_HOSTS ?? '', '/templates/window-peeper/soundtrack.m4a');
+}
+export function createFalGangnamStyleAudio(env: Env, videoUrl: string): Promise<string> {
+  return createFalSoundtrack(env, videoUrl, env.KIE_MEDIA_HOSTS ?? '', '/gangnam-style/soundtrack.m4a');
 }
 
 export async function getFalWindowPeeperAudio(env: Env, serialized: string): Promise<FalVideoResult> {
@@ -100,7 +106,9 @@ export async function getFalWindowPeeperAudio(env: Env, serialized: string): Pro
   if (failed(result)) return { status: 'failed' };
   // Fal's File schema permits absent/null content_type. The media persistence
   // boundary still validates the actual downloaded MP4 before it can be used.
-  if (!record(result.video) || !mediaUrl(result.video.url, env)
+  if (!record(result.video) || !isSoundtrackMediaUrl(result.video.url, env.FAL_MEDIA_HOSTS ?? '')
     || result.video.content_type != null && result.video.content_type !== 'video/mp4') invalid();
   return { status: 'completed', result: { videos: [{ url: [result.video.url] }] } };
 }
+// Both templates use the same FFmpeg queue endpoint and response contract.
+export const getFalGangnamStyleAudio = getFalWindowPeeperAudio;

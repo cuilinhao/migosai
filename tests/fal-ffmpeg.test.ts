@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { Env } from '../lib/server/env';
 import { ApiError } from '../lib/server/errors';
-import { createFalWindowPeeperAudio, getFalWindowPeeperAudio } from '../lib/server/fal-ffmpeg';
+import { createFalGangnamStyleAudio, createFalWindowPeeperAudio, getFalWindowPeeperAudio } from '../lib/server/fal-ffmpeg';
 import { ProviderError } from '../lib/server/provider';
 
 const env = { FAL_KEY: 'private-fal-test-key', APP_URL: 'https://qa.example.test/path', FAL_MEDIA_HOSTS: 'v3b.fal.media,v3.fal.media,fal.media' } as Env;
@@ -23,6 +23,28 @@ async function failure(operation: Promise<unknown>, uncertain: boolean, transien
   expect(String(caught)).not.toMatch(/private-|token=/);
 }
 afterEach(() => vi.restoreAllMocks());
+
+describe('Gangnam Style soundtrack source boundary', () => {
+  const gangnamEnv = { ...env, KIE_MEDIA_HOSTS: 'tempfile.aiquickdraw.com' };
+  const source = 'https://tempfile.aiquickdraw.com/generated.mp4?token=private';
+  it('merges the fixed Gangnam track with a verified Kie video', async () => {
+    const fetcher = response(receipt);
+    expect(await createFalGangnamStyleAudio(gangnamEnv, source)).toBe(handle);
+    expect(fetcher).toHaveBeenCalledExactlyOnceWith(endpoint, expect.objectContaining({ method: 'POST', redirect: 'manual' }));
+    expect(JSON.parse(String(fetcher.mock.calls[0][1]?.body))).toEqual({ video_url: source, audio_url: 'https://qa.example.test/gangnam-style/soundtrack.m4a', start_offset: 0 });
+    expect(new Headers(fetcher.mock.calls[0][1]?.headers).get('X-Fal-No-Retry')).toBe('1');
+  });
+  it.each([video, 'https://evil.test/video.mp4', 'http://tempfile.aiquickdraw.com/video.mp4', `${source}#fragment`, `${source}\n`, 'https://tempfile.aiquickdraw.com.evil.test/video.mp4', 'https://user:pass@tempfile.aiquickdraw.com/video.mp4', 'https://tempfile.aiquickdraw.com:444/video.mp4'])('rejects a source outside the strict Kie allowlist %#', async url => {
+    const fetcher = response(receipt);
+    await failure(createFalGangnamStyleAudio(gangnamEnv, url), false);
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+  it('never accepts a Kie-hosted URL as the FFmpeg output', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(Response.json({ request_id: requestId, status: 'COMPLETED' }))
+      .mockResolvedValueOnce(Response.json({ video: { url: source, content_type: 'video/mp4' } }));
+    await failure(getFalWindowPeeperAudio(gangnamEnv, handle), true);
+  });
+});
 
 describe('Window Peeper fixed soundtrack FFmpeg submission', () => {
   it('submits exactly one audio replacement, without calling a generation model', async () => {

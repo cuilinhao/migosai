@@ -38,12 +38,18 @@ describe('Gangnam Style generator submission states', () => {
     expect(html).toContain('href="/app/my-videos"');
   });
 
-  it('shows a silent completed video with download and saved history links', () => {
+  it('keeps completed video playback available without claiming legacy results have a soundtrack', () => {
     state.generation = { id: 'trio-1', status: 'completed', progress: 100, videoUrl: '/api/media/trio-result' };
     const html = renderToStaticMarkup(<GangnamStyleGenerator />);
     expect(html).toContain('src="/api/media/trio-result"');
     expect(html).toContain('download="migosai-gangnam-style.mp4"');
-    expect(html).toContain('Your video · Silent');
+    expect(html).toContain('<h3>Your video</h3>');
+    expect(html).toContain('Preview and download your finished MP4.');
+    const player = html.match(/<video[^>]*>/)?.[0];
+    expect(player).toContain('aria-label="Your generated Gangnam Style video"');
+    expect(player).toContain('controls');
+    expect(player).not.toContain('muted');
+    expect(player).not.toContain('autoPlay');
     expect(html).toContain('href="/app/my-videos"');
     expect(html.match(/<button[^>]*class="gns-primary gns-generate"[^>]*>/)?.[0]).not.toContain('disabled');
   });

@@ -71,6 +71,16 @@
       "path": "/gangnam-style/groove-icon.svg",
       "sha256": "211f4b56d9419fe66fb83ee76d0f17ea4b004c72f7b141703a66dc7ad6eb6d82",
       "bytes": 302
+    },
+    {
+      "url": "https://gangnamstyle.io/assets/photo-trio-seoul-with-audio.mp4",
+      "path": "/gangnam-style/soundtrack.m4a",
+      "type": "audio/mp4",
+      "bytes": 243435,
+      "sha256": "c0649f2fac5d6546a93b54835d3990f494126e63855804c01b7c7fc8367ca8ae",
+      "derivedFrom": "/gangnam-style/photo-trio-seoul-with-audio.mp4",
+      "transformation": "FFmpeg first audio stream, AAC stream copy, no video",
+      "derivedAt": "2026-10-28"
     }
   ]
 }

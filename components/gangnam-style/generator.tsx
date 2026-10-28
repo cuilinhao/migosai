@@ -218,7 +218,7 @@ export function GangnamStyleGenerator() {
         }}>{item.label}</button>)}
     </div>
     <div id={`${id}-panel`} role="tabpanel" aria-labelledby={`${id}-${mode}`}>
-      <div className="gns-studio-specs"><span>{GANGNAM_STYLE_CONFIG.duration}-second template</span><span>16:9 · Landscape</span><span>{resolution}</span>MP4<span>Silent</span></div>
+      <div className="gns-studio-specs"><span>{GANGNAM_STYLE_CONFIG.duration}-second template</span><span>16:9 · Landscape</span><span>{resolution}</span>MP4<span>Original soundtrack</span></div>
       <h3 className="gns-upload-heading">1 · Add your {mode === 'selfie' ? 'photo' : 'photos'}</h3>
       <div className={`gns-cast-uploads${mode === 'selfie' ? ' gns-single' : ''}`}>
         {roles.slice(0, photoCount).map((role, index) => <div className="gns-cast-slot" key={`${mode}-${index}`}>
@@ -267,11 +267,11 @@ export function GangnamStyleGenerator() {
       {generation && pollError && <p className="gns-error" role="alert">{t(pollError)} Status checks will retry automatically. <Link href="/app/my-videos">My videos</Link></p>}
       {generation && ['failed', 'cancelled'].includes(generation.status) && <p className="gns-error" role="alert">{t(generation.error ?? generation.statusMessage ?? 'Your video could not be completed.')} <Link href="/app/my-videos">View record</Link></p>}
       <div className="gns-studio-sample">
-        <h3>{resultUrl ? 'Your video · Silent' : `Preview · ${selectedMode.label}`}</h3>
-        <video key={resultUrl ?? selectedMode.sample} src={resultUrl ?? `/gangnam-style/${selectedMode.sample}`} poster={resultUrl ? undefined : `/gangnam-style/${selectedMode.poster}`} controls playsInline preload="metadata" aria-label={resultUrl ? 'Your generated Gangnam Style video, silent' : `${selectedMode.label} sample video`} />
+        <h3>{resultUrl ? 'Your video' : `Preview · ${selectedMode.label}`}</h3>
+        <video key={resultUrl ?? selectedMode.sample} src={resultUrl ?? `/gangnam-style/${selectedMode.sample}`} poster={resultUrl ? undefined : `/gangnam-style/${selectedMode.poster}`} controls playsInline preload="metadata" aria-label={resultUrl ? 'Your generated Gangnam Style video' : `${selectedMode.label} sample video`} />
         {resultUrl ? <>
           <div className="gns-result-actions"><p role="status"><Check size={15} />Your video is ready</p><a href={resultUrl} download="migosai-gangnam-style.mp4"><Download size={16} />Download MP4</a><Link href="/app/my-videos">My videos<ArrowUpRight size={14} /></Link></div>
-          <p className="gns-small">AI-generated video. New generations are silent. Add music you have permission to use in your publishing app.</p>
+          <p className="gns-small">Preview and download your finished MP4.</p>
         </> : <p className="gns-small">AI-generated sample. Your completed video will appear here.</p>}
       </div>
     </div>

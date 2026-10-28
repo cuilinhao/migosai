@@ -21,7 +21,7 @@ async function setup() {
   const metadata = (key: string) => { const object = objects.get(key); return object ? { size: object.bytes.length, etag: key, httpMetadata: { contentType: object.mime } } : null; };
   const head = vi.fn(async (key: string) => metadata(key));
   const get = vi.fn(async (key: string) => { const object = objects.get(key); return object ? { ...metadata(key), arrayBuffer: async () => object.bytes.slice().buffer } : null; });
-  routeEnv.value = { ...jobEnv(d.db), KIE_API_KEY: 'test-key', KIE_MEDIA_HOSTS: 'tempfile.aiquickdraw.com', MEDIA: { head, get } };
+  routeEnv.value = { ...jobEnv(d.db), KIE_API_KEY: 'test-key', KIE_MEDIA_HOSTS: 'tempfile.aiquickdraw.com', FAL_KEY: 'fal-test-key', FAL_MEDIA_HOSTS: 'v3.fal.media', MEDIA: { head, get } };
   const request = (patch: Record<string, unknown> = {}, headers: Record<string, string> = {}) => new Request('https://example.test/api/gangnam-style/generations', {
     method: 'POST', headers: { origin: 'https://example.test', cookie: `migos_session=${token}`, 'Content-Type': 'application/json', 'Idempotency-Key': 'gangnam-generation-once', ...headers },
     body: JSON.stringify({ mode: 'friends', photos, aspect: '16:9', resolution: '480p', consent: true, ...patch }),
@@ -46,7 +46,7 @@ describe('Gangnam Style reservations', () => {
     expect(response.headers.get('Cache-Control')).toBe('no-store');
     expect(getGangnamStyleCost(resolution)).toBe(cost);
     expect(d.credits()).toBe(1000 - cost);
-    expect(d.payload()).toMatchObject({ template: 'gangnam-style', workflow: 'reference-edit-v1', provider: 'kie', model: 'seedance-2-5', duration: 15, aspect: '16:9', generateAudio: false, photos, consent: true, mode: 'friends', resolution });
+    expect(d.payload()).toMatchObject({ template: 'gangnam-style', workflow: 'reference-edit-v1', soundtrack: 'gangnam-style-v1', provider: 'kie', model: 'seedance-2-5', duration: 15, aspect: '16:9', generateAudio: false, photos, consent: true, mode: 'friends', resolution });
     expect(d.payload().prompt).not.toContain('malicious override');
     expect(d.payload().prompt).toContain('screen-left is @Image3, center is @Image1, screen-right is @Image2');
     expect(d.payload().prompt).toContain('2-4.9 seconds is @Image1; 4.9-8.4 seconds is @Image2; 8.4-12.3 seconds is @Image3');
@@ -58,6 +58,10 @@ describe('Gangnam Style reservations', () => {
   it.each(['reference-edit-v1', 'legacy', '', null, {}])('rejects a client-owned workflow %# before uploads or charging', async workflow => {
     const d = await setup(); expect((await POST(d.request({ workflow }), undefined)).status).toBe(400);
     expect(d.jobs()).toBe(0); expect(d.credits()).toBe(1000); expect(d.head).not.toHaveBeenCalled();
+  });
+  it.each(['gangnam-style-v1', 'silent', null])('rejects client-owned soundtrack %# before charging', async soundtrack => {
+    const d = await setup(); expect((await POST(d.request({ soundtrack }), undefined)).status).toBe(400);
+    expect(d.jobs()).toBe(0); expect(d.credits()).toBe(1000);
   });
   it('uses one selfie as all three identities without fabricating extra upload keys', async () => {
     const d = await setup(); expect((await POST(d.request({ mode: 'selfie', photos: photos.slice(0, 1) }), undefined)).status).toBe(202);
@@ -116,7 +120,7 @@ describe('Gangnam Style reservations', () => {
   it('recovers an existing task after uploads and generation configuration become unavailable', async () => {
     const d = await setup(), previous = await reserveLegacy(d);
     d.objects.clear();
-    for (const key of ['KIE_API_KEY', 'KIE_MEDIA_HOSTS', 'MEDIA_SIGNING_SECRET', 'SEEAPI_API_KEY', 'MEDIA']) delete routeEnv.value[key];
+    for (const key of ['KIE_API_KEY', 'KIE_MEDIA_HOSTS', 'FAL_KEY', 'FAL_MEDIA_HOSTS', 'MEDIA_SIGNING_SECRET', 'SEEAPI_API_KEY', 'MEDIA']) delete routeEnv.value[key];
     const response = await POST(d.request(), undefined);
     expect(response.status).toBe(202); expect(await response.json()).toMatchObject({ id: previous.id });
     expect(d.head).not.toHaveBeenCalled(); expect(d.credits()).toBe(850); expect(d.jobs()).toBe(1);
@@ -182,7 +186,7 @@ describe('Gangnam Style reservations', () => {
     expect((await POST(d.request({}, { cookie: '' }), undefined)).status).toBe(401);
     expect(d.head).not.toHaveBeenCalled(); expect(d.jobs()).toBe(0);
   });
-  it.each(['KIE_API_KEY', 'KIE_MEDIA_HOSTS', 'MEDIA_SIGNING_SECRET', 'SEEAPI_API_KEY', 'MEDIA'])('rejects missing %s before charging', async key => {
+  it.each(['KIE_API_KEY', 'KIE_MEDIA_HOSTS', 'FAL_KEY', 'FAL_MEDIA_HOSTS', 'MEDIA_SIGNING_SECRET', 'SEEAPI_API_KEY', 'MEDIA'])('rejects missing %s before charging', async key => {
     const d = await setup(); delete routeEnv.value[key]; expect((await POST(d.request(), undefined)).status).toBe(503); expect(d.jobs()).toBe(0);
   });
   it('rejects malformed JSON and an invalid idempotency key', async () => {

@@ -49,6 +49,7 @@ export async function createGangnamStyleGeneration(request: Request): Promise<Re
   const header = request.headers.get('Idempotency-Key');
   if (header !== null && !/^[\w-]{8,128}$/.test(header)) throw new ApiError(400, 'Invalid request identifier.');
   if ('workflow' in options) throw new ApiError(400, 'The generation workflow is managed by the server.');
+  if ('soundtrack' in options) throw new ApiError(400, 'The video soundtrack is managed by the server.');
   if (header) {
     const previous = await database(env).prepare('SELECT * FROM generations WHERE user_id=? AND idempotency_key=?').bind(user.id, header).first<Job>();
     if (previous) {
@@ -61,7 +62,7 @@ export async function createGangnamStyleGeneration(request: Request): Promise<Re
     }
   }
   let unavailableReason: string | undefined;
-  try { providerConfigured(env, 'kie'); }
+  try { providerConfigured(env, 'kie'); providerConfigured(env, 'fal'); }
   catch (error) { if (error instanceof ApiError && error.status === 503) unavailableReason = error.message; else throw error; }
   moderationConfigured(env);
   if (typeof options.mode !== 'string' || !GANGNAM_STYLE_MODES.includes(options.mode as GangnamStyleMode)) throw new ApiError(400, 'Choose friends, selfie or pets.');
@@ -76,7 +77,7 @@ export async function createGangnamStyleGeneration(request: Request): Promise<Re
   const resolution = options.resolution as GangnamStyleResolution;
   // The request cannot choose a provider, model, prompt, duration, audio or price.
   const payload: GangnamStylePayload = {
-    template: 'gangnam-style', workflow: 'reference-edit-v1', ...GANGNAM_STYLE_CONFIG,
+    template: 'gangnam-style', workflow: 'reference-edit-v1', soundtrack: 'gangnam-style-v1', ...GANGNAM_STYLE_CONFIG,
     mode, photos, aspect: options.aspect as GangnamStyleAspect, resolution, consent: true,
     prompt: gangnamStylePrompt(mode),
   };
