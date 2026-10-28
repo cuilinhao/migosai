@@ -7,6 +7,8 @@ import { PricingEntry } from '@/components/black-friday/pricing-entry';
 import { PricingCards } from '@/components/pricing-cards';
 import { GangnamStyleGenerator } from './generator';
 import { GangnamHeroMedia, GangnamExamples } from './media';
+import { GangnamBlogPreview } from './blog';
+import { GANGNAM_BLOG_PATH } from '@/content/gangnam-style-blog/shared';
 import './reference.css';
 import './page.css';
 
@@ -54,9 +56,10 @@ export async function GangnamStylePage() {
   return <>
     <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(faq).replace(/</g,'\\u003c')}}/>
     <div className="gangnam-page" lang="en">
-      <nav className="gns-page-nav" aria-label="Gangnam Style navigation"><a href="#studio" className="gns-wordmark">Gangnam Style<span> ↗</span></a><div><a href="#studio">Generator</a><a href="#how">How to</a><a href="#faq">FAQ</a><a href="#pricing">Pricing</a></div></nav>
+      <nav className="gns-page-nav" aria-label="Gangnam Style navigation"><a href="#studio" className="gns-wordmark">Gangnam Style<span> ↗</span></a><div><a href="#studio">Generator</a><a href="#how">How to</a><a href="#faq">FAQ</a><a href="#pricing">Pricing</a><a href={GANGNAM_BLOG_PATH}>Blog</a></div></nav>
       {render(content,locale,Date.now(),'page')}
       <aside className="gns-attribution">Reference examples and page content: <a href="https://gangnamstyle.io/" target="_blank" rel="noreferrer">Groove / gangnamstyle.io</a>. Sample videos are third-party references, not MigosAI-generated results. MigosAI is an independent AI creative service.</aside>
     </div>
+    <GangnamBlogPreview/>
   </>;
 }

@@ -1,0 +1,33 @@
+# Gangnam Style 常见问题博客
+
+2026-10-28：用户要求新增10篇针对Gangnam Style用户问题的博客并更新sitemap。文章按现有站点英文内容撰写，使用独立专题博客结构。
+
+## 文章
+
+1. [What Is Gangnam Style? The Song, Dance and AI Trio Explained](https://migosai.design/gangnam-style-ai-video-generator/blog/what-is-gangnam-style)
+2. [What Does Gangnam Style Mean? Gangnam, Oppa and the AI Template](https://migosai.design/gangnam-style-ai-video-generator/blog/what-does-gangnam-style-mean)
+3. [How to Make a Gangnam Style AI Video from Your Photos](https://migosai.design/gangnam-style-ai-video-generator/blog/how-to-make-gangnam-style-ai-video)
+4. [Best Photos for a Gangnam Style AI Video: A Practical Upload Guide](https://migosai.design/gangnam-style-ai-video-generator/blog/best-photos-for-gangnam-style-ai-video)
+5. [How to Make a Gangnam Style AI Video from One Selfie](https://migosai.design/gangnam-style-ai-video-generator/blog/gangnam-style-ai-video-from-one-selfie)
+6. [How to Make a Gangnam Style AI Pet Video with Three Photos](https://migosai.design/gangnam-style-ai-video-generator/blog/gangnam-style-ai-pet-video)
+7. [Gangnam Style AI Video Prompt: Use a Reference, Not Just More Words](https://migosai.design/gangnam-style-ai-video-generator/blog/gangnam-style-ai-video-prompt)
+8. [Gangnam Style AI Video Music: What Sound Is Included?](https://migosai.design/gangnam-style-ai-video-generator/blog/gangnam-style-ai-video-music)
+9. [Gangnam Style AI Video Format and Resolution: 480p or 720p?](https://migosai.design/gangnam-style-ai-video-generator/blog/gangnam-style-ai-video-format-resolution)
+10. [Gangnam Style AI Video Cost, Failed Jobs and Common Fixes](https://migosai.design/gangnam-style-ai-video-generator/blog/gangnam-style-ai-video-cost-and-fixes)
+
+## 接入与约束
+
+- 新增专题索引和10篇正文，保留现有MigosAI主题。每篇含答案、分节、目录、FAQ、来源、相关文章及生成器入口。
+- 生成器导航、教程链接与总博客增加入口；侧栏正确标记Hub。
+- 日期为实际发布日。文章只提供已撰写的英文版本，语言前缀永久重定向至真实页面；canonical、hreflang和sitemap保持一致。
+- sitemap新增11个真实URL，总数由693变为704；更新总博客和此前隐私说明的实际lastmod。
+- 内容与当前产品一致：访客钱包/账户、照片限制、固定16:9、480p/720p、约15秒参考、自动音轨。正文价格读取getGangnamStyleCost，未改变生成、支付或退款流程。
+- 历史事实引用PSY官方视频、YouTube官方文章及韩国官方资料。音乐文件、音乐授权和Shorts格式分别说明，未承诺平台收录或收益。
+
+## 验证
+
+- 全量137文件/2616项测试通过；类型检查与差异格式检查通过。
+- 本地20项HTTP检查通过：11页、schema与canonical、404、5语言重定向、sitemap及入口。
+- 浏览器确认索引卡片、正文、目录与Hub选中状态。
+- 证据保存于Git忽略目录.local-evidence/gangnamstyle/blog-20261028/。
+- OpenNext/Cloudflare正式构建完成。

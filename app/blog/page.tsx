@@ -6,6 +6,7 @@ import { localizeMetadata } from "@/lib/i18n/server";
 import { SITE_URL } from "@/content/public-pages";
 import { BLOG_PATH, BLOG_UPDATED, COMPARISON_PATH, blogIndexCopy, blogPosts } from "@/content/blog";
 import { CampaignBanner } from "@/components/black-friday/campaign-banner";
+import { GangnamBlogPreview } from "@/components/gangnam-style/blog";
 
 const URL = `${SITE_URL}${BLOG_PATH}`;
 const COMPARISON_DATE = "2026-10-02";
@@ -63,6 +64,7 @@ export default async function BlogIndexPage() {
       </div>
     </section>
 
+    <GangnamBlogPreview/>
     <div className="section-container"><CampaignBanner placement="blog"/></div>
     <GeoCta />
     <GeoRelatedLinks current={BLOG_PATH} />

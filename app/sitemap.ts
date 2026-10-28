@@ -4,6 +4,7 @@ import { publicPages, SITE_URL } from "../content/public-pages";
 import { OZIL_BLOG_PATH, OZIL_BLOG_UPDATED, ozilBlogAlternates, ozilBlogPosts } from "../content/ozil-blog";
 import { videoEffects } from "../content/effects";
 import { getEffectCreationHref } from "../content/effect-templates";
+import { GANGNAM_BLOG_PATH, GANGNAM_BLOG_UPDATED, gangnamBlogPosts } from "../content/gangnam-style-blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Dedicated generators already appear in publicPages; omit their effect aliases.
@@ -18,8 +19,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency,
     ...(lastModified ? { lastModified } : {}),
   })));
-  // Blog copy is authored in three languages. Do not fabricate six UI-locale copies.
+  // Dedicated blogs index only their authored languages, not synthetic UI-locale copies.
   return [...translatedPages,
+    ...[{ path: GANGNAM_BLOG_PATH, dateModified: GANGNAM_BLOG_UPDATED }, ...gangnamBlogPosts].map(({ path, dateModified }) => ({
+      url: `${SITE_URL}${path}`, priority: 0.7, changeFrequency: path === GANGNAM_BLOG_PATH ? "weekly" as const : "monthly" as const, lastModified: dateModified,
+      alternates: { languages: { en: `${SITE_URL}${path}`, "x-default": `${SITE_URL}${path}` } },
+    })),
     { url: `${SITE_URL}${OZIL_BLOG_PATH}`, priority: 0.7, changeFrequency: "weekly", lastModified: OZIL_BLOG_UPDATED },
     ...ozilBlogPosts.map(post => ({
       url: `${SITE_URL}${post.path}`, priority: 0.7, changeFrequency: "monthly" as const, lastModified: post.dateModified,

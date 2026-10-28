@@ -735,9 +735,7 @@
                   {
                     "tag": "a",
                     "attrs": {
-                      "href": "https://gangnamstyle.io/guides/gangnam-style-ai-trio-tutorial",
-                      "target": "_blank",
-                      "rel": "noreferrer"
+                      "href": "/gangnam-style-ai-video-generator/blog/how-to-make-gangnam-style-ai-video"
                     },
                     "children": [
                       "Read the full guide"
@@ -827,9 +825,7 @@
               {
                 "tag": "a",
                 "attrs": {
-                  "href": "https://gangnamstyle.io/guides",
-                  "target": "_blank",
-                  "rel": "noreferrer"
+                  "href": "/gangnam-style-ai-video-generator/blog/best-photos-for-gangnam-style-ai-video"
                 },
                 "children": [
                   "Read the photo preparation guides ↗"
@@ -1112,9 +1108,7 @@
           {
             "tag": "a",
             "attrs": {
-              "href": "https://gangnamstyle.io/guides",
-              "target": "_blank",
-              "rel": "noreferrer"
+              "href": "/gangnam-style-ai-video-generator/blog"
             },
             "children": [
               "Explore Gangnam Style AI guides, selfie tips and pet video ideas ↗"

@@ -21,7 +21,7 @@ const groups = [
 ];
 
 function navigationIsActive(pathname: string, href: string) {
-  const isArticle = pathname === "/ozil-goal-generator/blog" || pathname.startsWith("/ozil-goal-generator/blog/");
+  const isArticle = /^\/(?:ozil-goal-generator|gangnam-style-ai-video-generator)\/blog(?:\/|$)/.test(pathname);
   if (href === "/blog" && isArticle) return true;
   if (href === "/explore" && pathname === "/showcases") return true;
   if (href === "/ai-video-generator") return !isArticle && (pathname.startsWith("/hotel-lobby-ai-") || ["/ai-video-generator", "/hotel-lobby-ai-video-generator", "/flying-car-ai-video-generator", "/ozil-goal-generator", "/window-peeper-ai-video-generator", "/gangnam-style-ai-video-generator"].some(route => pathname === route || pathname.startsWith(`${route}/`)));

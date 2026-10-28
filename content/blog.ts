@@ -37,7 +37,7 @@ export type BlogPost = {
 };
 
 export const BLOG_PATH = "/blog";
-export const BLOG_UPDATED = "2026-10-04";
+export const BLOG_UPDATED = "2026-10-28";
 export const COMPARISON_PATH = "/blog/best-hotel-lobby-ai-video-generators-2026";
 
 export const blogIndexCopy = {

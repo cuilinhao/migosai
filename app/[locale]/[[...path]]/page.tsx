@@ -57,7 +57,7 @@ async function resolvePage(params: Props["params"]) {
   const { locale, path = [] } = await params;
   const pathname = `/${path.join("/")}`;
   if (!isLocale(locale)) notFound();
-  if (/^\/ozil-goal-generator\/blog(?:\/|$)/.test(pathname)) permanentRedirect(pathname);
+  if (/^\/(?:ozil-goal-generator|gangnam-style-ai-video-generator)\/blog(?:\/|$)/.test(pathname)) permanentRedirect(pathname);
   const effect = pathname.match(/^\/effects\/([^/]+)$/);
   if (effect) return { kind: "effect" as const, page: await import("@/app/effects/[slug]/page"), pathname, params: Promise.resolve({ slug: effect[1] }) };
   if (!Object.hasOwn(routes, pathname)) notFound();
