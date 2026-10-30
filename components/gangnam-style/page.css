@@ -40,4 +40,13 @@
 .gangnam-page:not([lang="en"]) .gns-hero-title-line{white-space:normal;max-width:100%;overflow-wrap:anywhere}
 .gangnam-page:not([lang="en"]) .gns-hero h1{font-size:clamp(28px,8cqi,68px)}
 .gangnam-page:not([lang="en"]) .gns-page-nav>div{flex-wrap:wrap}
+.gangnam-page.gangnam-page .gns-facts{margin:28px 0 32px;padding:24px;background:var(--card);border:1px solid var(--border);border-radius:16px}
+.gangnam-page.gangnam-page .gns-facts-table{width:100%;border-collapse:collapse;font-size:14px;text-align:left}
+.gangnam-page.gangnam-page .gns-facts-table caption{text-align:left;font-weight:800;font-size:20px;line-height:1.4;padding-bottom:16px}
+.gangnam-page.gangnam-page .gns-facts-table :is(th,td){padding:12px 0;border-bottom:1px solid var(--border);vertical-align:top}
+.gangnam-page.gangnam-page .gns-facts-table th{width:32%;padding-right:24px;font-weight:600}
+.gangnam-page.gangnam-page .gns-facts-table ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px 24px}
+.gangnam-page.gangnam-page .gns-facts-note{font-size:13px;line-height:1.65;margin:16px 0 0;color:var(--muted)}
+.gangnam-page.gangnam-page .gns-facts-disclosure{font-size:12px;line-height:1.65;margin:12px 0 0;color:var(--muted)}
+@media(max-width:760px){.gangnam-page.gangnam-page .gns-facts{padding:18px}.gangnam-page.gangnam-page .gns-facts-table{font-size:13px}.gangnam-page.gangnam-page .gns-facts-table th{width:38%;padding-right:14px}.gangnam-page.gangnam-page .gns-facts-table ul{display:block}.gangnam-page.gangnam-page .gns-facts-table li+li{margin-top:6px}}
 @media(max-width:1000px){.gangnam-page:not([lang="en"]) .gns-hero{grid-template-columns:1fr}}

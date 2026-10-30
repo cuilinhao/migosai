@@ -8,6 +8,8 @@ import { PricingCards } from '@/components/pricing-cards';
 import { GangnamStyleGenerator } from './generator';
 import { GangnamHeroMedia, GangnamExamples } from './media';
 import { GangnamBlogPreview } from './blog';
+import { GangnamFacts } from './facts';
+import { GangnamEntities, GangnamPageSchema } from './structured-data';
 import { GANGNAM_BLOG_PATH } from '@/content/gangnam-style-blog/shared';
 import { getGangnamTranslator } from '@/lib/i18n/gangnam-style';
 import './reference.css';
@@ -27,7 +29,7 @@ function render(node: Node, locale: Locale, offerTime: number, key: string): Rea
   if (typeof node === 'string') return t(node);
   if ('slot' in node) {
     const slots: Record<string, ReactNode> = {
-      'hero-media': <GangnamHeroMedia/>, examples: <GangnamExamples/>, generator: <GangnamStyleGenerator/>,
+      'hero-media': <GangnamHeroMedia/>, examples: <GangnamExamples/>, generator: <><GangnamFacts locale={locale}/><GangnamStyleGenerator/></>,
       pricing: <section id="pricing" className="gns-local-pricing"><header><p className="gns-eyebrow">{t("SIMPLE, SHARED MIGOSAI CREDITS")}</p><h2>{t("Your next trio,")}<br/><em>{t("your existing credits.")}</em></h2><p>{t("Use your MigosAI balance for every template. Choose a credit pack or subscription below. The generator shows the cost before you create.")}</p></header>
         <Suspense fallback={<PricingCards offerTime={offerTime}/>}><PricingEntry offerTime={offerTime}/></Suspense>
         <div className="gns-pricing-notes"><article><h3>{t("Your photos stay private")}</h3><p>{t("Photos are submitted to our video provider to generate your clip. Account records are private to you.")}</p></article><article><h3>{t("Download and keep it")}</h3><p>{t("Save the finished MP4 promptly. Provider download links can expire.")}</p></article><article><h3>{t("AI has limits")}</h3><p>{t("Likeness, hands and timing can vary. New videos include the original soundtrack from the Gangnam Style trio reference clip.")}</p></article></div>
@@ -58,6 +60,8 @@ export async function GangnamStylePage() {
   const translatedText = (node: Node): string => typeof node === 'string' ? t(node) : 'children' in node ? node.children.map(translatedText).join('') : '';
   const faq={ '@context':'https://schema.org','@type':'FAQPage',url,inLanguage:locale,mainEntity:elements(content,'details').map(detail=>({ '@type':'Question',name:elements(detail,'summary').map(translatedText).join(' '),acceptedAnswer:{ '@type':'Answer',text:detail.children.filter(n=>typeof n==='string'||!('tag' in n)||n.tag!=='summary').map(translatedText).join('').trim() } })) };
   return <>
+    <GangnamEntities locale={locale}/>
+    <GangnamPageSchema locale={locale}/>
     <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(faq).replace(/</g,'\\u003c')}}/>
     <div className="gangnam-page" lang={locale}>
       <nav className="gns-page-nav" aria-label={t("Gangnam Style navigation")}><a href="#studio" className="gns-wordmark">{t("Gangnam Style")}<span> ↗</span></a><div><a href="#studio">{t("Generator")}</a><a href="#how">{t("How to")}</a><a href="#faq">{t("FAQ")}</a><a href="#pricing">{t("Pricing")}</a><a href={localizeHref(GANGNAM_BLOG_PATH, locale)}>{t("Blog")}</a></div></nav>

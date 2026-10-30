@@ -60,4 +60,28 @@
 
 Content reviewed: 2026-10-15. Check the linked pages and generator for current settings and costs.
 
-- Gangnam Style AI Video Generator: https://migosai.design/gangnam-style-ai-video-generator — Friends, one-selfie and pet trio templates; three reference photos or one selfie; 15-second silent MP4, 480p or 720p, shared MigosAI credits. Third-party sample videos are attributed to gangnamstyle.io.
+## Gangnam Style pages and product facts
+- [Gangnam Style AI Video Generator](https://migosai.design/gangnam-style-ai-video-generator): The interactive generator and feature guide for friends, one-selfie and pet trio videos, with photo uploads, quality selection, examples, credits and FAQ. This page has its own canonical URL; the MigosAI homepage remains the Hotel Lobby generator.
+- Friends mode takes three separate photos, ordered middle, right and left. Selfie mode uses one selfie as the identity for all three dancers. Pets mode takes three separate pet photos in the same role order.
+- New output is a landscape 16:9 MP4 with the trio reference clip's template soundtrack. It follows an approximately 15-second reference; the finished duration can vary slightly and may be shorter. Choose 480p for 150 credits or 720p for 300 credits from the shared MigosAI balance. Check the generator's current quote before submitting.
+- The template soundtrack is added during processing. It is not a complete original-song download or a promise of music-use permission on other platforms. This workflow has no separate custom-song control. Third-party sample videos are attributed to gangnamstyle.io.
+- [Gangnam Style Blog](https://migosai.design/gangnam-style-ai-video-generator/blog): A dedicated index of ten Gangnam Style guides. The main /blog remains the Hotel Lobby blog; Gangnam articles keep their nested /gangnam-style-ai-video-generator/blog/ paths.
+
+## Gangnam Style guides
+- [What Is Gangnam Style? The Song, Dance and AI Trio Explained](https://migosai.design/gangnam-style-ai-video-generator/blog/what-is-gangnam-style): Distinguishes PSY's song and dance from the photo-based AI trio format.
+- [What Does Gangnam Style Mean? Gangnam, Oppa and the AI Template](https://migosai.design/gangnam-style-ai-video-generator/blog/what-does-gangnam-style-mean): Explains the name, Gangnam and oppa, and how the template uses the reference.
+- [How to Make a Gangnam Style AI Video from Your Photos](https://migosai.design/gangnam-style-ai-video-generator/blog/how-to-make-gangnam-style-ai-video): Walks through mode selection, photo roles, quality, credits and review of the finished video.
+- [Best Photos for a Gangnam Style AI Video: A Practical Upload Guide](https://migosai.design/gangnam-style-ai-video-generator/blog/best-photos-for-gangnam-style-ai-video): Covers recognizable subjects, role assignments, supported image files and photo permission.
+- [How to Make a Gangnam Style AI Video from One Selfie](https://migosai.design/gangnam-style-ai-video-generator/blog/gangnam-style-ai-video-from-one-selfie): Shows how one selfie supplies the identity for three dancers and what to inspect in the result.
+- [How to Make a Gangnam Style AI Pet Video with Three Photos](https://migosai.design/gangnam-style-ai-video-generator/blog/gangnam-style-ai-pet-video): Explains how to prepare three pet photos and review markings, role order and movement.
+- [Gangnam Style AI Video Prompts: Three Friends, One Selfie and Pets](https://migosai.design/gangnam-style-ai-video-generator/blog/gangnam-style-ai-video-prompt): Provides the three complete prompts with photo-role mapping, shot timings and soundtrack workflow.
+- [Gangnam Style AI Video Music: What Sound Is Included?](https://migosai.design/gangnam-style-ai-video-generator/blog/gangnam-style-ai-video-music): Explains the included template soundtrack, playback checks and the difference between audio inclusion and publishing permission.
+- [Gangnam Style AI Video Format and Resolution: 480p or 720p?](https://migosai.design/gangnam-style-ai-video-generator/blog/gangnam-style-ai-video-format-resolution): Compares resolution, fixed 16:9 framing, approximate duration and cropping considerations.
+- [Gangnam Style AI Video Cost, Failed Jobs and Common Fixes](https://migosai.design/gangnam-style-ai-video-generator/blog/gangnam-style-ai-video-cost-and-fixes): Explains generation credits, upload issues, processing states, failed-job credit restoration and support details.
+
+## Gangnam Style language and discovery
+- The generator, its blog index and all ten guides are available in English, Korean, Japanese, French, Spanish and Traditional Chinese. English uses the original path; the other versions use /ko, /ja, /fr, /es and /zh-TW prefixes.
+- Every translated page uses its own canonical URL with reciprocal language alternatives and an English x-default. Example: https://migosai.design/ja/gangnam-style-ai-video-generator/blog/what-is-gangnam-style.
+- [Sitemap](https://migosai.design/sitemap.xml): Current MigosAI public pages and their language URLs, including the original Hotel Lobby and dedicated Gangnam Style routes.
+
+Gangnam Style content reviewed: 2026-10-30. Article publication and modification dates remain 2026-10-28; the generator and blog index were updated on 2026-10-30.

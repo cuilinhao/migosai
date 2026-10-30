@@ -14,7 +14,7 @@ describe('Gangnam Style inner page', () => {
       const url = `https://migosai.design${localizeHref('/gangnam-style-ai-video-generator', locale)}`;
       const entry = entries.find(item => item.url === url);
       expect(entry, url).toBeDefined();
-      expect(entry?.lastModified).toBe('2026-10-28');
+      expect(entry?.lastModified).toBe('2026-10-30');
       expect(Object.keys(entry?.alternates?.languages ?? {})).toHaveLength(7);
     }
   });

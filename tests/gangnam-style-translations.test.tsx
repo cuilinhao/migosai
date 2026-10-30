@@ -33,6 +33,7 @@ for (const post of gangnamBlogPosts) {
 }
 
 const uiKeys = new Set<string>([source.title, source.description]);
+const blogUiKeys = new Set<string>();
 const addUi = (text: string) => { if (/[A-Za-z]/.test(text)) uiKeys.add(text.trim()); };
 function visitTree(node: any) {
   if (typeof node === 'string') return addUi(node);
@@ -43,7 +44,10 @@ visitTree(source.content);
 for (const file of ['page-content.tsx', 'generator.tsx', 'media.tsx', 'blog.tsx', 'blog-metadata.ts', 'use-translations.ts']) {
   const ast = ts.createSourceFile(file, readFileSync(`components/gangnam-style/${file}`, 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
   function literals(node: ts.Node) {
-    if (ts.isStringLiteral(node)) addUi(node.text);
+    if (ts.isStringLiteral(node)) {
+      if (['blog.tsx', 'blog-metadata.ts'].includes(file)) blogUiKeys.add(node.text.trim());
+      else addUi(node.text);
+    }
     else if (ts.isConditionalExpression(node)) { literals(node.whenTrue); literals(node.whenFalse); }
     else ts.forEachChild(node, literals);
   }
@@ -57,7 +61,7 @@ for (const file of ['page-content.tsx', 'generator.tsx', 'media.tsx', 'blog.tsx'
 
 describe('complete Gangnam translations', () => {
   it.each(translated)('%s translates every article field and page/control string without losing placeholders or links', locale => {
-    for (const [keys, messages] of [[blogKeys, gangnamBlogMessages[locale]], [uiKeys, gangnamUiMessages[locale]]] as const) {
+    for (const [keys, messages] of [[blogKeys, gangnamBlogMessages[locale]], [uiKeys, gangnamUiMessages[locale]], [blogUiKeys, { ...gangnamUiMessages[locale], ...gangnamBlogMessages[locale] }]] as const) {
       for (const key of keys) {
         expect(messages[key], `${locale}: ${key}`).toBeTruthy();
         expect(placeholders(messages[key]), key).toEqual(placeholders(key));

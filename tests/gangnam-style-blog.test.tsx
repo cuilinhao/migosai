@@ -1,13 +1,14 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it, vi } from 'vitest';
-import { gangnamBlogPosts, getGangnamBlogPost, GANGNAM_BLOG_PATH, GANGNAM_BLOG_UPDATED } from '../content/gangnam-style-blog';
-import { GangnamBlogArticle, GangnamBlogIndex } from '../components/gangnam-style/blog';
+import { gangnamBlogPosts, getGangnamBlogPost, GANGNAM_BLOG_PATH, GANGNAM_BLOG_UPDATED, GANGNAM_BLOG_INDEX_UPDATED, GANGNAM_GENERATOR_PATH } from '../content/gangnam-style-blog';
+import { GangnamBlogArticle, GangnamBlogIndex, GangnamBlogPreview } from '../components/gangnam-style/blog';
 import { gangnamBlogMetadata, gangnamBlogText } from '../components/gangnam-style/blog-metadata';
 import { publicPages, SITE_URL } from '../content/public-pages';
 import { getGangnamStyleCost } from '../lib/gangnam-style';
 import { gangnamStylePrompt } from '../lib/prompts/gangnam-style';
 import { BlogBlocks } from '../components/blog/blog-shared';
 import { locales, localizeHref } from '../lib/i18n/routing';
+import { getGangnamBlogTranslator } from '../lib/i18n/gangnam-blog';
 import sitemap from '../app/sitemap';
 
 vi.mock('next/navigation', () => ({ notFound: () => { throw new Error('NOT_FOUND'); } }));
@@ -19,6 +20,8 @@ const expectedSlugs = [
   'gangnam-style-ai-video-format-resolution', 'gangnam-style-ai-video-cost-and-fixes',
 ];
 const inlineLinks = (text: string) => [...text.matchAll(/\]\(([^)\s]+)\)/g)].map(match => match[1]);
+const structuredData = (html: string): Record<string, unknown>[] => [...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)]
+  .flatMap(match => { const data = JSON.parse(match[1]); return data['@graph'] ?? [data]; });
 
 describe('Gangnam Style question-led blog', () => {
   it('publishes exactly ten distinct answers and resolves only known slugs', () => {
@@ -36,7 +39,7 @@ describe('Gangnam Style question-led blog', () => {
       const matches = entries.filter(entry => new URL(entry.url).pathname.endsWith(path));
       expect(matches.map(entry => entry.url)).toEqual(locales.map(locale => `${SITE_URL}${localizeHref(path, locale)}`));
       for (const match of matches) {
-        expect(match.lastModified).toBe(GANGNAM_BLOG_UPDATED);
+        expect(match.lastModified).toBe(path === GANGNAM_BLOG_PATH ? GANGNAM_BLOG_INDEX_UPDATED : GANGNAM_BLOG_UPDATED);
         expect(Object.keys(match.alternates?.languages ?? {})).toHaveLength(7);
       }
     }
@@ -46,6 +49,53 @@ describe('Gangnam Style question-led blog', () => {
     const html = renderToStaticMarkup(<GangnamBlogIndex/>);
     expect(html.match(/<h1\b/g)).toHaveLength(1);
     for (const post of gangnamBlogPosts) expect(html).toContain(`href="${post.path}"`);
+  });
+
+  it.each([
+    ['en', 'Gangnam Style AI Video: 10 Practical Guides'],
+    ['ko', '강남스타일 AI 영상: 실용 가이드 10편'],
+    ['ja', 'Gangnam Style AI動画：10の実践ガイド'],
+    ['fr', 'Vidéo IA Gangnam Style : 10 guides pratiques'],
+    ['es', 'Vídeo de IA Gangnam Style: 10 guías prácticas'],
+    ['zh-TW', 'Gangnam Style AI 影片：10 篇實用指南'],
+  ] as const)('gives the %s index its own title, revised date and linked entities', (locale, title) => {
+    const html = renderToStaticMarkup(<GangnamBlogIndex locale={locale}/>);
+    const t = getGangnamBlogTranslator(locale);
+    expect(html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1]).toBe(title);
+    expect(html).toContain(renderToStaticMarkup(<p className="geo-intro">{t('Know the song.')} {t('Make your own trio.')}</p>));
+    const nodes = structuredData(html);
+    expect(nodes.filter(node => node['@type'] === 'Organization')).toHaveLength(1);
+    expect(nodes.filter(node => node['@type'] === 'WebSite')).toHaveLength(1);
+    expect(nodes.find(node => node['@type'] === 'Blog')).toMatchObject({
+      '@id': `${SITE_URL}${localizeHref(GANGNAM_BLOG_PATH, locale)}#blog`,
+      dateModified: '2026-10-30', publisher: { '@id': `${SITE_URL}/#org` }, isPartOf: { '@id': `${SITE_URL}/#website` },
+    });
+    expect(gangnamBlogPosts.every(post => post.datePublished === '2026-10-28' && post.dateModified === '2026-10-28')).toBe(true);
+  });
+
+  it.each(locales)('exposes every %s article from a compact preview without adding site entities', locale => {
+    const html = renderToStaticMarkup(<GangnamBlogPreview locale={locale}/>);
+    expect(html.match(/<article class="blog-card">/g)).toHaveLength(3);
+    for (const post of gangnamBlogPosts) expect(html).toContain(`href="${localizeHref(post.path, locale)}"`);
+    expect(structuredData(html)).toHaveLength(0);
+  });
+
+  it.each(locales)('links every %s article to its parent generator, blog and publisher', locale => {
+    for (const post of gangnamBlogPosts) {
+      const html = renderToStaticMarkup(<GangnamBlogArticle post={post} locale={locale}/>);
+      const nodes = structuredData(html);
+      expect(nodes.filter(node => node['@type'] === 'Organization')).toHaveLength(1);
+      expect(nodes.filter(node => node['@type'] === 'WebSite')).toHaveLength(1);
+      expect(nodes.find(node => node['@type'] === 'BlogPosting')).toMatchObject({
+        url: `${SITE_URL}${localizeHref(post.path, locale)}`,
+        publisher: { '@id': `${SITE_URL}/#org` },
+        isPartOf: { '@id': `${SITE_URL}${localizeHref(GANGNAM_BLOG_PATH, locale)}#blog` },
+        datePublished: '2026-10-28', dateModified: '2026-10-28',
+      });
+      const buttons = [...html.matchAll(/<a\b[^>]*class="pill-gradient-button"[^>]*href="([^"]+)"/g)].map(match => match[1]);
+      expect(buttons[0]).toBe(localizeHref(GANGNAM_GENERATOR_PATH, locale));
+      expect(buttons.at(-1)).toBe(localizeHref(`${GANGNAM_GENERATOR_PATH}#studio`, locale));
+    }
   });
 
   it('uses live template prices in editorial copy', () => {

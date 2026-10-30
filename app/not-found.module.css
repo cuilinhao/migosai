@@ -1,0 +1,61 @@
+.page {
+  max-width: 720px;
+  min-height: 60vh;
+  margin-inline: auto;
+  padding: clamp(64px, 12vw, 128px) 24px;
+  text-align: center;
+}
+
+.code {
+  margin-bottom: 18px;
+  color: var(--primary);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: .18em;
+}
+
+.page h1 {
+  font-size: clamp(30px, 5vw, 48px);
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -.03em;
+  overflow-wrap: anywhere;
+}
+
+.description {
+  margin: 24px auto 32px;
+  max-width: 560px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 22px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.primary {
+  border-color: transparent;
+  background: var(--brand-gradient);
+  color: var(--brand-on-accent);
+}
+
+.secondary {
+  background: var(--card);
+  color: var(--foreground);
+}
