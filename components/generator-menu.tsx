@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
-import { ArrowRight, CarFront, ChevronDown, Goal, Music2, ScanEye, Users } from "lucide-react";
+import { ArrowRight, CarFront, Castle, ChevronDown, Goal, Mountain, Music2, ScanEye, Users } from "lucide-react";
 import Link from "./i18n/localized-link";
 import { useTranslations } from "./i18n/locale-provider";
 import "./generator-menu.css";
 
 // The newest generator leads the rotating desktop pill and mobile spotlight.
 const generators = [
+  { href: "/goodbye-2026-welcome-2027", label: "Goodbye 2026 Welcome 2027", short: "Welcome 2027", blurb: "Climb above the clouds and welcome 2027.", thumb: "/trend-video/goodbye-2026-welcome-2027.webp", Icon: Mountain, isNew: true },
+  { href: "/stones-to-castle-ai", label: "Stones to Castle AI", short: "Stones to Castle", blurb: "Watch a pile of stones become a castle.", thumb: "/trend-video/stones-to-castle-ai.webp", Icon: Castle, isNew: true },
   { href: "/gangnam-style-ai-video-generator", label: "Gangnam Style AI Video Generator", short: "Gangnam Style", blurb: "Three friends, one selfie or your pets. Make your trio.", thumb: "/gangnam-style/photo-trio-seoul.jpg", Icon: Users, isNew: true },
   { href: "/window-peeper-ai-video-generator", label: "Window Peeper AI Generator", short: "Window Peeper", blurb: "One photo. Your own awkward window moment.", thumb: "/window-peeper/original-poster.jpg", Icon: ScanEye, isNew: true },
   { href: "/flying-car-ai-video-generator", label: "Flying Car AI Generator", short: "Flying Car AI", blurb: "Turn your scene or photo into a flying car video", thumb: "/flyingcar/real/overpass-launch.jpg", Icon: CarFront, isNew: true },

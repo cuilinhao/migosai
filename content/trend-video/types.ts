@@ -1,0 +1,21 @@
+export type TextCard = { title: string; description: string };
+export type TrendStory = {
+  navTitle: string;
+  seoTitle: string;
+  seoDescription: string;
+  badge: string;
+  heroTitle: string;
+  heroAccent: string;
+  heroDescription: string;
+  uploadHint: string;
+  introTitle: string;
+  intro: string;
+  sequence: TextCard[];
+  tips: string[];
+  steps: TextCard[];
+  uses: TextCard[];
+  examples: TextCard[];
+  faqs: { question: string; answer: string }[];
+  ctaTitle: string;
+  ctaDescription: string;
+};

@@ -1,0 +1,264 @@
+{
+  "retrieved": "2026-11-06",
+  "referencePages": [
+    "https://www.kavel.ai/video/goodbye-2026-welcome-2027",
+    "https://www.goenhance.ai/video-effects/stones-to-castle-ai"
+  ],
+  "usage": "Third-party reference examples, not generated results from MigosAI. Source media remain credited; public availability does not establish an open license.",
+  "localPosters": [
+    {
+      "source_url": "https://cdn.kavel.ai/posters/kavel-showcase/goodbye-2026-woman-climbs-2027-poster.webp",
+      "source_path": ".local-evidence/new-effects/media/goodbye-2026-woman-climbs-2027-poster.webp",
+      "source_sha256": "f5a752738bcb6538a0abb458a62fe6c5d7be406995582a03fecf829aeb5e2360",
+      "output_path": "public/trend-video/goodbye-2026-welcome-2027.webp",
+      "output_sha256": "f5a752738bcb6538a0abb458a62fe6c5d7be406995582a03fecf829aeb5e2360",
+      "derivation": "Copied unchanged",
+      "license": "Public reference asset; no open-source reuse license verified; reference attribution required"
+    },
+    {
+      "source_url": "https://cdn.goenhance.ai/static/site/202611/31898ada-8e11-4e46-b659-7b670bf0a9fb.jpg",
+      "source_path": ".local-evidence/new-effects/media/31898ada-8e11-4e46-b659-7b670bf0a9fb.jpg",
+      "source_sha256": "c6f5ea577ccd82e8881157ee72cdebdb87b1090a8e42f337c1daec8b4c003bdf",
+      "output_path": "public/trend-video/stones-to-castle-ai.webp",
+      "output_sha256": "5072505bc4fc65e04772c76c8d1c3ee8f6bd77a4607b7dd47af449eb302554a8",
+      "derivation": "JPEG converted to WebP with cwebp quality=90, unchanged dimensions",
+      "license": "Public reference asset; no open-source reuse license verified; reference attribution required"
+    }
+  ],
+  "media": [
+    {
+      "source": "https://cdn.kavel.ai/videos/kavel-showcase/goodbye-2026-woman-climbs-2027.mp4",
+      "sha256": "a44a754a5b949425e14e0d502d5241c2d64a567119c48651347969ae4ad06c0a",
+      "bytes": 1202271,
+      "duration": "6.408005",
+      "width": 720,
+      "height": 1280,
+      "audio": true
+    },
+    {
+      "source": "https://cdn.kavel.ai/posters/kavel-showcase/goodbye-2026-woman-climbs-2027-poster.webp",
+      "sha256": "f5a752738bcb6538a0abb458a62fe6c5d7be406995582a03fecf829aeb5e2360",
+      "bytes": 23054,
+      "duration": null,
+      "width": null,
+      "height": null,
+      "audio": false
+    },
+    {
+      "source": "https://cdn.kavel.ai/videos/kavel-showcase/goodbye-2026-climb-giant-2027.mp4",
+      "sha256": "438eefb55500f0ba3b6658f2b61c441acd68ebcc8c4cfcb2b9da4a718fae9125",
+      "bytes": 1212427,
+      "duration": "7.709002",
+      "width": 720,
+      "height": 1280,
+      "audio": true
+    },
+    {
+      "source": "https://cdn.kavel.ai/posters/kavel-showcase/goodbye-2026-climb-giant-2027-poster.webp",
+      "sha256": "da4109c74de344908d960dae89ed6f8d65fde0cc1c167ae49aafa00405e186da",
+      "bytes": 22018,
+      "duration": null,
+      "width": null,
+      "height": null,
+      "audio": false
+    },
+    {
+      "source": "https://cdn.kavel.ai/videos/kavel-showcase/goodbye-2026-gen-fur-stand.mp4",
+      "sha256": "bf7a98cc43b7d2b85724c70d2981ab8cb8a14f484eb606f644a0505e5a93ee02",
+      "bytes": 3407214,
+      "duration": "12.256000",
+      "width": 768,
+      "height": 1344,
+      "audio": true
+    },
+    {
+      "source": "https://cdn.kavel.ai/posters/kavel-showcase/goodbye-2026-gen-fur-stand-poster.webp",
+      "sha256": "9a59cf04e5424ae012b530702803991bc37eb133de1dc6190feb27af8a468e81",
+      "bytes": 34204,
+      "duration": null,
+      "width": null,
+      "height": null,
+      "audio": false
+    },
+    {
+      "source": "https://cdn.kavel.ai/videos/kavel-showcase/goodbye-2026-gen-crouch.mp4",
+      "sha256": "b906bd03d593d5e8458af1f5ab4c0cc79e74f19a4bf053df1611445b8a589392",
+      "bytes": 3401417,
+      "duration": "12.256000",
+      "width": 768,
+      "height": 1344,
+      "audio": true
+    },
+    {
+      "source": "https://cdn.kavel.ai/posters/kavel-showcase/goodbye-2026-gen-crouch-poster.webp",
+      "sha256": "34807e0559e1db6958452da236e3d1cec05702ee94f82f2a5eb1478bedc759d1",
+      "bytes": 39930,
+      "duration": null,
+      "width": null,
+      "height": null,
+      "audio": false
+    },
+    {
+      "source": "https://cdn.kavel.ai/videos/kavel-showcase/goodbye-2026-gen-snow-seven.mp4",
+      "sha256": "4ed773263bb1ced6bd9d37366d9b9fa2cc48c8cec6bd33a58e32d496273c1219",
+      "bytes": 3178390,
+      "duration": "12.256000",
+      "width": 768,
+      "height": 1344,
+      "audio": true
+    },
+    {
+      "source": "https://cdn.kavel.ai/posters/kavel-showcase/goodbye-2026-gen-snow-seven-poster.webp",
+      "sha256": "90ac36640cd6cd9084345d0a90b608473d30977733ddf56a36ef2e617f5dedf3",
+      "bytes": 28418,
+      "duration": null,
+      "width": null,
+      "height": null,
+      "audio": false
+    },
+    {
+      "source": "https://cdn.kavel.ai/images/kavel/tools/goodbye-2026-welcome-2027-ai-image.webp",
+      "sha256": "6c062ba094ff52b86509d8f77d3129964216574f2846476209f50ad21a3485ca",
+      "bytes": 47174,
+      "duration": null,
+      "width": null,
+      "height": null,
+      "audio": false
+    },
+    {
+      "source": "https://cdn.kavel.ai/images/kavel/tools/previews/goodbye-2026-welcome-2027-preview.webp",
+      "sha256": "1122e969cb0cb382511866c444baa0e0f701395563ed82ea95a61a9cc8117ead",
+      "bytes": 24366,
+      "duration": null,
+      "width": null,
+      "height": null,
+      "audio": false
+    },
+    {
+      "source": "https://cdn.goenhance.ai/static/site/202611/31898ada-8e11-4e46-b659-7b670bf0a9fb.jpg",
+      "sha256": "c6f5ea577ccd82e8881157ee72cdebdb87b1090a8e42f337c1daec8b4c003bdf",
+      "bytes": 88618,
+      "duration": null,
+      "width": null,
+      "height": null,
+      "audio": false
+    },
+    {
+      "source": "https://cdn.goenhance.ai/static/site/202611/955cdaab-96f5-4cc1-8cf9-0eaa8edc4338.jpg",
+      "sha256": "37d1e448a267937a66ca6dcccf3d0e5d595d174adbe710d347674844f62a736c",
+      "bytes": 107084,
+      "duration": null,
+      "width": null,
+      "height": null,
+      "audio": false
+    },
+    {
+      "source": "https://cdn.goenhance.ai/static/site/202611/4ab3ff1e-985e-4f74-a863-e459262cac27.jpg",
+      "sha256": "3ee3b4145849c9d6b4a72d84ad6394017f35da325cfd2cd863c9313acc748def",
+      "bytes": 95256,
+      "duration": null,
+      "width": null,
+      "height": null,
+      "audio": false
+    },
+    {
+      "source": "https://cdn.goenhance.ai/static/site/202611/d718aa7d-4dbd-4df1-ab0d-5368426e6d85.jpg",
+      "sha256": "a7d56268ee3f7acab38f16ab620a23fa6098658ff37056ab0d974da03c91a736",
+      "bytes": 10744,
+      "duration": null,
+      "width": null,
+      "height": null,
+      "audio": false
+    },
+    {
+      "source": "https://cdn.goenhance.ai/static/site/202611/cb2bddc6-eb8e-4468-b627-ea4fd0bd82d0.mp4",
+      "sha256": "748160944e77f02a75a35b4c2272ecff2184595ce118aa8593297d3835d68bab",
+      "bytes": 409921,
+      "duration": "5.061995",
+      "width": 480,
+      "height": 850,
+      "audio": true
+    },
+    {
+      "source": "https://cdn.goenhance.ai/static/site/202611/3adfb4b5-7837-4107-b15d-c8423c4af285.mp4",
+      "sha256": "41557cfca35947454a7fed469f9ecb3799d15a6133d07d0f65208b0d0d8814da",
+      "bytes": 576386,
+      "duration": "5.061995",
+      "width": 480,
+      "height": 850,
+      "audio": true
+    },
+    {
+      "source": "https://cdn.goenhance.ai/static/site/202611/34ca6909-80fd-4baf-b46d-0cb3cb9ba626.jpg",
+      "sha256": "74f26c0281c55aa073443b9d1f55b1127ee2f7b6211da5a6ccf64d7563c31d19",
+      "bytes": 109688,
+      "duration": null,
+      "width": null,
+      "height": null,
+      "audio": false
+    },
+    {
+      "source": "https://cdn.goenhance.ai/static/site/202611/e99389d8-e2ea-44ff-9b97-48b2d592095e.mp4",
+      "sha256": "9ccafe9ea69040c7f22616cd14b8b03aae578a39e002b5a3886bed7ed9809926",
+      "bytes": 541704,
+      "duration": "5.061995",
+      "width": 480,
+      "height": 850,
+      "audio": true
+    },
+    {
+      "source": "https://cdn.goenhance.ai/static/site/202611/783ad2d7-7f2c-454b-a4f9-13c72f503e7a.mp4",
+      "sha256": "8a247b6c6890ce7e1833047642588d5204394ad57542d4dedde692a250722e6e",
+      "bytes": 462469,
+      "duration": "5.061995",
+      "width": 480,
+      "height": 850,
+      "audio": true
+    },
+    {
+      "source": "https://cdn.goenhance.ai/static/site/202611/e75ae11c-3d61-45f5-b6bc-de2d007dc2ab.mp4",
+      "sha256": "2ebc4b4565be047d4f46f2f8caabfc9e1f964b6f1698256818722e0a8319119a",
+      "bytes": 443816,
+      "duration": "5.061995",
+      "width": 480,
+      "height": 850,
+      "audio": true
+    },
+    {
+      "source": "https://cdn4.goenhance.ai/source2/WGCBpo2U8g4qaDtWzMEkqQF6XoiO1L0B98smwDNQfn4EACt1xvTKgrOPXlSMIvnMFfFTcujwIZtrZXsLHbuVhhNqrScQM80LzZ6WjP3oBzL66OJgGMyQYW_WQVl4MNaX78zIRwSj5Np2m4xWQ7eC6vjRRXMktXuKCORqILzS0KnY3WV0dbqZ3fuEyvBK/output.png",
+      "sha256": "0464d04d5d28b8150d3843292b22d9d036bf4c6a71561b3a7f364d2ecf57b5f1",
+      "bytes": 1664543,
+      "duration": null,
+      "width": null,
+      "height": null,
+      "audio": false
+    },
+    {
+      "source": "https://cdn4.goenhance.ai/source2/oQGRwX1-H2xefkv_PpuNcqGjypkz0UWBlyG5gDiGitpwyCWPV-r0LSZpg8Km3fXIVN_vVCAOmjZp87z4U_R7x9qSw7VE_4u6HIHWUbz5WPtzHEvGmjJXONUeBhZ1VRYcc7vlFOZRgguLaPAysWPv0lFbYV2bqZvMa6EPWBotYWUK5_ZlkDDEeRXQrjGT/output.png",
+      "sha256": "b4b2f0164cf449975df3dc16f8f0241af0bf9c3bb786d08cd82d0c4cd38b95b2",
+      "bytes": 2000343,
+      "duration": null,
+      "width": null,
+      "height": null,
+      "audio": false
+    },
+    {
+      "source": "https://cdn4.goenhance.ai/source2/9dRAzB12omLPqXQUHbhDaRdmZ61OeGDjTQ94-ugP3tqf58IUA7ZXIawh8FDQqs1VsXc5_yimiZ5e8-hbadkzYki1R1cQZg5bbDzwCH5FCrJyNvFAgBxnSK82HAKidOMnD4MCj4sXyrcnOXwLsfg9KQt2sQA8np7Rlp_BBOD-YVua8iza9Hvj20sNzj2C/output.png",
+      "sha256": "9f25fb569067a7ffb72327ab1515994e32538cde8f4bd83d55c23d78dcaf8c65",
+      "bytes": 1981448,
+      "duration": null,
+      "width": null,
+      "height": null,
+      "audio": false
+    },
+    {
+      "source": "https://cdn4.goenhance.ai/source2/p7snj3to1PNu3uYWvTQWWnBQ0lfTNYRLvEdw_S8jzIkqWOn6YGrAGw47SvVS3YWjLkYyO1ldeV_MQxcf4xh2yPHlB42m0UPni4aJQYKUMigrB4Wxe3HchMDtV1ZK1uMjg3d1q--lgH_M9drB-twmXdw5Q8c42MMnEi_u5szMUttJJITrTsZ-ubbClPae/output.png",
+      "sha256": "68e8b8ff65d41bbc432720103ec4638cb39977afe8f45de25668f8d36ca1001f",
+      "bytes": 1895521,
+      "duration": null,
+      "width": null,
+      "height": null,
+      "audio": false
+    }
+  ]
+}

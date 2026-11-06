@@ -10,7 +10,7 @@ import { jsonBody, sameOrigin, sha256 } from './security';
 const IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
 const PHOTO_ERROR = 'Please upload a valid JPEG, PNG or WebP photo from your account again.';
 
-async function validatePhoto(env: Env, userId: string, value: unknown): Promise<string> {
+export async function validatePhoto(env: Env, userId: string, value: unknown): Promise<string> {
   const prefix = `users/${userId}/uploads/`;
   if (typeof value !== 'string' || value.length > 250 || !value.startsWith(prefix)
     || !/^[A-Za-z0-9_-]+$/.test(value.slice(prefix.length))) throw new ApiError(400, PHOTO_ERROR);

@@ -1,3 +1,4 @@
+import type { TrendEffectId, TrendVariantId } from './trend-video';
 export type AspectRatio = "9:16" | "16:9" | "4:3" | "3:4" | "1:1";
 export type VideoDuration = number;
 export type VideoResolution = "720p" | "480p" | "1080p";
@@ -16,6 +17,7 @@ export type GenerationStatus = "queued" | "reviewing" | "processing" | "complete
 export type GenerationResponse = {
   id: string; status: GenerationStatus; progress: number;
   template?: "ozil-goal" | "flyingcar" | "window-peeper" | "gangnam-style";
+  trendEffect?: TrendEffectId; trendVariant?: TrendVariantId;
   videoUrl?: string; audioUrls?: string[]; imageUrls?: string[]; error?: string;
   statusMessage?: string;
 };

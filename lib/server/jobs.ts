@@ -17,16 +17,18 @@ import type { GangnamStylePayload } from '../gangnam-style';
 import type { FlyingCarPayload } from '../flyingcar';
 import { getVideoSettings, usesHotelLobbyImageReferences } from '../video-options';
 import { getVideoModelUnavailableReason } from '../video-availability';
+import { getTrendVideoTemplate } from '../trend-video';
 type Avatar={key:string;side:'left'|'right';taskId?:string;url?:string};
 export function generationResponse(job:Job):GenerationResponse{
  const keys:string[]=JSON.parse(job.result_keys??'[]');
  let template:GenerationResponse['template'];
+ let trend:Pick<GenerationResponse,'trendEffect'|'trendVariant'>={};
  // Return only the public discriminator, never photo keys or prompt metadata.
- if(job.kind==='video')try{const saved=JSON.parse(job.payload)?.template;if(saved==='ozil-goal'||saved==='flyingcar'||saved==='window-peeper'||saved==='gangnam-style')template=saved;}catch{/* Malformed old metadata must not hide the job. */}
+ if(job.kind==='video')try{const payload=JSON.parse(job.payload),saved=payload?.template;if(saved==='ozil-goal'||saved==='flyingcar'||saved==='window-peeper'||saved==='gangnam-style')template=saved;const effect=saved==='flyingcar'?getTrendVideoTemplate(payload.trendEffect,payload.trendVariant):undefined;if(effect)trend={trendEffect:effect.effectId,trendVariant:effect.variant};}catch{/* Malformed old metadata must not hide the job. */}
  const approved=job.kind==='video'&&job.moderation_verdict==='passed'&&keys.length===1&&keys[0]===job.moderation_key&&!!job.moderation_etag;
  const unreviewed=job.kind==='video'&&job.status==='completed'&&!approved;
  const statusMessage=job.moderation_verdict==='manual'?'Safety review needs attention. Your video remains unavailable.':job.stage==='manual_review'?'This request needs support review. It will not be retried automatically.':job.stage.startsWith('moderation_')?'Checking video safety before delivery…':(template==='window-peeper'||template==='gangnam-style')&&(['audio_ready','submitting_audio','audio_polling','audio_storing'].includes(job.stage))?'Adding the template soundtrack…':undefined;
- return {id:job.id,...(template?{template}:{}),status:job.status as GenerationStatus,progress:job.progress,...(job.error||unreviewed?{error:job.error??'This video is unavailable until its safety review is completed.'}:{}),...(statusMessage?{statusMessage}:{}),...(job.status==='completed'?(job.kind==='music'?{audioUrls:keys.map(key=>`/api/media/${key}`)}:job.kind==='image'?{imageUrls:keys.map(key=>`/api/media/${key}`)}:approved?{videoUrl:`/api/media/${keys[0]}`}:{ }):{})};
+ return {id:job.id,...(template?{template}:{}),...trend,status:job.status as GenerationStatus,progress:job.progress,...(job.error||unreviewed?{error:job.error??'This video is unavailable until its safety review is completed.'}:{}),...(statusMessage?{statusMessage}:{}),...(job.status==='completed'?(job.kind==='music'?{audioUrls:keys.map(key=>`/api/media/${key}`)}:job.kind==='image'?{imageUrls:keys.map(key=>`/api/media/${key}`)}:approved?{videoUrl:`/api/media/${keys[0]}`}:{ }):{})};
 }
 class LostLease extends Error {}
 async function patch(db:D1Database,id:string,fence:JobFence,fields:Record<string,string|number|null>){

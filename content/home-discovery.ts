@@ -61,6 +61,10 @@ export const blackFridayDiscoveryCampaign: DiscoveryCampaign = {
 const HALLOWEEN_2026 = { label: 'Halloween', until: '2026-11-01T00:00:00.000Z' };
 
 export const discoveryPages: readonly DiscoveryPage[] = [
+  { path: '/goodbye-2026-welcome-2027', title: 'Goodbye 2026 Welcome 2027', blurb: 'Climb above the clouds and welcome 2027.', kind: 'generator',
+    poster: '/trend-video/goodbye-2026-welcome-2027.webp', publishedAt: '2026-11-06', priority: 98, footer: 'generators' },
+  { path: '/stones-to-castle-ai', title: 'Stones to Castle AI', blurb: 'Watch a pile of stones become a castle.', kind: 'generator',
+    poster: '/trend-video/stones-to-castle-ai.webp', publishedAt: '2026-11-06', priority: 97, footer: 'generators' },
   { path: '/black-friday', title: 'Black Friday 2026', blurb: 'Bonus credits on one-time credit packs', kind: 'offer',
     poster: '/posters/home-discovery/black-friday.webp', video: '/videos/lobbyduo/wan-3-corgi-cat.mp4',
     campaign: blackFridayDiscoveryCampaign, priority: 100, footer: 'offers' },

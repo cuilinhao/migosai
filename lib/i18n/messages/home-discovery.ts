@@ -6,6 +6,12 @@ import type { Messages, Translator } from "../translator";
 // These keys are merged with the lowest priority, so they can never change an existing translation.
 type Row = readonly [string, string, string, string, string, string];
 const rows: readonly Row[] = [
+  ["Goodbye 2026 Welcome 2027", "告別 2026，迎接 2027", "2026년을 보내고 2027년을 맞이하세요", "さよなら2026、ようこそ2027", "Au revoir 2026, bienvenue 2027", "Adiós 2026, bienvenido 2027"],
+  ["Welcome 2027", "迎接 2027", "2027년을 맞이하세요", "ようこそ2027", "Bienvenue 2027", "Bienvenido 2027"],
+  ["Climb above the clouds and welcome 2027.", "登上雲海之巔，迎接 2027。", "구름 위 정상에서 2027년을 맞이하세요.", "雲海の頂に登って2027年を迎えよう。", "Grimpez au-dessus des nuages pour accueillir 2027.", "Sube sobre las nubes y da la bienvenida a 2027."],
+  ["Stones to Castle AI", "石子變城堡 AI", "돌에서 성으로 AI", "石から城へAI", "Des pierres au château avec l’IA", "De piedras a castillo con IA"],
+  ["Stones to Castle", "石子變城堡", "돌에서 성으로", "石から城へ", "Des pierres au château", "De piedras a castillo"],
+  ["Watch a pile of stones become a castle.", "看一堆石子逐步化為城堡。", "돌무더기가 성으로 변하는 모습을 확인하세요.", "石の山が城へと変わる瞬間を。", "Regardez un tas de pierres se transformer en château.", "Mira cómo un montón de piedras se convierte en castillo."],
   // Campaign bar
   ["+{percent}% bonus credits on one-time credit packs, {start} – {end}.", "一次性點數包加贈 {percent}% 點數，{start} – {end}。", "일회성 크레딧 패키지 크레딧 {percent}% 추가 증정, {start} – {end}.", "買い切りクレジットパックのクレジットが{percent}%増量：{start} – {end}。", "+{percent} % de crédits bonus sur les packs de crédits à achat unique, du {start} au {end}.", "+{percent} % de créditos extra en paquetes de créditos de pago único, del {start} al {end}."],
   ["+{percent}% bonus credits on one-time credit packs, now through {end}.", "一次性點數包加贈 {percent}% 點數，優惠進行至 {end}。", "일회성 크레딧 패키지 크레딧 {percent}% 추가 증정, {end}까지 진행 중.", "買い切りクレジットパックのクレジットが{percent}%増量。{end}まで開催中。", "+{percent} % de crédits bonus sur les packs de crédits à achat unique, jusqu’au {end}.", "+{percent} % de créditos extra en paquetes de créditos de pago único, hasta el {end}."],

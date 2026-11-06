@@ -85,3 +85,10 @@ Content reviewed: 2026-10-15. Check the linked pages and generator for current s
 - [Sitemap](https://migosai.design/sitemap.xml): Current MigosAI public pages and their language URLs, including the original Hotel Lobby and dedicated Gangnam Style routes.
 
 Gangnam Style content reviewed: 2026-10-30. Article publication and modification dates remain 2026-10-28; the generator and blog index were updated on 2026-10-30.
+
+
+## New Year and castle video templates
+- [Goodbye 2026 Welcome 2027](https://migosai.design/goodbye-2026-welcome-2027): One authorized portrait becomes a summit climb and a reveal of giant stone 2027 numbers. Five reference-inspired framing options, including a two-panel composition using the same person.
+- [Stones to Castle AI](https://migosai.design/stones-to-castle-ai): A low-angle photograph of loose stones becomes a fantasy castle assembling from the ground. No throwing action or person is needed.
+- Both templates use the existing Kie Seedance 2.5 integration: one image, 10 seconds, 480p, vertical 9:16, silent output, 75 shared credits. Original prompts are configured on the server. Reference clips from Kavel and GoEnhance are credited examples, not MigosAI-generated results or guarantees of identical output.
+- Both pages and generation controls are available in English, Korean, Japanese, French, Spanish and Traditional Chinese, with reciprocal language links and an English x-default. Existing account or guest-wallet credits, generation history, safety review and private downloads apply.
