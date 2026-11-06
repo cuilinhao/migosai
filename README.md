@@ -42,6 +42,8 @@ npm run preview
 
 ## 验证与部署
 
+2026-11-06 新年登顶与石头变城堡两个内页已上线，六语言共 12 个页面地址已加入 sitemap（共 771 条）。发布源码 `cf21cc4`，Cloudflare 版本 `8f0e69d3-73a4-453b-b484-2e0ae8b79b8e`；2763 项测试、类型检查、生产构建及线上 SEO/sitemap 验收通过，详情见[上线记录](docs/trend-video/RELEASE.md)。本次未发起付费视频生成。
+
 ```bash
 npm test
 npm run typecheck
